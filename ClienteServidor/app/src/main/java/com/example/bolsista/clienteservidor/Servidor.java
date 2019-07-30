@@ -2,6 +2,9 @@ package com.example.bolsista.clienteservidor;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -11,7 +14,8 @@ import java.net.Socket;
 
 public class Servidor extends AppCompatActivity {
 
-    private ServerSocket serverSocket;
+
+    Server server = new Server();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,11 +26,11 @@ public class Servidor extends AppCompatActivity {
 
         try {
             System.out.println("CRIANDO SERVIDOR...");
-            criarServerSocket(5555);
+            server.criarServerSocket(5555);
             System.out.println("AGUARDANDO CONEXÃO...");
-            Socket socket = esperaConexao(); //protocolo
+            Socket socket = server.esperaConexao(); //protocolo
             System.out.println("CLIENTE CONECTADO");
-            trataConexao(socket);
+            server.trataConexao(socket);
         }catch (IOException e)
         {
             //tratar excessão
@@ -35,44 +39,5 @@ public class Servidor extends AppCompatActivity {
         }
     }
 
-    private void criarServerSocket(int porta) throws IOException
-    {
-        serverSocket = new ServerSocket(porta);
 
-    }
-    private Socket esperaConexao() throws IOException
-    {
-        System.out.println("TENTANDO");
-        Socket socket = serverSocket.accept();
-        System.out.println("PASSOU");
-        return socket;
-    }
-
-    private void fechaSocket(Socket s) throws IOException{
-        s.close();
-    }
-
-    private void trataConexao(Socket socket) throws IOException
-    {
-        //protocolo da aplicação
-        try{
-        ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
-        ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());
-        /*Cliente --> hello
-          Server <-- HELLO WORLD
-        */
-        String msg = input.readUTF();
-        System.out.println("MENSAGEM RECEBIDA");
-        output.writeUTF("HELLO WORLD");
-
-        input.close();
-        output.close();
-        }catch (IOException e)
-        {
-            //tratamento de falhas
-        }finally {
-            //final do tratamento do protocolo
-            fechaSocket(socket);
-        }
-    }
 }
