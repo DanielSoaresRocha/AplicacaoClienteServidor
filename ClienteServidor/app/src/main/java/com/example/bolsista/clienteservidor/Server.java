@@ -3,6 +3,7 @@ package com.example.bolsista.clienteservidor;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.widget.Space;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -42,15 +43,22 @@ public class Server extends AsyncTask<Void,String,Socket>{
 
     @Override //DURANTE EXECUÇÃO -> ACESSO A OUTRA THREAD
     protected Socket doInBackground(Void... params) {
+        Socket socket;
         try {
             progress.setMessage("esperando conexão de cliente");
-            return esperaConexao();
+            socket = esperaConexao();
+            progress.setMessage("Cliente foi conectado");
+
+            //////////////TRATAMENTO DO PROTOCOLO/////////////////////
+            trataConexao(socket);
+
         } catch (IOException e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
             return null;
         }
 
+    return socket;
     }
 
     @Override //ATUALIZAÇÃO -> É OPCIONAL
@@ -78,10 +86,6 @@ public class Server extends AsyncTask<Void,String,Socket>{
         return socket;
     }
 
-    /*
-    public void fechaSocket(Socket s) throws IOException{
-        s.close();
-    }
 
     public void trataConexao(Socket socket) throws IOException
     {
@@ -91,20 +95,28 @@ public class Server extends AsyncTask<Void,String,Socket>{
             ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());
         //Cliente --> hello
           //Server <-- HELLO WORLD
-
+            progress.setMessage("Esperando mensagem");
             String msg = input.readUTF();
+
             System.out.println("MENSAGEM RECEBIDA");
+            progress.setMessage("MENSAGEM RECEBIDA");
+
             output.writeUTF("HELLO WORLD");
 
             input.close();
             output.close();
         }catch (IOException e)
         {
+            System.out.println("DEU ERRO");
             //tratamento de falhas
         }finally {
             //final do tratamento do protocolo
             fechaSocket(socket);
         }
     }
-    */
+
+    public void fechaSocket(Socket s) throws IOException{
+        s.close();
+    }
+
 }
