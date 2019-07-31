@@ -1,5 +1,9 @@
 package com.example.bolsista.clienteservidor;
 
+import android.app.ProgressDialog;
+import android.content.Context;
+import android.os.AsyncTask;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -9,8 +13,57 @@ import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 
-public class Server {
+public class Server extends AsyncTask<Void,String,Socket>{
+    private Context context;
+    private ProgressDialog progress;
+
     private ServerSocket serverSocket;
+
+    public Server(Context context){
+        this.context = context;
+    }
+
+    @Override //ANTES DE EXECUÇÃO -> ACESSO A THREAD PRINCIPAL
+    protected void onPreExecute() {
+        progress = new ProgressDialog(context);
+        progress.setMessage("Criando servidor...");
+        progress.show();
+
+        try {
+            criarServerSocket(5555);
+            System.out.println("SERVIDOR INICIADO NA PORTA 5555");
+            progress.setMessage("Iniciado na porta 5555");
+
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    @Override //DURANTE EXECUÇÃO -> ACESSO A OUTRA THREAD
+    protected Socket doInBackground(Void... params) {
+        try {
+            progress.setMessage("esperando conexão de cliente");
+            return esperaConexao();
+        } catch (IOException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+            return null;
+        }
+
+    }
+
+    @Override //ATUALIZAÇÃO -> É OPCIONAL
+    protected void onProgressUpdate(String... params) {
+
+    }
+
+    @Override //DEPOIS DA EXECUÇÃO
+    protected void onPostExecute(Socket params) {
+        progress.setMessage("realizado");
+        progress.dismiss();
+    }
+
 
     public void criarServerSocket(int porta) throws IOException
     {
@@ -25,6 +78,7 @@ public class Server {
         return socket;
     }
 
+    /*
     public void fechaSocket(Socket s) throws IOException{
         s.close();
     }
@@ -35,9 +89,9 @@ public class Server {
         try{
             ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
             ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());
-        /*Cliente --> hello
-          Server <-- HELLO WORLD
-        */
+        //Cliente --> hello
+          //Server <-- HELLO WORLD
+
             String msg = input.readUTF();
             System.out.println("MENSAGEM RECEBIDA");
             output.writeUTF("HELLO WORLD");
@@ -52,5 +106,5 @@ public class Server {
             fechaSocket(socket);
         }
     }
-
+    */
 }

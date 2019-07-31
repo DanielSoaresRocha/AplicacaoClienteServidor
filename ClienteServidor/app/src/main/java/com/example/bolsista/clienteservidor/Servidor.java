@@ -1,5 +1,6 @@
 package com.example.bolsista.clienteservidor;
 
+import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -15,7 +16,7 @@ import java.net.Socket;
 public class Servidor extends AppCompatActivity {
 
 
-    Server server = new Server();
+    Server server;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,7 +24,10 @@ public class Servidor extends AppCompatActivity {
         setContentView(R.layout.activity_servidor);
 
         System.out.println("PRIMEIRO PRINT");
+        criarServidor();
 
+
+        /*
         try {
             System.out.println("CRIANDO SERVIDOR...");
             server.criarServerSocket(5555);
@@ -37,7 +41,13 @@ public class Servidor extends AppCompatActivity {
 
             System.out.println(e.getMessage());
         }
+        */
     }
 
-
+    public void criarServidor(){
+        server = new Server(this);
+        server.execute();
+    }
 }
+
+
