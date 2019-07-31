@@ -91,8 +91,8 @@ public class Server extends AsyncTask<Void,String,Socket>{
     {
         //protocolo da aplicação
         try{
-            ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
             ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());
+            ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
         //Cliente --> hello
           //Server <-- HELLO WORLD
             progress.setMessage("Esperando mensagem");
@@ -101,13 +101,16 @@ public class Server extends AsyncTask<Void,String,Socket>{
             System.out.println("MENSAGEM RECEBIDA");
             progress.setMessage("MENSAGEM RECEBIDA");
 
-            output.writeUTF("HELLO WORLD");
+            output.writeUTF("HELLO CLIENT");
+            output.flush(); //limpar o buffer -> diz quando terminou a mensagem
 
             input.close();
             output.close();
         }catch (IOException e)
         {
-            System.out.println("DEU ERRO");
+            System.out.println("DEU ERRO NO TRATAMENTO");
+            progress.setMessage("Deu erro no tratamento");
+            System.out.println(e.getMessage());
             //tratamento de falhas
         }finally {
             //final do tratamento do protocolo
