@@ -89,8 +89,7 @@ public class Server extends AsyncTask<Void,String,Socket>{
     }
 
 
-    public void trataConexao(Socket socket)
-    {
+    public void trataConexao(Socket socket) throws IOException{
         //protocolo da aplicação
         try{
             System.out.println("CRIANDO STREAMS DE ENTRADA E SAIDA");
@@ -118,7 +117,7 @@ public class Server extends AsyncTask<Void,String,Socket>{
             //tratamento de falhas
         }finally {
             //final do tratamento do protocolo
-            //fechaSocket(socket);
+            fechaSocket(socket);
         }
     }
 

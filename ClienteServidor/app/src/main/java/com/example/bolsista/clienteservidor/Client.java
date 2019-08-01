@@ -52,15 +52,18 @@ public class Client extends AsyncTask<Void,Void,Void> {
 
             msg = input.readUTF();
 
-
+            System.out.println("Mensagem do servidor = "+ msg);
             input.close();
             output.close();
-            if(msg.equals("fechar")){
-                socket.close();
-            }
+
+            fechaSocket(socket);
 
         }catch (IOException e){
             System.out.println("Erro no cliente ="+ e.getMessage());
+            //final do tratamento do protocolo
+
+        }finally {
+
         }
 
         return null;
@@ -74,6 +77,10 @@ public class Client extends AsyncTask<Void,Void,Void> {
     @Override //DEPOIS DA EXECUÇÃO
     protected void onPostExecute(Void params) {
 
+    }
+
+    public void fechaSocket(Socket s) throws IOException{
+        s.close();
     }
 
 }
