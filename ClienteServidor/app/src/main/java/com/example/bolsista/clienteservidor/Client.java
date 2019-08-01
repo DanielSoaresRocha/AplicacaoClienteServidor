@@ -55,7 +55,10 @@ public class Client extends AsyncTask<Void,Void,Void> {
 
             input.close();
             output.close();
-            socket.close();
+            if(msg.equals("fechar")){
+                socket.close();
+            }
+
         }catch (IOException e){
             System.out.println("Erro no cliente ="+ e.getMessage());
         }
