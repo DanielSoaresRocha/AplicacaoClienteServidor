@@ -13,6 +13,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.sql.SQLOutput;
 
 public class Server extends AsyncTask<Void,String,Socket>{
     private Context context;
@@ -47,9 +48,10 @@ public class Server extends AsyncTask<Void,String,Socket>{
         try {
             progress.setMessage("esperando conexão de cliente");
             socket = esperaConexao();
-            progress.setMessage("Cliente foi conectado");
+            System.out.println("Cliente foi conectado");
 
             //////////////TRATAMENTO DO PROTOCOLO/////////////////////
+            System.out.println("Vai entrar em tratamento");
             trataConexao(socket);
 
         } catch (IOException e) {
@@ -87,19 +89,21 @@ public class Server extends AsyncTask<Void,String,Socket>{
     }
 
 
-    public void trataConexao(Socket socket) throws IOException
+    public void trataConexao(Socket socket)
     {
         //protocolo da aplicação
         try{
+            System.out.println("CRIANDO STREAMS DE ENTRADA E SAIDA");
             ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());
             ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
         //Cliente --> hello
           //Server <-- HELLO WORLD
-            progress.setMessage("Esperando mensagem");
+            System.out.println("Criou as strenams");
+
             String msg = input.readUTF();
 
             System.out.println("MENSAGEM RECEBIDA");
-            progress.setMessage("MENSAGEM RECEBIDA");
+
 
             output.writeUTF("HELLO CLIENT");
             output.flush(); //limpar o buffer -> diz quando terminou a mensagem
@@ -109,12 +113,12 @@ public class Server extends AsyncTask<Void,String,Socket>{
         }catch (IOException e)
         {
             System.out.println("DEU ERRO NO TRATAMENTO");
-            progress.setMessage("Deu erro no tratamento");
-            System.out.println(e.getMessage());
+
+            System.out.println("ERRO = " + e.getMessage());
             //tratamento de falhas
         }finally {
             //final do tratamento do protocolo
-            fechaSocket(socket);
+            //fechaSocket(socket);
         }
     }
 

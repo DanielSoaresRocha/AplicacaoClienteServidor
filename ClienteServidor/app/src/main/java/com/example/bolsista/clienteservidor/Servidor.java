@@ -18,8 +18,9 @@ public class Servidor extends AppCompatActivity {
 
 
     Server server;
+    Client client;
 
-    Button connect;
+    Button connect,criarServer;
     EditText host;
 
     private ProgressDialog progress;
@@ -29,23 +30,37 @@ public class Servidor extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_servidor);
 
+        connect = findViewById(R.id.button);
+        criarServer = findViewById(R.id.button2);
+        host = findViewById(R.id.editText);
+
+
         System.out.println("PRIMEIRO PRINT");
-        criarServidor();
+
+        criarServer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            criarServidor();
+
+            }
+        });
 
         /////////////CONECTAR-SE AO SERVIDOR////////////////////////
         progress = new ProgressDialog(this);
 
-        connect = findViewById(R.id.button);
-        host = findViewById(R.id.editText);
-
         connect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
-                progress.setMessage("Conectando ao servidor...");
+                criarCliente(host.getText().toString());
+/*
+                progress.setMessage("Conectando" + host.getText().toString());
                 progress.show();
-                Socket socket = new Socket(host.getText().toString(),5555); //cria conexão entre cliente e server
 
+                        //////////
+                try {
+                    Socket socket = new Socket(host.getText().toString(),5555); //cria conexão entre cliente e server
+                    System.out.println("CONSEGUIU??");
+                    progress.setMessage("VEREMOS...");
                     //criação dos streams de entrada e saida
 
                     ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());
@@ -68,9 +83,13 @@ public class Servidor extends AppCompatActivity {
 
                 }catch (IOException e){
                     progress.setMessage("Erro ao enviar a mensagem");
-                    System.out.println(e.getMessage());
-                }
-            }
+                    System.out.println("ERRO : "+ e.getMessage());
+                }*/
+
+                    }
+
+
+
         });
 
 
@@ -89,6 +108,11 @@ public class Servidor extends AppCompatActivity {
             System.out.println(e.getMessage());
         }
         */
+    }
+
+    public void criarCliente(String host){
+        client = new Client(this, host);
+        client.execute();
     }
 
     public void criarServidor(){
