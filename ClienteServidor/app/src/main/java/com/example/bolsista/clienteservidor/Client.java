@@ -4,6 +4,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.telephony.IccOpenLogicalChannelResponse;
+import android.util.Log;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -52,6 +53,8 @@ public class Client extends AsyncTask<Void,Void,Void> {
 
             msg = input.readUTF();
 
+            Log.i("TESTE","A mensagem do server foi recebida: "+ msg);
+
 
             input.close();
             output.close();
@@ -70,7 +73,7 @@ public class Client extends AsyncTask<Void,Void,Void> {
 
     @Override //DEPOIS DA EXECUÇÃO
     protected void onPostExecute(Void params) {
-
+        progress.dismiss();
     }
 
 }

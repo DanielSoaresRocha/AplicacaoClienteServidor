@@ -3,6 +3,8 @@ package com.example.bolsista.clienteservidor;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.telephony.IccOpenLogicalChannelResponse;
+import android.util.Log;
 import android.widget.Space;
 
 import java.io.BufferedReader;
@@ -11,18 +13,21 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.sql.SQLOutput;
 
-public class Server extends AsyncTask<Void,String,Socket>{
+public class Server extends AsyncTask<Void,String,Void>{
     private Context context;
     private ProgressDialog progress;
+    private Servidor servidor;
 
     private ServerSocket serverSocket;
 
-    public Server(Context context){
+    public Server(Context context, Servidor servidor){
         this.context = context;
+        this.servidor = servidor;
     }
 
     @Override //ANTES DE EXECUÇÃO -> ACESSO A THREAD PRINCIPAL
@@ -36,6 +41,7 @@ public class Server extends AsyncTask<Void,String,Socket>{
             System.out.println("SERVIDOR INICIADO NA PORTA 5555");
             progress.setMessage("Iniciado na porta 5555");
 
+
         } catch (IOException e) {
             System.out.println(e.getMessage());
             e.printStackTrace();
@@ -43,24 +49,31 @@ public class Server extends AsyncTask<Void,String,Socket>{
     }
 
     @Override //DURANTE EXECUÇÃO -> ACESSO A OUTRA THREAD
-    protected Socket doInBackground(Void... params) {
+    protected Void doInBackground(Void... params) {
         Socket socket;
         try {
-            progress.setMessage("esperando conexão de cliente");
+
+            while(true){
+
+
+            Log.i("TESTE","ESPERANDO CONEXÃO..");
+
             socket = esperaConexao();
-            System.out.println("Cliente foi conectado");
+            Log.i("TESTE","CLIENTE FOI CONECTADO = "+ socket.getInetAddress());
+
 
             //////////////TRATAMENTO DO PROTOCOLO/////////////////////
-            System.out.println("Vai entrar em tratamento");
+            Log.i("TESTE","Vai entrar em tratamento");
+
             trataConexao(socket);
 
+            }
         } catch (IOException e) {
-            System.out.println(e.getMessage());
+            Log.i("ERRO","Erro no servidor: "+ e.getMessage());
             e.printStackTrace();
             return null;
         }
 
-    return socket;
     }
 
     @Override //ATUALIZAÇÃO -> É OPCIONAL
@@ -69,7 +82,7 @@ public class Server extends AsyncTask<Void,String,Socket>{
     }
 
     @Override //DEPOIS DA EXECUÇÃO
-    protected void onPostExecute(Socket params) {
+    protected void onPostExecute(Void params) {
         progress.setMessage("realizado");
         progress.dismiss();
     }
@@ -103,7 +116,7 @@ public class Server extends AsyncTask<Void,String,Socket>{
             String msg = input.readUTF();
 
             System.out.println("MENSAGEM RECEBIDA");
-
+            Log.i("TESTE","A mensagem foi recebida: "+ msg);
 
             output.writeUTF("HELLO CLIENT");
             output.flush(); //limpar o buffer -> diz quando terminou a mensagem

@@ -52,44 +52,8 @@ public class Servidor extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 criarCliente(host.getText().toString());
-/*
-                progress.setMessage("Conectando" + host.getText().toString());
-                progress.show();
-
-                        //////////
-                try {
-                    Socket socket = new Socket(host.getText().toString(),5555); //cria conexão entre cliente e server
-                    System.out.println("CONSEGUIU??");
-                    progress.setMessage("VEREMOS...");
-                    //criação dos streams de entrada e saida
-
-                    ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());
-                    ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
-
-                    String msg = "HELLO";
-
-                    progress.setMessage("Enviando Mensagem...");
-                    output.writeUTF(msg);
-                    output.flush();
-                    progress.setMessage("Mensagem enviada");
-
-                    msg = input.readUTF();
-                    progress.setMessage(msg);
-
-                    input.close();
-                    output.close();
-                    socket.close();
-
-
-                }catch (IOException e){
-                    progress.setMessage("Erro ao enviar a mensagem");
-                    System.out.println("ERRO : "+ e.getMessage());
-                }*/
 
                     }
-
-
-
         });
 
 
@@ -116,8 +80,12 @@ public class Servidor extends AppCompatActivity {
     }
 
     public void criarServidor(){
-        server = new Server(this);
+        server = new Server(this,this);
         server.execute();
+    }
+
+    public void indicarIp(String ip){
+        host.setText("ip");
     }
 }
 
