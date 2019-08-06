@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -19,9 +20,9 @@ public class Servidor extends AppCompatActivity {
 
     Server server;
     Client client;
-
-    Button connect,criarServer;
+    Button connect,criarServer, enviar, imagem;
     EditText host;
+
 
     private ProgressDialog progress;
 
@@ -30,12 +31,22 @@ public class Servidor extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_servidor);
 
+        imagem = findViewById(R.id.img);
         connect = findViewById(R.id.button);
         criarServer = findViewById(R.id.button2);
         host = findViewById(R.id.editText);
+        enviar = findViewById(R.id.enviarServer);
 
 
         System.out.println("PRIMEIRO PRINT");
+
+        enviar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                client.enviar();
+
+            }
+        });
 
         criarServer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -75,7 +86,7 @@ public class Servidor extends AppCompatActivity {
     }
 
     public void criarCliente(String host){
-        client = new Client(this, host);
+        client = new Client(this, host,this);
         client.execute();
     }
 

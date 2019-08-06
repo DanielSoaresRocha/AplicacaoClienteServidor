@@ -3,9 +3,8 @@ package com.example.bolsista.clienteservidor;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
-import android.telephony.IccOpenLogicalChannelResponse;
 import android.util.Log;
-import android.widget.Space;
+
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -16,12 +15,19 @@ import java.io.ObjectOutputStream;
 import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
-import java.sql.SQLOutput;
+import java.util.Random;
+
 
 public class Server extends AsyncTask<Void,String,Void>{
     private Context context;
     private ProgressDialog progress;
     private Servidor servidor;
+
+    private ObjectOutputStream output;
+    private ObjectInputStream input;
+
+    private String msg;
+
 
     private ServerSocket serverSocket;
 
@@ -33,8 +39,8 @@ public class Server extends AsyncTask<Void,String,Void>{
     @Override //ANTES DE EXECUÇÃO -> ACESSO A THREAD PRINCIPAL
     protected void onPreExecute() {
         progress = new ProgressDialog(context);
-        progress.setMessage("Criando servidor...");
-        progress.show();
+        // progress.setMessage("Criando servidor...");--------
+        //progress.show();--------
 
         try {
             criarServerSocket(5555);
@@ -60,7 +66,6 @@ public class Server extends AsyncTask<Void,String,Void>{
 
             socket = esperaConexao();
             Log.i("TESTE","CLIENTE FOI CONECTADO = "+ socket.getInetAddress());
-
 
             //////////////TRATAMENTO DO PROTOCOLO/////////////////////
             Log.i("TESTE","Vai entrar em tratamento");
@@ -102,26 +107,31 @@ public class Server extends AsyncTask<Void,String,Void>{
     }
 
 
-    public void trataConexao(Socket socket) throws IOException{
+    public void trataConexao(Socket socket)
+    {
         //protocolo da aplicação
         try{
-            System.out.println("CRIANDO STREAMS DE ENTRADA E SAIDA");
-            ObjectOutputStream output = new ObjectOutputStream(socket.getOutputStream());
-            ObjectInputStream input = new ObjectInputStream(socket.getInputStream());
-        //Cliente --> hello
-          //Server <-- HELLO WORLD
+
+            output = new ObjectOutputStream(socket.getOutputStream());
+            input = new ObjectInputStream(socket.getInputStream());
             System.out.println("Criou as strenams");
 
-            String msg = input.readUTF();
+            msg = "";
+            while(!(msg.equals("sair"))){
+                msg = input.readUTF();
+                System.out.println("mensagem do cliente: "+ msg);
 
-            System.out.println("MENSAGEM RECEBIDA");
-            Log.i("TESTE","A mensagem foi recebida: "+ msg);
+                mudaImagem();
+                System.out.println("Mudou imagem");
 
-            output.writeUTF("HELLO CLIENT");
-            output.flush(); //limpar o buffer -> diz quando terminou a mensagem
+                output.writeUTF("Servidor:2");
+                output.flush();
 
-            input.close();
-            output.close();
+
+            }
+
+            //input.close();
+            //output.close();
         }catch (IOException e)
         {
             System.out.println("DEU ERRO NO TRATAMENTO");
@@ -130,12 +140,42 @@ public class Server extends AsyncTask<Void,String,Void>{
             //tratamento de falhas
         }finally {
             //final do tratamento do protocolo
-            fechaSocket(socket);
+                //fechaSocket(socket);
+
         }
     }
 
     public void fechaSocket(Socket s) throws IOException{
         s.close();
+    }
+
+    public void mudaImagem(){
+        servidor.imagem.post(new Runnable() {
+            @Override
+            public void run() {
+
+                Random radom  = new Random(); // gerar número aleatório
+                int numeroTmp = radom.nextInt(6);
+
+                if(numeroTmp == 0){
+                    servidor.imagem.setBackgroundResource(R.drawable.circulo);
+                }else if(numeroTmp == 1){
+                    servidor.imagem.setBackgroundResource(R.drawable.estrela);
+                }else if(numeroTmp == 2){
+                    servidor.imagem.setBackgroundResource(R.drawable.hexagono);
+                }else if(numeroTmp == 3){
+                    servidor.imagem.setBackgroundResource(R.drawable.retangulo);
+                }else if(numeroTmp == 4){
+                    servidor.imagem.setBackgroundResource(R.drawable.triangulo);
+                }else if(numeroTmp == 5){
+                    servidor.imagem.setBackgroundResource(R.drawable.losango);
+                }else{
+                    servidor.imagem.setBackgroundResource(R.drawable.triangulo);
+                }
+
+                //servidor.imagem.setBackgroundResource(R.drawable.circulo);
+            }
+        });
     }
 
 }
