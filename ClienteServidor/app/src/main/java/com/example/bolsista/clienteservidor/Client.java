@@ -35,9 +35,9 @@ public class Client extends AsyncTask<Void,Void,Void> {
 
     @Override //ANTES DE EXECUÇÃO -> ACESSO A THREAD PRINCIPAL
     protected void onPreExecute() {
-        progress = new ProgressDialog(context);
-        progress.setMessage("Criando Cliente...");
-        progress.show();
+        //progress = new ProgressDialog(context);
+        //progress.setMessage("Criando Cliente...");
+        //progress.show();
 
 
     }
@@ -50,7 +50,6 @@ public class Client extends AsyncTask<Void,Void,Void> {
             System.out.println("Conectou ao server");
 
             trataConexao(socket);
-
 
             //input.close();
            // output.close();
@@ -69,7 +68,7 @@ public class Client extends AsyncTask<Void,Void,Void> {
 
     @Override //DEPOIS DA EXECUÇÃO
     protected void onPostExecute(Void params) {
-        progress.dismiss();
+        //progress.dismiss();
     }
 
     public void trataConexao(Socket socket){

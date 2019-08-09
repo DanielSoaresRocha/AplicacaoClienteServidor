@@ -1,9 +1,12 @@
 package com.example.bolsista.clienteservidor;
 
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,11 +20,13 @@ import java.net.Socket;
 
 public class Servidor extends AppCompatActivity {
 
-
-    Server server;
+    //Server server;
     Client client;
     Button connect,criarServer, enviar, imagem;
     EditText host;
+
+    Socket socket;
+    Handler handler;
 
 
     private ProgressDialog progress;
@@ -31,6 +36,7 @@ public class Servidor extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_servidor);
 
+        handler = new Handler();
         imagem = findViewById(R.id.img);
         connect = findViewById(R.id.button);
         criarServer = findViewById(R.id.button2);
@@ -67,22 +73,6 @@ public class Servidor extends AppCompatActivity {
                     }
         });
 
-
-        /*
-        try {
-            System.out.println("CRIANDO SERVIDOR...");
-            server.criarServerSocket(5555);
-            System.out.println("AGUARDANDO CONEXÃO...");
-            Socket socket = server.esperaConexao(); //protocolo
-            System.out.println("CLIENTE CONECTADO");
-            server.trataConexao(socket);
-        }catch (IOException e)
-        {
-            //tratar excessão
-
-            System.out.println(e.getMessage());
-        }
-        */
     }
 
     public void criarCliente(String host){
@@ -90,11 +80,45 @@ public class Servidor extends AppCompatActivity {
         client.execute();
     }
 
-    public void criarServidor(){
-        server = new Server(this,this);
-        server.execute();
-    }
+    /*public void criarServidor(){
+        server = new Server(this,this, handler);
+        server.onPreExecute();
+    }*/
 
+    public void criarServidor(){
+        final Context context = this;
+        final Servidor servidor = this;
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    ServerSocket serverSocket = new ServerSocket(5555);
+
+                    while (true){
+                        Log.i("TESTE","ESPERANDO CONEXÃO..");
+                        Socket socket = serverSocket.accept();
+                        Log.i("TESTE","CLIENTE FOI CONECTADO = "+ socket.getInetAddress());
+
+
+                        Server server = new Server(context,servidor,socket);
+                        server.execute();
+                        Thread.sleep(2000);
+
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+
+
+            }
+        }).start();
+
+
+
+    }
     public void indicarIp(String ip){
         host.setText("ip");
     }
