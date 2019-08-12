@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -14,8 +15,9 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class MainActivity extends AppCompatActivity {
-    Button server, client,enviar;
+    Button server, client,enviar,imagem;
     EditText host;
+
 
 
     ServerSocket servidor;
@@ -54,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void criarServidor() {
+        final MainActivity server = this;
 
         new Thread(new Runnable() {
             @Override
@@ -68,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
                     while (true) {
                         Socket cliente = servidor.accept();
                         Log.i("SERVIDOR", "CLIENTE FOI CONECTADO = " + cliente.getInetAddress());
-                        new GerenciadorDeClientes(cliente);
+                        new GerenciadorDeClientes(cliente,server);
                     }
 
                 } catch (IOException e) {
@@ -95,6 +98,7 @@ public class MainActivity extends AppCompatActivity {
         host = findViewById(R.id.host);
         client = findViewById(R.id.client);
         enviar = findViewById(R.id.enviar);
+        imagem = findViewById(R.id.imagem);
 
     }
 

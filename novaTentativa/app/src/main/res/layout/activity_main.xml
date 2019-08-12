@@ -43,4 +43,13 @@
         android:layout_marginBottom="211dp"
         android:text="Enviar" />
 
+    <Button
+        android:id="@+id/imagem"
+        android:layout_width="206dp"
+        android:layout_height="139dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="44dp"
+        android:background="@drawable/estrela" />
+
 </RelativeLayout>
