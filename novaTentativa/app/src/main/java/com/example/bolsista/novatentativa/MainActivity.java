@@ -19,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
     EditText host;
 
 
-
     ServerSocket servidor;
 
     Cliente cliente;
@@ -48,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         enviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cliente.escrever("Alguma coisa");
+                cliente.escrever("1");
             }
         });
 
@@ -57,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void criarServidor() {
         final MainActivity server = this;
+
 
         new Thread(new Runnable() {
             @Override
@@ -67,11 +67,12 @@ public class MainActivity extends AppCompatActivity {
                     servidor = new ServerSocket(9999);
                     Log.i("SERVIDOR", "Esperando conexão...");
                     //Toast.makeText(getApplicationContext(), "Esperando...", Toast.LENGTH_LONG).show();
-
+                    int numCliente = 0;
                     while (true) {
                         Socket cliente = servidor.accept();
                         Log.i("SERVIDOR", "CLIENTE FOI CONECTADO = " + cliente.getInetAddress());
-                        new GerenciadorDeClientes(cliente,server);
+                        new GerenciadorDeClientes(cliente,server,numCliente);
+                        numCliente++;
                     }
 
                 } catch (IOException e) {
@@ -89,8 +90,6 @@ public class MainActivity extends AppCompatActivity {
         cliente = new Cliente(host.getText().toString(),client);
         cliente.connect();
         Toast.makeText(getApplicationContext(), "Cliente criado", Toast.LENGTH_SHORT).show();
-
-
 
     }
 

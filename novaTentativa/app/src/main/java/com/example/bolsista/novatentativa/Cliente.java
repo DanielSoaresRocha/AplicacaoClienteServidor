@@ -45,7 +45,8 @@ public class Cliente {
 
                     while (true){
                         String mensagem = leitor.readLine();
-                        Log.i("COMUNICACAO","MENSAGEM RECEBIDA DO SERVER"+ mensagem);
+                        Log.i("COMUNICACAO","MENSAGEM RECEBIDA DO SERVER TESTE"+ mensagem);
+                        mudarImagem();
                     }
 
                 }catch (IOException e){
