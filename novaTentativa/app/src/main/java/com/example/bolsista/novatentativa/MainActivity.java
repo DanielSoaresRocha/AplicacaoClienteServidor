@@ -85,7 +85,8 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void criarCliente(){
-        cliente = new Cliente(host.getText().toString());
+        final MainActivity client = this;
+        cliente = new Cliente(host.getText().toString(),client);
         cliente.connect();
         Toast.makeText(getApplicationContext(), "Cliente criado", Toast.LENGTH_SHORT).show();
 

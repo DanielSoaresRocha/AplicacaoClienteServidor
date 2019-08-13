@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.Random;
 
 public class Cliente {
 
@@ -16,9 +17,11 @@ public class Cliente {
     private PrintWriter escritor;
 
     private Socket cliente;
+    private MainActivity client;
 
-    public Cliente(String host){
+    public Cliente(String host, MainActivity client){
         this.host = host;
+        this.client = client;
     }
 
 
@@ -63,6 +66,34 @@ public class Cliente {
     public void escrever(String msg){
         Log.i("COMUNICACAO","MENSAGEM ENVIADA AO SERVIDOR:  "+ msg);
         escritor.println(msg);
+        mudarImagem();
+
+    }
+
+    private void mudarImagem() {
+            client.imagem.post(new Runnable() {
+                @Override
+                public void run() {
+                    Random radom  = new Random(); // gerar número aleatório
+                    int numeroTmp = radom.nextInt(6);
+
+                    if(numeroTmp == 0){
+                        client.imagem.setBackgroundResource(R.drawable.circulo);
+                    }else if(numeroTmp == 1){
+                        client.imagem.setBackgroundResource(R.drawable.estrela);
+                    }else if(numeroTmp == 2){
+                        client.imagem.setBackgroundResource(R.drawable.hexagono);
+                    }else if(numeroTmp == 3){
+                        client.imagem.setBackgroundResource(R.drawable.retangulo);
+                    }else if(numeroTmp == 4){
+                        client.imagem.setBackgroundResource(R.drawable.triangulo);
+                    }else if(numeroTmp == 5){
+                        client.imagem.setBackgroundResource(R.drawable.losango);
+                    }else{
+                        client.imagem.setBackgroundResource(R.drawable.triangulo);
+                    }
+                }
+            });
 
     }
 
