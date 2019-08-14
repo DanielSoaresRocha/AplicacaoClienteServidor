@@ -20,7 +20,8 @@ public class GerenciadorDeClientes extends Thread{
     private PrintWriter escritor;
 
     private Socket cliente;
-    private static final List<GerenciadorDeClientes> clientes = new ArrayList<GerenciadorDeClientes>();
+    //private static final List<GerenciadorDeClientes> clientes = new ArrayList<GerenciadorDeClientes>();
+    private static final Map<Integer,GerenciadorDeClientes> clientes = new HashMap<>();
     private int numCliente;
 
     private MainActivity server;
@@ -45,11 +46,13 @@ public class GerenciadorDeClientes extends Thread{
                 msg = leitor.readLine();
                 Log.i("COMUNICACAO","MENSAGEM RECEBIDA DO CLIENTE");
                 mudarImagem();
-                escritor.println("Cliente disse: "+msg);
+
+                comecar();
 
                 if(msg.equals("1")){
                     Log.i("TESTE","ENVIANDO MENSAGEM PARA OUTRO TABLET...");
-                    for(int i = 0;i <= clientes.size()-1; i++){
+
+                    for(int i = 0;i < clientes.size(); i++){
                         if(i == numCliente){
                             continue;
                         }else{
@@ -68,8 +71,8 @@ public class GerenciadorDeClientes extends Thread{
     }
 
     private void adicionarCliente() {
-        //clientes.put(numCliente,this);
-        clientes.add(this);
+        clientes.put(numCliente,this);
+        //clientes.add(this);
     }
 
     private void mudarImagem() {
@@ -104,5 +107,11 @@ public class GerenciadorDeClientes extends Thread{
 
     public void setEscritor(PrintWriter escritor) {
         this.escritor = escritor;
+    }
+
+    private void comecar(){
+        if(numCliente == 0){
+
+        }
     }
 }
