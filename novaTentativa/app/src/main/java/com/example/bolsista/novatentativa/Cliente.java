@@ -18,6 +18,9 @@ public class Cliente {
 
     private Socket cliente;
     private MainActivity client;
+    private Jogar jogar;
+
+    private String imgAtual;
 
     public Cliente(String host, MainActivity client){
         this.host = host;
@@ -26,6 +29,9 @@ public class Cliente {
 
 
     public void connect(){
+        //preparando jogo
+        jogar = new Jogar();
+        imgAtual = "1"; //////////////////DESTAQUE
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -45,8 +51,10 @@ public class Cliente {
 
                     while (true){
                         String mensagem = leitor.readLine();
-                        Log.i("COMUNICACAO","MENSAGEM RECEBIDA DO SERVER TESTE"+ mensagem);
-                        mudarImagem();
+                        imgAtual = mensagem;
+                        Log.i("COMUNICACAO","MENSAGEM RECEBIDA DO SERVER ="+ mensagem);
+
+                        mudarImagem(mensagem);
                     }
 
                 }catch (IOException e){
@@ -57,6 +65,7 @@ public class Cliente {
 
             //criando escrita
             escritor = new PrintWriter(cliente.getOutputStream(),true);
+            escritor.println("CONECTEI");
 
         }catch (IOException e){
             Log.i("ERRO","ERRO AO CONECTAR-SE AO SERVIDOR "+ e.getMessage());
@@ -64,37 +73,37 @@ public class Cliente {
     }
 
     //escrevendo para o servidor
-    public void escrever(String msg){
-        Log.i("COMUNICACAO","MENSAGEM ENVIADA AO SERVIDOR:  "+ msg);
-        escritor.println(msg);
-        mudarImagem();
+    public void escrever(){
+        Log.i("COMUNICACAO","MENSAGEM ENVIADA AO SERVIDOR:  "+ imgAtual);
+        escritor.println(imgAtual);
 
     }
 
-    private void mudarImagem() {
-            client.imagem.post(new Runnable() {
+    private void mudarImagem(String msg) {
+        final String comando = msg;
+
+            jogar.getImagemButton().post(new Runnable() {
                 @Override
                 public void run() {
-                    Random radom  = new Random(); // gerar número aleatório
-                    int numeroTmp = radom.nextInt(6);
-
-                    if(numeroTmp == 0){
-                        client.imagem.setBackgroundResource(R.drawable.circulo);
-                    }else if(numeroTmp == 1){
-                        client.imagem.setBackgroundResource(R.drawable.estrela);
-                    }else if(numeroTmp == 2){
-                        client.imagem.setBackgroundResource(R.drawable.hexagono);
-                    }else if(numeroTmp == 3){
-                        client.imagem.setBackgroundResource(R.drawable.retangulo);
-                    }else if(numeroTmp == 4){
-                        client.imagem.setBackgroundResource(R.drawable.triangulo);
-                    }else if(numeroTmp == 5){
-                        client.imagem.setBackgroundResource(R.drawable.losango);
+                    if(comando.equals("1")){
+                        jogar.getImagemButton().setBackgroundResource(R.drawable.circulo);
+                    }else if(comando.equals("2")){
+                        jogar.getImagemButton().setBackgroundResource(R.drawable.triangulo);
+                    }else if(comando.equals("3")){
+                        jogar.getImagemButton().setBackgroundResource(R.drawable.losango);
+                    }else if(comando.equals("4")){
+                        jogar.getImagemButton().setBackgroundResource(R.drawable.triangulo);
+                    }else if(comando.equals("5")){
+                        jogar.getImagemButton().setBackgroundResource(R.drawable.losango);
+                    }else if(comando.equals("6")){
+                        jogar.getImagemButton().setBackgroundResource(R.drawable.hexagono);
                     }else{
-                        client.imagem.setBackgroundResource(R.drawable.triangulo);
+                        jogar.getImagemButton().setBackgroundResource(R.drawable.retangulo);
                     }
                 }
             });
+
+            imgAtual = msg;
 
     }
 

@@ -12,6 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Random;
+import java.util.logging.Handler;
 
 
 public class GerenciadorDeClientes extends Thread{
@@ -20,17 +21,26 @@ public class GerenciadorDeClientes extends Thread{
     private PrintWriter escritor;
 
     private Socket cliente;
-    //private static final List<GerenciadorDeClientes> clientes = new ArrayList<GerenciadorDeClientes>();
-    private static final Map<Integer,GerenciadorDeClientes> clientes = new HashMap<>();
     private int numCliente;
+
+    private static final Map<Integer,GerenciadorDeClientes> clientes = new HashMap<>();
+
+    private String imgAtual;
+
+    private Jogar jogar;
+
+    Handler handler;
 
     private MainActivity server;
 
-    public GerenciadorDeClientes(Socket cliente, MainActivity server, int numCliente){
+    public GerenciadorDeClientes(Socket cliente, MainActivity server, int numCliente,Jogar jogar){
         this.cliente = cliente;
         this.server = server;
         this.numCliente = numCliente;
+        this.jogar = jogar;
+
         start();
+
     }
 
     @Override
@@ -38,31 +48,28 @@ public class GerenciadorDeClientes extends Thread{
         try {
             leitor = new BufferedReader(new InputStreamReader(cliente.getInputStream()));
             escritor = new PrintWriter(cliente.getOutputStream(),true);
-            escritor.println("Cliente foi conectado");
+            //escritor.println("Cliente foi conectado");
             adicionarCliente();
             String msg;
+
+            imgAtual = "1"; //////////////////DESTAQUE
+
+            //sortear();
 
             while (true){
                 msg = leitor.readLine();
                 Log.i("COMUNICACAO","MENSAGEM RECEBIDA DO CLIENTE");
-                mudarImagem();
 
-                comecar();
-
-                if(msg.equals("1")){
-                    Log.i("TESTE","ENVIANDO MENSAGEM PARA OUTRO TABLET...");
-
-                    for(int i = 0;i < clientes.size(); i++){
-                        if(i == numCliente){
-                            continue;
-                        }else{
-                            GerenciadorDeClientes destino = clientes.get(i);
-                            destino.getEscritor().println(msg);
-                        }
+                if(clientes.size()>=2){
+                    if(msg.equals(imgAtual)){
+                        Log.i("COMUNICACAO","VAI ENTRAR EM SORTEAR");
+                        sortear();
+                        Log.i("COMUNICACAO","VAI ENTRAR EM SORTEAR");
                     }
                 }
-            }
+                //mudarImagem(msg);
 
+            }
 
 
         }catch (IOException e){
@@ -75,30 +82,63 @@ public class GerenciadorDeClientes extends Thread{
         //clientes.add(this);
     }
 
-    private void mudarImagem() {
-        server.imagem.post(new Runnable() {
+    private void mudarImagem(String msg) {
+        final String comando = msg;
+
+        jogar.imagemButton.post(new Runnable() {
             @Override
             public void run() {
-                Random radom  = new Random(); // gerar número aleatório
-                int numeroTmp = radom.nextInt(6);
-
-                if(numeroTmp == 0){
-                    server.imagem.setBackgroundResource(R.drawable.circulo);
-                }else if(numeroTmp == 1){
-                    server.imagem.setBackgroundResource(R.drawable.estrela);
-                }else if(numeroTmp == 2){
-                    server.imagem.setBackgroundResource(R.drawable.hexagono);
-                }else if(numeroTmp == 3){
-                    server.imagem.setBackgroundResource(R.drawable.retangulo);
-                }else if(numeroTmp == 4){
-                    server.imagem.setBackgroundResource(R.drawable.triangulo);
-                }else if(numeroTmp == 5){
-                    server.imagem.setBackgroundResource(R.drawable.losango);
+                System.out.println("ENTROU PARA MUDARRR");
+                if(comando.equals("1")){
+                    jogar.getImagemButton().setBackgroundResource(R.drawable.circulo);
+                }else if(comando.equals("2")){
+                    jogar.getImagemButton().setBackgroundResource(R.drawable.triangulo);
+                }else if(comando.equals("3")){
+                    jogar.getImagemButton().setBackgroundResource(R.drawable.losango);
+                }else if(comando.equals("4")){
+                    jogar.getImagemButton().setBackgroundResource(R.drawable.triangulo);
+                }else if(comando.equals("5")){
+                    jogar.getImagemButton().setBackgroundResource(R.drawable.losango);
+                }else if(comando.equals("6")){
+                    jogar.getImagemButton().setBackgroundResource(R.drawable.hexagono);
                 }else{
-                    server.imagem.setBackgroundResource(R.drawable.triangulo);
+                    jogar.getImagemButton().setBackgroundResource(R.drawable.retangulo);
                 }
+
             }
         });
+
+    }
+
+
+    public void sortear(){
+
+        imgAtual = Integer.toString(sortearNumero());
+        mudarImagem(imgAtual);
+
+        //sortear o escolhido para herdar imagem
+        Random radom  = new Random();
+        int clienteEscolhido = radom.nextInt(2);
+
+        for(int i = 0;i < clientes.size(); i++){
+            if(i == clienteEscolhido){
+                GerenciadorDeClientes destino = clientes.get(i);
+                destino.getEscritor().println(imgAtual);
+            }else{
+                int aleatorio = sortearNumero();
+                String outraImg = Integer.toString(aleatorio);
+
+                GerenciadorDeClientes destino = clientes.get(i);
+                destino.getEscritor().println(outraImg);
+            }
+        }
+    }
+
+    private int sortearNumero() {
+        Random radom  = new Random(); // gerar número aleatório
+        int numeroTmp = radom.nextInt(6);
+
+        return numeroTmp;
     }
 
     public PrintWriter getEscritor() {
@@ -107,11 +147,5 @@ public class GerenciadorDeClientes extends Thread{
 
     public void setEscritor(PrintWriter escritor) {
         this.escritor = escritor;
-    }
-
-    private void comecar(){
-        if(numCliente == 0){
-
-        }
     }
 }

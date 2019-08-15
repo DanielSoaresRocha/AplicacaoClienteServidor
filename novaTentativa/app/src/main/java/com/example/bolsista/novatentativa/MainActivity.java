@@ -1,13 +1,13 @@
 package com.example.bolsista.novatentativa;
 
-import android.os.StrictMode;
+import android.content.Intent;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -15,13 +15,14 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class MainActivity extends AppCompatActivity {
-    Button server, client,enviar,imagem;
+    Button server, client,enviar,imagem,comecar;
     EditText host;
 
-
+    Jogar jogar;
     ServerSocket servidor;
 
-    Cliente cliente;
+    static Cliente cliente;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,15 +48,26 @@ public class MainActivity extends AppCompatActivity {
         enviar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cliente.escrever("1");
+                cliente.escrever();
             }
         });
+
+        comecar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent mudarTela = new Intent(MainActivity.this,Jogar.class);
+
+                startActivity(mudarTela);
+            }
+        });
+
 
 
     }
 
     private void criarServidor() {
         final MainActivity server = this;
+        jogar = new Jogar();
 
 
         new Thread(new Runnable() {
@@ -66,12 +78,13 @@ public class MainActivity extends AppCompatActivity {
                     Log.i("SERVIDOR", "STARTANDO SERVIDOR");
                     servidor = new ServerSocket(9999);
                     Log.i("SERVIDOR", "Esperando conexão...");
-                    //Toast.makeText(getApplicationContext(), "Esperando...", Toast.LENGTH_LONG).show();
+
                     int numCliente = 0;
                     while (true) {
                         Socket cliente = servidor.accept();
                         Log.i("SERVIDOR", "CLIENTE FOI CONECTADO = " + cliente.getInetAddress());
-                        new GerenciadorDeClientes(cliente,server,numCliente);
+                        new GerenciadorDeClientes(cliente,server,numCliente,jogar);
+
                         numCliente++;
                     }
 
@@ -99,8 +112,15 @@ public class MainActivity extends AppCompatActivity {
         client = findViewById(R.id.client);
         enviar = findViewById(R.id.enviar);
         imagem = findViewById(R.id.imagem);
+        comecar = findViewById(R.id.comecar);
 
     }
+
+
+    public static void enviar2(){
+        cliente.escrever();
+    }
+
 
 
 }
