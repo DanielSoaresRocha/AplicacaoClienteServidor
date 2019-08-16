@@ -27,18 +27,15 @@ public class GerenciadorDeClientes extends Thread{
 
     private String imgAtual;
 
-    private Jogar jogar;
+    static Jogar jogar;
 
-    Handler handler;
 
     private MainActivity server;
 
-    public GerenciadorDeClientes(Socket cliente, MainActivity server, int numCliente,Jogar jogar){
+    public GerenciadorDeClientes(Socket cliente, MainActivity server, int numCliente){
         this.cliente = cliente;
         this.server = server;
         this.numCliente = numCliente;
-        this.jogar = jogar;
-
         start();
 
     }
@@ -58,13 +55,14 @@ public class GerenciadorDeClientes extends Thread{
 
             while (true){
                 msg = leitor.readLine();
+                imgAtual = server.numberAleatorio;
                 Log.i("COMUNICACAO","MENSAGEM RECEBIDA DO CLIENTE");
-
+                Log.i("COMUNICACAO","cliente -- "+ msg+" server = "+ imgAtual);
                 if(clientes.size()>=2){
                     if(msg.equals(imgAtual)){
-                        Log.i("COMUNICACAO","VAI ENTRAR EM SORTEAR");
+
                         sortear();
-                        Log.i("COMUNICACAO","VAI ENTRAR EM SORTEAR");
+
                     }
                 }
                 //mudarImagem(msg);
@@ -88,17 +86,17 @@ public class GerenciadorDeClientes extends Thread{
         jogar.imagemButton.post(new Runnable() {
             @Override
             public void run() {
-                System.out.println("ENTROU PARA MUDARRR");
+
                 if(comando.equals("1")){
                     jogar.getImagemButton().setBackgroundResource(R.drawable.circulo);
                 }else if(comando.equals("2")){
-                    jogar.getImagemButton().setBackgroundResource(R.drawable.triangulo);
+                    jogar.getImagemButton().setBackgroundResource(R.drawable.coracao);
                 }else if(comando.equals("3")){
                     jogar.getImagemButton().setBackgroundResource(R.drawable.losango);
                 }else if(comando.equals("4")){
                     jogar.getImagemButton().setBackgroundResource(R.drawable.triangulo);
                 }else if(comando.equals("5")){
-                    jogar.getImagemButton().setBackgroundResource(R.drawable.losango);
+                    jogar.getImagemButton().setBackgroundResource(R.drawable.estrela2);
                 }else if(comando.equals("6")){
                     jogar.getImagemButton().setBackgroundResource(R.drawable.hexagono);
                 }else{
@@ -113,32 +111,46 @@ public class GerenciadorDeClientes extends Thread{
 
     public void sortear(){
 
-        imgAtual = Integer.toString(sortearNumero());
+        //mudar o numero aleatorio no servidor
+        server.numberAleatorio = Integer.toString(sortearNumero());
+        //colocar este numero na Theread atual
+        imgAtual = server.numberAleatorio;
+
         mudarImagem(imgAtual);
 
         //sortear o escolhido para herdar imagem
         Random radom  = new Random();
         int clienteEscolhido = radom.nextInt(2);
 
+
+
+        Log.i("ENVIAR","ESCOLHIDA = "+ imgAtual);
         for(int i = 0;i < clientes.size(); i++){
             if(i == clienteEscolhido){
                 GerenciadorDeClientes destino = clientes.get(i);
                 destino.getEscritor().println(imgAtual);
+                Log.i("ENVIAR","ENVIADA 1 = "+ imgAtual);
             }else{
                 int aleatorio = sortearNumero();
                 String outraImg = Integer.toString(aleatorio);
-
+                Log.i("ENVIAR","ENVIADA 2 "+ outraImg);
                 GerenciadorDeClientes destino = clientes.get(i);
                 destino.getEscritor().println(outraImg);
             }
         }
     }
 
+
     private int sortearNumero() {
         Random radom  = new Random(); // gerar número aleatório
         int numeroTmp = radom.nextInt(6);
 
         return numeroTmp;
+    }
+
+    public static void definirTela(Jogar jogarr){
+        jogar = jogarr;
+
     }
 
     public PrintWriter getEscritor() {
@@ -148,4 +160,6 @@ public class GerenciadorDeClientes extends Thread{
     public void setEscritor(PrintWriter escritor) {
         this.escritor = escritor;
     }
+
+
 }

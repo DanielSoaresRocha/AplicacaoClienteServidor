@@ -23,6 +23,9 @@ public class MainActivity extends AppCompatActivity {
 
     static Cliente cliente;
 
+    static boolean serverIdentificado = false;
+
+    String numberAleatorio;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,9 +70,9 @@ public class MainActivity extends AppCompatActivity {
 
     private void criarServidor() {
         final MainActivity server = this;
-        jogar = new Jogar();
+        numberAleatorio = "1";
 
-
+        serverIdentificado = true;
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -83,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
                     while (true) {
                         Socket cliente = servidor.accept();
                         Log.i("SERVIDOR", "CLIENTE FOI CONECTADO = " + cliente.getInetAddress());
-                        new GerenciadorDeClientes(cliente,server,numCliente,jogar);
+                        new GerenciadorDeClientes(cliente,server,numCliente);
 
                         numCliente++;
                     }
@@ -120,7 +123,6 @@ public class MainActivity extends AppCompatActivity {
     public static void enviar2(){
         cliente.escrever();
     }
-
 
 
 }

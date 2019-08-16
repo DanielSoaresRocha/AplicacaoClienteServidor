@@ -13,6 +13,14 @@ public class Jogar extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_jogar);
 
+
+        if(MainActivity.serverIdentificado){
+            GerenciadorDeClientes.definirTela(this);
+        }else{
+            Cliente.definirTela(this);
+        }
+
+
         inicializar();
         escutar();
 

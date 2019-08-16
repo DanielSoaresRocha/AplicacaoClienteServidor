@@ -18,7 +18,7 @@ public class Cliente {
 
     private Socket cliente;
     private MainActivity client;
-    private Jogar jogar;
+    static Jogar jogar;
 
     private String imgAtual;
 
@@ -29,8 +29,6 @@ public class Cliente {
 
 
     public void connect(){
-        //preparando jogo
-        jogar = new Jogar();
         imgAtual = "1"; //////////////////DESTAQUE
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -51,7 +49,7 @@ public class Cliente {
 
                     while (true){
                         String mensagem = leitor.readLine();
-                        imgAtual = mensagem;
+
                         Log.i("COMUNICACAO","MENSAGEM RECEBIDA DO SERVER ="+ mensagem);
 
                         mudarImagem(mensagem);
@@ -82,19 +80,19 @@ public class Cliente {
     private void mudarImagem(String msg) {
         final String comando = msg;
 
-            jogar.getImagemButton().post(new Runnable() {
+            jogar.imagemButton.post(new Runnable() {
                 @Override
                 public void run() {
                     if(comando.equals("1")){
                         jogar.getImagemButton().setBackgroundResource(R.drawable.circulo);
                     }else if(comando.equals("2")){
-                        jogar.getImagemButton().setBackgroundResource(R.drawable.triangulo);
+                        jogar.getImagemButton().setBackgroundResource(R.drawable.coracao);
                     }else if(comando.equals("3")){
                         jogar.getImagemButton().setBackgroundResource(R.drawable.losango);
                     }else if(comando.equals("4")){
                         jogar.getImagemButton().setBackgroundResource(R.drawable.triangulo);
                     }else if(comando.equals("5")){
-                        jogar.getImagemButton().setBackgroundResource(R.drawable.losango);
+                        jogar.getImagemButton().setBackgroundResource(R.drawable.estrela2);
                     }else if(comando.equals("6")){
                         jogar.getImagemButton().setBackgroundResource(R.drawable.hexagono);
                     }else{
@@ -107,5 +105,9 @@ public class Cliente {
 
     }
 
+    public static void definirTela(Jogar jogarr){
+        jogar = jogarr;
+
+    }
 
 }
