@@ -83,7 +83,9 @@ public class Cliente {
             jogar.imagemButton.post(new Runnable() {
                 @Override
                 public void run() {
-                    if(comando.equals("1")){
+                    if(comando.equals("branco")){
+                        jogar.getImagemButton().setBackgroundResource(R.drawable.branco);
+                    }else if(comando.equals("1")){
                         jogar.getImagemButton().setBackgroundResource(R.drawable.circulo);
                     }else if(comando.equals("2")){
                         jogar.getImagemButton().setBackgroundResource(R.drawable.coracao);

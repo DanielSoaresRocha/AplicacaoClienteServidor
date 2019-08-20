@@ -11,6 +11,7 @@ public class Jogar extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getSupportActionBar().hide(); //tirar barra de título
         setContentView(R.layout.activity_jogar);
 
 
@@ -29,12 +30,14 @@ public class Jogar extends AppCompatActivity {
 
     private void escutar() {
 
-        imagemButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                MainActivity.enviar2();
+        if(!MainActivity.serverIdentificado){  //Se não for o servidor
+            imagemButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    MainActivity.enviar2();
+                }
+            });
             }
-        });
 
     }
 

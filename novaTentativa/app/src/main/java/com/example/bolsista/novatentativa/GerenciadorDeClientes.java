@@ -61,7 +61,10 @@ public class GerenciadorDeClientes extends Thread{
                 if(clientes.size()>=2){
                     if(msg.equals(imgAtual)){
 
-                        sortear();
+                        esperar(); //mudar imagens para branco, e espera um novo sorteio
+                        sleep(5000); // tempo de espera de 5 segundos
+
+                        sortear(); //fazer nova interação de imagens entre os tablets
 
                     }
                 }
@@ -72,8 +75,12 @@ public class GerenciadorDeClientes extends Thread{
 
         }catch (IOException e){
             Log.i("COMUNICACAO", "ERRO = "+ e.getMessage());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
+
+
 
     private void adicionarCliente() {
         clientes.put(numCliente,this);
@@ -87,7 +94,9 @@ public class GerenciadorDeClientes extends Thread{
             @Override
             public void run() {
 
-                if(comando.equals("1")){
+                if(comando.equals("branco")){
+                    jogar.getImagemButton().setBackgroundResource(R.drawable.branco);
+                }else if(comando.equals("1")){
                     jogar.getImagemButton().setBackgroundResource(R.drawable.circulo);
                 }else if(comando.equals("2")){
                     jogar.getImagemButton().setBackgroundResource(R.drawable.coracao);
@@ -146,6 +155,15 @@ public class GerenciadorDeClientes extends Thread{
         int numeroTmp = radom.nextInt(6);
 
         return numeroTmp;
+    }
+
+    private void esperar() {
+        mudarImagem("branco");
+
+        for(int i = 0; i < clientes.size(); i++){
+            GerenciadorDeClientes destino = clientes.get(i);
+            destino.getEscritor().println("branco");
+        }
     }
 
     public static void definirTela(Jogar jogarr){
