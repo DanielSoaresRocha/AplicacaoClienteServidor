@@ -46,7 +46,9 @@ public class GerenciadorDeClientes extends Thread{
             leitor = new BufferedReader(new InputStreamReader(cliente.getInputStream()));
             escritor = new PrintWriter(cliente.getOutputStream(),true);
             //escritor.println("Cliente foi conectado");
-            adicionarCliente();
+
+            identificarCliente();
+
             String msg;
 
             imgAtual = "1"; //////////////////DESTAQUE
@@ -62,10 +64,14 @@ public class GerenciadorDeClientes extends Thread{
                     if(msg.equals(imgAtual)){
 
                         esperar(); //mudar imagens para branco, e espera um novo sorteio
-                        sleep(5000); // tempo de espera de 5 segundos
+                        if(!server.controleRemoto){  // se o controle remoto não estiver conectado
+                            sleep(5000); // tempo de espera de 5 segundos
+                            sortear(); //fazer nova interação de imagens entre os tablets
+                        }
+                    }
 
-                        sortear(); //fazer nova interação de imagens entre os tablets
-
+                    if(msg.equals("mudar")){
+                        sortear();
                     }
                 }
                 //mudarImagem(msg);
@@ -81,9 +87,10 @@ public class GerenciadorDeClientes extends Thread{
     }
 
 
-
     private void adicionarCliente() {
+        System.out.println("INCREMENTTOOOOOUUUUU");
         clientes.put(numCliente,this);
+
         //clientes.add(this);
     }
 
@@ -117,6 +124,22 @@ public class GerenciadorDeClientes extends Thread{
 
     }
 
+    private void identificarCliente() {
+        try {
+
+        String identificaCliente = leitor.readLine();
+        Log.i("REMOTO","IDENTIFICAÇÃO = "+ identificaCliente);
+        if(identificaCliente.equals("remoto")){
+            Log.i("REMOTO","CONTROLE REMOTO DETECTADO");
+            server.controleRemoto = true;
+        }else{
+            Log.i("REMOTO","CLIENTE PADRAO ADICIONADO");
+            adicionarCliente();
+        }
+        }catch (IOException e){
+            System.out.println("Erro ao identificar cliente: "+ e.getMessage());
+        }
+    }
 
     public void sortear(){
 

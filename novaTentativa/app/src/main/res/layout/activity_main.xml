@@ -35,20 +35,11 @@
         android:text="CRIAR CLIENTE" />
 
     <Button
-        android:id="@+id/enviar"
+        android:id="@+id/controleRemoto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:text="Enviar" />
-
-    <Button
-        android:id="@+id/imagem"
-        android:layout_width="206dp"
-        android:layout_height="139dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="78dp"
-        android:background="@drawable/estrela" />
+        android:text="controle remoto" />
 
     <Button
         android:id="@+id/comecar"

@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">novaTentativa</string>
+    <string name="title_activity_controle_remoto">ControleRemoto</string>
+    <string name="enviarControle">Enviar</string>
+    <string name="desconectar">desconectar</string>
 </resources>

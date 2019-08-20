@@ -22,9 +22,12 @@ public class Cliente {
 
     private String imgAtual;
 
-    public Cliente(String host, MainActivity client){
+    private Boolean controleRemoto;
+
+    public Cliente(String host, MainActivity client, boolean controleRemoto){
         this.host = host;
         this.client = client;
+        this.controleRemoto = controleRemoto;
     }
 
 
@@ -63,18 +66,27 @@ public class Cliente {
 
             //criando escrita
             escritor = new PrintWriter(cliente.getOutputStream(),true);
-            escritor.println("CONECTEI");
+            if(!controleRemoto){
+                escritor.println("CLIENTE PADRÃO");
+            }else{
+                System.out.println("PASSSOUUUUUUUUUUU CONTROLEEEE");
+                escritor.println("remoto");
+            }
 
         }catch (IOException e){
             Log.i("ERRO","ERRO AO CONECTAR-SE AO SERVIDOR "+ e.getMessage());
         }
     }
 
-    //escrevendo para o servidor
+    //escrevendo para o servidor - cliente Padrão
     public void escrever(){
         Log.i("COMUNICACAO","MENSAGEM ENVIADA AO SERVIDOR:  "+ imgAtual);
         escritor.println(imgAtual);
+    }
 
+    public void controleRemoto(){
+        Log.i("COMUNICACAO", "CONTROLE REMOTO ACIONADO");
+        escritor.println("mudar");
     }
 
     private void mudarImagem(String msg) {

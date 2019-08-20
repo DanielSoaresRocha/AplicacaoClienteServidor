@@ -22,7 +22,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Jogar"></activity>
+        <activity android:name=".Jogar" />
+        <activity android:name=".ControleRemoto"></activity>
     </application>
 
 </manifest>

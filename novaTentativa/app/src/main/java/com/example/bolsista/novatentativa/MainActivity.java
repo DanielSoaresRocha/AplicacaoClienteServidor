@@ -15,7 +15,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class MainActivity extends AppCompatActivity {
-    Button server, client,enviar,imagem,comecar;
+    Button server, client,controleRemotoBtn,comecar;
     EditText host;
 
     Jogar jogar;
@@ -24,6 +24,7 @@ public class MainActivity extends AppCompatActivity {
     static Cliente cliente;
 
     static boolean serverIdentificado = false;
+    static boolean controleRemoto = false;
 
     String numberAleatorio;
 
@@ -48,10 +49,10 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        enviar.setOnClickListener(new View.OnClickListener() {
+        controleRemotoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cliente.escrever();
+                criarControleRemoto();
             }
         });
 
@@ -61,6 +62,8 @@ public class MainActivity extends AppCompatActivity {
                 Intent mudarTela = new Intent(MainActivity.this,Jogar.class);
 
                 startActivity(mudarTela);
+
+
             }
         });
 
@@ -102,26 +105,42 @@ public class MainActivity extends AppCompatActivity {
 
 
     public void criarCliente(){
-        final MainActivity client = this;
-        cliente = new Cliente(host.getText().toString(),client);
-        cliente.connect();
-        Toast.makeText(getApplicationContext(), "Cliente criado", Toast.LENGTH_SHORT).show();
+        if(host.getText().toString().length() < 5){
+            Toast.makeText(getApplicationContext(),"Insira um IP válido!!!", Toast.LENGTH_LONG).show();
+        }else {
+            final MainActivity client = this;
+            cliente = new Cliente(host.getText().toString(),client,false);
+            cliente.connect();
+            Toast.makeText(getApplicationContext(), "Cliente criado", Toast.LENGTH_SHORT).show();
+        }
+    }
 
+    public void criarControleRemoto(){
+        if(host.getText().toString().length() < 5){
+            Toast.makeText(getApplicationContext(),"Insira um IP válido!!!", Toast.LENGTH_LONG).show();
+        }else{
+            final MainActivity client = this;
+            cliente = new Cliente(host.getText().toString(),client,true);
+            cliente.connect();
+            Toast.makeText(getApplicationContext(), "Controle Ativo", Toast.LENGTH_SHORT).show();
+
+            Intent controleRemoto = new Intent(MainActivity.this,ControleRemoto.class);
+            startActivity(controleRemoto);
+
+        }
+    }
+
+    public static void enviar2(){
+        cliente.escrever();
     }
 
     public void inicializarComponentes(){
         server = findViewById(R.id.server);
         host = findViewById(R.id.host);
         client = findViewById(R.id.client);
-        enviar = findViewById(R.id.enviar);
-        imagem = findViewById(R.id.imagem);
+        controleRemotoBtn = findViewById(R.id.controleRemoto);
         comecar = findViewById(R.id.comecar);
 
-    }
-
-
-    public static void enviar2(){
-        cliente.escrever();
     }
 
 
