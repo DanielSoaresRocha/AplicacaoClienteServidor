@@ -72,6 +72,9 @@ public class GerenciadorDeClientes extends Thread{
 
                     if(msg.equals("mudar")){
                         sortear();
+                    }else if(msg.equals("desconect")){
+                        desconectar();
+                        break;
                     }
                 }
                 //mudarImagem(msg);
@@ -86,12 +89,25 @@ public class GerenciadorDeClientes extends Thread{
         }
     }
 
+    private void desconectar() {
+        try{
+            server.controleRemoto = false;
+
+            leitor.close();
+            escritor.close();
+            cliente.close();
+
+            Log.i("REMOTO", "CONTROLE REMOTO DESCONECTADO");
+
+        }catch (IOException e){
+            Log.i("ERRO", "ERRO AO FECHAR CONEXÃO = " + e.getMessage());
+        }
+    }
+
 
     private void adicionarCliente() {
-        System.out.println("INCREMENTTOOOOOUUUUU");
         clientes.put(numCliente,this);
 
-        //clientes.add(this);
     }
 
     private void mudarImagem(String msg) {
@@ -128,7 +144,7 @@ public class GerenciadorDeClientes extends Thread{
         try {
 
         String identificaCliente = leitor.readLine();
-        Log.i("REMOTO","IDENTIFICAÇÃO = "+ identificaCliente);
+
         if(identificaCliente.equals("remoto")){
             Log.i("REMOTO","CONTROLE REMOTO DETECTADO");
             server.controleRemoto = true;
@@ -164,8 +180,15 @@ public class GerenciadorDeClientes extends Thread{
                 Log.i("ENVIAR","ENVIADA 1 = "+ imgAtual);
             }else{
                 int aleatorio = sortearNumero();
+
+                while (aleatorio == Integer.parseInt(server.numberAleatorio)){
+                    //este laço não deixa o número do outro tablet ser igual
+                    aleatorio = sortearNumero();
+                }
+
                 String outraImg = Integer.toString(aleatorio);
                 Log.i("ENVIAR","ENVIADA 2 "+ outraImg);
+
                 GerenciadorDeClientes destino = clientes.get(i);
                 destino.getEscritor().println(outraImg);
             }

@@ -15,6 +15,7 @@ public class Cliente {
     private String host;
 
     private PrintWriter escritor;
+    private BufferedReader leitor;
 
     private Socket cliente;
     private MainActivity client;
@@ -47,7 +48,7 @@ public class Cliente {
             @Override
             public void run() {
                 try {
-                    BufferedReader leitor = new BufferedReader(new InputStreamReader(cliente.getInputStream()));
+                    leitor = new BufferedReader(new InputStreamReader(cliente.getInputStream()));
 
 
                     while (true){
@@ -69,7 +70,7 @@ public class Cliente {
             if(!controleRemoto){
                 escritor.println("CLIENTE PADRÃO");
             }else{
-                System.out.println("PASSSOUUUUUUUUUUU CONTROLEEEE");
+
                 escritor.println("remoto");
             }
 
@@ -88,6 +89,23 @@ public class Cliente {
         Log.i("COMUNICACAO", "CONTROLE REMOTO ACIONADO");
         escritor.println("mudar");
     }
+
+    public void desconect(){
+        escritor.println("desconect");
+
+        try{
+            escritor.close();
+            leitor.close();
+
+            cliente.close();
+
+            Log.i("REMOTO","CONEXÃO COM SERVIDOR FECHADA");
+        }catch (IOException e){
+            Log.i("ERRO", "ERRO AO FECHAR CLIENTE = " + e.getMessage());
+        }
+
+    }
+
 
     private void mudarImagem(String msg) {
         final String comando = msg;

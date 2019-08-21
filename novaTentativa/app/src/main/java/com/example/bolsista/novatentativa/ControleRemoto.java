@@ -1,5 +1,6 @@
 package com.example.bolsista.novatentativa;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -27,6 +28,15 @@ public class ControleRemoto extends AppCompatActivity {
             }
         });
 
+        desconect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                MainActivity.cliente.desconect();
+
+                Intent controleRemoto = new Intent(ControleRemoto.this,MainActivity.class);
+                startActivity(controleRemoto);
+            }
+        });
 
     }
 
