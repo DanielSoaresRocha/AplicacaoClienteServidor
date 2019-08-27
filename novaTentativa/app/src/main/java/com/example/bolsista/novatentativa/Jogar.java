@@ -2,8 +2,11 @@ package com.example.bolsista.novatentativa;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+
+import java.io.IOException;
 
 public class Jogar extends AppCompatActivity {
     Button imagemButton;
@@ -34,7 +37,12 @@ public class Jogar extends AppCompatActivity {
             imagemButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
+                    try {
                     MainActivity.enviar2();
+
+                    }catch (IOException e){
+                        Log.i("ERRO","ERRO AO ENVIAR MENSAGEM");
+                    }
                 }
             });
             }

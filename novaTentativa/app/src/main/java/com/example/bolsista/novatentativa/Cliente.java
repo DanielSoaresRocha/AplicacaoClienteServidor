@@ -6,16 +6,19 @@ import android.util.Log;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.Random;
 
 public class Cliente {
 
+    private ObjectInputStream leitor;//****
+    private ObjectOutputStream escritor;//*****
+
     private String host;
 
-    private PrintWriter escritor;
-    private BufferedReader leitor;
 
     private Socket cliente;
     private MainActivity client;
@@ -42,18 +45,18 @@ public class Cliente {
         cliente = new Socket(host,9999);
 
 
+
         //lendo mensagens do servidor
         new Thread(new Runnable() {
 
             @Override
             public void run() {
                 try {
-                    leitor = new BufferedReader(new InputStreamReader(cliente.getInputStream()));
-
+                    leitor = new ObjectInputStream(cliente.getInputStream());
+                    Log.i("OBJETO","Criou input do CLIENTE");
 
                     while (true){
-                        String mensagem = leitor.readLine();
-
+                        String mensagem = leitor.readUTF(); ///******
                         Log.i("COMUNICACAO","MENSAGEM RECEBIDA DO SERVER ="+ mensagem);
 
                         mudarImagem(mensagem);
@@ -66,12 +69,17 @@ public class Cliente {
         }).start();
 
             //criando escrita
-            escritor = new PrintWriter(cliente.getOutputStream(),true);
-            if(!controleRemoto){
-                escritor.println("CLIENTE PADRÃO");
-            }else{
 
-                escritor.println("remoto");
+            escritor = new ObjectOutputStream(cliente.getOutputStream());
+            Log.i("OBJETO","Criou output do CLIENTE");
+
+
+            if(!controleRemoto){
+                escritor.writeUTF("CLIENTE PADRÃO");
+                escritor.flush();
+            }else{
+                escritor.writeUTF("remoto");
+                escritor.flush();
             }
 
         }catch (IOException e){
@@ -80,20 +88,34 @@ public class Cliente {
     }
 
     //escrevendo para o servidor - cliente Padrão
-    public void escrever(){
-        Log.i("COMUNICACAO","MENSAGEM ENVIADA AO SERVIDOR:  "+ imgAtual);
-        escritor.println(imgAtual);
+    public void escrever() throws IOException{
+        try{
+            Log.i("COMUNICACAO","MENSAGEM ENVIADA AO SERVIDOR:  "+ imgAtual);
+            escritor.writeUTF(imgAtual);
+            escritor.flush();
+
+        }catch (IOException e){
+            Log.i("ERRO", "erro ao enviar mensagem ao servidor" + e.getMessage());
+        }
     }
 
     public void controleRemoto(){
-        Log.i("COMUNICACAO", "CONTROLE REMOTO ACIONADO");
-        escritor.println("mudar");
+        try{
+            Log.i("COMUNICACAO", "CONTROLE REMOTO ACIONADO");
+            escritor.writeUTF("mudar");
+            escritor.flush();
+
+        }catch (IOException e){
+            Log.i("ERRO", "erro ao enviar no controle remoto" + e.getMessage());
+        }
+
     }
 
     public void desconect(){
-        escritor.println("desconect");
 
         try{
+            escritor.writeUTF("desconect");
+
             escritor.close();
             leitor.close();
 

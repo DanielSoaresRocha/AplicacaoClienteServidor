@@ -5,6 +5,8 @@ import android.util.Log;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -16,9 +18,9 @@ import java.util.logging.Handler;
 
 
 public class GerenciadorDeClientes extends Thread{
+    private ObjectInputStream leitor;
+    private ObjectOutputStream escritor;
 
-    private BufferedReader leitor;
-    private PrintWriter escritor;
 
     private Socket cliente;
     private int numCliente;
@@ -43,20 +45,19 @@ public class GerenciadorDeClientes extends Thread{
     @Override
     public void run() {
         try {
-            leitor = new BufferedReader(new InputStreamReader(cliente.getInputStream()));
-            escritor = new PrintWriter(cliente.getOutputStream(),true);
-            //escritor.println("Cliente foi conectado");
+            escritor = new ObjectOutputStream(cliente.getOutputStream());///***
+            Log.i("OBJETO","Criou output do servidor");///****
+            leitor = new ObjectInputStream(cliente.getInputStream());///*****
+            Log.i("OBJETO","Criou input do servidor");///****
 
             identificarCliente();
 
             String msg;
-
             imgAtual = "1"; //////////////////DESTAQUE
 
-            //sortear();
 
             while (true){
-                msg = leitor.readLine();
+                msg = leitor.readUTF();
                 imgAtual = server.numberAleatorio;
                 Log.i("COMUNICACAO","MENSAGEM RECEBIDA DO CLIENTE");
                 Log.i("COMUNICACAO","cliente -- "+ msg+" server = "+ imgAtual);
@@ -143,7 +144,7 @@ public class GerenciadorDeClientes extends Thread{
     private void identificarCliente() {
         try {
 
-        String identificaCliente = leitor.readLine();
+        String identificaCliente = leitor.readUTF();
 
         if(identificaCliente.equals("remoto")){
             Log.i("REMOTO","CONTROLE REMOTO DETECTADO");
@@ -152,12 +153,14 @@ public class GerenciadorDeClientes extends Thread{
             Log.i("REMOTO","CLIENTE PADRAO ADICIONADO");
             adicionarCliente();
         }
+
+
         }catch (IOException e){
             System.out.println("Erro ao identificar cliente: "+ e.getMessage());
         }
     }
 
-    public void sortear(){
+    public void sortear() throws IOException{
 
         //mudar o numero aleatorio no servidor
         server.numberAleatorio = Integer.toString(sortearNumero());
@@ -170,13 +173,19 @@ public class GerenciadorDeClientes extends Thread{
         Random radom  = new Random();
         int clienteEscolhido = radom.nextInt(2);
 
+        try{
+            sleep(5000);
 
+        }catch (InterruptedException e){
+            Log.i("ERRO","ERRO EM SLEEP = "+ e.getMessage());
+        }
 
         Log.i("ENVIAR","ESCOLHIDA = "+ imgAtual);
         for(int i = 0;i < clientes.size(); i++){
             if(i == clienteEscolhido){
                 GerenciadorDeClientes destino = clientes.get(i);
-                destino.getEscritor().println(imgAtual);
+                destino.getEscritor().writeUTF(imgAtual);
+                destino.getEscritor().flush();
                 Log.i("ENVIAR","ENVIADA 1 = "+ imgAtual);
             }else{
                 int aleatorio = sortearNumero();
@@ -190,7 +199,8 @@ public class GerenciadorDeClientes extends Thread{
                 Log.i("ENVIAR","ENVIADA 2 "+ outraImg);
 
                 GerenciadorDeClientes destino = clientes.get(i);
-                destino.getEscritor().println(outraImg);
+                destino.getEscritor().writeUTF(outraImg);
+                destino.getEscritor().flush();
             }
         }
     }
@@ -203,12 +213,13 @@ public class GerenciadorDeClientes extends Thread{
         return numeroTmp;
     }
 
-    private void esperar() {
+    private void esperar() throws IOException{
         mudarImagem("branco");
 
         for(int i = 0; i < clientes.size(); i++){
             GerenciadorDeClientes destino = clientes.get(i);
-            destino.getEscritor().println("branco");
+            destino.getEscritor().writeUTF("branco");
+            destino.getEscritor().flush();
         }
     }
 
@@ -217,11 +228,11 @@ public class GerenciadorDeClientes extends Thread{
 
     }
 
-    public PrintWriter getEscritor() {
+    public ObjectOutputStream getEscritor() {
         return escritor;
     }
 
-    public void setEscritor(PrintWriter escritor) {
+    public void setEscritor(ObjectOutputStream escritor) {
         this.escritor = escritor;
     }
 
