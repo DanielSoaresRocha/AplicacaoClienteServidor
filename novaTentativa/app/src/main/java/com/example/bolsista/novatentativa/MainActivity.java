@@ -131,7 +131,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    public static void enviar2() throws IOException{
+    public static void enviar2() {
         cliente.escrever();
     }
 

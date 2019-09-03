@@ -63,19 +63,20 @@ public class GerenciadorDeClientes extends Thread{
                 Log.i("COMUNICACAO","cliente -- "+ msg+" server = "+ imgAtual);
                 if(clientes.size()>=2){
                     if(msg.equals(imgAtual)){
+                        jogar.tocarAcerto(); // cavalo acertou
 
                         esperar(); //mudar imagens para branco, e espera um novo sorteio
                         if(!server.controleRemoto){  // se o controle remoto não estiver conectado
                             sleep(5000); // tempo de espera de 5 segundos
                             sortear(); //fazer nova interação de imagens entre os tablets
                         }
-                    }
-
-                    if(msg.equals("mudar")){
+                    }else if(msg.equals("mudar")){
                         sortear();
                     }else if(msg.equals("desconect")){
                         desconectar();
                         break;
+                    }else{ //O cavalo errou
+                        jogar.tocarError();
                     }
                 }
                 //mudarImagem(msg);

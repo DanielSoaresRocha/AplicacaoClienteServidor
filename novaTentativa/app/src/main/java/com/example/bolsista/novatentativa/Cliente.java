@@ -88,7 +88,7 @@ public class Cliente {
     }
 
     //escrevendo para o servidor - cliente Padrão
-    public void escrever() throws IOException{
+    public void escrever(){
         try{
             Log.i("COMUNICACAO","MENSAGEM ENVIADA AO SERVIDOR:  "+ imgAtual);
             escritor.writeUTF(imgAtual);

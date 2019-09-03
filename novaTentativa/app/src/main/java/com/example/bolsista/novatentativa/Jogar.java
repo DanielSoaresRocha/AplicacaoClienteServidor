@@ -1,5 +1,6 @@
 package com.example.bolsista.novatentativa;
 
+import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,6 +11,7 @@ import java.io.IOException;
 
 public class Jogar extends AppCompatActivity {
     Button imagemButton;
+    MediaPlayer mp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,23 +33,46 @@ public class Jogar extends AppCompatActivity {
 
     }
 
-    private void escutar() {
+    private void escutar(){
 
-        if(!MainActivity.serverIdentificado){  //Se não for o servidor
             imagemButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    try {
-                    MainActivity.enviar2();
+                    if(!MainActivity.serverIdentificado) { //Se não for o servidor
+                        MainActivity.enviar2();
 
-                    }catch (IOException e){
-                        Log.i("ERRO","ERRO AO ENVIAR MENSAGEM");
+                    }else {
+                        tocarError();
                     }
                 }
             });
-            }
 
+        }
+
+    public void tocarError(){
+        mp = MediaPlayer.create(Jogar.this, R.raw.error);
+        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener(){
+            public void onCompletion(MediaPlayer mp) {
+                mp.stop();
+                mp.release();
+                mp = null;
+            }
+        });
+        mp.start();
     }
+
+    public void tocarAcerto(){
+        mp = MediaPlayer.create(Jogar.this, R.raw.sucess);
+        mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener(){
+            public void onCompletion(MediaPlayer mp) {
+                mp.stop();
+                mp.release();
+                mp = null;
+            }
+        });
+        mp.start();
+    }
+
 
     private void inicializar() {
         imagemButton = findViewById(R.id.imagemButton);
