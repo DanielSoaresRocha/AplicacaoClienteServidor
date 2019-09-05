@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 public class ControleRemoto extends AppCompatActivity {
     Button controleRemoto,desconect;
@@ -32,6 +33,7 @@ public class ControleRemoto extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 MainActivity.cliente.desconect();
+                Toast.makeText(getApplicationContext(),R.string.controle_inativo,Toast.LENGTH_LONG).show();
 
                 Intent controleRemoto = new Intent(ControleRemoto.this,MainActivity.class);
                 startActivity(controleRemoto);

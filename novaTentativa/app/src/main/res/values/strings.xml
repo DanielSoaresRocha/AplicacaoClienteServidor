@@ -3,4 +3,10 @@
     <string name="title_activity_controle_remoto">ControleRemoto</string>
     <string name="enviarControle">Enviar</string>
     <string name="desconectar">desconectar</string>
+    <string name="cliente_criado">Cliente criado</string>
+    <string name="servidor_criado">Servidor criado</string>
+    <string name="controle_ativo">Controle ativado</string>
+    <string name="controle_inativo">Controle desativado</string>
+    <string name="ip_invalido">Insira um IP válido!!!</string>
+    <string name="comecar">Pronto para começar</string>
 </resources>

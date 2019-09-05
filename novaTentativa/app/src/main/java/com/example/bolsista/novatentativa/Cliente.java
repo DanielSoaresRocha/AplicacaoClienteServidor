@@ -2,6 +2,8 @@ package com.example.bolsista.novatentativa;
 
 import android.os.StrictMode;
 import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -82,10 +84,13 @@ public class Cliente {
                 escritor.flush();
             }
 
+            ativarBotao();
         }catch (IOException e){
             Log.i("ERRO","ERRO AO CONECTAR-SE AO SERVIDOR "+ e.getMessage());
         }
     }
+
+
 
     //escrevendo para o servidor - cliente Padrão
     public void escrever(){
@@ -157,6 +162,16 @@ public class Cliente {
 
             imgAtual = msg;
 
+    }
+
+    private void ativarBotao() {
+        client.comecar.post(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(client.getApplicationContext(),R.string.comecar,Toast.LENGTH_LONG).show();
+                client.comecar.setVisibility(View.VISIBLE);
+            }
+        });
     }
 
     public static void definirTela(Jogar jogarr){

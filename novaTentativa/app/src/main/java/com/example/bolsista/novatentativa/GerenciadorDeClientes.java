@@ -1,6 +1,8 @@
 package com.example.bolsista.novatentativa;
 
 import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -67,11 +69,11 @@ public class GerenciadorDeClientes extends Thread{
 
                         esperar(); //mudar imagens para branco, e espera um novo sorteio
                         if(!server.controleRemoto){  // se o controle remoto não estiver conectado
-                            sleep(5000); // tempo de espera de 5 segundos
-                            sortear(); //fazer nova interação de imagens entre os tablets
+                            dormir(5); // tempo de espera de 5 segundos
+                            sortear(true); //fazer nova interação de imagens entre os tablets
                         }
                     }else if(msg.equals("mudar")){
-                        sortear();
+                        sortear(false);
                     }else if(msg.equals("desconect")){
                         desconectar();
                         break;
@@ -86,8 +88,6 @@ public class GerenciadorDeClientes extends Thread{
 
         }catch (IOException e){
             Log.i("COMUNICACAO", "ERRO = "+ e.getMessage());
-        } catch (InterruptedException e) {
-            e.printStackTrace();
         }
     }
 
@@ -109,7 +109,21 @@ public class GerenciadorDeClientes extends Thread{
 
     private void adicionarCliente() {
         clientes.put(numCliente,this);
+        ativarBotao();
 
+    }
+
+    //este método faz aparecer o botao começar
+    private void ativarBotao() {
+        if(clientes.size()>=2){
+            server.comecar.post(new Runnable() {
+                @Override
+                public void run() {
+                    Toast.makeText(server.getApplicationContext(),R.string.comecar,Toast.LENGTH_LONG).show();
+                    server.comecar.setVisibility(View.VISIBLE);
+                }
+            });
+        }
     }
 
     private void mudarImagem(String msg) {
@@ -161,7 +175,7 @@ public class GerenciadorDeClientes extends Thread{
         }
     }
 
-    public void sortear() throws IOException{
+    public void sortear(boolean espera) throws IOException {
 
         //mudar o numero aleatorio no servidor
         server.numberAleatorio = Integer.toString(sortearNumero());
@@ -171,14 +185,11 @@ public class GerenciadorDeClientes extends Thread{
         mudarImagem(imgAtual);
 
         //sortear o escolhido para herdar imagem
-        Random radom  = new Random();
+        Random radom = new Random();
         int clienteEscolhido = radom.nextInt(2);
 
-        try{
-            sleep(5000);
-
-        }catch (InterruptedException e){
-            Log.i("ERRO","ERRO EM SLEEP = "+ e.getMessage());
+        if (espera){
+            dormir(5);
         }
 
         Log.i("ENVIAR","ESCOLHIDA = "+ imgAtual);
@@ -206,6 +217,15 @@ public class GerenciadorDeClientes extends Thread{
         }
     }
 
+    private void dormir(int tempo){
+        try {
+            tempo *= 1000; //transforma segundos em millisegundos
+            sleep(tempo);
+
+        } catch (InterruptedException e) {
+            Log.i("ERRO", "ERRO EM SLEEP = " + e.getMessage());
+        }
+    }
 
     private int sortearNumero() {
         Random radom  = new Random(); // gerar número aleatório

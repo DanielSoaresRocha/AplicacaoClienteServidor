@@ -17,6 +17,7 @@
 
     <EditText
         android:id="@+id/host"
+        android:gravity="center"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
@@ -48,6 +49,7 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="16dp"
-        android:text="Começar" />
+        android:text="Começar"
+        android:visibility="invisible" />
 
 </RelativeLayout>

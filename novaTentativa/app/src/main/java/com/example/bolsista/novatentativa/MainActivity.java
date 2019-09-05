@@ -1,6 +1,10 @@
 package com.example.bolsista.novatentativa;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -11,14 +15,15 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.net.InetAddress;
 import java.net.ServerSocket;
 import java.net.Socket;
+
 
 public class MainActivity extends AppCompatActivity {
     Button server, client,controleRemotoBtn,comecar;
     EditText host;
 
-    Jogar jogar;
     ServerSocket servidor;
 
     static Cliente cliente;
@@ -84,6 +89,7 @@ public class MainActivity extends AppCompatActivity {
                     Log.i("SERVIDOR", "STARTANDO SERVIDOR");
                     servidor = new ServerSocket(9999);
                     Log.i("SERVIDOR", "Esperando conexão...");
+                    pegarIp();
 
                     int numCliente = 0;
                     while (true) {
@@ -106,23 +112,23 @@ public class MainActivity extends AppCompatActivity {
 
     public void criarCliente(){
         if(host.getText().toString().length() < 5){
-            Toast.makeText(getApplicationContext(),"Insira um IP válido!!!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),R.string.ip_invalido, Toast.LENGTH_LONG).show();
         }else {
             final MainActivity client = this;
             cliente = new Cliente(host.getText().toString(),client,false);
             cliente.connect();
-            Toast.makeText(getApplicationContext(), "Cliente criado", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), R.string.cliente_criado, Toast.LENGTH_SHORT).show();
         }
     }
 
     public void criarControleRemoto(){
         if(host.getText().toString().length() < 5){
-            Toast.makeText(getApplicationContext(),"Insira um IP válido!!!", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),R.string.ip_invalido, Toast.LENGTH_LONG).show();
         }else{
             final MainActivity client = this;
             cliente = new Cliente(host.getText().toString(),client,true);
             cliente.connect();
-            Toast.makeText(getApplicationContext(), "Controle Ativo", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), R.string.controle_ativo, Toast.LENGTH_SHORT).show();
 
             Intent controleRemoto = new Intent(MainActivity.this,ControleRemoto.class);
             startActivity(controleRemoto);
@@ -133,6 +139,38 @@ public class MainActivity extends AppCompatActivity {
 
     public static void enviar2() {
         cliente.escrever();
+    }
+
+    //este método retorna o ip de conexão wifi no android
+    private void pegarIp(){
+        WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        WifiInfo wifiInfo = wifiManager.getConnectionInfo();
+        int ip = wifiInfo.getIpAddress();
+        String strIP = String.format("%d.%d.%d.%d",
+                (ip & 0xff),
+                (ip >> 8 & 0xff),
+                (ip >> 16 & 0xff),
+                (ip >> 24 & 0xff));
+
+        System.out.println("endereço ip = "+ strIP);
+        mostrarIp(strIP);
+
+    }
+
+    //este método recebe o ip e atualiza no textView
+    private void mostrarIp(final String ip){
+        host.post(new Runnable() {
+
+            @Override
+            public void run() {
+                host.setText(ip);
+                host.setTextColor(getResources().getColor(R.color.verde));
+
+                Toast.makeText(getApplicationContext(), R.string.servidor_criado,Toast.LENGTH_LONG).show();
+
+            }
+        });
+
     }
 
     public void inicializarComponentes(){
