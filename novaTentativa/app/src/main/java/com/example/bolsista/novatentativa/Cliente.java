@@ -56,6 +56,7 @@ public class Cliente {
                 try {
                     leitor = new ObjectInputStream(cliente.getInputStream());
                     Log.i("OBJETO","Criou input do CLIENTE");
+                    receberObjeto();
 
                     while (true){
                         String mensagem = leitor.readUTF(); ///******
@@ -90,6 +91,18 @@ public class Cliente {
         }
     }
 
+    private void receberObjeto() {
+        try {
+            Mensagem m = (Mensagem) leitor.readObject();
+            Log.i("OBJETO","MENSAGEM RECEBIDA DO SERVIDOR = ");
+            Log.i("OBJETO","mensagem = "+ m.getMensagem());
+            Log.i("OBJETO","vetor = "+ m.getImagens().toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
 
 
     //escrevendo para o servidor - cliente Padrão
@@ -161,7 +174,6 @@ public class Cliente {
             });
 
             imgAtual = msg;
-
     }
 
     private void ativarBotao() {

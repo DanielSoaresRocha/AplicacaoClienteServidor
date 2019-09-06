@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="match_parent"
+            android:layout_height="72dp"
+            android:gravity="center"
+            android:text="@string/configurar_teste"
+            android:textSize="30sp" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingVertical="15sp">
+
+            <EditText
+                android:id="@+id/qtdQuestao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight=".70"
+                android:ems="10"
+                android:hint="@string/qtd_de_quest_es"
+                android:inputType="number" />
+
+            <ImageView
+                android:id="@+id/info1"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_weight=".30"
+                app:srcCompat="@drawable/info" />
+
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/info1TextView"
+            style="@style/tamanhoInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/informacao1"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="15sp">
+
+            <EditText
+                android:id="@+id/intervaloQuestoes"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_weight=".70"
+                android:ems="10"
+                android:hint="@string/intervalo"
+                android:inputType="number" />
+
+            <ImageView
+                android:id="@+id/info2"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_weight=".30"
+                app:srcCompat="@drawable/info" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/info2TextView"
+            style="@style/tamanhoInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/informacao2"
+            android:visibility="gone" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="15sp">
+
+            <EditText
+                android:id="@+id/intervalo2"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_weight=".70"
+                android:ems="10"
+                android:hint="@string/intervalo2"
+                android:inputType="number" />
+
+            <ImageView
+                android:id="@+id/info3"
+                android:layout_width="wrap_content"
+                android:layout_height="50dp"
+                android:layout_weight=".30"
+                app:srcCompat="@drawable/info" />
+
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/info3TextView"
+            style="@style/tamanhoInfo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/informacao3"
+            android:visibility="gone" />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:paddingVertical="10sp"
+
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/som_de_erro"
+                android:textSize="16sp"
+                android:textColor="@color/vermelhoo"/>
+
+            <RadioButton
+                android:buttonTint="@color/vermelhoo"
+                android:color="@color/verde"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/som1"
+                />
+            <RadioButton
+                android:buttonTint="@color/vermelhoo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/som2"/>
+
+            <RadioButton
+                android:buttonTint="@color/vermelhoo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/som3"/>
+        </RadioGroup>
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:paddingVertical="10sp"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/som_de_acerto"
+                android:textSize="16sp"
+                android:textColor="@color/verde"/>
+
+            <RadioButton
+                android:buttonTint="@color/verde"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/som1" />
+            <RadioButton
+                android:buttonTint="@color/verde"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/som2"/>
+
+            <RadioButton
+                android:buttonTint="@color/verde"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/som3"/>
+        </RadioGroup>
+        <Button
+            android:layout_gravity="center"
+            android:id="@+id/irPara"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ir para"
+            />
+
+    </LinearLayout>
+</ScrollView>
+

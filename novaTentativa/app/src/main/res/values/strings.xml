@@ -9,4 +9,22 @@
     <string name="controle_inativo">Controle desativado</string>
     <string name="ip_invalido">Insira um IP válido!!!</string>
     <string name="comecar">Pronto para começar</string>
+    <string name="qtd_de_quest_es">Quantidade de questões</string>
+    <string name="informacao1">
+        Este campo dirá quantas questões o cavalo irá responder até o terminar o teste
+    </string>
+    <string name="informacao2">
+        Definir tempo de intervalo entre as questões em que o tablet mestre permanece branco
+    </string>
+    <string name="informacao3">
+        Este é o tempo de aparição das imagens nos escravos após a imagem do mestre ter aparecido
+    </string>
+    <string name="intervalo">Intervalo</string>
+    <string name="intervalo2">Segundo intervalo</string>
+    <string name="configurar_teste">Configurar teste</string>
+    <string name="som1">som 1</string>
+    <string name="som2">som 2</string>
+    <string name="som_de_erro">Som de erro:</string>
+    <string name="som3">som 3</string>
+    <string name="som_de_acerto">Som de acerto</string>
 </resources>

@@ -56,7 +56,7 @@ public class GerenciadorDeClientes extends Thread{
 
             String msg;
             imgAtual = "1"; //////////////////DESTAQUE
-
+            enviarObjeto();
 
             while (true){
                 msg = leitor.readUTF();
@@ -88,6 +88,19 @@ public class GerenciadorDeClientes extends Thread{
 
         }catch (IOException e){
             Log.i("COMUNICACAO", "ERRO = "+ e.getMessage());
+        }
+    }
+
+    private void enviarObjeto() {
+        int vetor[] = {3,4,5};
+        Mensagem mensagem = new Mensagem(vetor);
+        try {
+            mensagem.setMensagem("Aqui está uma mensagem");
+            escritor.writeObject(mensagem);
+            escritor.flush();
+            Log.i("OBJETO","MENSAGEM ENVIADA PARA O CLIENTE");
+        } catch (IOException e) {
+            Log.i("ERRO","ERRO AO ENVIAR OBJETO" + e.getMessage());
         }
     }
 
