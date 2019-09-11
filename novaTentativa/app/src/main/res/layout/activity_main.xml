@@ -1,55 +1,58 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:orientation="vertical"
+    tools:context=".MainActivity"
+    android:gravity="center|top"
+    >
 
     <Button
         android:id="@+id/server"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="12dp"
-        android:text="Criar Server" />
+        android:text="Criar Server"
+        />
 
     <EditText
         android:id="@+id/host"
-        android:gravity="center"
+        android:layout_marginTop="20sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="97dp"
         android:ems="10"
+        android:gravity="center"
         android:inputType="textPersonName" />
 
     <Button
         android:id="@+id/client"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentTop="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="168dp"
+        android:layout_marginTop="20sp"
         android:text="CRIAR CLIENTE" />
 
     <Button
         android:id="@+id/controleRemoto"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
         android:text="controle remoto" />
+
+
+    <ImageView
+        android:id="@+id/imageViewTeste"
+        android:layout_width="wrap_content"
+        android:layout_height="125dp"
+        android:src="@drawable/circulo"
+        android:scaleType="fitCenter"/>
 
     <Button
         android:id="@+id/comecar"
+        android:layout_marginTop="100sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
         android:layout_marginBottom="16dp"
         android:text="Começar"
         android:visibility="invisible" />
 
-</RelativeLayout>
+</LinearLayout>

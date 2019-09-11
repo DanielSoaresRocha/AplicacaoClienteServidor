@@ -3,15 +3,19 @@ package com.example.bolsista.novatentativa;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Resources;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Handler;
+import android.support.annotation.DrawableRes;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -23,7 +27,7 @@ import java.net.Socket;
 public class MainActivity extends AppCompatActivity {
     Button server, client,controleRemotoBtn,comecar;
     EditText host;
-
+    ImageView imagem;
     ServerSocket servidor;
 
     static Cliente cliente;
@@ -31,7 +35,8 @@ public class MainActivity extends AppCompatActivity {
     static boolean serverIdentificado = false;
     static boolean controleRemoto = false;
 
-    String numberAleatorio;
+    int numberAleatorio;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,17 +73,13 @@ public class MainActivity extends AppCompatActivity {
 
                 startActivity(mudarTela);
 
-
             }
         });
-
-
-
     }
 
     private void criarServidor() {
         final MainActivity server = this;
-        numberAleatorio = "1";
+        numberAleatorio = 1;
 
         serverIdentificado = true;
         new Thread(new Runnable() {
@@ -164,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void run() {
                 host.setText(ip);
-                host.setTextColor(getResources().getColor(R.color.verde));
+                host.setTextColor(getResources().getColor(R.color.vermelhoo));
 
                 Toast.makeText(getApplicationContext(), R.string.servidor_criado,Toast.LENGTH_LONG).show();
 
@@ -179,6 +180,8 @@ public class MainActivity extends AppCompatActivity {
         client = findViewById(R.id.client);
         controleRemotoBtn = findViewById(R.id.controleRemoto);
         comecar = findViewById(R.id.comecar);
+        imagem = findViewById(R.id.imageViewTeste);
+
 
     }
 

@@ -29,9 +29,12 @@ public class GerenciadorDeClientes extends Thread{
 
     private static final Map<Integer,GerenciadorDeClientes> clientes = new HashMap<>();
 
-    private String imgAtual;
+    private int imgAtual;
 
     static Jogar jogar;
+
+    private int vetor[] = {R.drawable.circulo,R.drawable.triangulo,R.drawable.coracao,R.drawable.estrela2,
+    R.drawable.estrela,R.drawable.retangulo};
 
 
     private MainActivity server;
@@ -54,27 +57,28 @@ public class GerenciadorDeClientes extends Thread{
 
             identificarCliente();
 
-            String msg;
-            imgAtual = "1"; //////////////////DESTAQUE
+            int msg;
+            imgAtual = 1; //////////////////DESTAQUE
             enviarObjeto();
 
             while (true){
-                msg = leitor.readUTF();
+                msg = leitor.readInt();
                 imgAtual = server.numberAleatorio;
                 Log.i("COMUNICACAO","MENSAGEM RECEBIDA DO CLIENTE");
                 Log.i("COMUNICACAO","cliente -- "+ msg+" server = "+ imgAtual);
+
                 if(clientes.size()>=2){
-                    if(msg.equals(imgAtual)){
+                    if(msg == imgAtual){
                         jogar.tocarAcerto(); // cavalo acertou
 
                         esperar(); //mudar imagens para branco, e espera um novo sorteio
                         if(!server.controleRemoto){  // se o controle remoto não estiver conectado
                             dormir(5); // tempo de espera de 5 segundos
-                            sortear(true); //fazer nova interação de imagens entre os tablets
+                            sortear(); //fazer nova interação de imagens entre os tablets
                         }
-                    }else if(msg.equals("mudar")){
-                        sortear(false);
-                    }else if(msg.equals("desconect")){
+                    }else if(msg == 997){
+                        sortear();
+                    }else if(msg == 998){
                         desconectar();
                         break;
                     }else{ //O cavalo errou
@@ -139,29 +143,17 @@ public class GerenciadorDeClientes extends Thread{
         }
     }
 
-    private void mudarImagem(String msg) {
-        final String comando = msg;
+    private void mudarImagem(int msg) {
+        final int comando = msg;
 
         jogar.imagemButton.post(new Runnable() {
             @Override
             public void run() {
 
-                if(comando.equals("branco")){
+                if(comando == 999){
                     jogar.getImagemButton().setBackgroundResource(R.drawable.branco);
-                }else if(comando.equals("1")){
-                    jogar.getImagemButton().setBackgroundResource(R.drawable.circulo);
-                }else if(comando.equals("2")){
-                    jogar.getImagemButton().setBackgroundResource(R.drawable.coracao);
-                }else if(comando.equals("3")){
-                    jogar.getImagemButton().setBackgroundResource(R.drawable.losango);
-                }else if(comando.equals("4")){
-                    jogar.getImagemButton().setBackgroundResource(R.drawable.triangulo);
-                }else if(comando.equals("5")){
-                    jogar.getImagemButton().setBackgroundResource(R.drawable.estrela2);
-                }else if(comando.equals("6")){
-                    jogar.getImagemButton().setBackgroundResource(R.drawable.hexagono);
                 }else{
-                    jogar.getImagemButton().setBackgroundResource(R.drawable.retangulo);
+                    jogar.getImagemButton().setBackgroundResource(comando);
                 }
 
             }
@@ -188,43 +180,41 @@ public class GerenciadorDeClientes extends Thread{
         }
     }
 
-    public void sortear(boolean espera) throws IOException {
+    public void sortear() throws IOException {
 
         //mudar o numero aleatorio no servidor
-        server.numberAleatorio = Integer.toString(sortearNumero());
+        server.numberAleatorio = vetor[sortearNumero()];
         //colocar este numero na Theread atual
         imgAtual = server.numberAleatorio;
 
         mudarImagem(imgAtual);
 
+        dormir(5);
+
         //sortear o escolhido para herdar imagem
         Random radom = new Random();
         int clienteEscolhido = radom.nextInt(2);
-
-        if (espera){
-            dormir(5);
-        }
 
         Log.i("ENVIAR","ESCOLHIDA = "+ imgAtual);
         for(int i = 0;i < clientes.size(); i++){
             if(i == clienteEscolhido){
                 GerenciadorDeClientes destino = clientes.get(i);
-                destino.getEscritor().writeUTF(imgAtual);
+                destino.getEscritor().writeInt(imgAtual);
                 destino.getEscritor().flush();
                 Log.i("ENVIAR","ENVIADA 1 = "+ imgAtual);
             }else{
                 int aleatorio = sortearNumero();
 
-                while (aleatorio == Integer.parseInt(server.numberAleatorio)){
+                while (vetor[aleatorio] == server.numberAleatorio){
                     //este laço não deixa o número do outro tablet ser igual
                     aleatorio = sortearNumero();
                 }
 
-                String outraImg = Integer.toString(aleatorio);
+                int outraImg = vetor[aleatorio];
                 Log.i("ENVIAR","ENVIADA 2 "+ outraImg);
 
                 GerenciadorDeClientes destino = clientes.get(i);
-                destino.getEscritor().writeUTF(outraImg);
+                destino.getEscritor().writeInt(outraImg);
                 destino.getEscritor().flush();
             }
         }
@@ -248,11 +238,11 @@ public class GerenciadorDeClientes extends Thread{
     }
 
     private void esperar() throws IOException{
-        mudarImagem("branco");
+        mudarImagem(999);
 
         for(int i = 0; i < clientes.size(); i++){
             GerenciadorDeClientes destino = clientes.get(i);
-            destino.getEscritor().writeUTF("branco");
+            destino.getEscritor().writeInt(999);
             destino.getEscritor().flush();
         }
     }

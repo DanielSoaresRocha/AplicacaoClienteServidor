@@ -26,7 +26,7 @@ public class Cliente {
     private MainActivity client;
     static Jogar jogar;
 
-    private String imgAtual;
+    private int imgAtual;
 
     private Boolean controleRemoto;
 
@@ -38,7 +38,7 @@ public class Cliente {
 
 
     public void connect(){
-        imgAtual = "1"; //////////////////DESTAQUE
+        imgAtual = 1; //////////////////DESTAQUE
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
@@ -59,7 +59,7 @@ public class Cliente {
                     receberObjeto();
 
                     while (true){
-                        String mensagem = leitor.readUTF(); ///******
+                        int mensagem = leitor.readInt(); ///******
                         Log.i("COMUNICACAO","MENSAGEM RECEBIDA DO SERVER ="+ mensagem);
 
                         mudarImagem(mensagem);
@@ -109,7 +109,7 @@ public class Cliente {
     public void escrever(){
         try{
             Log.i("COMUNICACAO","MENSAGEM ENVIADA AO SERVIDOR:  "+ imgAtual);
-            escritor.writeUTF(imgAtual);
+            escritor.writeInt(imgAtual);
             escritor.flush();
 
         }catch (IOException e){
@@ -120,7 +120,7 @@ public class Cliente {
     public void controleRemoto(){
         try{
             Log.i("COMUNICACAO", "CONTROLE REMOTO ACIONADO");
-            escritor.writeUTF("mudar");
+            escritor.writeInt(997);
             escritor.flush();
 
         }catch (IOException e){
@@ -132,7 +132,7 @@ public class Cliente {
     public void desconect(){
 
         try{
-            escritor.writeUTF("desconect");
+            escritor.writeInt(998);
 
             escritor.close();
             leitor.close();
@@ -147,28 +147,16 @@ public class Cliente {
     }
 
 
-    private void mudarImagem(String msg) {
-        final String comando = msg;
+    private void mudarImagem(int msg) {
+        final int comando = msg;
 
             jogar.imagemButton.post(new Runnable() {
                 @Override
                 public void run() {
-                    if(comando.equals("branco")){
+                    if(comando == 999){
                         jogar.getImagemButton().setBackgroundResource(R.drawable.branco);
-                    }else if(comando.equals("1")){
-                        jogar.getImagemButton().setBackgroundResource(R.drawable.circulo);
-                    }else if(comando.equals("2")){
-                        jogar.getImagemButton().setBackgroundResource(R.drawable.coracao);
-                    }else if(comando.equals("3")){
-                        jogar.getImagemButton().setBackgroundResource(R.drawable.losango);
-                    }else if(comando.equals("4")){
-                        jogar.getImagemButton().setBackgroundResource(R.drawable.triangulo);
-                    }else if(comando.equals("5")){
-                        jogar.getImagemButton().setBackgroundResource(R.drawable.estrela2);
-                    }else if(comando.equals("6")){
-                        jogar.getImagemButton().setBackgroundResource(R.drawable.hexagono);
                     }else{
-                        jogar.getImagemButton().setBackgroundResource(R.drawable.retangulo);
+                        jogar.getImagemButton().setBackgroundResource(comando);
                     }
                 }
             });
