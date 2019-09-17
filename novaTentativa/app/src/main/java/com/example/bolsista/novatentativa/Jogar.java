@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.bolsista.novatentativa.configuracao.ConfigurarTeste;
+
 import java.io.IOException;
 
 public class Jogar extends AppCompatActivity {
@@ -50,7 +52,7 @@ public class Jogar extends AppCompatActivity {
         }
 
     public void tocarError(){
-        mp = MediaPlayer.create(Jogar.this, R.raw.error);
+        mp = MediaPlayer.create(Jogar.this, ConfigurarTeste.configuracao.getSomErro());
         mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener(){
             public void onCompletion(MediaPlayer mp) {
                 mp.stop();
@@ -62,7 +64,7 @@ public class Jogar extends AppCompatActivity {
     }
 
     public void tocarAcerto(){
-        mp = MediaPlayer.create(Jogar.this, R.raw.sucess);
+        mp = MediaPlayer.create(Jogar.this, ConfigurarTeste.configuracao.getSomAcerto());
         mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener(){
             public void onCompletion(MediaPlayer mp) {
                 mp.stop();

@@ -27,4 +27,9 @@
     <string name="som_de_erro">Som de erro:</string>
     <string name="som3">som 3</string>
     <string name="som_de_acerto">Som de acerto</string>
+    <string name="seleciona_a_categoria">Seleciona a categoria:</string>
+    <string name="formas">Formas</string>
+    <string name="tamanho">Tamanho</string>
+    <string name="preenchimento">Preenchimento</string>
+    <string name="configurarteste">Configurar Teste</string>
 </resources>

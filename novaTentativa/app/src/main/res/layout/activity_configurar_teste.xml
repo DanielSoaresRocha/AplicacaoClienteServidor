@@ -117,36 +117,40 @@
         <RadioGroup
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:gravity="center"
+            android:orientation="horizontal"
             android:paddingVertical="10sp"
 
             >
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/som_de_erro"
-                android:textSize="16sp"
-                android:textColor="@color/vermelhoo"/>
+                android:textColor="@color/vermelhoo"
+                android:textSize="16sp" />
 
             <RadioButton
+                android:id="@+id/somErro1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:buttonTint="@color/vermelhoo"
                 android:color="@color/verde"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/som1"
-                />
-            <RadioButton
-                android:buttonTint="@color/vermelhoo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/som2"/>
+                android:text="@string/som1" />
 
             <RadioButton
-                android:buttonTint="@color/vermelhoo"
+                android:id="@+id/somErro2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/som3"/>
+                android:buttonTint="@color/vermelhoo"
+                android:text="@string/som2" />
+
+            <RadioButton
+                android:id="@+id/somErro3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/vermelhoo"
+                android:text="@string/som3" />
         </RadioGroup>
 
         <RadioGroup
@@ -164,22 +168,60 @@
                 android:textColor="@color/verde"/>
 
             <RadioButton
-                android:buttonTint="@color/verde"
+                android:id="@+id/somAcerto1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:buttonTint="@color/verde"
                 android:text="@string/som1" />
-            <RadioButton
-                android:buttonTint="@color/verde"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/som2"/>
 
             <RadioButton
-                android:buttonTint="@color/verde"
+                android:id="@+id/somAcerto2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/som3"/>
+                android:buttonTint="@color/verde"
+                android:text="@string/som2" />
+
+            <RadioButton
+                android:id="@+id/somAcerto3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/verde"
+                android:text="@string/som3" />
         </RadioGroup>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:text="@string/seleciona_a_categoria"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:paddingTop="10sp"
+            >
+
+            <CheckBox
+                android:id="@+id/formasBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/formas" />
+
+            <CheckBox
+                android:id="@+id/preenchimentoBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/preenchimento" />
+
+            <CheckBox
+                android:id="@+id/tamanhoBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/tamanho" />
+
+
+        </LinearLayout>
         <Button
             android:layout_gravity="center"
             android:id="@+id/irPara"

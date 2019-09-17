@@ -4,25 +4,21 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
+import com.example.bolsista.novatentativa.configuracao.Configuracao;
+import com.example.bolsista.novatentativa.configuracao.ConfigurarTeste;
+
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.logging.Handler;
 
 
 public class GerenciadorDeClientes extends Thread{
     private ObjectInputStream leitor;
     private ObjectOutputStream escritor;
-
 
     private Socket cliente;
     private int numCliente;
@@ -33,9 +29,8 @@ public class GerenciadorDeClientes extends Thread{
 
     static Jogar jogar;
 
-    private int vetor[] = {R.drawable.circulo,R.drawable.triangulo,R.drawable.coracao,R.drawable.estrela2,
-    R.drawable.estrela,R.drawable.retangulo};
 
+    private int vetor[];
 
     private MainActivity server;
 
@@ -55,6 +50,8 @@ public class GerenciadorDeClientes extends Thread{
             leitor = new ObjectInputStream(cliente.getInputStream());///*****
             Log.i("OBJETO","Criou input do servidor");///****
 
+            vetor = ConfigurarTeste.configuracao.getImagens();
+
             identificarCliente();
 
             int msg;
@@ -73,7 +70,7 @@ public class GerenciadorDeClientes extends Thread{
 
                         esperar(); //mudar imagens para branco, e espera um novo sorteio
                         if(!server.controleRemoto){  // se o controle remoto não estiver conectado
-                            dormir(5); // tempo de espera de 5 segundos
+                            dormir(ConfigurarTeste.configuracao.getIntervalo1()); // tempo de espera do mestre
                             sortear(); //fazer nova interação de imagens entre os tablets
                         }
                     }else if(msg == 997){
@@ -96,13 +93,11 @@ public class GerenciadorDeClientes extends Thread{
     }
 
     private void enviarObjeto() {
-        int vetor[] = {3,4,5};
-        Mensagem mensagem = new Mensagem(vetor);
         try {
-            mensagem.setMensagem("Aqui está uma mensagem");
-            escritor.writeObject(mensagem);
+            escritor.writeObject(ConfigurarTeste.configuracao);
             escritor.flush();
-            Log.i("OBJETO","MENSAGEM ENVIADA PARA O CLIENTE");
+
+            Log.i("OBJETO","OBJETO ENVIADO PARA O CLIENTE");
         } catch (IOException e) {
             Log.i("ERRO","ERRO AO ENVIAR OBJETO" + e.getMessage());
         }
@@ -189,11 +184,11 @@ public class GerenciadorDeClientes extends Thread{
 
         mudarImagem(imgAtual);
 
-        dormir(5);
+        dormir(ConfigurarTeste.configuracao.getIntervalo2());
 
         //sortear o escolhido para herdar imagem
         Random radom = new Random();
-        int clienteEscolhido = radom.nextInt(2);
+        int clienteEscolhido = radom.nextInt(clientes.size());
 
         Log.i("ENVIAR","ESCOLHIDA = "+ imgAtual);
         for(int i = 0;i < clientes.size(); i++){
@@ -232,7 +227,7 @@ public class GerenciadorDeClientes extends Thread{
 
     private int sortearNumero() {
         Random radom  = new Random(); // gerar número aleatório
-        int numeroTmp = radom.nextInt(6);
+        int numeroTmp = radom.nextInt(vetor.length);
 
         return numeroTmp;
     }

@@ -5,14 +5,12 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import java.io.BufferedReader;
+import com.example.bolsista.novatentativa.configuracao.Configuracao;
+
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.Random;
 
 public class Cliente {
 
@@ -93,10 +91,9 @@ public class Cliente {
 
     private void receberObjeto() {
         try {
-            Mensagem m = (Mensagem) leitor.readObject();
-            Log.i("OBJETO","MENSAGEM RECEBIDA DO SERVIDOR = ");
-            Log.i("OBJETO","mensagem = "+ m.getMensagem());
-            Log.i("OBJETO","vetor = "+ m.getImagens().toString());
+            Configuracao configuracao = (Configuracao) leitor.readObject();
+            Log.i("OBJETO","Objeto recebido do servidor ");
+            Log.i("OBJETO","vetor = "+ configuracao.getQtdQuestoes());
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {

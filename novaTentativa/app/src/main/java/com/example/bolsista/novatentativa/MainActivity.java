@@ -18,6 +18,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.bolsista.novatentativa.configuracao.ConfigurarTeste;
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.ServerSocket;
@@ -25,9 +27,8 @@ import java.net.Socket;
 
 
 public class MainActivity extends AppCompatActivity {
-    Button server, client,controleRemotoBtn,comecar;
+    Button server, client,controleRemotoBtn,comecar, configurarBtn;
     EditText host;
-    ImageView imagem;
     ServerSocket servidor;
 
     static Cliente cliente;
@@ -49,6 +50,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 criarServidor();
+            }
+        });
+
+        configurarBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent telaConfiguracao = new Intent(MainActivity.this, ConfigurarTeste.class);
+                startActivity(telaConfiguracao);
             }
         });
 
@@ -104,8 +113,6 @@ public class MainActivity extends AppCompatActivity {
                 } catch (IOException e) {
                     Log.i("ERRO", "PORTA OCUPADA OU SERVER FOI FECHADO:" + e.getMessage());
                 }
-
-
             }
         }).start();
     }
@@ -180,10 +187,11 @@ public class MainActivity extends AppCompatActivity {
         client = findViewById(R.id.client);
         controleRemotoBtn = findViewById(R.id.controleRemoto);
         comecar = findViewById(R.id.comecar);
-        imagem = findViewById(R.id.imageViewTeste);
-
+        configurarBtn = findViewById(R.id.configurarBtn);
 
     }
+
+
 
 
 }
