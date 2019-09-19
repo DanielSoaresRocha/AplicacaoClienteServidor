@@ -4,6 +4,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.bolsista.novatentativa.arquitetura.Servidor;
 import com.example.bolsista.novatentativa.configuracao.Configuracao;
 import com.example.bolsista.novatentativa.configuracao.ConfigurarTeste;
 
@@ -32,9 +33,9 @@ public class GerenciadorDeClientes extends Thread{
 
     private int vetor[];
 
-    private MainActivity server;
+    private Servidor server;
 
-    public GerenciadorDeClientes(Socket cliente, MainActivity server, int numCliente){
+    public GerenciadorDeClientes(Socket cliente, Servidor server, int numCliente){
         this.cliente = cliente;
         this.server = server;
         this.numCliente = numCliente;
@@ -128,11 +129,11 @@ public class GerenciadorDeClientes extends Thread{
     //este método faz aparecer o botao começar
     private void ativarBotao() {
         if(clientes.size()>=2){
-            server.comecar.post(new Runnable() {
+            server.comecarServerBtn.post(new Runnable() {
                 @Override
                 public void run() {
                     Toast.makeText(server.getApplicationContext(),R.string.comecar,Toast.LENGTH_LONG).show();
-                    server.comecar.setVisibility(View.VISIBLE);
+                    server.comecarServerBtn.setVisibility(View.VISIBLE);
                 }
             });
         }

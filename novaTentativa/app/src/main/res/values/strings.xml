@@ -32,4 +32,17 @@
     <string name="tamanho">Tamanho</string>
     <string name="preenchimento">Preenchimento</string>
     <string name="configurarteste">Configurar Teste</string>
+    <string name="title_activity_definir">Definir</string>
+    <string name="quem_eu_sou">Quem sou eu?</string>
+    <string name="mestre">mestre</string>
+    <string name="escravo">escravo</string>
+    <string name="remoto">remoto</string>
+    <string name="servidor">Criar Servidor</string>
+    <string name="precisa_configurar">Voce precida configurar um teste</string>
+    <string name="precisa_cliente">Você precisa informar um ip</string>
+    <string name="com_ecar">comecar</string>
+    <string name="ip_para_conecao">Ip para conexão:</string>
+    <string name="esperando">esperando...</string>
+    <string name="criar_cliente">Criar Cliente</string>
+    <string name="pronto_para_criar">Pronto para criar</string>
 </resources>

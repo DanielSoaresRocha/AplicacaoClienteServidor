@@ -7,6 +7,8 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 
+import com.example.bolsista.novatentativa.arquitetura.ClienteActivity;
+import com.example.bolsista.novatentativa.arquitetura.Servidor;
 import com.example.bolsista.novatentativa.configuracao.ConfigurarTeste;
 
 import java.io.IOException;
@@ -22,12 +24,11 @@ public class Jogar extends AppCompatActivity {
         setContentView(R.layout.activity_jogar);
 
 
-        if(MainActivity.serverIdentificado){
+        if(Servidor.serverIdentificado){
             GerenciadorDeClientes.definirTela(this);
         }else{
             Cliente.definirTela(this);
         }
-
 
         inicializar();
         escutar();
@@ -40,9 +41,8 @@ public class Jogar extends AppCompatActivity {
             imagemButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(!MainActivity.serverIdentificado) { //Se não for o servidor
-                        MainActivity.enviar2();
-
+                    if(!Servidor.serverIdentificado) { //Se não for o servidor
+                        ClienteActivity.enviar();
                     }else {
                         tocarError();
                     }

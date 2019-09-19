@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        >
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/quem_eu_sou"
+        android:textSize="40sp"
+        android:paddingVertical="30sp"
+        android:fontFamily="casual"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        >
+
+        <ImageView
+            android:id="@+id/controleImgView"
+            android:layout_width="145dp"
+            android:layout_weight="1"
+            android:layout_height="113dp"
+            android:src="@drawable/controle"
+            android:paddingHorizontal="30sp"/>
+
+        <ImageView
+            android:id="@+id/mestreImgView"
+            android:layout_width="148dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/mestre" />
+
+        <ImageView
+            android:id="@+id/escravoImgView"
+            android:layout_width="148dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:src="@drawable/escravo" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center"
+        >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/remoto"
+            style="@style/textViewDefinir"
+            android:fontFamily="casual"
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/mestre"
+            style="@style/textViewDefinir"
+            android:fontFamily="casual"
+
+            />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/escravo"
+            style="@style/textViewDefinir"
+            android:fontFamily="casual"
+            />
+
+
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

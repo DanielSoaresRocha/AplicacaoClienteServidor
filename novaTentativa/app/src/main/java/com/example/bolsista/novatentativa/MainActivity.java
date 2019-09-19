@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
                     while (true) {
                         Socket cliente = servidor.accept();
                         Log.i("SERVIDOR", "CLIENTE FOI CONECTADO = " + cliente.getInetAddress());
-                        new GerenciadorDeClientes(cliente,server,numCliente);
+                        //new GerenciadorDeClientes(cliente,server,numCliente);
 
                         numCliente++;
                     }
@@ -123,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),R.string.ip_invalido, Toast.LENGTH_LONG).show();
         }else {
             final MainActivity client = this;
-            cliente = new Cliente(host.getText().toString(),client,false);
+            //cliente = new Cliente(host.getText().toString(),client,false);
             cliente.connect();
             Toast.makeText(getApplicationContext(), R.string.cliente_criado, Toast.LENGTH_SHORT).show();
         }
@@ -134,7 +134,7 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(getApplicationContext(),R.string.ip_invalido, Toast.LENGTH_LONG).show();
         }else{
             final MainActivity client = this;
-            cliente = new Cliente(host.getText().toString(),client,true);
+            //cliente = new Cliente(host.getText().toString(),client,true);
             cliente.connect();
             Toast.makeText(getApplicationContext(), R.string.controle_ativo, Toast.LENGTH_SHORT).show();
 

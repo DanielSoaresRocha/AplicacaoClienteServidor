@@ -1,5 +1,6 @@
 package com.example.bolsista.novatentativa.configuracao;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
@@ -13,6 +14,8 @@ import android.widget.TextView;
 
 import com.example.bolsista.novatentativa.MainActivity;
 import com.example.bolsista.novatentativa.R;
+
+import java.io.IOException;
 
 public class ConfigurarTeste extends AppCompatActivity {
     EditText qtdQuestao, intervaloQuestoes, intervalo2;
@@ -180,9 +183,20 @@ public class ConfigurarTeste extends AppCompatActivity {
         irPara.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                fazerConfiguracao();
-                Intent i = new Intent(ConfigurarTeste.this,MainActivity.class);
-                startActivity(i);
+                try {
+                    fazerConfiguracao();
+
+                    Intent returnIntent = new Intent();
+                    returnIntent.putExtra("result","OK");
+                    setResult(Activity.RESULT_OK,returnIntent);
+                    finish();
+
+                }catch(java.lang.NumberFormatException e){
+                    Intent returnIntent = new Intent();
+                    setResult(Activity.RESULT_CANCELED, returnIntent);
+                    finish();
+                }
+
             }
         });
     }

@@ -5,6 +5,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
+import com.example.bolsista.novatentativa.arquitetura.ClienteActivity;
 import com.example.bolsista.novatentativa.configuracao.Configuracao;
 
 import java.io.IOException;
@@ -21,14 +22,14 @@ public class Cliente {
 
 
     private Socket cliente;
-    private MainActivity client;
+    private ClienteActivity client;
     static Jogar jogar;
 
     private int imgAtual;
 
     private Boolean controleRemoto;
 
-    public Cliente(String host, MainActivity client, boolean controleRemoto){
+    public Cliente(String host, ClienteActivity client, boolean controleRemoto){
         this.host = host;
         this.client = client;
         this.controleRemoto = controleRemoto;
@@ -162,11 +163,11 @@ public class Cliente {
     }
 
     private void ativarBotao() {
-        client.comecar.post(new Runnable() {
+        client.comecarClientBtn.post(new Runnable() {
             @Override
             public void run() {
                 Toast.makeText(client.getApplicationContext(),R.string.comecar,Toast.LENGTH_LONG).show();
-                client.comecar.setVisibility(View.VISIBLE);
+                client.comecarClientBtn.setVisibility(View.VISIBLE);
             }
         });
     }
