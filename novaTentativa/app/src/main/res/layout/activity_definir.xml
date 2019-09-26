@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -9,6 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_weight="1"
         android:gravity="center"
         android:orientation="vertical"
         >
@@ -22,71 +23,98 @@
         android:paddingVertical="30sp"
         android:fontFamily="casual"
         />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        >
-
-        <ImageView
-            android:id="@+id/controleImgView"
-            android:layout_width="145dp"
-            android:layout_weight="1"
-            android:layout_height="113dp"
-            android:src="@drawable/controle"
-            android:paddingHorizontal="30sp"/>
-
-        <ImageView
-            android:id="@+id/mestreImgView"
-            android:layout_width="148dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@drawable/mestre" />
-
-        <ImageView
-            android:id="@+id/escravoImgView"
-            android:layout_width="148dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:src="@drawable/escravo" />
-
-
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
         android:gravity="center"
+        android:layout_weight="9"
         >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/remoto"
-            style="@style/textViewDefinir"
-            android:fontFamily="casual"
-            />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            >
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/mestre"
-            style="@style/textViewDefinir"
-            android:fontFamily="casual"
+            <ImageView
+                android:id="@+id/controleImgView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="8"
+                android:src="@drawable/controle"
+                />
 
-            />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/escravo"
-            style="@style/textViewDefinir"
-            android:fontFamily="casual"
-            />
+            <TextView
+                style="@style/textViewDefinir"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="2"
+                android:fontFamily="casual"
+                android:textSize="30sp"
+                android:text="@string/remoto" />
 
 
         </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            >
+
+            <ImageView
+                android:id="@+id/mestreImgView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="8"
+                android:src="@drawable/mestre" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/mestre"
+                style="@style/textViewDefinir"
+                android:fontFamily="casual"
+                android:textSize="30sp"
+                android:layout_weight="2"
+
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:gravity="center"
+            >
+
+            <ImageView
+                android:id="@+id/escravoImgView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="8"
+                android:src="@drawable/escravo" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/escravo"
+                style="@style/textViewDefinir"
+                android:fontFamily="casual"
+                android:layout_weight="2"
+                android:textSize="30sp"
+                />
+
+        </LinearLayout>
+
+
     </LinearLayout>
 
-</ScrollView>
+</LinearLayout>

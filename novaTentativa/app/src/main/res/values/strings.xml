@@ -45,4 +45,6 @@
     <string name="esperando">esperando...</string>
     <string name="criar_cliente">Criar Cliente</string>
     <string name="pronto_para_criar">Pronto para criar</string>
+    <string name="controle_remoto">Controle Remoto</string>
+    <string name="iniciar_controle_remoto">Iniciar controle remoto</string>
 </resources>

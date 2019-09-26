@@ -30,8 +30,8 @@ public class Definir extends AppCompatActivity {
         controle.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent controle = new Intent(Definir.this, MainActivity.class);
-                startActivity(controle);
+                Intent telaControle = new Intent(Definir.this, Remoto.class);
+                startActivity(telaControle);
             }
         });
 

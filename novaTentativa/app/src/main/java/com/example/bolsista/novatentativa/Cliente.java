@@ -1,11 +1,13 @@
 package com.example.bolsista.novatentativa;
 
+import android.app.Activity;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.example.bolsista.novatentativa.arquitetura.ClienteActivity;
+import com.example.bolsista.novatentativa.arquitetura.Remoto;
 import com.example.bolsista.novatentativa.configuracao.Configuracao;
 
 import java.io.IOException;
@@ -22,14 +24,14 @@ public class Cliente {
 
 
     private Socket cliente;
-    private ClienteActivity client;
+    private Activity client;
     static Jogar jogar;
 
     private int imgAtual;
 
     private Boolean controleRemoto;
 
-    public Cliente(String host, ClienteActivity client, boolean controleRemoto){
+    public Cliente(String host, Activity client, boolean controleRemoto){
         this.host = host;
         this.client = client;
         this.controleRemoto = controleRemoto;
@@ -84,7 +86,9 @@ public class Cliente {
                 escritor.flush();
             }
 
-            ativarBotao();
+            if(!controleRemoto){
+                ativarBotao();
+            }
         }catch (IOException e){
             Log.i("ERRO","ERRO AO CONECTAR-SE AO SERVIDOR "+ e.getMessage());
         }
@@ -115,6 +119,7 @@ public class Cliente {
         }
     }
 
+    //este método envia para o servidor um comando do controle remoto: 997 = mudar imagem
     public void controleRemoto(){
         try{
             Log.i("COMUNICACAO", "CONTROLE REMOTO ACIONADO");
@@ -163,13 +168,16 @@ public class Cliente {
     }
 
     private void ativarBotao() {
-        client.comecarClientBtn.post(new Runnable() {
+        final ClienteActivity cliente = (ClienteActivity) client;
+
+        cliente.comecarClientBtn.post(new Runnable() {
             @Override
             public void run() {
                 Toast.makeText(client.getApplicationContext(),R.string.comecar,Toast.LENGTH_LONG).show();
-                client.comecarClientBtn.setVisibility(View.VISIBLE);
+                cliente.comecarClientBtn.setVisibility(View.VISIBLE);
             }
         });
+
     }
 
     public static void definirTela(Jogar jogarr){
