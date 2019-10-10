@@ -41,6 +41,7 @@ public class Jogar extends AppCompatActivity {
             Cliente.definirTela(this);
         }
 
+        modoFullScreean();
     }
 
     private void escutar(){
@@ -102,6 +103,14 @@ public class Jogar extends AppCompatActivity {
         returnTelaServer.putExtras(b);
         setResult(Activity.RESULT_CANCELED,returnTelaServer);
         finish();
+    }
+
+    private void modoFullScreean(){
+        View decorView = getWindow().getDecorView();
+
+        int uiOptions = View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                | View.SYSTEM_UI_FLAG_FULLSCREEN;
+        decorView.setSystemUiVisibility(uiOptions);
     }
 
 
