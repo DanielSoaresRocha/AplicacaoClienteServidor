@@ -1,11 +1,14 @@
 package com.example.bolsista.novatentativa;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.media.MediaPlayer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.Toast;
 
 import com.example.bolsista.novatentativa.arquitetura.ClienteActivity;
 import com.example.bolsista.novatentativa.arquitetura.Servidor;
@@ -23,16 +26,19 @@ public class Jogar extends AppCompatActivity {
         getSupportActionBar().hide(); //tirar barra de título
         setContentView(R.layout.activity_jogar);
 
-
-        if(Servidor.serverIdentificado){
-            GerenciadorDeClientes.definirTela(this);
-        }else{
-            Cliente.definirTela(this);
-        }
-
         inicializar();
         escutar();
 
+        if(Servidor.serverIdentificado){
+            GerenciadorDeClientes.definirTela(this);
+            int imagemAtual = Servidor.numberAleatorio;//pegar a imagem atual que está no servidor
+
+            if(imagemAtual != 1){//se fosse 1, seria a primeira interação = circulo
+                imagemButton.setBackgroundResource(imagemAtual);
+            }
+        }else{
+            Cliente.definirTela(this);
+        }
 
     }
 
@@ -73,6 +79,28 @@ public class Jogar extends AppCompatActivity {
             }
         });
         mp.start();
+    }
+
+    public void informarDesconexao(){
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(Jogar.this,"Um cliente foi desconectado",Toast.LENGTH_LONG).show();
+                if(GerenciadorDeClientes.clientes.size()<2){
+                    voltarTela();
+                }
+            }
+        });
+    }
+
+    private void voltarTela(){
+
+        Intent returnTelaServer = new Intent();
+        Bundle b = new Bundle();
+        b.putString("desconexao", "insuficiente");
+        returnTelaServer.putExtras(b);
+        setResult(Activity.RESULT_CANCELED,returnTelaServer);
+        finish();
     }
 
 

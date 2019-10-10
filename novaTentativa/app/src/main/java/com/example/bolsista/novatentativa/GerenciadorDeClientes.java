@@ -24,12 +24,11 @@ public class GerenciadorDeClientes extends Thread{
     private Socket cliente;
     private int numCliente;
 
-    private static final Map<Integer,GerenciadorDeClientes> clientes = new HashMap<>();
+    public static final Map<Integer,GerenciadorDeClientes> clientes = new HashMap<>();
 
     private int imgAtual;
 
     static Jogar jogar;
-
 
     private int vetor[];
 
@@ -77,7 +76,7 @@ public class GerenciadorDeClientes extends Thread{
                     }else if(msg == 997){
                         sortear();
                     }else if(msg == 998){
-                        desconectar();
+                        desconectarControle();
                         break;
                     }else{ //O cavalo errou
                         jogar.tocarError();
@@ -86,10 +85,9 @@ public class GerenciadorDeClientes extends Thread{
                 //mudarImagem(msg);
 
             }
-
-
         }catch (IOException e){
             Log.i("COMUNICACAO", "ERRO = "+ e.getMessage());
+            desconectarCliente();
         }
     }
 
@@ -104,7 +102,7 @@ public class GerenciadorDeClientes extends Thread{
         }
     }
 
-    private void desconectar() {
+    private void desconectarControle() {
         try{
             server.controleRemoto = false;
 
@@ -118,6 +116,23 @@ public class GerenciadorDeClientes extends Thread{
             Log.i("ERRO", "ERRO AO FECHAR CONEXÃO = " + e.getMessage());
         }
     }
+
+    private void desconectarCliente(){
+        try{
+            leitor.close();
+            escritor.close();
+            cliente.close();
+
+            clientes.remove(numCliente);//removendo da tabela hash
+            jogar.informarDesconexao();
+
+            Log.i("REMOTO", "CONTROLE REMOTO DESCONECTADO");
+
+        }catch (IOException e){
+            Log.i("ERRO", "ERRO AO FECHAR CONEXÃO = " + e.getMessage());
+        }
+    }
+
 
 
     private void adicionarCliente() {

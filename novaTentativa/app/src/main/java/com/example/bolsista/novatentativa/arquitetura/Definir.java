@@ -23,8 +23,6 @@ public class Definir extends AppCompatActivity {
 
     }
 
-
-
     private void listener() {
 
         controle.setOnClickListener(new View.OnClickListener() {

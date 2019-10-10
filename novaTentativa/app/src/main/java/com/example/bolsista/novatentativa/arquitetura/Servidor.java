@@ -35,7 +35,7 @@ public class Servidor extends AppCompatActivity {
 
     //static Cliente cliente;
 
-    public int numberAleatorio;
+    public static int numberAleatorio;
     public static boolean serverIdentificado = false;
     public static boolean controleRemoto = false;
 
@@ -128,6 +128,7 @@ public class Servidor extends AppCompatActivity {
 
     }
 
+    //mostrar o ip na tela
     private void mostrarIp(final String ip){
         ipTextView.post(new Runnable() {
 
@@ -165,9 +166,14 @@ public class Servidor extends AppCompatActivity {
         if (requestCode == PICK_CONTACT_REQUEST) {
             // Make sure the request was successful
             if (resultCode == RESULT_OK) {
-                System.out.println("Chegou aqui");
                 serverDiv1.setVisibility(View.GONE);
                 serverDiv2.setVisibility(View.VISIBLE);
+
+                Bundle parametro = data.getExtras();
+                String desconexao = parametro.getString("desconexao","suficiente");
+                if(desconexao.equals("insuficiente")){//se for diferente de suficiente
+                    comecarServerBtn.setVisibility(View.GONE);
+                }
             }else{
                 Toast.makeText(this,"Preencha os campos corretamente",Toast.LENGTH_LONG).show();
             }
