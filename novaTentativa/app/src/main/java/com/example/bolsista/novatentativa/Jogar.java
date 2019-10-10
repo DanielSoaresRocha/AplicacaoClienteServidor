@@ -24,6 +24,7 @@ public class Jogar extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getSupportActionBar().hide(); //tirar barra de título
+        //getActionBar().hide();
         setContentView(R.layout.activity_jogar);
 
         inicializar();
