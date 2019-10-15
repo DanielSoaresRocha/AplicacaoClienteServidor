@@ -44,11 +44,11 @@ void loop() {
       Serial.println("Mensagem recebida do servidor = ");
       Serial.println(mensagem);
       digitalWrite(led,HIGH);
-      delay(500);
-      client.flush();
-      continue;  
+      //delay(500);
+      //client.flush();
+      //continue;  
     }else{
-      Serial.println("Sem dados a serem lidos");
+      //Serial.println("Sem dados a serem lidos");
       digitalWrite(led,LOW);
     }
   }
