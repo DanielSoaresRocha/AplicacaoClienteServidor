@@ -33,6 +33,8 @@ public class Servidor extends AppCompatActivity {
 
     ServerSocket servidor;
 
+    public static int numCliente;
+
     //static Cliente cliente;
 
     public static int numberAleatorio;
@@ -96,7 +98,7 @@ public class Servidor extends AppCompatActivity {
                     Log.i("SERVIDOR", "Esperando conexão...");
                     pegarIp();
 
-                    int numCliente = 0;
+                    numCliente = 0;
                     while (true) {
                         Socket cliente = servidor.accept();
                         Log.i("SERVIDOR", "CLIENTE FOI CONECTADO = " + cliente.getInetAddress());

@@ -8,9 +8,13 @@ import com.example.bolsista.novatentativa.arquitetura.Servidor;
 import com.example.bolsista.novatentativa.configuracao.Configuracao;
 import com.example.bolsista.novatentativa.configuracao.ConfigurarTeste;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
@@ -20,6 +24,8 @@ import java.util.Random;
 public class GerenciadorDeClientes extends Thread{
     private ObjectInputStream leitor;
     private ObjectOutputStream escritor;
+
+    PrintStream esp32; //enviar comando para o esp32
 
     private Socket cliente;
     private int numCliente;
@@ -44,51 +50,53 @@ public class GerenciadorDeClientes extends Thread{
 
     @Override
     public void run() {
-        try {
-            escritor = new ObjectOutputStream(cliente.getOutputStream());///***
-            Log.i("OBJETO","Criou output do servidor");///****
-            leitor = new ObjectInputStream(cliente.getInputStream());///*****
-            Log.i("OBJETO","Criou input do servidor");///****
+            if(!identificarCliente()) { //se o cliente não for o esp32
+                try {
+                    escritor = new ObjectOutputStream(cliente.getOutputStream());
+                    Log.i("OBJETO", "Criou output do servidor");
+                    leitor = new ObjectInputStream(cliente.getInputStream());
+                    Log.i("OBJETO", "Criou input do servidor");
 
-            vetor = ConfigurarTeste.configuracao.getImagens();
+                    vetor = ConfigurarTeste.configuracao.getImagens();
+                    enviarObjeto();
 
-            identificarCliente();
 
-            int msg;
-            imgAtual = 1; //////////////////DESTAQUE
-            enviarObjeto();
+                    int msg;
+                    imgAtual = 1; //////////////////DESTAQUE
 
-            while (true){
-                msg = leitor.readInt();
-                imgAtual = server.numberAleatorio;
-                Log.i("COMUNICACAO","MENSAGEM RECEBIDA DO CLIENTE");
-                Log.i("COMUNICACAO","cliente -- "+ msg+" server = "+ imgAtual);
+                    while (true) {
+                        msg = leitor.readInt();
+                        imgAtual = server.numberAleatorio;
+                        Log.i("COMUNICACAO", "MENSAGEM RECEBIDA DO CLIENTE");
+                        Log.i("COMUNICACAO", "cliente -- " + msg + " server = " + imgAtual);
 
-                if(clientes.size()>=2){
-                    if(msg == imgAtual){
-                        jogar.tocarAcerto(); // cavalo acertou
+                        if (clientes.size() >= 2) {
+                            if (msg == imgAtual) {
+                                jogar.tocarAcerto(); // cavalo acertou
+                                esp32();//eenviar comando para o esp32
 
-                        esperar(); //mudar imagens para branco, e espera um novo sorteio
-                        if(!server.controleRemoto){  // se o controle remoto não estiver conectado
-                            dormir(ConfigurarTeste.configuracao.getIntervalo1()); // tempo de espera do mestre
-                            sortear(); //fazer nova interação de imagens entre os tablets
+                                esperar(); //mudar imagens para branco, e espera um novo sorteio
+                                if (!server.controleRemoto) {  // se o controle remoto não estiver conectado
+                                    dormir(ConfigurarTeste.configuracao.getIntervalo1()); // tempo de espera do mestre
+                                    sortear(); //fazer nova interação de imagens entre os tablets
+                                }
+                            } else if (msg == 997) {//trocar imagens
+                                sortear();
+                            } else if (msg == 998) {//fechar socket
+                                desconectarControle();
+                                break;
+                            } else { //O cavalo errou
+                                jogar.tocarError();
+                            }
                         }
-                    }else if(msg == 997){
-                        sortear();
-                    }else if(msg == 998){
-                        desconectarControle();
-                        break;
-                    }else{ //O cavalo errou
-                        jogar.tocarError();
-                    }
-                }
-                //mudarImagem(msg);
+                        //mudarImagem(msg);
 
+                    }
+                } catch (IOException e) {
+                    Log.i("COMUNICACAO", "ERRO = " + e.getMessage());
+                    desconectarCliente();
+                }
             }
-        }catch (IOException e){
-            Log.i("COMUNICACAO", "ERRO = "+ e.getMessage());
-            desconectarCliente();
-        }
     }
 
     private void enviarObjeto() {
@@ -132,23 +140,23 @@ public class GerenciadorDeClientes extends Thread{
             Log.i("ERRO", "ERRO AO FECHAR CONEXÃO = " + e.getMessage());
         }
     }
-
-
-
+    
     private void adicionarCliente() {
         clientes.put(numCliente,this);
-        ativarBotao();
+        exibirMensagem("pronto para comecar",true);
 
     }
 
     //este método faz aparecer o botao começar
-    private void ativarBotao() {
+    private void exibirMensagem(final String mensagem,final boolean btn) {
         if(clientes.size()>=2){
             server.comecarServerBtn.post(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(server.getApplicationContext(),R.string.comecar,Toast.LENGTH_LONG).show();
+                    Toast.makeText(server.getApplicationContext(),mensagem,Toast.LENGTH_LONG).show();
+                    if(btn){
                     server.comecarServerBtn.setVisibility(View.VISIBLE);
+                    }
                 }
             });
         }
@@ -171,23 +179,53 @@ public class GerenciadorDeClientes extends Thread{
         });
 
     }
+    /*
+    Este método trata a comunicação com sockets de uma maneira mais "crua" , a fim de receber a
+    mensagem do esp32, é necessário diminuir a abstração que é recebida com ObjectOutputStream e
+    ObjectInputStream no java (que recebem um objeto) para os construtores PrintStream(receber dados)
+    e  BufferedReader(enviar dados), assim, podemos tratar o protocolo TCP para que o servidor socket
+    java receba corretamente os dados de um cliente socket de um esp32
 
-    private void identificarCliente() {
+    objetivo: identificar se o tipo do cliente é o controle remoto, um cliente padrão, ou um esp32
+    */
+    private Boolean identificarCliente() {
         try {
+            BufferedReader entrada = new BufferedReader(new InputStreamReader(cliente.getInputStream()));
 
-        String identificaCliente = leitor.readUTF();
+            Log.i("esp32","Esperando receber mensagem");
+            String identificador = entrada.readLine(); // mensagem que é recebida de um tablet ou esp32
+            Log.i("esp32","mensagem chegouuuu: "+ identificador);
 
-        if(identificaCliente.equals("remoto")){
-            Log.i("REMOTO","CONTROLE REMOTO DETECTADO");
-            server.controleRemoto = true;
-        }else{
-            Log.i("REMOTO","CLIENTE PADRAO ADICIONADO");
-            adicionarCliente();
-        }
-
-
+            if(identificador.contains("padrao")){
+                Log.i("REMOTO","CLIENTE PADRAO ADICIONADO");
+                exibirMensagem("padrao",false);
+                adicionarCliente();
+                return false;
+            }else if(identificador.contains("remoto")){
+                Log.i("REMOTO","CONTROLE REMOTO DETECTADO");
+                exibirMensagem("remoto",false);
+                server.controleRemoto = true;
+                return false;
+            }else{
+                Log.i("esp32","ESP32 FOI CONECTADO");
+                exibirMensagem("esp32",false);
+                esp32 = new PrintStream(cliente.getOutputStream());
+                esp32.print(1);
+                esp32.flush();
+                Servidor.numCliente = Servidor.numCliente - 1; //descontar 1
+            }
         }catch (IOException e){
             System.out.println("Erro ao identificar cliente: "+ e.getMessage());
+            return false;
+        }
+        return true;
+    }
+
+    //enviar comando para o esp32
+    public void esp32(){
+        if(esp32 != null){
+            esp32.print(1);
+            esp32.flush();
         }
     }
 

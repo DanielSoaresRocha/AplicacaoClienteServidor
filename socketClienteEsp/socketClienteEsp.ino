@@ -34,7 +34,10 @@ void loop() {
   }
 
   Serial.println("conexão com o servidor concluida");
-
+  Serial.println("vai enviar mensagem");
+  client.println("hello");
+  client.flush();
+  Serial.println("enviou a mensagem");
   //client.stop;
   Serial.println("esperando mensagem chegar");
   while(true){

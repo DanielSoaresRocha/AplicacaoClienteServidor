@@ -13,6 +13,8 @@ import com.example.bolsista.novatentativa.configuracao.Configuracao;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.net.Socket;
 
 public class Cliente {
@@ -74,17 +76,10 @@ public class Cliente {
 
             //criando escrita
 
+            enviarIdentificacao();
+
             escritor = new ObjectOutputStream(cliente.getOutputStream());
             Log.i("OBJETO","Criou output do CLIENTE");
-
-
-            if(!controleRemoto){
-                escritor.writeUTF("CLIENTE PADRÃO");
-                escritor.flush();
-            }else{
-                escritor.writeUTF("remoto");
-                escritor.flush();
-            }
 
             if(!controleRemoto){
                 ativarBotao();
@@ -178,6 +173,22 @@ public class Cliente {
             }
         });
 
+    }
+    /*
+    Da mesma forma que o servidor recebe a comunicação de uma forma mais crua para identificação,
+    o cliente também deve reduzir o nível de abstração utilizando para enviar a mensagem PrintStream
+    ao invés de ObjectOutputStream
+    */
+    public void enviarIdentificacao() throws IOException{
+        //PrintStream saida = new PrintStream(cliente.getOutputStream());
+        PrintWriter saida = new PrintWriter(cliente.getOutputStream());
+        if(!controleRemoto){
+            saida.println("padrao");
+            saida.flush();
+        }else{
+            saida.println("remoto");
+            saida.flush();
+        }
     }
 
     public static void definirTela(Jogar jogarr){
