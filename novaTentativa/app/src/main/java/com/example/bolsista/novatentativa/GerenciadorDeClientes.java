@@ -25,7 +25,7 @@ public class GerenciadorDeClientes extends Thread{
     private ObjectInputStream leitor;
     private ObjectOutputStream escritor;
 
-    PrintStream esp32; //enviar comando para o esp32
+    static PrintStream esp32; //enviar comando para o esp32
 
     private Socket cliente;
     private int numCliente;
@@ -140,7 +140,7 @@ public class GerenciadorDeClientes extends Thread{
             Log.i("ERRO", "ERRO AO FECHAR CONEXÃO = " + e.getMessage());
         }
     }
-    
+
     private void adicionarCliente() {
         clientes.put(numCliente,this);
         exibirMensagem("pronto para comecar",true);
@@ -223,9 +223,13 @@ public class GerenciadorDeClientes extends Thread{
 
     //enviar comando para o esp32
     public void esp32(){
-        if(esp32 != null){
-            esp32.print(1);
-            esp32.flush();
+        try {
+        Log.i("ESP32", "ENVIOU COMANDO PARA O ESP");
+        esp32.print(1);
+        esp32.flush();
+
+        }catch (NullPointerException e){
+            Log.i("ERRO", "erro ao enviar comando para o esp32 = "+ e.getMessage());
         }
     }
 

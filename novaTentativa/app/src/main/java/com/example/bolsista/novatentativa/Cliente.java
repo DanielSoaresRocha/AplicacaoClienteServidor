@@ -74,10 +74,10 @@ public class Cliente {
             }
         }).start();
 
-            //criando escrita
 
             enviarIdentificacao();
 
+            //criando escrita
             escritor = new ObjectOutputStream(cliente.getOutputStream());
             Log.i("OBJETO","Criou output do CLIENTE");
 
