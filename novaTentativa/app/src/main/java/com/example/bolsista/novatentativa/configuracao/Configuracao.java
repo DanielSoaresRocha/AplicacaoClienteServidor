@@ -4,7 +4,7 @@ package com.example.bolsista.novatentativa.configuracao;
 import java.io.Serializable;
 
 public class Configuracao implements Serializable{
-    //private static final long serialVersionUID = 1L;
+   // private static final long serialVersionUID = 1L;
     //private String mensagem;
 
     private int imagens[];

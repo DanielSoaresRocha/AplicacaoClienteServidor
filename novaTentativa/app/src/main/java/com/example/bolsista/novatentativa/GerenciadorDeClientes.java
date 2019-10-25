@@ -19,6 +19,7 @@ import java.net.Socket;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
+import java.util.function.BiConsumer;
 
 
 public class GerenciadorDeClientes extends Thread{
@@ -30,7 +31,7 @@ public class GerenciadorDeClientes extends Thread{
     private Socket cliente;
     private int numCliente;
 
-    public static final Map<Integer,GerenciadorDeClientes> clientes = new HashMap<>();
+    public static Map<Integer,GerenciadorDeClientes> clientes = new HashMap<>();
 
     private int imgAtual;
 
@@ -52,17 +53,18 @@ public class GerenciadorDeClientes extends Thread{
     public void run() {
             if(!identificarCliente()) { //se o cliente não for o esp32
                 try {
+                    //escritor = new ObjectOutputStream(cliente.getOutputStream());
                     escritor = new ObjectOutputStream(cliente.getOutputStream());
                     Log.i("OBJETO", "Criou output do servidor");
+                    sleep(2000);
                     leitor = new ObjectInputStream(cliente.getInputStream());
                     Log.i("OBJETO", "Criou input do servidor");
 
                     vetor = ConfigurarTeste.configuracao.getImagens();
                     enviarObjeto();
 
-
                     int msg;
-                    imgAtual = 1; //////////////////DESTAQUE
+                    imgAtual = R.drawable.circulo; //////////////////DESTAQUE
 
                     while (true) {
                         msg = leitor.readInt();
@@ -73,9 +75,8 @@ public class GerenciadorDeClientes extends Thread{
                         if (clientes.size() >= 2) {
                             if (msg == imgAtual) {
                                 jogar.tocarAcerto(); // cavalo acertou
-                                esp32();//eenviar comando para o esp32
-
                                 esperar(); //mudar imagens para branco, e espera um novo sorteio
+                                esp32();//enviar comando para o esp32
                                 if (!server.controleRemoto) {  // se o controle remoto não estiver conectado
                                     dormir(ConfigurarTeste.configuracao.getIntervalo1()); // tempo de espera do mestre
                                     sortear(); //fazer nova interação de imagens entre os tablets
@@ -95,6 +96,8 @@ public class GerenciadorDeClientes extends Thread{
                 } catch (IOException e) {
                     Log.i("COMUNICACAO", "ERRO = " + e.getMessage());
                     desconectarCliente();
+                }catch (InterruptedException e) {
+                    Log.i("ERRO", "ERRO EM SLEEP = " + e.getMessage());
                 }
             }
     }
@@ -131,13 +134,47 @@ public class GerenciadorDeClientes extends Thread{
             escritor.close();
             cliente.close();
 
-            clientes.remove(numCliente);//removendo da tabela hash
+            //clientes.remove(numCliente);//removendo da tabela hash
+            clientes.put(numCliente,null);
             jogar.informarDesconexao();
 
-            Log.i("REMOTO", "CONTROLE REMOTO DESCONECTADO");
+            reestabelecer();
+            Log.i("REMOTO", "CLIENTE REMOTO DESCONECTADO");
 
         }catch (IOException e){
             Log.i("ERRO", "ERRO AO FECHAR CONEXÃO = " + e.getMessage());
+        }
+    }
+
+    private void reestabelecer(){
+        Servidor.numCliente = Servidor.numCliente - 1;//descontar o cliente que foi desconectado
+        Map<Integer,GerenciadorDeClientes> clientesAuxiliar = new HashMap<>();
+
+        int x = 0;
+        for(int i = 0; i <= 5; i++){
+            if(clientes.get(i) == null){
+            }else{
+                clientesAuxiliar.put(x,clientes.get(i));
+                x++;
+            }
+        }
+        clientes = clientesAuxiliar;
+        enviarImagemCorreta();
+
+    }
+
+    /* Este metodo nao deixa que a imagem correta se perca com o ultimo cliente que saiu,
+    enviando para o primeiro cliente da lista a imagem do servidor
+    */
+    private void enviarImagemCorreta() {
+        if(clientes.size()>0){
+            GerenciadorDeClientes destino = clientes.get(0);
+            try {
+                destino.getEscritor().writeInt(imgAtual);
+                destino.getEscritor().flush();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
     }
 
@@ -150,7 +187,7 @@ public class GerenciadorDeClientes extends Thread{
     //este método faz aparecer o botao começar
     private void exibirMensagem(final String mensagem,final boolean btn) {
         if(clientes.size()>=2){
-            server.comecarServerBtn.post(new Runnable() {
+            server.criarServerBtn.post(new Runnable() {
                 @Override
                 public void run() {
                     Toast.makeText(server.getApplicationContext(),mensagem,Toast.LENGTH_LONG).show();

@@ -34,9 +34,8 @@ public class Jogar extends AppCompatActivity {
             GerenciadorDeClientes.definirTela(this);
             int imagemAtual = Servidor.numberAleatorio;//pegar a imagem atual que está no servidor
 
-            if(imagemAtual != 1){//se fosse 1, seria a primeira interação = circulo
-                imagemButton.setBackgroundResource(imagemAtual);
-            }
+            imagemButton.setBackgroundResource(imagemAtual);
+
         }else{
             Cliente.definirTela(this);
         }

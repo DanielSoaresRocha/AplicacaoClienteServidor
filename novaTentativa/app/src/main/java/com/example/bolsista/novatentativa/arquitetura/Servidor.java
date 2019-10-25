@@ -24,8 +24,8 @@ import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Servidor extends AppCompatActivity {
-    Button configTestBtn, criarServerBtn;
-    public Button comecarServerBtn;
+    Button configTestBtn;
+    public Button comecarServerBtn, criarServerBtn;
     LinearLayout serverDiv1,serverDiv2;
     TextView ipTextView;
 
@@ -85,7 +85,7 @@ public class Servidor extends AppCompatActivity {
 
     private void criarServidor() {
         final Servidor server = this;
-        numberAleatorio = 1;
+        numberAleatorio = R.drawable.circulo;
 
         serverIdentificado = true;
         new Thread(new Runnable() {

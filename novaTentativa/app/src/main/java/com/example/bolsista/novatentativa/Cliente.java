@@ -41,7 +41,7 @@ public class Cliente {
 
 
     public void connect(){
-        imgAtual = 1; //////////////////DESTAQUE
+        imgAtual = R.drawable.circulo; //////////////////DESTAQUE
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
