@@ -15,12 +15,12 @@ char* host ="";
 
 const uint16_t port = 9999;
 
-//static const int servoPin = 2;
+static const int servoPin = 4;
 Servo servo;
 
 void setup() {
   Serial.begin(115200);
-  servo.attach(4);
+  servo.attach(servoPin);
   pinMode(ledVermelho, OUTPUT);
   pinMode(ledVerde, OUTPUT);
   //criando rede
@@ -29,10 +29,13 @@ void setup() {
   IPAddress IP = WiFi.softAPIP();
   Serial.println("AP IP address: ");
   Serial.println(IP);
+
+  servo.write(0);
 }
 
 void loop() {
   digitalWrite(ledVermelho,HIGH);
+  digitalWrite(ledVerde,LOW);
   // put your main code here, to run repeatedly:
   if(tentaConexao()== false){
     number++;
@@ -40,8 +43,8 @@ void loop() {
       number = 2;
     return;
   }else{
-    //servo.write(0);
     digitalWrite(ledVermelho,LOW);
+    digitalWrite(ledVerde,HIGH);
     Serial.println("conexão com o servidor concluida");
     Serial.println("vai enviar mensagem");
     client.println("esp32");
@@ -59,10 +62,6 @@ void loop() {
         Serial.println("Mensagem recebida do servidor = ");
         Serial.println(mensagem);
         moverMotor(mensagem);
-        digitalWrite(ledVerde,HIGH);
-      }else{
-        //Serial.println("Sem dados a serem lidos");
-        digitalWrite(ledVerde,LOW);
       }
     }
     Serial.println("conexão com o servidor fechada");
@@ -72,24 +71,11 @@ void loop() {
 }
 
 void moverMotor(char mensagem){
- Serial.println("ENTROU SERVO");
  if(mensagem == '1'){
     servo.write(178);
  }else if(mensagem == '0'){
     servo.write(0);
  }
-  /*for(int posDegres = 0; posDegres <= 178; posDegres++){
-    servo.write(posDegres);
-    Serial.println(posDegres);
-    delay(20);
-  }
-  delay(3000);
-  for(int posDegres = 178; posDegres >= 0; posDegres--){
-    servo.write(posDegres);
-    Serial.println(posDegres);
-    delay(20);
-  }*/
-  
 }
 
 bool tentaConexao(){

@@ -249,8 +249,6 @@ public class GerenciadorDeClientes extends Thread{
                 Log.i("esp32","ESP32 FOI CONECTADO");
                 exibirMensagem("esp32",false);
                 esp32 = new PrintStream(cliente.getOutputStream());
-                //esp32.print(1);//1 para acionar o motor, e 0 para fechar
-                //esp32.flush();
                 Servidor.numCliente = Servidor.numCliente - 1; //descontar 1
             }
         }catch (IOException e){
