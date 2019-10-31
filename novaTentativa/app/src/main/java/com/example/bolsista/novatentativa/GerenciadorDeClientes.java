@@ -27,6 +27,8 @@ public class GerenciadorDeClientes extends Thread{
     private ObjectOutputStream escritor;
 
     static PrintStream esp32; //enviar comando para o esp32
+    private final int ABRIR_MOTOR = 1;
+    private final int FECHAR_MOTOR = 0;
 
     private Socket cliente;
     private int numCliente;
@@ -38,6 +40,7 @@ public class GerenciadorDeClientes extends Thread{
     static Jogar jogar;
 
     private int vetor[];
+    int msg;
 
     private Servidor server;
 
@@ -53,19 +56,15 @@ public class GerenciadorDeClientes extends Thread{
     public void run() {
             if(!identificarCliente()) { //se o cliente não for o esp32
                 try {
-                    //escritor = new ObjectOutputStream(cliente.getOutputStream());
                     escritor = new ObjectOutputStream(cliente.getOutputStream());
                     Log.i("OBJETO", "Criou output do servidor");
-                    sleep(2000);
+                    //leep(2000);
                     leitor = new ObjectInputStream(cliente.getInputStream());
                     Log.i("OBJETO", "Criou input do servidor");
-
-                    vetor = ConfigurarTeste.configuracao.getImagens();
                     enviarObjeto();
 
-                    int msg;
                     imgAtual = R.drawable.circulo; //////////////////DESTAQUE
-
+                    vetor = ConfigurarTeste.configuracao.getImagens();
                     while (true) {
                         msg = leitor.readInt();
                         imgAtual = server.numberAleatorio;
@@ -76,7 +75,7 @@ public class GerenciadorDeClientes extends Thread{
                             if (msg == imgAtual) {
                                 jogar.tocarAcerto(); // cavalo acertou
                                 esperar(); //mudar imagens para branco, e espera um novo sorteio
-                                esp32();//enviar comando para o esp32
+                                esp32(ABRIR_MOTOR);//enviar comando para abrir o servo no esp32
                                 if (!server.controleRemoto) {  // se o controle remoto não estiver conectado
                                     dormir(ConfigurarTeste.configuracao.getIntervalo1()); // tempo de espera do mestre
                                     sortear(); //fazer nova interação de imagens entre os tablets
@@ -96,9 +95,9 @@ public class GerenciadorDeClientes extends Thread{
                 } catch (IOException e) {
                     Log.i("COMUNICACAO", "ERRO = " + e.getMessage());
                     desconectarCliente();
-                }catch (InterruptedException e) {
+                }/*catch (InterruptedException e) {
                     Log.i("ERRO", "ERRO EM SLEEP = " + e.getMessage());
-                }
+                }*/
             }
     }
 
@@ -136,12 +135,14 @@ public class GerenciadorDeClientes extends Thread{
 
             //clientes.remove(numCliente);//removendo da tabela hash
             clientes.put(numCliente,null);
-            jogar.informarDesconexao();
-
+            enviarImagemCorreta();
             reestabelecer();
+            jogar.informarDesconexao();
             Log.i("REMOTO", "CLIENTE REMOTO DESCONECTADO");
 
         }catch (IOException e){
+            Log.i("ERRO", "ERRO AO FECHAR CONEXÃO = " + e.getMessage());
+        }catch (java.lang.NullPointerException e){
             Log.i("ERRO", "ERRO AO FECHAR CONEXÃO = " + e.getMessage());
         }
     }
@@ -159,21 +160,22 @@ public class GerenciadorDeClientes extends Thread{
             }
         }
         clientes = clientesAuxiliar;
-        enviarImagemCorreta();
-
     }
 
     /* Este metodo nao deixa que a imagem correta se perca com o ultimo cliente que saiu,
     enviando para o primeiro cliente da lista a imagem do servidor
     */
     private void enviarImagemCorreta() {
-        if(clientes.size()>0){
-            GerenciadorDeClientes destino = clientes.get(0);
-            try {
-                destino.getEscritor().writeInt(imgAtual);
-                destino.getEscritor().flush();
-            } catch (IOException e) {
-                e.printStackTrace();
+        for(int i = 0; i < clientes.size(); i++) {
+            if (clientes.get(i) != null) {
+                GerenciadorDeClientes destino = clientes.get(i);
+                try {
+                    destino.getEscritor().writeInt(Servidor.numberAleatorio);
+                    destino.getEscritor().flush();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
             }
         }
     }
@@ -247,8 +249,8 @@ public class GerenciadorDeClientes extends Thread{
                 Log.i("esp32","ESP32 FOI CONECTADO");
                 exibirMensagem("esp32",false);
                 esp32 = new PrintStream(cliente.getOutputStream());
-                esp32.print(1);
-                esp32.flush();
+                //esp32.print(1);//1 para acionar o motor, e 0 para fechar
+                //esp32.flush();
                 Servidor.numCliente = Servidor.numCliente - 1; //descontar 1
             }
         }catch (IOException e){
@@ -258,19 +260,19 @@ public class GerenciadorDeClientes extends Thread{
         return true;
     }
 
-    //enviar comando para o esp32
-    public void esp32(){
+    //enviar comando para o esp32, 1 para abrir o motor, e 0 para fechar
+    public void esp32(int comando){
         try {
-        Log.i("ESP32", "ENVIOU COMANDO PARA O ESP");
-        esp32.print(1);
-        esp32.flush();
-
+            esp32.print(comando);
+            esp32.flush();
+            Log.i("enviarESP32", "ENVIOU COMANDO PARA O ESP");
         }catch (NullPointerException e){
             Log.i("ERRO", "erro ao enviar comando para o esp32 = "+ e.getMessage());
         }
     }
 
     public void sortear() throws IOException {
+        esp32(FECHAR_MOTOR);//enviar comando para o servo fechar no esp32
 
         //mudar o numero aleatorio no servidor
         server.numberAleatorio = vetor[sortearNumero()];

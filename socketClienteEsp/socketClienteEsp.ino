@@ -40,39 +40,45 @@ void loop() {
       number = 2;
     return;
   }else{
-  //servo.write(0);
-  digitalWrite(ledVermelho,LOW);
-  Serial.println("conexão com o servidor concluida");
-  Serial.println("vai enviar mensagem");
-  client.println("hello");
-  client.flush();
-  Serial.println("enviou a mensagem");
-  //client.stop;
-  Serial.println("esperando mensagem chegar");
-  while(true){
-    if(!client.connected()){//verifica se o esp ainda está conectado
-      break;
+    //servo.write(0);
+    digitalWrite(ledVermelho,LOW);
+    Serial.println("conexão com o servidor concluida");
+    Serial.println("vai enviar mensagem");
+    client.println("esp32");
+    client.flush();
+    Serial.println("enviou a mensagem");
+    //client.stop;
+    Serial.println("esperando mensagem chegar");
+    while(true){
+      if(!client.connected()){//verifica se o esp ainda está conectado
+        break;
+      }
+      delay(200);
+      if(client.available()){
+        char mensagem = client.read();
+        Serial.println("Mensagem recebida do servidor = ");
+        Serial.println(mensagem);
+        moverMotor(mensagem);
+        digitalWrite(ledVerde,HIGH);
+      }else{
+        //Serial.println("Sem dados a serem lidos");
+        digitalWrite(ledVerde,LOW);
+      }
     }
-    delay(200);
-    if(client.available()){
-      char mensagem = client.read();
-      Serial.println("Mensagem recebida do servidor = ");
-      Serial.println(mensagem);
-      moverMotor();
-      digitalWrite(ledVerde,HIGH);
-    }else{
-      //Serial.println("Sem dados a serem lidos");
-      digitalWrite(ledVerde,LOW);
-    }
-  }
-  Serial.println("conexão com o servidor fechada");
-  }
-  delay(1000);
+    Serial.println("conexão com o servidor fechada");
+ }
+ delay(1000);
   
 }
 
-void moverMotor(){
-  for(int posDegres = 0; posDegres <= 178; posDegres++){
+void moverMotor(char mensagem){
+ Serial.println("ENTROU SERVO");
+ if(mensagem == '1'){
+    servo.write(178);
+ }else if(mensagem == '0'){
+    servo.write(0);
+ }
+  /*for(int posDegres = 0; posDegres <= 178; posDegres++){
     servo.write(posDegres);
     Serial.println(posDegres);
     delay(20);
@@ -82,7 +88,7 @@ void moverMotor(){
     servo.write(posDegres);
     Serial.println(posDegres);
     delay(20);
-  }
+  }*/
   
 }
 

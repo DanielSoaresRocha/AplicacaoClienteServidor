@@ -100,7 +100,7 @@ public class Jogar extends AppCompatActivity {
         Bundle b = new Bundle();
         b.putString("desconexao", "insuficiente");
         returnTelaServer.putExtras(b);
-        setResult(Activity.RESULT_CANCELED,returnTelaServer);
+        setResult(Activity.RESULT_OK,returnTelaServer);
         finish();
     }
 
