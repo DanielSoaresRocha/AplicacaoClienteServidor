@@ -15,7 +15,7 @@ char* host ="";
 
 const uint16_t port = 9999;
 
-static const int servoPin = 4;
+static const int servoPin = 5;
 Servo servo;
 
 void setup() {
