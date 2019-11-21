@@ -1,17 +1,22 @@
 package com.example.bolsista.novatentativa.arquitetura;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageView;
 
-import com.example.bolsista.novatentativa.MainActivity;
+import com.example.bolsista.novatentativa.Cavalo;
 import com.example.bolsista.novatentativa.R;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 public class Definir extends AppCompatActivity {
 
     ImageView controle,mestre,escravo;
+
+    private FirebaseDatabase mFirebaseDatabase;
+    private DatabaseReference mDatabaseReference;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +25,15 @@ public class Definir extends AppCompatActivity {
 
         inicializar();
         listener();
+        conectarAoBanco();
 
+    }
+
+    private void conectarAoBanco() {
+        mFirebaseDatabase = FirebaseDatabase.getInstance();
+        mDatabaseReference = mFirebaseDatabase.getReference().child("equinos-qi");
+
+        mDatabaseReference.push().setValue(new Cavalo("Robert","napolitanakkk",5));
     }
 
     private void listener() {

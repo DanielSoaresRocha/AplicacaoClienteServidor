@@ -3,9 +3,8 @@ package com.example.bolsista.novatentativa;
 import android.app.Activity;
 import android.content.Intent;
 import android.media.MediaPlayer;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -13,8 +12,6 @@ import android.widget.Toast;
 import com.example.bolsista.novatentativa.arquitetura.ClienteActivity;
 import com.example.bolsista.novatentativa.arquitetura.Servidor;
 import com.example.bolsista.novatentativa.configuracao.ConfigurarTeste;
-
-import java.io.IOException;
 
 public class Jogar extends AppCompatActivity {
     Button imagemButton;

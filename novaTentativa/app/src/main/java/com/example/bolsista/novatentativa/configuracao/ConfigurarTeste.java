@@ -3,7 +3,7 @@ package com.example.bolsista.novatentativa.configuracao;
 import android.app.Activity;
 import android.content.Intent;
 import android.media.MediaPlayer;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -12,10 +12,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.bolsista.novatentativa.MainActivity;
 import com.example.bolsista.novatentativa.R;
-
-import java.io.IOException;
 
 public class ConfigurarTeste extends AppCompatActivity {
     EditText qtdQuestao, intervaloQuestoes, intervalo2;
