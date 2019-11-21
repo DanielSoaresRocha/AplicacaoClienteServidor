@@ -47,4 +47,11 @@
     <string name="pronto_para_criar">Pronto para criar</string>
     <string name="controle_remoto">Controle Remoto</string>
     <string name="iniciar_controle_remoto">Iniciar controle remoto</string>
+    <string name="cadastrar_equino">Cadastrar equino</string>
+    <string name="nome">Nome</string>
+    <string name="idade">Idade</string>
+    <string name="raca">raça</string>
+    <string name="detalhes">Detalhes</string>
+    <string name="cadastrar">cadastrar</string>
+    <string name="cancelar">cancelar</string>
 </resources>

@@ -29,6 +29,9 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.0'
     implementation 'androidx.cardview:cardview:1.0.0'
 
+    //material desingn
+    implementation 'com.android.support:design:28.0.3'
+
     //imagens da net
     implementation 'com.github.bumptech.glide:glide:4.10.0'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'

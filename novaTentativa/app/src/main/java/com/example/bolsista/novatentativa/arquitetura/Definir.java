@@ -4,19 +4,16 @@ import android.content.Intent;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
-import com.example.bolsista.novatentativa.Cavalo;
+import com.example.bolsista.novatentativa.CadastrarCavalo;
 import com.example.bolsista.novatentativa.R;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class Definir extends AppCompatActivity {
 
     ImageView controle,mestre,escravo;
-
-    private FirebaseDatabase mFirebaseDatabase;
-    private DatabaseReference mDatabaseReference;
+    Button testeBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,15 +22,7 @@ public class Definir extends AppCompatActivity {
 
         inicializar();
         listener();
-        conectarAoBanco();
 
-    }
-
-    private void conectarAoBanco() {
-        mFirebaseDatabase = FirebaseDatabase.getInstance();
-        mDatabaseReference = mFirebaseDatabase.getReference().child("equinos-qi");
-
-        mDatabaseReference.push().setValue(new Cavalo("Robert","napolitanakkk",5));
     }
 
     private void listener() {
@@ -61,6 +50,14 @@ public class Definir extends AppCompatActivity {
                 startActivity(telaEscravo);
             }
         });
+
+        testeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent telaCadastro = new Intent(Definir.this, CadastrarCavalo.class);
+                startActivity(telaCadastro);
+            }
+        });
     }
 
 
@@ -68,5 +65,6 @@ public class Definir extends AppCompatActivity {
         controle = findViewById(R.id.controleImgView);
         mestre = findViewById(R.id.mestreImgView);
         escravo = findViewById(R.id.escravoImgView);
+        testeBtn = findViewById(R.id.testeBtn);
     }
 }
