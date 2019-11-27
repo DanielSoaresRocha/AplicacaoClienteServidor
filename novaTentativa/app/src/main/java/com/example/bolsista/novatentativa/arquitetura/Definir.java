@@ -1,17 +1,19 @@
 package com.example.bolsista.novatentativa.arquitetura;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
-import com.example.bolsista.novatentativa.MainActivity;
+import com.example.bolsista.novatentativa.CadastrarCavalo;
 import com.example.bolsista.novatentativa.R;
 
 public class Definir extends AppCompatActivity {
 
     ImageView controle,mestre,escravo;
+    Button testeBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,14 @@ public class Definir extends AppCompatActivity {
                 startActivity(telaEscravo);
             }
         });
+
+        testeBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent telaCadastro = new Intent(Definir.this, CadastrarCavalo.class);
+                startActivity(telaCadastro);
+            }
+        });
     }
 
 
@@ -55,5 +65,6 @@ public class Definir extends AppCompatActivity {
         controle = findViewById(R.id.controleImgView);
         mestre = findViewById(R.id.mestreImgView);
         escravo = findViewById(R.id.escravoImgView);
+        testeBtn = findViewById(R.id.testeBtn);
     }
 }
