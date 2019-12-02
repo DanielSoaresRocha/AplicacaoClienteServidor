@@ -8,12 +8,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 
 import com.example.bolsista.novatentativa.CadastrarCavalo;
+import com.example.bolsista.novatentativa.ListarCavalos;
 import com.example.bolsista.novatentativa.R;
 
 public class Definir extends AppCompatActivity {
 
     ImageView controle,mestre,escravo;
-    Button testeBtn;
+    Button testeBtn, listarBtn;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,6 +59,15 @@ public class Definir extends AppCompatActivity {
                 startActivity(telaCadastro);
             }
         });
+
+        listarBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent telaListar = new Intent(Definir.this, ListarCavalos.class);
+                startActivity(telaListar);
+            }
+        });
+
     }
 
 
@@ -66,5 +76,6 @@ public class Definir extends AppCompatActivity {
         mestre = findViewById(R.id.mestreImgView);
         escravo = findViewById(R.id.escravoImgView);
         testeBtn = findViewById(R.id.testeBtn);
+        listarBtn = findViewById(R.id.listarBtn);
     }
 }
