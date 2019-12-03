@@ -8,7 +8,7 @@ public class Cavalo {
     private String raca;
     private int idade;
     private String detalhes;
-    private DocumentReference referencia;
+    private DocumentReference referencia; //referencia a outro documento de outra coleção ("chave estrangeira")
 
     public Cavalo() {
     }
