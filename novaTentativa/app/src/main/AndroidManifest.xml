@@ -15,9 +15,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ListarCavalos">
+        <activity android:name=".banco.ListarCavalos">
         </activity>
-        <activity android:name=".CadastrarCavalo" />
+        <activity android:name=".banco.CadastrarCavalo" />
         <activity android:name=".arquitetura.Remoto" />
         <activity android:name=".MainActivity" />
         <activity android:name=".Jogar" />

@@ -1,4 +1,4 @@
-package com.example.bolsista.novatentativa;
+package com.example.bolsista.novatentativa.banco;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -10,12 +10,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.bolsista.novatentativa.R;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -63,6 +62,7 @@ public class CadastrarCavalo extends AppCompatActivity {
                 equino.put("nome", nome.getText().toString());
                 equino.put("raca",raca.getText().toString());
                 equino.put("detalhes",detalhes.getText().toString());
+                equino.put("id", "");
 
                 addFireStore();
                 nome.setText("");
@@ -88,6 +88,7 @@ public class CadastrarCavalo extends AppCompatActivity {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Log.i("DataBase-FireStore-add", "DocumentSnapshot added with ID: " + documentReference.getId());
+                        documentReference.update("id",documentReference.getId());//adiciona ao campo id o id gerado pelo firebase
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

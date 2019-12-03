@@ -1,14 +1,16 @@
-package com.example.bolsista.novatentativa;
+package com.example.bolsista.novatentativa.viewHolders;
 
 import android.view.View;
 import android.widget.TextView;
+
+import com.example.bolsista.novatentativa.R;
 
 import androidx.recyclerview.widget.RecyclerView;
 
 public class CavaloViewHolder extends RecyclerView.ViewHolder{
 
-    final TextView nomeCavalo;
-    final TextView detalhesCavalo;
+    public final TextView nomeCavalo;
+    public final TextView detalhesCavalo;
 
     public CavaloViewHolder(View v) {
         super(v);

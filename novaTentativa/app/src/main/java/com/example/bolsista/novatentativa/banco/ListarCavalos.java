@@ -1,4 +1,4 @@
-package com.example.bolsista.novatentativa;
+package com.example.bolsista.novatentativa.banco;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -7,13 +7,15 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.LinearLayout;
 
+import com.example.bolsista.novatentativa.R;
+import com.example.bolsista.novatentativa.adapters.CavaloAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+import com.google.firebase.firestore.Source;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,9 +42,10 @@ public class ListarCavalos extends AppCompatActivity {
     }
 
     public void getCavalosFireStore(){
+        Source source = Source.CACHE;
 
         db.collection("equinos")
-                .get()
+                .get(source)
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {

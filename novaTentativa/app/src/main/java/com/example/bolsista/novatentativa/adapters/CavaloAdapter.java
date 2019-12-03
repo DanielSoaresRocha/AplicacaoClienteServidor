@@ -1,4 +1,4 @@
-package com.example.bolsista.novatentativa;
+package com.example.bolsista.novatentativa.adapters;
 
 import android.content.Context;
 import android.util.Log;
@@ -6,7 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
+import com.example.bolsista.novatentativa.banco.Cavalo;
+import com.example.bolsista.novatentativa.R;
+import com.example.bolsista.novatentativa.viewHolders.CavaloViewHolder;
+
 import java.util.List;
 
 import androidx.annotation.NonNull;

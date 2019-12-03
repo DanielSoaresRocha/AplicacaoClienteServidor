@@ -7,8 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
-import com.example.bolsista.novatentativa.CadastrarCavalo;
-import com.example.bolsista.novatentativa.ListarCavalos;
+import com.example.bolsista.novatentativa.banco.CadastrarCavalo;
+import com.example.bolsista.novatentativa.banco.ListarCavalos;
 import com.example.bolsista.novatentativa.R;
 
 public class Definir extends AppCompatActivity {

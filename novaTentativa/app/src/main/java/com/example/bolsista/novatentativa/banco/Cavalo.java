@@ -1,6 +1,7 @@
-package com.example.bolsista.novatentativa;
+package com.example.bolsista.novatentativa.banco;
 
 public class Cavalo {
+    private String id;
     private String nome;
     private String raca;
     private int idade;
@@ -9,11 +10,12 @@ public class Cavalo {
     public Cavalo() {
     }
 
-    public Cavalo(String nome, String raca, int idade, String detalhes) {
+    public Cavalo(String nome, String raca, int idade, String detalhes, String id) {
         this.nome = nome;
         this.raca = raca;
         this.idade = idade;
         this.detalhes = detalhes;
+        this.id = id;
     }
 
     public String getNome() {
@@ -46,5 +48,13 @@ public class Cavalo {
 
     public void setDetalhes(String detalhes) {
         this.detalhes = detalhes;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 }
