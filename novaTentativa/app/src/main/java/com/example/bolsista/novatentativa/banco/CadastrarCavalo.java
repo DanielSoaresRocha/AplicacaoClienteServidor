@@ -28,14 +28,13 @@ public class CadastrarCavalo extends AppCompatActivity {
     Button cadastrarCavaloBtn,cancelarBtn;
     TextView nome, idade, raca, detalhes;
 
-
-    //private FirebaseDatabase mFirebaseDatabase;
-    //private DatabaseReference mDatabaseReference;
-
     FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    Map<String, Object> user = new HashMap<>();
-    Map<String, Object> equino = new HashMap<>();
+
+    Cavalo cavalo;
+
+    final DocumentReference usuario = db.collection("users")
+            .document("fLdZVcJDno1IkTtpOOMW"); //referencia do usuario que adicionou o cavalo
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,27 +43,19 @@ public class CadastrarCavalo extends AppCompatActivity {
 
         inicializar();
 
-        user.put("first", "Ada");
-        user.put("last", "Lovelace");
-        user.put("born", 1815);
-
-        //addFireStore();
         listener();
-
-
     }
 
     private void listener() {
         cadastrarCavaloBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                equino.put("idade",Integer.parseInt(idade.getText().toString()));
-                equino.put("nome", nome.getText().toString());
-                equino.put("raca",raca.getText().toString());
-                equino.put("detalhes",detalhes.getText().toString());
-                equino.put("id", "");
+                cavalo = new Cavalo(nome.getText().toString(),raca.getText().toString(),
+                        Integer.parseInt(idade.getText().toString()),detalhes.getText().toString(),
+                        "", usuario);
 
                 addFireStore();
+
                 nome.setText("");
                 raca.setText("");
                 idade.setText("");
@@ -83,12 +74,15 @@ public class CadastrarCavalo extends AppCompatActivity {
 
     public void addFireStore(){
         db.collection("equinos")
-                .add(equino)
+                .add(cavalo)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
-                        Log.i("DataBase-FireStore-add", "DocumentSnapshot added with ID: " + documentReference.getId());
+                        Log.i("DataBase-FireStore-add", "DocumentSnapshot added with ID: " + documentReference.getId()
+                        + "path = "+ documentReference.getPath());
                         documentReference.update("id",documentReference.getId());//adiciona ao campo id o id gerado pelo firebase
+                        //https://www.it-swarm.net/pt/firebase/para-que-serve-o-tipo-de-dados-de-referencia-do-firestore/833836186/
+
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {

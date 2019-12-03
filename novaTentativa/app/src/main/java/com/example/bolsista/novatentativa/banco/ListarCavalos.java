@@ -12,10 +12,12 @@ import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.adapters.CavaloAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 import com.google.firebase.firestore.Source;
+import com.google.firebase.firestore.model.value.ReferenceValue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +32,6 @@ public class ListarCavalos extends AppCompatActivity {
 
     CavaloAdapter adapter;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,10 +43,14 @@ public class ListarCavalos extends AppCompatActivity {
     }
 
     public void getCavalosFireStore(){
+        final DocumentReference usuario = db.collection("users")
+                .document("fLdZVcJDno1IkTtpOOMW"); //referencia do usuario que adicionou o cavalo
+
         Source source = Source.CACHE;
 
         db.collection("equinos")
-                .get(source)
+                .whereEqualTo("referencia", usuario)
+                .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -53,6 +58,9 @@ public class ListarCavalos extends AppCompatActivity {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 cavalo = document.toObject(Cavalo.class);
                                 cavalos.add(cavalo);
+                                Log.i("DataBase-FireStore-get", "referencia de => ." +
+                                        cavalo.getNome() + " = " +
+                                        document.getDocumentReference("referencia").getId());
                                 }
                                 adapter = new CavaloAdapter(getApplicationContext(),cavalos);
                                 recyclerView.setAdapter(adapter);

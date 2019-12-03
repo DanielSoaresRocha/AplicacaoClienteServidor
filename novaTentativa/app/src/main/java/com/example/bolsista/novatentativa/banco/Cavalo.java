@@ -1,21 +1,25 @@
 package com.example.bolsista.novatentativa.banco;
 
+import com.google.firebase.firestore.DocumentReference;
+
 public class Cavalo {
     private String id;
     private String nome;
     private String raca;
     private int idade;
     private String detalhes;
+    private DocumentReference referencia;
 
     public Cavalo() {
     }
 
-    public Cavalo(String nome, String raca, int idade, String detalhes, String id) {
+    public Cavalo(String nome, String raca, int idade, String detalhes, String id, DocumentReference referencia) {
         this.nome = nome;
         this.raca = raca;
         this.idade = idade;
         this.detalhes = detalhes;
         this.id = id;
+        this.referencia = referencia;
     }
 
     public String getNome() {
@@ -56,5 +60,13 @@ public class Cavalo {
 
     public void setId(String id) {
         this.id = id;
+    }
+
+    public DocumentReference getReferencia() {
+        return referencia;
+    }
+
+    public void setReferencia(DocumentReference referencia) {
+        this.referencia = referencia;
     }
 }
