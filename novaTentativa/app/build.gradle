@@ -18,6 +18,10 @@ android {
         }
     }
     buildToolsVersion '28.0.3'
+    compileOptions {
+        sourceCompatibility = 1.8
+        targetCompatibility = 1.8
+    }
 }
 
 dependencies {
@@ -44,6 +48,11 @@ dependencies {
 
     // add the Firebase SDK for Google Analytics
     implementation 'com.google.firebase:firebase-analytics:17.2.0'
+
+    //Adicionar o Firebase Authentication
+    implementation 'com.google.firebase:firebase-auth:19.1.0'
+    //FirebaseUI for Auth
+    implementation 'com.firebaseui:firebase-ui-auth:6.1.0'
 
     //realtime database
     implementation 'com.google.firebase:firebase-database:19.2.0'
