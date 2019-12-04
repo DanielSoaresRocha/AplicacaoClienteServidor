@@ -54,4 +54,5 @@
     <string name="detalhes">Detalhes</string>
     <string name="cadastrar">cadastrar</string>
     <string name="cancelar">cancelar</string>
+    <string name="logoff">logoff</string>
 </resources>

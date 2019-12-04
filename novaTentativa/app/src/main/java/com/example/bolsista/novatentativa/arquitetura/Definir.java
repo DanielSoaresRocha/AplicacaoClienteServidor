@@ -7,6 +7,9 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -27,6 +30,7 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.io.IOException;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -56,27 +60,29 @@ public class Definir extends AppCompatActivity {
 
         usuario = FirebaseAuth.getInstance();
 
-
-        if (usuario == null){
-            startActivityForResult(
-                    AuthUI.getInstance()
-                            .createSignInIntentBuilder()
-                            .setIsSmartLockEnabled(false)
-                            .setAvailableProviders(
-                                    Arrays.asList(
-                                            new AuthUI.IdpConfig.GoogleBuilder().build(),
-                                            new AuthUI.IdpConfig.EmailBuilder().build()
-                                    )
-                            )
-                            .build(),
-                    CODIGO_LOGAR
-            );
-        }else{
-            Toast.makeText(this,"Olá " +usuario.getCurrentUser().getDisplayName(),
+        if (usuario.getCurrentUser() != null) {
+            Toast.makeText(this, "Olá " + usuario.getCurrentUser().getDisplayName(),
                     Toast.LENGTH_SHORT).show();
+        }else{
+            telaLogin();
+            CheckUsuario();
         }
-        CheckUsuario();
+    }
 
+    private void telaLogin(){
+        startActivityForResult(
+                AuthUI.getInstance()
+                        .createSignInIntentBuilder()
+                        .setIsSmartLockEnabled(false)
+                        .setAvailableProviders(
+                                Arrays.asList(
+                                        new AuthUI.IdpConfig.GoogleBuilder().build(),
+                                        new AuthUI.IdpConfig.EmailBuilder().build()
+                                )
+                        )
+                        .build(),
+                CODIGO_LOGAR
+        );
     }
 
     //checar se este usuário existe no banco de dados
@@ -168,6 +174,25 @@ public class Definir extends AppCompatActivity {
             }
         });
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.logoff:
+                AuthUI.getInstance().signOut(this);
+                telaLogin();
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
     }
 
     @Override
