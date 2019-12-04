@@ -36,7 +36,6 @@ public class CavaloAdapter extends RecyclerView.Adapter<CavaloViewHolder>{
     @Override
     public void onBindViewHolder(@NonNull CavaloViewHolder holder, int position) {
         Cavalo cavaloEscolhido = cavalos.get(position);
-        System.out.println("=>>>>>>>>>>"+ cavaloEscolhido.getNome());
         holder.nomeCavalo.setText(cavaloEscolhido.getNome());
         holder.detalhesCavalo.setText(cavaloEscolhido.getDetalhes());
     }

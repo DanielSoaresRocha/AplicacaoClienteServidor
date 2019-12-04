@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -33,8 +34,10 @@ public class CadastrarCavalo extends AppCompatActivity {
 
     Cavalo cavalo;
 
-    final DocumentReference usuario = db.collection("users")
-            .document("fLdZVcJDno1IkTtpOOMW"); //referencia do usuario que adicionou o cavalo
+    FirebaseAuth usuario;
+
+    DocumentReference usuarioRef;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +45,10 @@ public class CadastrarCavalo extends AppCompatActivity {
         setContentView(R.layout.activity_cadastrar_cavalo);
 
         inicializar();
-
         listener();
+
+        usuario = FirebaseAuth.getInstance();
+        usuarioRef = db.collection("users").document(usuario.getCurrentUser().getUid());
     }
 
     private void listener() {
@@ -52,7 +57,7 @@ public class CadastrarCavalo extends AppCompatActivity {
             public void onClick(View v) {
                 cavalo = new Cavalo(nome.getText().toString(),raca.getText().toString(),
                         Integer.parseInt(idade.getText().toString()),detalhes.getText().toString(),
-                        "", usuario);
+                        "", usuarioRef);
 
                 addFireStore();
 

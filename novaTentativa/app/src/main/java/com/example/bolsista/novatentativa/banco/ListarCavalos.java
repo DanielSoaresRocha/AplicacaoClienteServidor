@@ -12,6 +12,7 @@ import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.adapters.CavaloAdapter;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -31,24 +32,28 @@ public class ListarCavalos extends AppCompatActivity {
 
     CavaloAdapter adapter;
 
+    FirebaseAuth usuario;
+
+    DocumentReference usuarioRef;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_listar_cavalos);
 
-        inicializar();
+        usuario = FirebaseAuth.getInstance();
+        usuarioRef = db.collection("users").document(usuario.getCurrentUser().getUid());
 
+        inicializar();
         getCavalosFireStore();
     }
 
     public void getCavalosFireStore(){
-        final DocumentReference usuario = db.collection("users")
-                .document("fLdZVcJDno1IkTtpOOMW"); //referencia do usuario que adicionou o cavalo
 
         Source source = Source.CACHE;
 
         db.collection("equinos")
-                .whereEqualTo("referencia", usuario)
+                .whereEqualTo("referencia", usuarioRef)//referencia do usuario que adicionou o cavalo
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
