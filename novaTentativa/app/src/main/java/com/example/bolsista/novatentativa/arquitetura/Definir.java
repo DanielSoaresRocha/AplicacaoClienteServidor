@@ -65,7 +65,6 @@ public class Definir extends AppCompatActivity {
                     Toast.LENGTH_SHORT).show();
         }else{
             telaLogin();
-            CheckUsuario();
         }
     }
 
@@ -202,6 +201,7 @@ public class Definir extends AppCompatActivity {
             if (resultCode == RESULT_OK) {
                 Toast.makeText(this, "Bem-vindo "+
                         usuario.getCurrentUser().getDisplayName(), Toast.LENGTH_SHORT).show();
+                CheckUsuario();
             } else if (resultCode == RESULT_CANCELED) {
                 finish();
             }
