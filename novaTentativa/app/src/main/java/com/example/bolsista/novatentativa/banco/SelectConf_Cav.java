@@ -7,7 +7,9 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import me.drakeet.materialdialog.MaterialDialog;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -39,7 +41,7 @@ public class SelectConf_Cav extends AppCompatActivity {
     RecyclerView selectConfigRecycle;
 
     Cavalo cavalo;
-    Configuracao configuracao;
+    public static Configuracao configuracao;
 
     //list cavalos
     List<Cavalo> cavalos = new ArrayList<Cavalo>();
@@ -78,7 +80,7 @@ public class SelectConf_Cav extends AppCompatActivity {
 
         db.collection("configuracoes")
                 //.whereEqualTo("referencia", usuarioRef)//referencia do usuario que adicionou o cavalo
-                .get()
+                .get(source)
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
@@ -114,8 +116,10 @@ public class SelectConf_Cav extends AppCompatActivity {
 
                     @Override
                     public void onItemClick(View view, int position) {
-                        Toast.makeText(getApplicationContext(),"Clique simples",
-                                Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(getApplicationContext(),"Clique simples",
+                        //        Toast.LENGTH_SHORT).show();
+                        configuracao = configs.get(position);
+                        retonarActivity();//volta para activity anterior
                         Log.i("Teste", "onSingleTapUp2");
                     }
 
@@ -143,6 +147,20 @@ public class SelectConf_Cav extends AppCompatActivity {
                     }
                 })
         );
+    }
+
+    private void retonarActivity(){
+        try {
+            Intent returnIntent = new Intent();
+            returnIntent.putExtra("result","OK");
+            setResult(Activity.RESULT_OK,returnIntent);
+            finish();
+
+        }catch(java.lang.NumberFormatException e){
+            Intent returnIntent = new Intent();
+            setResult(Activity.RESULT_CANCELED, returnIntent);
+            finish();
+        }
     }
 
     public void getCavalosFireStore(){
@@ -185,7 +203,8 @@ public class SelectConf_Cav extends AppCompatActivity {
 
                             @Override
                             public void onItemClick(View view, int position) {
-                                Toast.makeText(getApplicationContext(),"Clique simples",
+                                cavalo = cavalos.get(position);
+                                Toast.makeText(getApplicationContext(),"Cavalo selecionado",
                                         Toast.LENGTH_SHORT).show();
                                 Log.i("Teste", "onSingleTapUp2");
                             }

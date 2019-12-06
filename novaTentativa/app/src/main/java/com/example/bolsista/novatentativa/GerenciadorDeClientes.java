@@ -5,7 +5,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.bolsista.novatentativa.arquitetura.Servidor;
-import com.example.bolsista.novatentativa.configuracao.ConfigurarTeste;
+import com.example.bolsista.novatentativa.banco.SelectConf_Cav;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -64,7 +64,7 @@ public class GerenciadorDeClientes extends Thread{
                     enviarObjeto();
 
                     imgAtual = R.drawable.circulo; //////////////////DESTAQUE
-                    vetor = ConfigurarTeste.configuracao.getImagens();
+                    vetor = SelectConf_Cav.configuracao.getImagens();
                     while (true) {
                         msg = leitor.readInt();
                         imgAtual = server.numberAleatorio;
@@ -77,7 +77,7 @@ public class GerenciadorDeClientes extends Thread{
                                 esperar(); //mudar imagens para branco, e espera um novo sorteio
                                 esp32(ABRIR_MOTOR);//enviar comando para abrir o servo no esp32
                                 if (!server.controleRemoto) {  // se o controle remoto não estiver conectado
-                                    dormir(ConfigurarTeste.configuracao.getIntervalo1()); // tempo de espera do mestre
+                                    dormir(SelectConf_Cav.configuracao.getIntervalo1()); // tempo de espera do mestre
                                     sortear(); //fazer nova interação de imagens entre os tablets
                                 }
                             } else if (msg == TROCAR_IMAGENS) {//trocar imagens
@@ -103,7 +103,7 @@ public class GerenciadorDeClientes extends Thread{
 
     private void enviarObjeto() {
         try {
-            escritor.writeObject(ConfigurarTeste.configuracao);
+            escritor.writeObject(SelectConf_Cav.configuracao);
             escritor.flush();
 
             Log.i("OBJETO","OBJETO ENVIADO PARA O CLIENTE");
@@ -282,7 +282,7 @@ public class GerenciadorDeClientes extends Thread{
 
         mudarImagem(imgAtual);
 
-        dormir(ConfigurarTeste.configuracao.getIntervalo2());
+        dormir(SelectConf_Cav.configuracao.getIntervalo2());
 
         //sortear o escolhido para herdar imagem
         Random radom = new Random();
