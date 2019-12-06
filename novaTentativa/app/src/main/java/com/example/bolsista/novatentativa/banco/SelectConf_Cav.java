@@ -38,14 +38,15 @@ public class SelectConf_Cav extends AppCompatActivity {
     RecyclerView recyclerCavalos;
     RecyclerView selectConfigRecycle;
 
+    Cavalo cavalo;
+    Configuracao configuracao;
+
     //list cavalos
     List<Cavalo> cavalos = new ArrayList<Cavalo>();
-    Cavalo cavalo;
     CavaloAdapter cavalosAdapter;
 
     //list configs
     List<Configuracao> configs = new ArrayList<Configuracao>();
-    Configuracao configuracao;
     ConfiguracaoAdapter configuracaoAdapter;
 
     //FireBase FireStore
@@ -87,7 +88,7 @@ public class SelectConf_Cav extends AppCompatActivity {
                                 configuracao = document.toObject(Configuracao.class);
                                 configs.add(configuracao);
                                 Log.i("DataBase-FireStore-get", "referencia de => ." +
-                                        configuracao.getNome() + " = " +
+                                        configuracao.getImagens().get(0) + " = " +
                                         document.getDocumentReference("referencia").getId());
                             }
                             implementsRecycleConfig();
@@ -120,25 +121,25 @@ public class SelectConf_Cav extends AppCompatActivity {
 
                     @Override
                     public void onItemLongClick(View view, int position) {
-                        /*
+
                         View layout = LayoutInflater.from(contextoAtivity)
-                                .inflate(R.layout.cavaloinformacao_inflater,null,false);
+                                .inflate(R.layout.configuracaoinformacao_inflater,null,false);
 
-                        TextView nomeCavalo =(TextView) layout.findViewById(R.id.nomeEquinoInfo);
-                        TextView detalhes =(TextView) layout.findViewById(R.id.detalhesEquinoInfo);
-                        TextView idade =(TextView) layout.findViewById(R.id.idadeEquinoInfo);
-                        TextView raca =(TextView) layout.findViewById(R.id.racaEquinoInfo);
+                        TextView detalhes =(TextView) layout.findViewById(R.id.detalhesConfigInfo);
+                        TextView intervalo1 =(TextView) layout.findViewById(R.id.intervalo1ConfigInfo);
+                        TextView intervalo2 =(TextView) layout.findViewById(R.id.intervalo2ConfigInfo);
+                        TextView qtdQuestoes =(TextView) layout.findViewById(R.id.qtdQuestoesConfigInfo);
 
-                        nomeCavalo.setText(cavalos.get(position).getNome());
-                        detalhes.setText(cavalos.get(position).getDetalhes());
-                        idade.setText(cavalos.get(position).getIdade() + "");
-                        raca.setText(cavalos.get(position).getRaca());
+                        detalhes.setText(configs.get(position).getDetalhes());
+                        intervalo1.setText(configs.get(position).getIntervalo1()+"");
+                        intervalo2.setText(configs.get(position).getIntervalo2()+"");
+                        qtdQuestoes.setText(configs.get(position).getQtdQuestoes()+"");
 
                         MaterialDialog m = new MaterialDialog(contextoAtivity)
                                 .setContentView(layout)
                                 .setCanceledOnTouchOutside(true);
 
-                        m.show();*/
+                        m.show();
                     }
                 })
         );

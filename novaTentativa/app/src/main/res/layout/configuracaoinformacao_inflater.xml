@@ -13,13 +13,13 @@
         <TextView
             android:textColor="@color/colorAccent"
             android:textSize="25sp"
-            android:text="Nome do equino:"
+            android:text="detalhes:"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
         </TextView>
 
         <TextView
-            android:id="@+id/nomeEquinoInfo"
+            android:id="@+id/detalhesConfigInfo"
             android:textSize="25sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -35,13 +35,13 @@
         <TextView
             android:textColor="@color/colorAccent"
             android:textSize="25sp"
-            android:text="Raça:"
+            android:text="Intervalo 1:"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
         </TextView>
 
         <TextView
-            android:id="@+id/racaEquinoInfo"
+            android:id="@+id/intervalo1ConfigInfo"
             android:textSize="25sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -57,13 +57,13 @@
         <TextView
             android:textColor="@color/colorAccent"
             android:textSize="25sp"
-            android:text="Idade:"
+            android:text="Intervalo2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
         </TextView>
 
         <TextView
-            android:id="@+id/idadeEquinoInfo"
+            android:id="@+id/intervalo2ConfigInfo"
             android:textSize="25sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
@@ -79,13 +79,13 @@
         <TextView
             android:textColor="@color/colorAccent"
             android:textSize="25sp"
-            android:text="Detalhes:"
+            android:text="Quantidade de questões:"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
         </TextView>
 
         <TextView
-            android:id="@+id/detalhesEquinoInfo"
+            android:id="@+id/qtdQuestoesConfigInfo"
             android:textSize="25sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content">
