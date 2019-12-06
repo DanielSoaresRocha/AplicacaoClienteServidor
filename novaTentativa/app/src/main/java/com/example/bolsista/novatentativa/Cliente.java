@@ -57,7 +57,7 @@ public class Cliente {
                 try {
                     leitor = new ObjectInputStream(cliente.getInputStream());
                     Log.i("OBJETO","Criou input do CLIENTE");
-                    receberObjeto();
+                    //receberObjeto();
 
                     while (true){
                         int mensagem = leitor.readInt(); ///******

@@ -177,7 +177,7 @@ public class SelectConf_Cav extends AppCompatActivity {
                                 cavalo = document.toObject(Cavalo.class);
                                 cavalos.add(cavalo);
                                 Log.i("DataBase-FireStore-get", "referencia de => ." +
-                                        cavalo.getNome() + " = " +
+                                        cavalo.getReferencia() + " = " +
                                         document.getDocumentReference("referencia").getId());
                             }
                             implementsRecycleCavalos();

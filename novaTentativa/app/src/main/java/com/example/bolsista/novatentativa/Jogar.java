@@ -11,6 +11,7 @@ import android.widget.Toast;
 
 import com.example.bolsista.novatentativa.arquitetura.ClienteActivity;
 import com.example.bolsista.novatentativa.arquitetura.Servidor;
+import com.example.bolsista.novatentativa.banco.SelectConf_Cav;
 import com.example.bolsista.novatentativa.configuracao.ConfigurarTeste;
 
 public class Jogar extends AppCompatActivity {
@@ -56,7 +57,7 @@ public class Jogar extends AppCompatActivity {
         }
 
     public void tocarError(){
-        mp = MediaPlayer.create(Jogar.this, ConfigurarTeste.configuracao.getSomErro());
+        mp = MediaPlayer.create(Jogar.this, SelectConf_Cav.configuracao.getSomErro());
         mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener(){
             public void onCompletion(MediaPlayer mp) {
                 mp.stop();
@@ -68,7 +69,7 @@ public class Jogar extends AppCompatActivity {
     }
 
     public void tocarAcerto(){
-        mp = MediaPlayer.create(Jogar.this, ConfigurarTeste.configuracao.getSomAcerto());
+        mp = MediaPlayer.create(Jogar.this, SelectConf_Cav.configuracao.getSomAcerto());
         mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener(){
             public void onCompletion(MediaPlayer mp) {
                 mp.stop();

@@ -61,7 +61,7 @@ public class GerenciadorDeClientes extends Thread{
                     //leep(2000);
                     leitor = new ObjectInputStream(cliente.getInputStream());
                     Log.i("OBJETO", "Criou input do servidor");
-                    enviarObjeto();
+                    //enviarObjeto();
 
                     imgAtual = R.drawable.circulo; //////////////////DESTAQUE
                     vetor = SelectConf_Cav.configuracao.getImagens();
