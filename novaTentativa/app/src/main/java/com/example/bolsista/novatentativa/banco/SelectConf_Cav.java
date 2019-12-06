@@ -20,6 +20,7 @@ import com.example.bolsista.novatentativa.adapters.CavaloAdapter;
 import com.example.bolsista.novatentativa.adapters.ConfiguracaoAdapter;
 import com.example.bolsista.novatentativa.modelo.Cavalo;
 import com.example.bolsista.novatentativa.modelo.Configuracao;
+import com.example.bolsista.novatentativa.recycleOnTouchLinesters.ListaConfigOnTouch;
 import com.example.bolsista.novatentativa.recycleOnTouchLinesters.ListarCavalosOnItemTouch;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -105,6 +106,42 @@ public class SelectConf_Cav extends AppCompatActivity {
         selectConfigRecycle.setLayoutManager(layout);
 
         selectConfigRecycle.setItemAnimator(new DefaultItemAnimator());
+
+        selectConfigRecycle.addOnItemTouchListener(new ListaConfigOnTouch(getApplicationContext(),
+                recyclerCavalos,
+                new ListaConfigOnTouch.OnItemClickListener(){
+
+                    @Override
+                    public void onItemClick(View view, int position) {
+                        Toast.makeText(getApplicationContext(),"Clique simples",
+                                Toast.LENGTH_SHORT).show();
+                        Log.i("Teste", "onSingleTapUp2");
+                    }
+
+                    @Override
+                    public void onItemLongClick(View view, int position) {
+                        /*
+                        View layout = LayoutInflater.from(contextoAtivity)
+                                .inflate(R.layout.cavaloinformacao_inflater,null,false);
+
+                        TextView nomeCavalo =(TextView) layout.findViewById(R.id.nomeEquinoInfo);
+                        TextView detalhes =(TextView) layout.findViewById(R.id.detalhesEquinoInfo);
+                        TextView idade =(TextView) layout.findViewById(R.id.idadeEquinoInfo);
+                        TextView raca =(TextView) layout.findViewById(R.id.racaEquinoInfo);
+
+                        nomeCavalo.setText(cavalos.get(position).getNome());
+                        detalhes.setText(cavalos.get(position).getDetalhes());
+                        idade.setText(cavalos.get(position).getIdade() + "");
+                        raca.setText(cavalos.get(position).getRaca());
+
+                        MaterialDialog m = new MaterialDialog(contextoAtivity)
+                                .setContentView(layout)
+                                .setCanceledOnTouchOutside(true);
+
+                        m.show();*/
+                    }
+                })
+        );
     }
 
     public void getCavalosFireStore(){
