@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.bolsista.novatentativa.arquitetura.Servidor;
-import com.example.bolsista.novatentativa.configuracao.Configuracao;
 import com.example.bolsista.novatentativa.configuracao.ConfigurarTeste;
 
 import java.io.BufferedReader;
@@ -14,12 +13,11 @@ import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintStream;
-import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
-import java.util.function.BiConsumer;
 
 
 public class GerenciadorDeClientes extends Thread{
@@ -41,7 +39,7 @@ public class GerenciadorDeClientes extends Thread{
 
     static Jogar jogar;
 
-    private int vetor[];
+    private ArrayList<Integer> vetor;
     int msg;
 
     private Servidor server;
@@ -278,7 +276,7 @@ public class GerenciadorDeClientes extends Thread{
         esp32(FECHAR_MOTOR);//enviar comando para o servo fechar no esp32
 
         //mudar o numero aleatorio no servidor
-        server.numberAleatorio = vetor[sortearNumero()];
+        server.numberAleatorio = vetor.get(sortearNumero());
         //colocar este numero na Theread atual
         imgAtual = server.numberAleatorio;
 
@@ -300,12 +298,12 @@ public class GerenciadorDeClientes extends Thread{
             }else{
                 int aleatorio = sortearNumero();
 
-                while (vetor[aleatorio] == server.numberAleatorio){
+                while (vetor.get(aleatorio) == server.numberAleatorio){
                     //este laço não deixa o número do outro tablet ser igual
                     aleatorio = sortearNumero();
                 }
 
-                int outraImg = vetor[aleatorio];
+                int outraImg = vetor.get(aleatorio);
                 Log.i("ENVIAR","ENVIADA 2 "+ outraImg);
 
                 GerenciadorDeClientes destino = clientes.get(i);
@@ -327,8 +325,7 @@ public class GerenciadorDeClientes extends Thread{
 
     private int sortearNumero() {
         Random radom  = new Random(); // gerar número aleatório
-        int numeroTmp = radom.nextInt(vetor.length);
-
+        int numeroTmp = radom.nextInt(vetor.size());
         return numeroTmp;
     }
 

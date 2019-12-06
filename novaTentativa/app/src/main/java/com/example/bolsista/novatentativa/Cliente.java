@@ -7,13 +7,11 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.bolsista.novatentativa.arquitetura.ClienteActivity;
-import com.example.bolsista.novatentativa.arquitetura.Remoto;
-import com.example.bolsista.novatentativa.configuracao.Configuracao;
+import com.example.bolsista.novatentativa.modelo.Configuracao;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.net.Socket;
 

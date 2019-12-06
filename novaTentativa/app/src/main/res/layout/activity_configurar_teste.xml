@@ -22,6 +22,40 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:paddingVertical="15sp"
+            android:orientation="vertical"
+            >
+            <EditText
+                android:id="@+id/nomeConfigEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Nome da configuração"
+                >
+
+            </EditText>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="15sp"
+            android:orientation="vertical"
+            >
+            <EditText
+                android:id="@+id/detalhesConfigEdit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Detalhes"
+                >
+
+            </EditText>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:paddingVertical="15sp">
 
@@ -222,13 +256,27 @@
 
 
         </LinearLayout>
-        <Button
-            android:layout_gravity="center"
-            android:id="@+id/irPara"
-            android:layout_width="wrap_content"
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ir para"
-            />
+            android:orientation="horizontal"
+            android:gravity="center"
+            >
+            <Button
+                android:id="@+id/irPara"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ir para"
+                />
+            <Button
+                android:id="@+id/cadastrarTestBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cadastrar"
+                />
+
+        </LinearLayout>
 
     </LinearLayout>
 </ScrollView>

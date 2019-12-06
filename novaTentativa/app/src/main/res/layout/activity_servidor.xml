@@ -29,7 +29,7 @@
             android:fontFamily="casual"
             android:gravity="center"
             android:paddingVertical="10sp"
-            android:text="@string/precisa_configurar"
+            android:text="Selecione"
             android:textColor="@color/colorAccent"
             android:textSize="20sp" />
 
@@ -37,7 +37,7 @@
             android:id="@+id/configTestBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/configurarteste" />
+            android:text="Escolher" />
     </LinearLayout>
 
     <LinearLayout

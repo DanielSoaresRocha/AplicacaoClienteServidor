@@ -17,7 +17,9 @@ import android.widget.Toast;
 
 import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.adapters.CavaloAdapter;
+import com.example.bolsista.novatentativa.adapters.ConfiguracaoAdapter;
 import com.example.bolsista.novatentativa.modelo.Cavalo;
+import com.example.bolsista.novatentativa.modelo.Configuracao;
 import com.example.bolsista.novatentativa.recycleOnTouchLinesters.ListarCavalosOnItemTouch;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -31,14 +33,19 @@ import com.google.firebase.firestore.Source;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListarCavalos extends AppCompatActivity {
-    RecyclerView recyclerView;
+public class SelectConf_Cav extends AppCompatActivity {
+    RecyclerView recyclerCavalos;
+    RecyclerView selectConfigRecycle;
 
-
+    //list cavalos
     List<Cavalo> cavalos = new ArrayList<Cavalo>();
     Cavalo cavalo;
+    CavaloAdapter cavalosAdapter;
 
-    CavaloAdapter adapter;
+    //list configs
+    List<Configuracao> configs = new ArrayList<Configuracao>();
+    Configuracao configuracao;
+    ConfiguracaoAdapter configuracaoAdapter;
 
     //FireBase FireStore
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -51,7 +58,7 @@ public class ListarCavalos extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_listar_cavalos);
+        setContentView(R.layout.activity_select_conf__cav);
 
         usuario = FirebaseAuth.getInstance();
         usuarioRef = db.collection("users").document(usuario.getCurrentUser().getUid());
@@ -60,14 +67,51 @@ public class ListarCavalos extends AppCompatActivity {
 
         inicializar();
         getCavalosFireStore();
+        getConfigsFireStore();
+    }
+
+    public void getConfigsFireStore(){
+        Source source = Source.CACHE;
+        Log.i("---------------------","vai pegar");
+
+        db.collection("configuracoes")
+                //.whereEqualTo("referencia", usuarioRef)//referencia do usuario que adicionou o cavalo
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Log.i("---------------------","pegou");
+                                configuracao = document.toObject(Configuracao.class);
+                                configs.add(configuracao);
+                                Log.i("DataBase-FireStore-get", "referencia de => ." +
+                                        configuracao.getNome() + " = " +
+                                        document.getDocumentReference("referencia").getId());
+                            }
+                            implementsRecycleConfig();
+                        } else {
+                            Log.i("DataBase-FireStore-get", "Error getting documents.", task.getException());
+                        }
+                    }
+                });
+    }
+
+    private void implementsRecycleConfig(){
+        configuracaoAdapter = new ConfiguracaoAdapter(getApplicationContext(),configs);
+        selectConfigRecycle.setAdapter(configuracaoAdapter);
+
+        LinearLayoutManager layout = new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.VERTICAL,false);
+        selectConfigRecycle.setLayoutManager(layout);
+
+        selectConfigRecycle.setItemAnimator(new DefaultItemAnimator());
     }
 
     public void getCavalosFireStore(){
-
         Source source = Source.CACHE;
 
         db.collection("equinos")
-                .whereEqualTo("referencia", usuarioRef)//referencia do usuario que adicionou o cavalo
+                //.whereEqualTo("referencia", usuarioRef)//referencia do usuario que adicionou o cavalo
                 .get(source)
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
                     @Override
@@ -79,8 +123,8 @@ public class ListarCavalos extends AppCompatActivity {
                                 Log.i("DataBase-FireStore-get", "referencia de => ." +
                                         cavalo.getNome() + " = " +
                                         document.getDocumentReference("referencia").getId());
-                                }
-                                implementsRecycle();
+                            }
+                            implementsRecycleCavalos();
                         } else {
                             Log.i("DataBase-FireStore-get", "Error getting documents.", task.getException());
                         }
@@ -88,17 +132,17 @@ public class ListarCavalos extends AppCompatActivity {
                 });
     }
 
-    private void implementsRecycle(){
-        adapter = new CavaloAdapter(contextoAtivity,cavalos);
-        recyclerView.setAdapter(adapter);
+    private void implementsRecycleCavalos(){
+        cavalosAdapter = new CavaloAdapter(getApplicationContext(),cavalos);
+        recyclerCavalos.setAdapter(cavalosAdapter);
 
-        LinearLayoutManager layout = new LinearLayoutManager(contextoAtivity,LinearLayoutManager.VERTICAL,false);
-        recyclerView.setLayoutManager(layout);
+        LinearLayoutManager layout = new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.VERTICAL,false);
+        recyclerCavalos.setLayoutManager(layout);
 
-        recyclerView.addOnItemTouchListener(
+        recyclerCavalos.addOnItemTouchListener(
                 new ListarCavalosOnItemTouch(
                         getApplicationContext(),
-                        recyclerView,
+                        recyclerCavalos,
                         new ListarCavalosOnItemTouch.OnItemClickListener(){
 
                             @Override
@@ -132,11 +176,13 @@ public class ListarCavalos extends AppCompatActivity {
                         })
         );
 
-        recyclerView.setItemAnimator(new DefaultItemAnimator());
+        recyclerCavalos.setItemAnimator(new DefaultItemAnimator());
 
     }
 
     public void inicializar(){
-        recyclerView = findViewById(R.id.recycleView);
+        recyclerCavalos = findViewById(R.id.selectCavalosRecycle);
+        selectConfigRecycle = findViewById(R.id.selectConfigRecycle);
     }
+
 }

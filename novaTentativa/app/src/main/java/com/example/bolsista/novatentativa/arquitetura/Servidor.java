@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.bolsista.novatentativa.GerenciadorDeClientes;
 import com.example.bolsista.novatentativa.Jogar;
 import com.example.bolsista.novatentativa.R;
+import com.example.bolsista.novatentativa.banco.SelectConf_Cav;
 import com.example.bolsista.novatentativa.configuracao.ConfigurarTeste;
 
 import java.io.IOException;
@@ -55,7 +56,7 @@ public class Servidor extends AppCompatActivity {
         configTestBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent configTeste = new Intent(Servidor.this, ConfigurarTeste.class);
+                Intent configTeste = new Intent(Servidor.this, SelectConf_Cav.class);
 
                 startActivityForResult(configTeste,PICK_CONTACT_REQUEST);
 

@@ -6,8 +6,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.example.bolsista.novatentativa.banco.Cavalo;
 import com.example.bolsista.novatentativa.R;
+import com.example.bolsista.novatentativa.modelo.Cavalo;
 import com.example.bolsista.novatentativa.viewHolders.CavaloViewHolder;
 
 import java.util.List;
@@ -37,7 +37,7 @@ public class CavaloAdapter extends RecyclerView.Adapter<CavaloViewHolder>{
     public void onBindViewHolder(@NonNull CavaloViewHolder holder, int position) {
         Cavalo cavaloEscolhido = cavalos.get(position);
         holder.nomeCavalo.setText(cavaloEscolhido.getNome());
-        holder.detalhesCavalo.setText(cavaloEscolhido.getDetalhes());
+        //holder.detalhesCavalo.setText(cavaloEscolhido.getDetalhes());
     }
 
     @Override

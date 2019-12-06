@@ -1,33 +1,56 @@
-package com.example.bolsista.novatentativa.configuracao;
+package com.example.bolsista.novatentativa.modelo;
 
+
+import com.google.firebase.firestore.DocumentReference;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 
 public class Configuracao implements Serializable{
-   // private static final long serialVersionUID = 1L;
-    //private String mensagem;
-
-    private int imagens[];
+    private String id;
+    private String nome;
+    private String detalhes;
+    private ArrayList<Integer> imagens;
     private int qtdQuestoes;
     private int intervalo1;
     private int intervalo2;
     private int somErro;
     private int somAcerto;
-
-
-    public Configuracao(int imagens[]){
-            this.imagens = imagens;
-    }
+    private DocumentReference referencia;
 
     public Configuracao(){
 
     }
 
-    public int[] getImagens() {
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        this.nome = nome;
+    }
+
+    public String getDetalhes() {
+        return detalhes;
+    }
+
+    public void setDetalhes(String detalhes) {
+        this.detalhes = detalhes;
+    }
+
+    public DocumentReference getReferencia() {
+        return referencia;
+    }
+
+    public void setReferencia(DocumentReference referencia) {
+        this.referencia = referencia;
+    }
+
+    public ArrayList<Integer> getImagens() {
         return imagens;
     }
 
-    public void setImagens(int imagens[]) {
+    public void setImagens(ArrayList<Integer> imagens) {
         this.imagens = imagens;
     }
 
@@ -70,6 +93,15 @@ public class Configuracao implements Serializable{
     public void setSomAcerto(int somAcerto) {
         this.somAcerto = somAcerto;
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
     /*
     public String getMensagem() {
         return mensagem;

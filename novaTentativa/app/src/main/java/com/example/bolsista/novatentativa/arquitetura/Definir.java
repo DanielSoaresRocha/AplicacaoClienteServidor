@@ -18,28 +18,24 @@ import android.widget.Toast;
 import com.example.bolsista.novatentativa.banco.CadastrarCavalo;
 import com.example.bolsista.novatentativa.banco.ListarCavalos;
 import com.example.bolsista.novatentativa.R;
-import com.example.bolsista.novatentativa.banco.Usuario;
+import com.example.bolsista.novatentativa.configuracao.ConfigurarTeste;
+import com.example.bolsista.novatentativa.modelo.Usuario;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 
-import java.io.IOException;
-import java.lang.reflect.Array;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 
 public class Definir extends AppCompatActivity {
     ImageView controle,mestre,escravo;
-    Button testeBtn, listarBtn;
+    Button testeBtn, listarBtn, cadastrarT;
 
     private int CODIGO_LOGAR = 234;
 
@@ -173,6 +169,14 @@ public class Definir extends AppCompatActivity {
             }
         });
 
+        cadastrarT.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent telaCadastrot = new Intent(Definir.this, ConfigurarTeste.class);
+                startActivity(telaCadastrot);
+            }
+        });
+
     }
 
     @Override
@@ -214,5 +218,6 @@ public class Definir extends AppCompatActivity {
         escravo = findViewById(R.id.escravoImgView);
         testeBtn = findViewById(R.id.testeBtn);
         listarBtn = findViewById(R.id.listarBtn);
+        cadastrarT = findViewById(R.id.cadastrarT);
     }
 }

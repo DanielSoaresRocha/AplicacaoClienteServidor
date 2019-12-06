@@ -1,4 +1,4 @@
-package com.example.bolsista.novatentativa.banco;
+package com.example.bolsista.novatentativa.modelo;
 
 public class Usuario {
     private String uid;

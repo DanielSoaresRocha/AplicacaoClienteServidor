@@ -3,24 +3,36 @@ package com.example.bolsista.novatentativa.configuracao;
 import android.app.Activity;
 import android.content.Intent;
 import android.media.MediaPlayer;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.bolsista.novatentativa.R;
+import com.example.bolsista.novatentativa.modelo.Configuracao;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
 
 public class ConfigurarTeste extends AppCompatActivity {
-    EditText qtdQuestao, intervaloQuestoes, intervalo2;
+    EditText qtdQuestao, intervaloQuestoes, intervalo2,nomeConfigEdit,detalhesConfigEdit;
     ImageView info1, info2,info3;
     TextView info1TextView, info2TextView,info3TextView;
     Button somErro1, somErro2, somErro3, somAcerto1, somAcerto2, somAcerto3;
     CheckBox formas, preenchimento, tamanho;
-    Button irPara;
+    Button irPara, cadastrarTestBtn;
 
     private MediaPlayer mp;
 
@@ -29,10 +41,20 @@ public class ConfigurarTeste extends AppCompatActivity {
 
     public static Configuracao configuracao;
 
+    //FireBase
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    DocumentReference usuarioRef;
+    //Fire Base Auth
+    FirebaseAuth usuario;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_configurar_teste);
+
+        usuario = FirebaseAuth.getInstance();
+        usuarioRef = db.collection("users").document(usuario.getCurrentUser().getUid());
 
         inicializar();
         listener();
@@ -196,30 +218,72 @@ public class ConfigurarTeste extends AppCompatActivity {
 
             }
         });
+
+        cadastrarTestBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fazerConfiguracao();
+                addTestToFireBase();
+                Toast.makeText(getApplicationContext(), "Teste Adicionado",
+                        Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
+
+    private void addTestToFireBase(){
+        db.collection("configuracoes")
+                .add(configuracao)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        Log.i("DataBase-FireStore-add", "DocumentSnapshot added with ID: " + documentReference.getId()
+                                + "path = "+ documentReference.getPath());
+                        documentReference.update("id",documentReference.getId());//adiciona ao campo id o id gerado pelo firebase
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.i("DataBase-FireStore-add", "Error adding document", e);
+                    }
+                });
     }
 
     private void fazerConfiguracao(){
+
         configuracao = new Configuracao();
+        configuracao.setNome(nomeConfigEdit.getText().toString());
+        configuracao.setDetalhes(detalhesConfigEdit.getText().toString());
         configuracao.setQtdQuestoes(Integer.parseInt(qtdQuestao.getText().toString()));
         configuracao.setIntervalo1(Integer.parseInt(intervaloQuestoes.getText().toString()));
         configuracao.setIntervalo2(Integer.parseInt(intervalo2.getText().toString()));
         configuracao.setSomErro(erroEscolhido);
         configuracao.setSomAcerto(acertoEscolhido);
         configuracao.setImagens(getImagens());
-
+        configuracao.setReferencia(usuarioRef);
     }
 
-    private int[] getImagens(){
-        if(formas.isChecked() && preenchimento.isChecked()){
-            int imagens[] = {R.drawable.circulo, R.drawable.triangulo,R.drawable.coracao, R.drawable.estrela2,
-                    R.drawable.estrela,R.drawable.retangulo, R.drawable.b_circulo,R.drawable.b_losango,
-                    R.drawable.b_coracao, R.drawable.b_hexagono,R.drawable.b_retangulo,R.drawable.b_estrela2};
+    private ArrayList<Integer> getImagens(){
+        ArrayList<Integer> imagens = new ArrayList<>();
+            if(formas.isChecked()){
+                imagens.add(R.drawable.circulo);
+                imagens.add(R.drawable.triangulo);
+                imagens.add(R.drawable.coracao);
+                imagens.add(R.drawable.estrela2);
+                imagens.add(R.drawable.estrela);
+                imagens.add(R.drawable.retangulo);
+            }
+            if(preenchimento.isChecked()){
+                imagens.add(R.drawable.b_circulo);
+                imagens.add(R.drawable.b_hexagono);
+                imagens.add(R.drawable.b_coracao);
+                imagens.add(R.drawable.b_estrela2);
+                imagens.add(R.drawable.b_estrela);
+                imagens.add(R.drawable.b_retangulo);
+            }
             return imagens;
-        }else{
-            int imagens[] = {R.drawable.circulo, R.drawable.triangulo,R.drawable.coracao, R.drawable.estrela2,
-                    R.drawable.estrela,R.drawable.retangulo};
-            return imagens;
-        }
     }
 
     private void inicializar() {
@@ -247,5 +311,8 @@ public class ConfigurarTeste extends AppCompatActivity {
         tamanho = findViewById(R.id.tamanhoBtn);
 
         irPara = findViewById(R.id.irPara);
+        cadastrarTestBtn = findViewById(R.id.cadastrarTestBtn);
+        nomeConfigEdit = findViewById(R.id.nomeConfigEdit);
+        detalhesConfigEdit = findViewById(R.id.detalhesConfigEdit);
     }
 }

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bolsista.novatentativa.R;
+import com.example.bolsista.novatentativa.modelo.Cavalo;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -20,9 +21,6 @@ import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
-
-import java.util.HashMap;
-import java.util.Map;
 
 public class CadastrarCavalo extends AppCompatActivity {
 
@@ -86,7 +84,6 @@ public class CadastrarCavalo extends AppCompatActivity {
                         Log.i("DataBase-FireStore-add", "DocumentSnapshot added with ID: " + documentReference.getId()
                         + "path = "+ documentReference.getPath());
                         documentReference.update("id",documentReference.getId());//adiciona ao campo id o id gerado pelo firebase
-                        //https://www.it-swarm.net/pt/firebase/para-que-serve-o-tipo-de-dados-de-referencia-do-firestore/833836186/
 
                     }
                 })
