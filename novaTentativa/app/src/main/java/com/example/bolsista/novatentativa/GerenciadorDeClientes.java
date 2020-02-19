@@ -58,13 +58,13 @@ public class GerenciadorDeClientes extends Thread{
                 try {
                     escritor = new ObjectOutputStream(cliente.getOutputStream());
                     Log.i("OBJETO", "Criou output do servidor");
-                    //leep(2000);
+                    //dormir(2);
                     leitor = new ObjectInputStream(cliente.getInputStream());
                     Log.i("OBJETO", "Criou input do servidor");
                     //enviarObjeto();
 
                     imgAtual = R.drawable.circulo; //////////////////DESTAQUE
-                    vetor = SelectConf_Cav.configuracao.getImagens();
+                    vetor = IniciarConfiguracao.configuracaoSelecionada.getImagens();
                     while (true) {
                         msg = leitor.readInt();
                         imgAtual = server.numberAleatorio;
@@ -77,7 +77,7 @@ public class GerenciadorDeClientes extends Thread{
                                 esperar(); //mudar imagens para branco, e espera um novo sorteio
                                 esp32(ABRIR_MOTOR);//enviar comando para abrir o servo no esp32
                                 if (!server.controleRemoto) {  // se o controle remoto não estiver conectado
-                                    dormir(SelectConf_Cav.configuracao.getIntervalo1()); // tempo de espera do mestre
+                                    dormir(IniciarConfiguracao.configuracaoSelecionada.getIntervalo1()); // tempo de espera do mestre
                                     sortear(); //fazer nova interação de imagens entre os tablets
                                 }
                             } else if (msg == TROCAR_IMAGENS) {//trocar imagens
@@ -103,7 +103,7 @@ public class GerenciadorDeClientes extends Thread{
 
     private void enviarObjeto() {
         try {
-            escritor.writeObject(SelectConf_Cav.configuracao);
+            escritor.writeObject(IniciarConfiguracao.configuracaoSelecionada);
             escritor.flush();
 
             Log.i("OBJETO","OBJETO ENVIADO PARA O CLIENTE");
@@ -282,7 +282,7 @@ public class GerenciadorDeClientes extends Thread{
 
         mudarImagem(imgAtual);
 
-        dormir(SelectConf_Cav.configuracao.getIntervalo2());
+        dormir(IniciarConfiguracao.configuracaoSelecionada.getIntervalo2());
 
         //sortear o escolhido para herdar imagem
         Random radom = new Random();

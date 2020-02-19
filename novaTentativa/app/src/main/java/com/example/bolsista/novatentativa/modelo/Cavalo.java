@@ -8,18 +8,18 @@ public class Cavalo {
     private String raca;
     private int idade;
     private String detalhes;
-    private DocumentReference referencia; //referencia a outro documento de outra coleção ("chave estrangeira")
+    private DocumentReference usuario; //referencia a outro documento de outra coleção ("chave estrangeira")
 
     public Cavalo() {
     }
 
-    public Cavalo(String nome, String raca, int idade, String detalhes, String id, DocumentReference referencia) {
+    public Cavalo(String nome, String raca, int idade, String detalhes, String id, DocumentReference usuario) {
         this.nome = nome;
         this.raca = raca;
         this.idade = idade;
         this.detalhes = detalhes;
         this.id = id;
-        this.referencia = referencia;
+        this.usuario = usuario;
     }
 
     public String getNome() {
@@ -62,11 +62,11 @@ public class Cavalo {
         this.id = id;
     }
 
-    public DocumentReference getReferencia() {
-        return referencia;
+    public DocumentReference getUsuario() {
+        return usuario;
     }
 
-    public void setReferencia(DocumentReference referencia) {
-        this.referencia = referencia;
+    public void setUsuario(DocumentReference usuario) {
+        this.usuario = usuario;
     }
 }

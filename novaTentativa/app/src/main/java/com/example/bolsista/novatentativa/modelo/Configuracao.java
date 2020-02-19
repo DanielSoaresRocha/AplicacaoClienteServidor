@@ -16,7 +16,7 @@ public class Configuracao implements Serializable{
     private int intervalo2;
     private int somErro;
     private int somAcerto;
-    private DocumentReference referencia;
+    private DocumentReference usuario;
 
     public Configuracao(){
 
@@ -38,12 +38,12 @@ public class Configuracao implements Serializable{
         this.detalhes = detalhes;
     }
 
-    public DocumentReference getReferencia() {
-        return referencia;
+    public DocumentReference getUsuario() {
+        return usuario;
     }
 
-    public void setReferencia(DocumentReference referencia) {
-        this.referencia = referencia;
+    public void setUsuario(DocumentReference usuario) {
+        this.usuario = usuario;
     }
 
     public ArrayList<Integer> getImagens() {

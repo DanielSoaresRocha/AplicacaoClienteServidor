@@ -17,16 +17,14 @@ import com.example.bolsista.novatentativa.GerenciadorDeClientes;
 import com.example.bolsista.novatentativa.Jogar;
 import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.banco.SelectConf_Cav;
-import com.example.bolsista.novatentativa.configuracao.ConfigurarTeste;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Servidor extends AppCompatActivity {
-    Button configTestBtn;
     public Button comecarServerBtn, criarServerBtn;
-    LinearLayout serverDiv1,serverDiv2;
+    LinearLayout serverDiv2;
     TextView ipTextView;
 
     static final int PICK_CONTACT_REQUEST = 1;
@@ -47,22 +45,11 @@ public class Servidor extends AppCompatActivity {
         setContentView(R.layout.activity_servidor);
 
         inicializar();
-        comecar();
         listener();
 
     }
 
     private void listener() {
-        configTestBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent configTeste = new Intent(Servidor.this, SelectConf_Cav.class);
-
-                startActivityForResult(configTeste,PICK_CONTACT_REQUEST);
-
-            }
-        });
-
         criarServerBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -146,40 +133,14 @@ public class Servidor extends AppCompatActivity {
 
     }
 
-    private void comecar() {
-        serverDiv2.setVisibility(View.GONE);
+    private void inicializar() {
+        criarServerBtn = findViewById(R.id.criarServerBtn);
+        comecarServerBtn = findViewById(R.id.comecarServerBtn);
+        serverDiv2 = findViewById(R.id.serverDiv2);
+        ipTextView = findViewById(R.id.ipTextView);
+
         comecarServerBtn.setVisibility(View.GONE);
     }
 
-    private void inicializar() {
-        configTestBtn = findViewById(R.id.configTestBtn);
-        criarServerBtn = findViewById(R.id.criarServerBtn);
-        comecarServerBtn = findViewById(R.id.comecarServerBtn);
-
-        serverDiv1 = findViewById(R.id.serverDiv1);
-        serverDiv2 = findViewById(R.id.serverDiv2);
-
-        ipTextView = findViewById(R.id.ipTextView);
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        // Check which request we're responding to
-        if (requestCode == PICK_CONTACT_REQUEST) {
-            // Make sure the request was successful
-            if (resultCode == RESULT_OK) {
-                serverDiv1.setVisibility(View.GONE);
-                serverDiv2.setVisibility(View.VISIBLE);
-
-                Bundle parametro = data.getExtras();
-                String desconexao = parametro.getString("desconexao","suficiente");
-                if(desconexao.equals("insuficiente")){//se for diferente de suficiente
-                    comecarServerBtn.setVisibility(View.GONE);
-                }
-            }else{
-                Toast.makeText(this,"Preencha os campos corretamente",Toast.LENGTH_LONG).show();
-            }
-        }
-    }
 }
 

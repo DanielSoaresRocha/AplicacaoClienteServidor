@@ -16,31 +16,6 @@
         android:textSize="35sp" />
 
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/serverDiv1"
-        android:gravity="center"
-        android:orientation="vertical"
-        >
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:fontFamily="casual"
-            android:gravity="center"
-            android:paddingVertical="10sp"
-            android:text="Selecione"
-            android:textColor="@color/colorAccent"
-            android:textSize="20sp" />
-
-        <Button
-            android:id="@+id/configTestBtn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Escolher" />
-    </LinearLayout>
-
-    <LinearLayout
         android:id="@+id/serverDiv2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

@@ -15,11 +15,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.bolsista.novatentativa.IniciarConfiguracao;
 import com.example.bolsista.novatentativa.banco.CadastrarCavalo;
 import com.example.bolsista.novatentativa.banco.ListarCavalos;
 import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.configuracao.ConfigurarTeste;
 import com.example.bolsista.novatentativa.modelo.Usuario;
+import com.example.bolsista.novatentativa.viewsModels.ListarViewModel;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -140,8 +142,11 @@ public class Definir extends AppCompatActivity {
         mestre.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                /*
                 Intent telaMestre = new Intent(Definir.this, Servidor.class);
-                startActivity(telaMestre);
+                startActivity(telaMestre);*/
+                Intent iniciarConfiguracao = new Intent(Definir.this, IniciarConfiguracao.class);
+                startActivity(iniciarConfiguracao);
             }
         });
 
@@ -219,5 +224,7 @@ public class Definir extends AppCompatActivity {
         testeBtn = findViewById(R.id.testeBtn);
         listarBtn = findViewById(R.id.listarBtn);
         cadastrarT = findViewById(R.id.cadastrarT);
+
+        ListarViewModel.carregarListas();
     }
 }

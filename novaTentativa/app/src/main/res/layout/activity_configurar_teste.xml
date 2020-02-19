@@ -267,7 +267,7 @@
                 android:id="@+id/irPara"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Ir para"
+                android:text="Cancelar"
                 />
             <Button
                 android:id="@+id/cadastrarTestBtn"

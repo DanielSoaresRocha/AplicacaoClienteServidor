@@ -1,0 +1,67 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.bolsista.novatentativa.fragments.CadastrarExperimento"
+    android:orientation="vertical"
+    >
+
+    <!-- TODO: Update blank fragment layout -->
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cadastrar Experimento"
+        android:gravity="center"
+        android:textSize="30sp"
+        android:textColor="@color/black_de"
+        >
+
+    </TextView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingHorizontal="25sp"
+        >
+
+        <EditText
+            android:id="@+id/nomeExperimento"
+            android:paddingVertical="20sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nome para o experimento"
+            >
+        </EditText>
+
+        <EditText
+            android:id="@+id/descricaoExperimento"
+            android:paddingVertical="20sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Descrição"
+            >
+        </EditText>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:paddingVertical="30sp"
+            >
+
+            <Button
+                android:id="@+id/finalizarExperimento"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="finalizar"
+                >
+
+            </Button>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

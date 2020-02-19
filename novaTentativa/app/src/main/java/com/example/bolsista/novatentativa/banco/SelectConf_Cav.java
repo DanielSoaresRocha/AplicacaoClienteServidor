@@ -64,11 +64,6 @@ public class SelectConf_Cav extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_select_conf__cav);
 
-        usuario = FirebaseAuth.getInstance();
-        usuarioRef = db.collection("users").document(usuario.getCurrentUser().getUid());
-
-        contextoAtivity = this;
-
         inicializar();
         getCavalosFireStore();
         getConfigsFireStore();
@@ -177,7 +172,7 @@ public class SelectConf_Cav extends AppCompatActivity {
                                 cavalo = document.toObject(Cavalo.class);
                                 cavalos.add(cavalo);
                                 Log.i("DataBase-FireStore-get", "referencia de => ." +
-                                        cavalo.getReferencia() + " = " +
+                                        cavalo.getUsuario() + " = " +
                                         document.getDocumentReference("referencia").getId());
                             }
                             implementsRecycleCavalos();
@@ -238,6 +233,11 @@ public class SelectConf_Cav extends AppCompatActivity {
     }
 
     public void inicializar(){
+        usuario = FirebaseAuth.getInstance();
+        usuarioRef = db.collection("users").document(usuario.getCurrentUser().getUid());
+
+        contextoAtivity = this;
+
         recyclerCavalos = findViewById(R.id.selectCavalosRecycle);
         selectConfigRecycle = findViewById(R.id.selectConfigRecycle);
     }

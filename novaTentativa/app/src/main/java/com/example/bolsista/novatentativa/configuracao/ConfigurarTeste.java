@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.modelo.Configuracao;
+import com.example.bolsista.novatentativa.viewsModels.ListarViewModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -202,7 +203,7 @@ public class ConfigurarTeste extends AppCompatActivity {
         irPara.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                try {
+                /*try {
                     fazerConfiguracao();
 
                     Intent returnIntent = new Intent();
@@ -214,8 +215,8 @@ public class ConfigurarTeste extends AppCompatActivity {
                     Intent returnIntent = new Intent();
                     setResult(Activity.RESULT_CANCELED, returnIntent);
                     finish();
-                }
-
+                }*/
+                finish();
             }
         });
 
@@ -240,6 +241,8 @@ public class ConfigurarTeste extends AppCompatActivity {
                         Log.i("DataBase-FireStore-add", "DocumentSnapshot added with ID: " + documentReference.getId()
                                 + "path = "+ documentReference.getPath());
                         documentReference.update("id",documentReference.getId());//adiciona ao campo id o id gerado pelo firebase
+                        configuracao.setId(documentReference.getId());
+                        ListarViewModel.addConfiguracao(configuracao);
 
                     }
                 })
@@ -249,6 +252,8 @@ public class ConfigurarTeste extends AppCompatActivity {
                         Log.i("DataBase-FireStore-add", "Error adding document", e);
                     }
                 });
+
+        finish();
     }
 
     private void fazerConfiguracao(){
@@ -262,7 +267,7 @@ public class ConfigurarTeste extends AppCompatActivity {
         configuracao.setSomErro(erroEscolhido);
         configuracao.setSomAcerto(acertoEscolhido);
         configuracao.setImagens(getImagens());
-        configuracao.setReferencia(usuarioRef);
+        configuracao.setUsuario(usuarioRef);
     }
 
     private ArrayList<Integer> getImagens(){
