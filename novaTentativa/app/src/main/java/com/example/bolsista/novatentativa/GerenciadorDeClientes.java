@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.bolsista.novatentativa.arquitetura.Servidor;
-import com.example.bolsista.novatentativa.banco.SelectConf_Cav;
 
 import java.io.BufferedReader;
 import java.io.IOException;

@@ -17,7 +17,6 @@ import android.widget.Toast;
 
 import com.example.bolsista.novatentativa.IniciarConfiguracao;
 import com.example.bolsista.novatentativa.banco.CadastrarCavalo;
-import com.example.bolsista.novatentativa.banco.ListarCavalos;
 import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.configuracao.ConfigurarTeste;
 import com.example.bolsista.novatentativa.modelo.Usuario;
@@ -37,7 +36,6 @@ import java.util.Arrays;
 
 public class Definir extends AppCompatActivity {
     ImageView controle,mestre,escravo;
-    Button testeBtn, listarBtn, cadastrarT;
 
     private int CODIGO_LOGAR = 234;
 
@@ -157,31 +155,6 @@ public class Definir extends AppCompatActivity {
                 startActivity(telaEscravo);
             }
         });
-
-        testeBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent telaCadastro = new Intent(Definir.this, CadastrarCavalo.class);
-                startActivity(telaCadastro);
-            }
-        });
-
-        listarBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent telaListar = new Intent(Definir.this, ListarCavalos.class);
-                startActivity(telaListar);
-            }
-        });
-
-        cadastrarT.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent telaCadastrot = new Intent(Definir.this, ConfigurarTeste.class);
-                startActivity(telaCadastrot);
-            }
-        });
-
     }
 
     @Override
@@ -197,6 +170,14 @@ public class Definir extends AppCompatActivity {
             case R.id.logoff:
                 AuthUI.getInstance().signOut(this);
                 telaLogin();
+                return true;
+            case R.id.cadastrarCavalo:
+                Intent telaCadastro = new Intent(this, CadastrarCavalo.class);
+                startActivity(telaCadastro);
+                return true;
+            case R.id.cadastrarConfiguracao:
+                Intent cadastroConfig = new Intent(this, ConfigurarTeste.class);
+                startActivity(cadastroConfig);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -221,9 +202,6 @@ public class Definir extends AppCompatActivity {
         controle = findViewById(R.id.controleImgView);
         mestre = findViewById(R.id.mestreImgView);
         escravo = findViewById(R.id.escravoImgView);
-        testeBtn = findViewById(R.id.testeBtn);
-        listarBtn = findViewById(R.id.listarBtn);
-        cadastrarT = findViewById(R.id.cadastrarT);
 
         ListarViewModel.carregarListas();
     }

@@ -11,8 +11,6 @@ import android.widget.Toast;
 
 import com.example.bolsista.novatentativa.arquitetura.ClienteActivity;
 import com.example.bolsista.novatentativa.arquitetura.Servidor;
-import com.example.bolsista.novatentativa.banco.SelectConf_Cav;
-import com.example.bolsista.novatentativa.configuracao.ConfigurarTeste;
 
 public class Jogar extends AppCompatActivity {
     Button imagemButton;

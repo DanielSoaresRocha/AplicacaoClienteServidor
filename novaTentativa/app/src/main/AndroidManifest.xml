@@ -17,11 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".IniciarConfiguracao"></activity>
-        <activity android:name=".banco.SelectConf_Cav" />
-        <activity android:name=".banco.ListarCavalos" />
         <activity android:name=".banco.CadastrarCavalo" />
         <activity android:name=".arquitetura.Remoto" />
-        <activity android:name=".MainActivity" />
         <activity android:name=".Jogar" />
         <activity android:name=".ControleRemoto" />
         <activity android:name=".configuracao.ConfigurarTeste" />

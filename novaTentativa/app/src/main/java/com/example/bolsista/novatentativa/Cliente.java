@@ -37,7 +37,6 @@ public class Cliente {
         this.controleRemoto = controleRemoto;
     }
 
-
     public void connect(){
         imgAtual = R.drawable.circulo; //////////////////DESTAQUE
 
@@ -47,11 +46,8 @@ public class Cliente {
         try {
         cliente = new Socket(host,9999);
 
-
-
         //lendo mensagens do servidor
         new Thread(new Runnable() {
-
             @Override
             public void run() {
                 try {
@@ -72,16 +68,15 @@ public class Cliente {
             }
         }).start();
 
+        enviarIdentificacao();
 
-            enviarIdentificacao();
+        //criando escrita
+        escritor = new ObjectOutputStream(cliente.getOutputStream());
+        Log.i("OBJETO","Criou output do CLIENTE");
 
-            //criando escrita
-            escritor = new ObjectOutputStream(cliente.getOutputStream());
-            Log.i("OBJETO","Criou output do CLIENTE");
-
-            if(!controleRemoto){
-                ativarBotao();
-            }
+        if(!controleRemoto){
+            ativarBotao();
+        }
         }catch (IOException e){
             Log.i("ERRO","ERRO AO CONECTAR-SE AO SERVIDOR "+ e.getMessage());
         }

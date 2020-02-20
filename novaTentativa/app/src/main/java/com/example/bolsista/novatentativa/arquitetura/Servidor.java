@@ -16,7 +16,6 @@ import android.widget.Toast;
 import com.example.bolsista.novatentativa.GerenciadorDeClientes;
 import com.example.bolsista.novatentativa.Jogar;
 import com.example.bolsista.novatentativa.R;
-import com.example.bolsista.novatentativa.banco.SelectConf_Cav;
 
 import java.io.IOException;
 import java.net.ServerSocket;
