@@ -2,21 +2,23 @@ package com.example.bolsista.novatentativa.modelo;
 
 import com.google.firebase.firestore.DocumentReference;
 
+import java.util.Date;
+
 public class Cavalo {
     private String id;
     private String nome;
     private String raca;
-    private int idade;
+    private Date dataNascimento;
     private String detalhes;
     private DocumentReference usuario; //referencia a outro documento de outra coleção ("chave estrangeira")
 
     public Cavalo() {
     }
 
-    public Cavalo(String nome, String raca, int idade, String detalhes, String id, DocumentReference usuario) {
+    public Cavalo(String nome, String raca, Date dataNascimento, String detalhes, String id, DocumentReference usuario) {
         this.nome = nome;
         this.raca = raca;
-        this.idade = idade;
+        this.dataNascimento = dataNascimento;
         this.detalhes = detalhes;
         this.id = id;
         this.usuario = usuario;
@@ -38,12 +40,12 @@ public class Cavalo {
         this.raca = raca;
     }
 
-    public int getIdade() {
-        return idade;
+    public Date getDataNascimento() {
+        return dataNascimento;
     }
 
-    public void setIdade(int idade) {
-        this.idade = idade;
+    public void setDataNascimento(Date dataNascimento) {
+        this.dataNascimento = dataNascimento;
     }
 
     public String getDetalhes() {

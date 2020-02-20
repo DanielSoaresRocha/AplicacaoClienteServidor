@@ -3,11 +3,16 @@ package com.example.bolsista.novatentativa.banco;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.annotation.SuppressLint;
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -25,14 +30,22 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-public class CadastrarCavalo extends AppCompatActivity {
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+
+public class CadastrarCavalo extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
 
     Button cadastrarCavaloBtn,cancelarBtn;
-    TextView nome, idade, raca, detalhes;
+    EditText nome, raca, detalhes, dataNascimentoE;
     Context contextActivity;
+    ImageView dataNascimentoI;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
-
+    @SuppressLint("SimpleDateFormat")
+    SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+    Date dataNascimento;
 
     Cavalo cavalo;
 
@@ -57,14 +70,14 @@ public class CadastrarCavalo extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 cavalo = new Cavalo(nome.getText().toString(),raca.getText().toString(),
-                        Integer.parseInt(idade.getText().toString()),detalhes.getText().toString(),
+                        dataNascimento,detalhes.getText().toString(),
                         "", usuarioRef);
 
                 addFireStore();
 
                 nome.setText("");
                 raca.setText("");
-                idade.setText("");
+                dataNascimentoE.setText("");
                 detalhes.setText("");
                 Toast.makeText(getApplicationContext(),"Cavalo cadastrado", Toast.LENGTH_SHORT).show();
                 finish();
@@ -75,6 +88,13 @@ public class CadastrarCavalo extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 finish();
+            }
+        });
+
+        dataNascimentoI.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDatePickerDialog();
             }
         });
     }
@@ -99,33 +119,46 @@ public class CadastrarCavalo extends AppCompatActivity {
                 });
     }
 
-    public void getFireStore(){
-        db.collection("equinos")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.i("DataBase-FireStore-get", document.getId() + " => " + document.getData());
-                            }
-                        } else {
-                            Log.i("DataBase-FireStore-get", "Error getting documents.", task.getException());
-                        }
-                    }
-                });
-
+    private void showDatePickerDialog(){
+        Calendar hoje = Calendar.getInstance();
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                contextActivity,
+                this,
+                hoje.get(Calendar.YEAR),
+                hoje.get(Calendar.MONTH),
+                hoje.get(Calendar.DAY_OF_MONTH)
+        );
+        datePickerDialog.show();
     }
 
+    @Override
+    public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
+        Toast.makeText(contextActivity, dayOfMonth+"/"+(month+1)+"/"+year,Toast.LENGTH_SHORT).show();
+        String dataRecebida = dayOfMonth+"/"+(month+1)+"/"+year;
+
+        Date dataFormatada = formateDate(dataRecebida);
+        dataNascimento = dataFormatada;
+        dataNascimentoE.setText(dataRecebida);
+    }
+
+    private Date formateDate(String dataRecebida){
+        Date dataFormatada = null;
+        try {
+            dataFormatada = formato.parse(dataRecebida);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return dataFormatada;
+    }
 
     private void inicializar() {
         cadastrarCavaloBtn = findViewById(R.id.cadastrarCavaloBtn);
         cancelarBtn = findViewById(R.id.cancelarBtn);
         nome = findViewById(R.id.nomeTextView);
-        idade = findViewById(R.id.idadeTextView);
         raca = findViewById(R.id.racaTextView);
         detalhes = findViewById(R.id.detalhesTextView);
-
+        dataNascimentoI =findViewById(R.id.dataNascimentoI);
+        dataNascimentoE = findViewById(R.id.dataNascimentoE);
         contextActivity = this;
     }
 }

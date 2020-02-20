@@ -34,6 +34,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+
 
 public class ListarCavalos extends Fragment {
     private ListarViewModel mViewModel;
@@ -45,6 +48,7 @@ public class ListarCavalos extends Fragment {
 
     @SuppressLint("StaticFieldLeak")
     public static CavaloAdapter adapter;
+    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
 
     //FireBase FireStore
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -132,7 +136,8 @@ public class ListarCavalos extends Fragment {
 
                                 nomeCavalo.setText(mViewModel.cavalos.getValue().get(position).getNome());
                                 detalhes.setText(mViewModel.cavalos.getValue().get(position).getDetalhes());
-                                idade.setText(mViewModel.cavalos.getValue().get(position).getIdade() + "");
+                                idade.setText(simpleDateFormat.format(mViewModel.cavalos.getValue()
+                                        .get(position).getDataNascimento()));
                                 raca.setText(mViewModel.cavalos.getValue().get(position).getRaca());
 
                                 MaterialDialog m = new MaterialDialog(contextoAtivity)
