@@ -51,6 +51,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="8"
                     android:hint="Data de nascimento"
+                    android:inputType="date"
                     >
                 </EditText>
 

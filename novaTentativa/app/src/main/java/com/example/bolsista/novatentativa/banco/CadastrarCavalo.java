@@ -69,18 +69,23 @@ public class CadastrarCavalo extends AppCompatActivity implements DatePickerDial
         cadastrarCavaloBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                cavalo = new Cavalo(nome.getText().toString(),raca.getText().toString(),
-                        dataNascimento,detalhes.getText().toString(),
-                        "", usuarioRef);
+                if(dataNascimentoE.getText().toString().length() >= 8) {
+                    cavalo = new Cavalo(nome.getText().toString(), raca.getText().toString(),
+                            dataNascimento, detalhes.getText().toString(),
+                            "", usuarioRef);
 
-                addFireStore();
+                    addFireStore();
 
-                nome.setText("");
-                raca.setText("");
-                dataNascimentoE.setText("");
-                detalhes.setText("");
-                Toast.makeText(getApplicationContext(),"Cavalo cadastrado", Toast.LENGTH_SHORT).show();
-                finish();
+                    nome.setText("");
+                    raca.setText("");
+                    dataNascimentoE.setText("");
+                    detalhes.setText("");
+                    Toast.makeText(getApplicationContext(), "Cavalo cadastrado", Toast.LENGTH_SHORT).show();
+                    finish();
+                }else{
+                Toast.makeText(contextActivity, "Preencha a data corretamente!",
+                        Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
