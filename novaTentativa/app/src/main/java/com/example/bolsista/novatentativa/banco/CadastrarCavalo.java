@@ -38,9 +38,10 @@ import java.util.Date;
 public class CadastrarCavalo extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
 
     Button cadastrarCavaloBtn,cancelarBtn;
-    EditText nome, raca, detalhes, dataNascimentoE;
+    EditText nome, raca, detalhes;
     Context contextActivity;
     ImageView dataNascimentoI;
+    TextView dataNascimentoE;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     @SuppressLint("SimpleDateFormat")
@@ -69,7 +70,8 @@ public class CadastrarCavalo extends AppCompatActivity implements DatePickerDial
         cadastrarCavaloBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(dataNascimentoE.getText().toString().length() >= 8) {
+                if((dataNascimentoE.getText().toString().length() >= 8) && (nome.getText().toString()
+                        .length() > 1)) {
                     cavalo = new Cavalo(nome.getText().toString(), raca.getText().toString(),
                             dataNascimento, detalhes.getText().toString(),
                             "", usuarioRef);
@@ -82,9 +84,9 @@ public class CadastrarCavalo extends AppCompatActivity implements DatePickerDial
                     detalhes.setText("");
                     Toast.makeText(getApplicationContext(), "Cavalo cadastrado", Toast.LENGTH_SHORT).show();
                     finish();
-                }else{
-                Toast.makeText(contextActivity, "Preencha a data corretamente!",
-                        Toast.LENGTH_SHORT).show();
+                }else {
+                    Toast.makeText(getApplicationContext(), "Preencha os campos obrigatórios",
+                            Toast.LENGTH_SHORT).show();
                 }
             }
         });

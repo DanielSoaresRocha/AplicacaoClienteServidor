@@ -43,17 +43,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
+                android:paddingVertical="10sp"
                 >
 
-                <EditText
+                <TextView
                     android:id="@+id/dataNascimentoE"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="30sp"
+                    android:textSize="19sp"
                     android:layout_weight="8"
                     android:hint="Data de nascimento"
                     android:inputType="date"
+                    android:textColor="@color/black_de"
                     >
-                </EditText>
+                </TextView>
 
                 <ImageView
                     android:id="@+id/dataNascimentoI"
