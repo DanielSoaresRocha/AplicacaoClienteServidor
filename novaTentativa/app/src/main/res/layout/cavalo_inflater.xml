@@ -26,20 +26,24 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:id="@+id/nomeCavalo"
+                    android:gravity="center_vertical"
                     android:layout_weight="7"
                     android:text="Nome do cavalo"
                     android:textSize="30sp"
-                    android:textColor="@color/colorAccent"
+                    android:textColor="@color/black_de"
+                    android:drawableLeft="@drawable/horse"
                     />
 
                 <TextView
                     android:id="@+id/detalhesCavalo"
                     android:layout_width="match_parent"
+                    android:drawableLeft="@drawable/dna"
+                    android:gravity="center_vertical"
                     android:layout_height="0dp"
                     android:layout_weight="3"
-                    android:text="detalhes"
-                    android:textSize="20sp"
-                    android:textColor="@color/colorAccent"
+                    android:text="raça"
+                    android:textSize="25sp"
+                    android:textColor="@color/black_de"
                     />
         </LinearLayout>
 

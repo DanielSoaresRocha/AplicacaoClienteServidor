@@ -36,6 +36,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 
 public class ListarCavalos extends Fragment {
@@ -136,8 +137,8 @@ public class ListarCavalos extends Fragment {
 
                                 nomeCavalo.setText(mViewModel.cavalos.getValue().get(position).getNome());
                                 detalhes.setText(mViewModel.cavalos.getValue().get(position).getDetalhes());
-                                idade.setText(simpleDateFormat.format(mViewModel.cavalos.getValue()
-                                        .get(position).getDataNascimento()));
+                                idade.setText(calculaIdade(mViewModel.cavalos.getValue()
+                                        .get(position).getDataNascimento()) + " anos");
                                 raca.setText(mViewModel.cavalos.getValue().get(position).getRaca());
 
                                 MaterialDialog m = new MaterialDialog(contextoAtivity)
@@ -150,6 +151,23 @@ public class ListarCavalos extends Fragment {
         );
 
         progressBarCavalos.setVisibility(View.GONE);
+    }
+
+    // Retorna o calculo da idade atual a partir de uma data
+    // Código disponível em https://www.devmedia.com.br/calcule-a-idade-corretamente-em-java/4729
+    public static int calculaIdade(java.util.Date dataNasc){
+        Calendar dateOfBirth = new GregorianCalendar();
+        dateOfBirth.setTime(dataNasc);
+        // Cria um objeto calendar com a data atual
+        Calendar today = Calendar.getInstance();
+        // Obtém a idade baseado no ano
+        int age = today.get(Calendar.YEAR) - dateOfBirth.get(Calendar.YEAR);
+        dateOfBirth.add(Calendar.YEAR, age);
+        //se a data de hoje é antes da data de Nascimento, então diminui 1(um)
+        if (today.before(dateOfBirth)) {
+            age--;
+        }
+        return age;
     }
 
     private void observerList() {

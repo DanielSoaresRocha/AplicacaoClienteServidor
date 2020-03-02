@@ -132,10 +132,14 @@ public class ListarConfiguracoes extends Fragment {
                                 TextView intervalo2 = layout.findViewById(R.id.intervalo2ConfigInfo);
                                 TextView qtdQuestoes = layout.findViewById(R.id.qtdQuestoesConfigInfo);
 
-                                detalhes.setText(mViewModel.configuracoes.getValue().get(position).getDetalhes());
-                                intervalo1.setText(mViewModel.configuracoes.getValue().get(position).getIntervalo1()+"");
-                                intervalo2.setText(mViewModel.configuracoes.getValue().get(position).getIntervalo2()+"");
-                                qtdQuestoes.setText(mViewModel.configuracoes.getValue().get(position).getQtdQuestoes()+"");
+                                detalhes.setText(mViewModel.configuracoes.getValue().get(position)
+                                        .getDetalhes());
+                                intervalo1.setText(mViewModel.configuracoes.getValue().get(position)
+                                        .getIntervalo1()+" segundos");
+                                intervalo2.setText(mViewModel.configuracoes.getValue().get(position)
+                                        .getIntervalo2()+" segundos");
+                                qtdQuestoes.setText(mViewModel.configuracoes.getValue().get(position)
+                                        .getQtdQuestoes()+" segundos");
 
                                 MaterialDialog m = new MaterialDialog(contextoAtivity)
                                         .setContentView(layout)
