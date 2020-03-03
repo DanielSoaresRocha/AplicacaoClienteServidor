@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.bolsista.novatentativa.arquitetura.Servidor;
+import com.example.bolsista.novatentativa.modelo.Desafio;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -33,6 +34,7 @@ public class GerenciadorDeClientes extends Thread{
     private int numCliente;
 
     public static Map<Integer,GerenciadorDeClientes> clientes = new HashMap<>();
+    private ArrayList<Desafio> desafios = new ArrayList<>();
 
     private int imgAtual;
 
@@ -61,15 +63,17 @@ public class GerenciadorDeClientes extends Thread{
                     leitor = new ObjectInputStream(cliente.getInputStream());
                     Log.i("OBJETO", "Criou input do servidor");
                     //enviarObjeto();
-
                     imgAtual = R.drawable.circulo; //////////////////DESTAQUE
                     vetor = IniciarConfiguracao.configuracaoSelecionada.getImagens();
-                    while (true) {
+                    int numRodadas = IniciarConfiguracao.configuracaoSelecionada.getQtdQuestoes();
+                    int rodada = 1;
+                    Desafio desafio = new Desafio();
+                    while (rodada <= numRodadas) {
                         msg = leitor.readInt();
                         imgAtual = server.numberAleatorio;
+                        desafio.setImgCorreta(imgAtual);
                         Log.i("COMUNICACAO", "MENSAGEM RECEBIDA DO CLIENTE");
                         Log.i("COMUNICACAO", "cliente -- " + msg + " server = " + imgAtual);
-
                         if (clientes.size() >= 2) {
                             if (msg == imgAtual) {
                                 jogar.tocarAcerto(); // cavalo acertou
@@ -85,12 +89,15 @@ public class GerenciadorDeClientes extends Thread{
                                 desconectarControle();
                                 break;
                             } else { //O cavalo errou
+                                desafio.setQtdErros(desafio.getQtdErros()+1);
                                 jogar.tocarError();
                             }
                         }
-                        //mudarImagem(msg);
-
+                        rodada++;
+                        desafios.add(desafio);
                     }
+                    terminar();
+                    jogar.terminar(desafios, IniciarConfiguracao.experimento.getId());
                 } catch (IOException e) {
                     Log.i("COMUNICACAO", "ERRO = " + e.getMessage());
                     desconectarCliente();
@@ -114,13 +121,10 @@ public class GerenciadorDeClientes extends Thread{
     private void desconectarControle() {
         try{
             server.controleRemoto = false;
-
             leitor.close();
             escritor.close();
             cliente.close();
-
             Log.i("REMOTO", "CONTROLE REMOTO DESCONECTADO");
-
         }catch (IOException e){
             Log.i("ERRO", "ERRO AO FECHAR CONEXÃO = " + e.getMessage());
         }
@@ -207,7 +211,6 @@ public class GerenciadorDeClientes extends Thread{
         jogar.imagemButton.post(new Runnable() {
             @Override
             public void run() {
-
                 if(comando == 999){
                     jogar.getImagemButton().setBackgroundResource(R.drawable.branco);
                 }else{
@@ -343,6 +346,19 @@ public class GerenciadorDeClientes extends Thread{
 
     }
 
+    // Informar e fechar todos os sockets (clientes)
+    private void terminar() throws IOException {
+        for(int i = 0; i < clientes.size(); i++){
+            GerenciadorDeClientes destino = clientes.get(i);
+            destino.getEscritor().writeInt(900);// comando para fechar socket no lado do cliente
+            destino.getEscritor().flush();
+
+            destino.getEscritor().close();
+            destino.getLeitor().close();
+            destino.getCliente().close();
+        }
+    }
+
     public ObjectOutputStream getEscritor() {
         return escritor;
     }
@@ -351,5 +367,11 @@ public class GerenciadorDeClientes extends Thread{
         this.escritor = escritor;
     }
 
+    public ObjectInputStream getLeitor() {
+        return leitor;
+    }
 
+    public Socket getCliente() {
+        return cliente;
+    }
 }

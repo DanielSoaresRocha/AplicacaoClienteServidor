@@ -3,18 +3,35 @@ package com.example.bolsista.novatentativa;
 import android.app.Activity;
 import android.content.Intent;
 import android.media.MediaPlayer;
+
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.bolsista.novatentativa.arquitetura.ClienteActivity;
 import com.example.bolsista.novatentativa.arquitetura.Servidor;
+import com.example.bolsista.novatentativa.modelo.Desafio;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+
+import java.util.ArrayList;
 
 public class Jogar extends AppCompatActivity {
     Button imagemButton;
     MediaPlayer mp;
+
+    //FireBase FireStore
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    DocumentReference usuarioRef;
+    //FireBase autenth
+    FirebaseAuth usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +72,7 @@ public class Jogar extends AppCompatActivity {
         }
 
     public void tocarError(){
+
         mp = MediaPlayer.create(Jogar.this, IniciarConfiguracao.configuracaoSelecionada.getSomErro());
         mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener(){
             public void onCompletion(MediaPlayer mp) {
@@ -91,7 +109,6 @@ public class Jogar extends AppCompatActivity {
     }
 
     private void voltarTela(){
-
         Intent returnTelaServer = new Intent();
         Bundle b = new Bundle();
         b.putString("desconexao", "insuficiente");
@@ -99,6 +116,40 @@ public class Jogar extends AppCompatActivity {
         setResult(Activity.RESULT_OK,returnTelaServer);
         finish();
     }
+
+    // Terminar o teste recebendo todos os desafios realizados para enviar ao banco
+    public void terminar(ArrayList<Desafio> desafios, String idExperimento){
+        DocumentReference experimentoRef = db.collection("experimentos").document(idExperimento);
+        for (int i = 0; i < desafios.size(); i++){
+            desafios.get(i).setExperimento(experimentoRef);
+            addDesafioFireStore(desafios.get(i));
+        }
+
+        telaResultado();
+    }
+
+    // Tela para exibir o resultado
+    private void telaResultado() {
+
+    }
+
+    private void addDesafioFireStore(Desafio desafio){
+        db.collection("desafios")
+                .add(desafio)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        documentReference.update("id",documentReference.getId());//adiciona ao campo id o id gerado pelo firebase
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.i("DataBase-FireStore-add", "Error adding document", e);
+                    }
+                });
+    }
+
 
     private void modoFullScreean(){
         View decorView = getWindow().getDecorView();
@@ -111,6 +162,9 @@ public class Jogar extends AppCompatActivity {
 
     private void inicializar() {
         imagemButton = findViewById(R.id.imagemButton);
+
+        usuario = FirebaseAuth.getInstance();
+        usuarioRef = db.collection("users").document(usuario.getCurrentUser().getUid());
     }
 
 
