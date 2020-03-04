@@ -4,8 +4,8 @@ import com.google.firebase.firestore.DocumentReference;
 
 public class Desafio {
     private String id;
-    private long imgCorreta;
-    private long imgErrada;
+    private int imgCorreta;
+    private int imgErrada;
     private int qtdErros = 0;
     private long tempoAcerto;
     private DocumentReference experimento;
@@ -13,7 +13,7 @@ public class Desafio {
     public Desafio() {
     }
 
-    public Desafio(String id, long imgCorreta, long imgErrada, int qtdErros,
+    public Desafio(String id, int imgCorreta, int imgErrada, int qtdErros,
                    long tempoAcerto, DocumentReference experimento) {
         this.id = id;
         this.imgCorreta = imgCorreta;
@@ -31,19 +31,19 @@ public class Desafio {
         this.id = id;
     }
 
-    public long getImgCorreta() {
+    public int getImgCorreta() {
         return imgCorreta;
     }
 
-    public void setImgCorreta(long imgCorreta) {
+    public void setImgCorreta(int imgCorreta) {
         this.imgCorreta = imgCorreta;
     }
 
-    public long getImgErrada() {
+    public int getImgErrada() {
         return imgErrada;
     }
 
-    public void setImgErrada(long imgErrada) {
+    public void setImgErrada(int imgErrada) {
         this.imgErrada = imgErrada;
     }
 
