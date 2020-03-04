@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.bolsista.novatentativa.Resultado"
+    android:background="@color/black_de"
+    android:orientation="vertical"
+    >
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Resultado"
+        android:textColor="@color/branco"
+        android:textSize="30sp"
+        android:gravity="center"
+        android:paddingBottom="25sp"
+        >
+    </TextView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <TextView
+            android:layout_width="180sp"
+            android:layout_height="wrap_content"
+            android:text="Imagem\ncorreta"
+            android:gravity="center"
+            android:textColor="@color/branco"
+            >
+        </TextView>
+
+        <TextView
+            android:layout_width="180sp"
+            android:layout_height="wrap_content"
+            android:text="Imagem\nErrada"
+            android:gravity="center"
+            android:textColor="@color/branco"
+            >
+        </TextView>
+
+        <TextView
+            android:layout_width="180sp"
+            android:layout_height="wrap_content"
+            android:text="Quantidade de\nerros"
+            android:gravity="center"
+            android:textColor="@color/branco"
+            >
+        </TextView>
+
+        <TextView
+            android:layout_width="180sp"
+            android:layout_height="wrap_content"
+            android:text="Tempo para\nacerto"
+            android:gravity="center"
+            android:textColor="@color/branco"
+            >
+        </TextView>
+    </LinearLayout>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/resultadosRecycle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+</LinearLayout>

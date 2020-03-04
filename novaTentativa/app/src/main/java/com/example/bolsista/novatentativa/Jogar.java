@@ -130,7 +130,6 @@ public class Jogar extends AppCompatActivity {
 
     // Tela para exibir o resultado
     private void telaResultado() {
-
     }
 
     private void addDesafioFireStore(Desafio desafio){
