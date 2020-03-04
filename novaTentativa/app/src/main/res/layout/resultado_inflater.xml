@@ -18,30 +18,40 @@
         android:gravity="center"
         >
         <ImageView
-            android:layout_width="50sp"
-            android:layout_height="50sp"
+            android:id="@+id/imgCorreta"
+            android:layout_width="180sp"
+            android:layout_height="70sp"
             android:src="@drawable/circulo"
             >
         </ImageView>
 
+        <ImageView
+            android:id="@+id/imgErrada"
+            android:layout_width="180sp"
+            android:layout_height="70sp"
+            android:src="@drawable/triangulo"
+            >
+        </ImageView>
+
         <TextView
+            android:id="@+id/qtdErros"
             android:layout_width="180sp"
             android:layout_height="wrap_content"
             android:textColor="@color/black_de"
+            android:text="5"
+            android:gravity="center"
+            android:textSize="30sp"
             >
         </TextView>
 
         <TextView
+            android:id="@+id/tempo"
             android:layout_width="180sp"
             android:layout_height="wrap_content"
             android:textColor="@color/black_de"
-            >
-        </TextView>
-
-        <TextView
-            android:layout_width="180sp"
-            android:layout_height="wrap_content"
-            android:textColor="@color/black_de"
+            android:text="300"
+            android:gravity="center"
+            android:textSize="30sp"
             >
         </TextView>
     </LinearLayout>
