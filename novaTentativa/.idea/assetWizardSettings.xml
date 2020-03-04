@@ -48,7 +48,6 @@
                                               <map>
                                                 <entry key="color" value="000000" />
                                                 <entry key="opacityPercent" value="80" />
-                                                <entry key="paddingPercent" value="-5" />
                                               </map>
                                             </option>
                                           </PersistentState>
@@ -71,10 +70,10 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="C:\Users\Bolsista\Downloads\triangle.png" />
-                                      <entry key="outputName" value="triangle" />
+                                      <entry key="imageAsset" value="C:\Users\Bolsista\Documents\Dan\Imagens\b_heart.png" />
+                                      <entry key="outputName" value="b_coracao" />
                                       <entry key="theme" value="CUSTOM" />
-                                      <entry key="themeColor" value="11080f" />
+                                      <entry key="themeColor" value="000000" />
                                     </map>
                                   </option>
                                 </PersistentState>

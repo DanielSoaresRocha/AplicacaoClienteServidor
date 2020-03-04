@@ -130,6 +130,8 @@ public class Jogar extends AppCompatActivity {
 
     // Tela para exibir o resultado
     private void telaResultado() {
+        Intent telaResultado = new Intent(Jogar.this, Resultado.class);
+        startActivity(telaResultado);
     }
 
     private void addDesafioFireStore(Desafio desafio){

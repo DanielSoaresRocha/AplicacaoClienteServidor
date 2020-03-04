@@ -277,7 +277,7 @@ public class ConfigurarTeste extends AppCompatActivity {
                 imagens.add(R.drawable.triangulo);
                 imagens.add(R.drawable.coracao);
                 imagens.add(R.drawable.estrela2);
-                imagens.add(R.drawable.estrela);
+                imagens.add(R.drawable.hexagono);
                 imagens.add(R.drawable.retangulo);
             }
             if(preenchimento.isChecked()){
