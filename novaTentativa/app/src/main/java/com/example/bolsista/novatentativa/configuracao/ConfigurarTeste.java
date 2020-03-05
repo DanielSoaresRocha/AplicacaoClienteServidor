@@ -282,10 +282,10 @@ public class ConfigurarTeste extends AppCompatActivity {
             }
             if(preenchimento.isChecked()){
                 imagens.add(R.drawable.b_circulo);
-                imagens.add(R.drawable.b_hexagono);
+                imagens.add(R.drawable.b_triangle);
                 imagens.add(R.drawable.b_coracao);
-                imagens.add(R.drawable.b_estrela2);
                 imagens.add(R.drawable.b_estrela);
+                imagens.add(R.drawable.b_hexagono);
                 imagens.add(R.drawable.b_retangulo);
             }
             return imagens;

@@ -27,6 +27,8 @@ public class Jogar extends AppCompatActivity {
     Button imagemButton;
     MediaPlayer mp;
 
+    public static ArrayList<Desafio> desafios;
+
     //FireBase FireStore
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     DocumentReference usuarioRef;
@@ -119,12 +121,12 @@ public class Jogar extends AppCompatActivity {
 
     // Terminar o teste recebendo todos os desafios realizados para enviar ao banco
     public void terminar(ArrayList<Desafio> desafios, String idExperimento){
+        this.desafios = desafios;
         DocumentReference experimentoRef = db.collection("experimentos").document(idExperimento);
         for (int i = 0; i < desafios.size(); i++){
             desafios.get(i).setExperimento(experimentoRef);
             addDesafioFireStore(desafios.get(i));
         }
-
         telaResultado();
     }
 

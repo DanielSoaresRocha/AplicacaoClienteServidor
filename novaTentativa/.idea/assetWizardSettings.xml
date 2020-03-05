@@ -70,8 +70,8 @@
                                   <option name="values">
                                     <map>
                                       <entry key="assetType" value="IMAGE" />
-                                      <entry key="imageAsset" value="C:\Users\Bolsista\Documents\Dan\Imagens\b_heart.png" />
-                                      <entry key="outputName" value="b_coracao" />
+                                      <entry key="imageAsset" value="C:\Users\denk\Downloads\rectangle.png" />
+                                      <entry key="outputName" value="b_retangulo" />
                                       <entry key="theme" value="CUSTOM" />
                                       <entry key="themeColor" value="000000" />
                                     </map>
