@@ -37,6 +37,7 @@ public class GerenciadorDeClientes extends Thread{
     private ArrayList<Desafio> desafios = new ArrayList<>();
 
     private int imgAtual;
+    private Desafio desafio = new Desafio();
 
     static Jogar jogar;
 
@@ -67,7 +68,6 @@ public class GerenciadorDeClientes extends Thread{
                     vetor = IniciarConfiguracao.configuracaoSelecionada.getImagens();
                     int numRodadas = IniciarConfiguracao.configuracaoSelecionada.getQtdQuestoes();
                     int rodada = 1;
-                    Desafio desafio = new Desafio();
                     while (rodada <= numRodadas) {
                         msg = leitor.readInt();
                         imgAtual = server.numberAleatorio;
@@ -306,6 +306,7 @@ public class GerenciadorDeClientes extends Thread{
                 }
 
                 int outraImg = vetor.get(aleatorio);
+                desafio.setImgErrada(outraImg);
                 Log.i("ENVIAR","ENVIADA 2 "+ outraImg);
 
                 GerenciadorDeClientes destino = clientes.get(i);
