@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.bolsista.novatentativa.Resultado"
-    android:background="@color/black_de"
+    android:background="@color/azulClaro"
     android:orientation="vertical"
     >
 
@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Resultado"
-        android:textColor="@color/branco"
+        android:textColor="@color/black_de"
         android:textSize="30sp"
         android:gravity="center"
         android:paddingBottom="25sp"
@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:text="Imagem\ncorreta"
             android:gravity="center"
-            android:textColor="@color/branco"
+            android:textColor="@color/black_de"
             >
         </TextView>
 
@@ -39,7 +39,7 @@
             android:layout_height="wrap_content"
             android:text="Imagem\nErrada"
             android:gravity="center"
-            android:textColor="@color/branco"
+            android:textColor="@color/black_de"
             >
         </TextView>
 
@@ -48,7 +48,7 @@
             android:layout_height="wrap_content"
             android:text="Quantidade de\nerros"
             android:gravity="center"
-            android:textColor="@color/branco"
+            android:textColor="@color/black_de"
             >
         </TextView>
 
@@ -57,7 +57,7 @@
             android:layout_height="wrap_content"
             android:text="Tempo para\nacerto"
             android:gravity="center"
-            android:textColor="@color/branco"
+            android:textColor="@color/black_de"
             >
         </TextView>
     </LinearLayout>
