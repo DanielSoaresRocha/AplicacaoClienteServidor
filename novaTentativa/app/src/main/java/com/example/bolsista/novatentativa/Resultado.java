@@ -8,6 +8,7 @@ import android.content.Context;
 import android.os.Bundle;
 
 import com.example.bolsista.novatentativa.adapters.ResultadoAdapter;
+import com.example.bolsista.novatentativa.arquitetura.Servidor;
 
 public class Resultado extends AppCompatActivity {
     private RecyclerView desafiosRecycle;
@@ -20,7 +21,9 @@ public class Resultado extends AppCompatActivity {
         setContentView(R.layout.activity_resultado);
 
         inicializar();
-        implementsRecycle();
+        if(Servidor.serverIdentificado) {
+            implementsRecycle();
+        }
     }
 
     private void implementsRecycle() {

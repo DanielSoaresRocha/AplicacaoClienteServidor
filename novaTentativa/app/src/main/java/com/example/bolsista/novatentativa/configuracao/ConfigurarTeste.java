@@ -273,20 +273,20 @@ public class ConfigurarTeste extends AppCompatActivity {
     private ArrayList<Integer> getImagens(){
         ArrayList<Integer> imagens = new ArrayList<>();
             if(formas.isChecked()){
-                imagens.add(R.drawable.circulo);
-                imagens.add(R.drawable.triangulo);
-                imagens.add(R.drawable.coracao);
-                imagens.add(R.drawable.estrela2);
-                imagens.add(R.drawable.hexagono);
-                imagens.add(R.drawable.retangulo);
+                imagens.add(R.drawable.circuloo);
+                imagens.add(R.drawable.trianguloo);
+                imagens.add(R.drawable.coracaoo);
+                imagens.add(R.drawable.estrela22);
+                imagens.add(R.drawable.hexagonoo);
+                imagens.add(R.drawable.retanguloo);
             }
             if(preenchimento.isChecked()){
-                imagens.add(R.drawable.b_circulo);
-                imagens.add(R.drawable.b_triangle);
-                imagens.add(R.drawable.b_coracao);
-                imagens.add(R.drawable.b_estrela);
-                imagens.add(R.drawable.b_hexagono);
-                imagens.add(R.drawable.b_retangulo);
+                imagens.add(R.drawable.b_circuloo);
+                imagens.add(R.drawable.trianguloo);
+                imagens.add(R.drawable.b_coracaoo);
+                imagens.add(R.drawable.b_estrela22);
+                imagens.add(R.drawable.b_hexagonoo);
+                imagens.add(R.drawable.b_retanguloo);
             }
             return imagens;
     }

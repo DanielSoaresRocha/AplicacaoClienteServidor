@@ -64,7 +64,7 @@ public class GerenciadorDeClientes extends Thread{
                     leitor = new ObjectInputStream(cliente.getInputStream());
                     Log.i("OBJETO", "Criou input do servidor");
                     //enviarObjeto();
-                    imgAtual = R.drawable.circulo; //////////////////DESTAQUE
+                    imgAtual = R.drawable.circuloo; //////////////////DESTAQUE
                     vetor = IniciarConfiguracao.configuracaoSelecionada.getImagens();
                     int numRodadas = IniciarConfiguracao.configuracaoSelecionada.getQtdQuestoes();
                     int rodada = 1;

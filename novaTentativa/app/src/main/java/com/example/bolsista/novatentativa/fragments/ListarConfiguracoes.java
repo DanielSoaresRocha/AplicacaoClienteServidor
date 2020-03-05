@@ -167,6 +167,10 @@ public class ListarConfiguracoes extends Fragment {
         contextoAtivity = getActivity();
 
         usuario = FirebaseAuth.getInstance();
-        usuarioRef = db.collection("users").document(usuario.getCurrentUser().getUid());
+        try {
+            usuarioRef = db.collection("users").document(usuario.getCurrentUser().getUid());
+        }catch (java.lang.NullPointerException e){
+            usuarioRef = db.collection("users").document("zl1hFltVOlJONAVUeIsY");
+        }
     }
 }

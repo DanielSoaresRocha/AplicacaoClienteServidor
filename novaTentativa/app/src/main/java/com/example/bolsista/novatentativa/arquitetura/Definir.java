@@ -193,7 +193,7 @@ public class Definir extends AppCompatActivity {
                         usuario.getCurrentUser().getDisplayName(), Toast.LENGTH_SHORT).show();
                 CheckUsuario();
             } else if (resultCode == RESULT_CANCELED) {
-                finish();
+                Toast.makeText(this, "Você está anônimo", Toast.LENGTH_SHORT).show();
             }
         }
     }
