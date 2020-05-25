@@ -71,7 +71,7 @@ public class Servidor extends AppCompatActivity {
 
     private void criarServidor() {
         final Servidor server = this;
-        numberAleatorio = R.drawable.circulo;
+        numberAleatorio = R.drawable.circuloo;
 
         serverIdentificado = true;
         new Thread(new Runnable() {

@@ -19,7 +19,8 @@
         >
         <ImageView
             android:id="@+id/imgCorreta"
-            android:layout_width="180sp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
             android:layout_height="70sp"
             android:src="@drawable/circulo"
             >
@@ -27,7 +28,8 @@
 
         <ImageView
             android:id="@+id/imgErrada"
-            android:layout_width="180sp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
             android:layout_height="70sp"
             android:src="@drawable/triangulo"
             >
@@ -35,7 +37,8 @@
 
         <TextView
             android:id="@+id/qtdErros"
-            android:layout_width="180sp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColor="@color/black_de"
             android:text="5"
@@ -46,7 +49,8 @@
 
         <TextView
             android:id="@+id/tempo"
-            android:layout_width="180sp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:textColor="@color/black_de"
             android:text="8"

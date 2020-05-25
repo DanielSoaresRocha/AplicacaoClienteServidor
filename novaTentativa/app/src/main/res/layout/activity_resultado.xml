@@ -26,7 +26,8 @@
         android:orientation="horizontal"
         >
         <TextView
-            android:layout_width="180sp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Imagem\ncorreta"
             android:gravity="center"
@@ -35,7 +36,8 @@
         </TextView>
 
         <TextView
-            android:layout_width="180sp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Imagem\nErrada"
             android:gravity="center"
@@ -44,7 +46,8 @@
         </TextView>
 
         <TextView
-            android:layout_width="180sp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Quantidade de\nerros"
             android:gravity="center"
@@ -53,7 +56,8 @@
         </TextView>
 
         <TextView
-            android:layout_width="180sp"
+            android:layout_weight="1"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="Tempo para\nacerto"
             android:gravity="center"
