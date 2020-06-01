@@ -35,6 +35,11 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+/*
+* sexo
+* atividade
+*/
+
 public class CadastrarCavalo extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
 
     Button cadastrarCavaloBtn,cancelarBtn;

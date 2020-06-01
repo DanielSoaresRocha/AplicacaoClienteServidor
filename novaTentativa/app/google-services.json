@@ -8,18 +8,18 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:657930800230:android:7a3b5149c7c3113f62f1a7",
+        "mobilesdk_app_id": "1:657930800230:android:aeb25b1b093ce74762f1a7",
         "android_client_info": {
           "package_name": "br.com.alura.ceep"
         }
       },
       "oauth_client": [
         {
-          "client_id": "657930800230-j7tguil4jdvusrjttgb3c1phinlhdu2m.apps.googleusercontent.com",
+          "client_id": "657930800230-ufja1l5r5of4gasnf5md7la73c7hnnq2.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "br.com.alura.ceep",
-            "certificate_hash": "fd342e7814acb23c5985e75773544a28a0688040"
+            "certificate_hash": "e7eb6c8755b3168e34670cec65052f71076e3960"
           }
         },
         {

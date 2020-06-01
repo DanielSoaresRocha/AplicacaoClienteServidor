@@ -36,6 +36,9 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
+/*
+* colocar sessão atual para determinado cavalo
+*/
 
 public class ListarConfiguracoes extends Fragment {
     private ListarViewModel mViewModel;
