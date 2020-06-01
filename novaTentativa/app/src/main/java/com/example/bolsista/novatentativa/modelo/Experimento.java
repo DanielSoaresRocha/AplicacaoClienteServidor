@@ -12,12 +12,14 @@ public class Experimento {
     private Date data;
     private String descricao;
     private String nome;
+    private int number;
 
     public Experimento() {
     }
 
     public Experimento(String id, DocumentReference configuracao, DocumentReference usuario,
-                       DocumentReference equino, Date data, String descricao, String nome) {
+                       DocumentReference equino, Date data, String descricao,
+                       String nome, int number) {
         this.id = id;
         this.configuracao = configuracao;
         this.usuario = usuario;
@@ -25,6 +27,7 @@ public class Experimento {
         this.data = data;
         this.descricao = descricao;
         this.nome = nome;
+        this.number = number;
     }
 
     public String getId() {
@@ -81,5 +84,13 @@ public class Experimento {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setNumber(int number) {
+        this.number = number;
     }
 }

@@ -25,7 +25,21 @@
         android:orientation="vertical"
         android:paddingHorizontal="25sp"
         >
+        <Button
+            android:id="@+id/btnTextExp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ok">
 
+        </Button>
+        <TextView
+            android:id="@+id/numExpCavalo"
+            android:text="Número do experimento:"
+            android:paddingVertical="20sp"
+            android:textSize="20sp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        </TextView>
         <EditText
             android:id="@+id/nomeExperimento"
             android:paddingVertical="20sp"

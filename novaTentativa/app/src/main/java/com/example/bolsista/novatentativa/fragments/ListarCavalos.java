@@ -119,6 +119,7 @@ public class ListarCavalos extends Fragment {
                             @Override
                             public void onItemClick(View view, int position) {
                                 IniciarConfiguracao.cavaloSelecionado = mViewModel.cavalos.getValue().get(position);
+                                CadastrarExperimento.verififyNumberExperiments(IniciarConfiguracao.cavaloSelecionado.getId());
                                 Toast.makeText(contextoAtivity,"Cavalo selecionado",
                                         Toast.LENGTH_SHORT).show();
                                 Log.i("Teste", "onSingleTapUp2");
