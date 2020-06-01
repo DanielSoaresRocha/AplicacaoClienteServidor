@@ -41,18 +41,18 @@ public class CadastrarExperimento extends Fragment {
     private View v;
     private Context contextoAtivity;
 
-    private Button finalizarExperimento, btnTextExp;
+    private Button finalizarExperimento, btnNumExperiments;
     private EditText nomeExperimento, descricaoExperimento;
     @SuppressLint("StaticFieldLeak")
     private static TextView numExpCavalo;
 
     //FireBase FireStore
     static FirebaseFirestore db = FirebaseFirestore.getInstance();
-    DocumentReference usuarioRef;
+    private DocumentReference usuarioRef;
     //FireBase autenth
-    FirebaseAuth usuario;
+    private FirebaseAuth usuario;
 
-    static int numberExperiments = 0;
+    private static int numberExperiments = 0;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -79,11 +79,11 @@ public class CadastrarExperimento extends Fragment {
             }
         });
 
-        btnTextExp.setOnClickListener(new View.OnClickListener() {
+        btnNumExperiments.setOnClickListener(new View.OnClickListener() {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
-                numExpCavalo.setText(""+numberExperiments);
+                numExpCavalo.setText("Número do experimento: "+numberExperiments);
             }
         });
     }
@@ -95,7 +95,7 @@ public class CadastrarExperimento extends Fragment {
                 .document(IniciarConfiguracao.cavaloSelecionado.getId());
 
         IniciarConfiguracao.experimento = new Experimento("", configuracaoRef, usuarioRef, equinoRef, new Date(),
-                descricaoExperimento.getText().toString(), nomeExperimento.getText().toString(), 0);
+                descricaoExperimento.getText().toString(), nomeExperimento.getText().toString(), numberExperiments);
 
         addExperimentoToFireBase();
         ListarViewModel.addExperimento(IniciarConfiguracao.experimento);
@@ -134,11 +134,15 @@ public class CadastrarExperimento extends Fragment {
                     @Override
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
+                            numberExperiments = 0;
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Log.d("entrou "+numberExperiments+" vezes", document.getId()
                                         + " => " + document.getData());
                                 numberExperiments++;
                             }
+
+                            if(numberExperiments == 0)
+                                numberExperiments = 1;
                         } else {
                             Log.d("notOK", "Error getting documents: ", task.getException());
                         }
@@ -158,7 +162,7 @@ public class CadastrarExperimento extends Fragment {
         nomeExperimento = v.findViewById(R.id.nomeExperimento);
         descricaoExperimento = v.findViewById(R.id.descricaoExperimento);
         numExpCavalo = v.findViewById(R.id.numExpCavalo);
-        btnTextExp = v.findViewById(R.id.btnTextExp);
+        btnNumExperiments = v.findViewById(R.id.btnNumExperiments);
 
         contextoAtivity = getActivity();
 
