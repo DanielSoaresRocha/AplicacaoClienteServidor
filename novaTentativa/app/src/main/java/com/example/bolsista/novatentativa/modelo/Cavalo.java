@@ -10,18 +10,31 @@ public class Cavalo {
     private String raca;
     private Date dataNascimento;
     private String detalhes;
+    private String sexo;
+    private String atividade;
     private DocumentReference usuario; //referencia a outro documento de outra coleção ("chave estrangeira")
 
     public Cavalo() {
     }
 
-    public Cavalo(String nome, String raca, Date dataNascimento, String detalhes, String id, DocumentReference usuario) {
+    public Cavalo(String nome, String raca, Date dataNascimento, String detalhes,
+                  String sexo, String atividade, DocumentReference usuario) {
+        this.id = id;
         this.nome = nome;
         this.raca = raca;
         this.dataNascimento = dataNascimento;
         this.detalhes = detalhes;
-        this.id = id;
+        this.sexo = sexo;
+        this.atividade = atividade;
         this.usuario = usuario;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -56,12 +69,20 @@ public class Cavalo {
         this.detalhes = detalhes;
     }
 
-    public String getId() {
-        return id;
+    public String getSexo() {
+        return sexo;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setSexo(String sexo) {
+        this.sexo = sexo;
+    }
+
+    public String getAtividade() {
+        return atividade;
+    }
+
+    public void setAtividade(String atividade) {
+        this.atividade = atividade;
     }
 
     public DocumentReference getUsuario() {

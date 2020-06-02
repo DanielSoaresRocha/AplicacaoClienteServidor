@@ -57,6 +57,7 @@ public class CadastrarCavalo extends AppCompatActivity implements DatePickerDial
     @SuppressLint("SimpleDateFormat")
     SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
     Date dataNascimento;
+    String sexo = "";
     private static final String[] tasks = new String[] {
             "Equitação (escola)", "Passeio", "Enduro", "Vaquejada", "Tambores", "Lida pecuária",
             "Militar", "Equoterapia", "Adestramento", "Volteio", "Corrida/Turfe"
@@ -85,8 +86,7 @@ public class CadastrarCavalo extends AppCompatActivity implements DatePickerDial
                 if((dataNascimentoE.getText().toString().length() >= 8) && (nome.getText().toString()
                         .length() > 1)) {
                     cavalo = new Cavalo(nome.getText().toString(), raca.getText().toString(),
-                            dataNascimento, detalhes.getText().toString(),
-                            "", usuarioRef);
+                            dataNascimento, detalhes.getText().toString(),sexo, autoComplete.getText().toString(), usuarioRef);
 
                     addFireStore();
 
@@ -126,11 +126,11 @@ public class CadastrarCavalo extends AppCompatActivity implements DatePickerDial
         switch(view.getId()) {
             case R.id.macho:
                 if (checked)
-                    // Pirates are the best
+                    sexo = "Macho";
                     break;
             case R.id.femea:
                 if (checked)
-                    // Ninjas rule
+                    sexo = "Fêmea";
                     break;
         }
     }
