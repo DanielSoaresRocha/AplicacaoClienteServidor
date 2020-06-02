@@ -32,7 +32,7 @@
             android:orientation="horizontal">
             <TextView
                 android:id="@+id/numExpCavalo"
-                android:text="Número do experimento:"
+                android:text="Sessão número:"
                 android:paddingVertical="20sp"
                 android:textSize="20sp"
                 android:layout_height="wrap_content"

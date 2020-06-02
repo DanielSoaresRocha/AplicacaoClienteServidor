@@ -83,7 +83,7 @@ public class CadastrarExperimento extends Fragment {
             @SuppressLint("SetTextI18n")
             @Override
             public void onClick(View view) {
-                numExpCavalo.setText("Número do experimento: "+numberExperiments);
+                numExpCavalo.setText("Sessão número: "+numberExperiments);
             }
         });
     }
@@ -165,7 +165,7 @@ public class CadastrarExperimento extends Fragment {
         btnNumExperiments = v.findViewById(R.id.btnNumExperiments);
 
         contextoAtivity = getActivity();
-        numExpCavalo.setText("Número do experimento: "+numberExperiments);
+        numExpCavalo.setText("Sessão número: "+numberExperiments);
 
         usuario = FirebaseAuth.getInstance();
         try {
