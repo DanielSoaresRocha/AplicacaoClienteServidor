@@ -9,10 +9,14 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.MultiAutoCompleteTextView;
+import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -47,16 +51,19 @@ public class CadastrarCavalo extends AppCompatActivity implements DatePickerDial
     Context contextActivity;
     ImageView dataNascimentoI;
     TextView dataNascimentoE;
+    AutoCompleteTextView autoComplete;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     @SuppressLint("SimpleDateFormat")
     SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
     Date dataNascimento;
+    private static final String[] tasks = new String[] {
+            "Equitação (escola)", "Passeio", "Enduro", "Vaquejada", "Tambores", "Lida pecuária",
+            "Militar", "Equoterapia", "Adestramento", "Volteio", "Corrida/Turfe"
+    };
 
     Cavalo cavalo;
-
     FirebaseAuth usuario;
-
     DocumentReference usuarioRef;
 
     @Override
@@ -109,6 +116,23 @@ public class CadastrarCavalo extends AppCompatActivity implements DatePickerDial
                 showDatePickerDialog();
             }
         });
+    }
+
+    public void onRadioButtonClicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        // Check which radio button was clicked
+        switch(view.getId()) {
+            case R.id.macho:
+                if (checked)
+                    // Pirates are the best
+                    break;
+            case R.id.femea:
+                if (checked)
+                    // Ninjas rule
+                    break;
+        }
     }
 
     public void addFireStore(){
@@ -171,6 +195,12 @@ public class CadastrarCavalo extends AppCompatActivity implements DatePickerDial
         detalhes = findViewById(R.id.detalhesTextView);
         dataNascimentoI =findViewById(R.id.dataNascimentoI);
         dataNascimentoE = findViewById(R.id.dataNascimentoE);
+        autoComplete = findViewById(R.id.autoComplete);
         contextActivity = this;
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(contextActivity,
+                android.R.layout.simple_dropdown_item_1line, tasks);
+        autoComplete.setAdapter(adapter);
+        //autoComplete.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
     }
 }

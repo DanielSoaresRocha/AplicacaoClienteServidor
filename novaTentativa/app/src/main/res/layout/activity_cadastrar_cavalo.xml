@@ -77,7 +77,44 @@
                 android:hint="@string/raca"
                 />
 
-            <EditText
+        <AutoCompleteTextView
+            android:id="@+id/autoComplete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Atividade" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sexo:"
+            android:paddingVertical="5sp"
+            android:textSize="15sp"
+            >
+
+        </TextView>
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <RadioButton
+                android:id="@+id/macho"
+                android:text="Macho"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClicked"
+                />
+            <RadioButton
+                android:id="@+id/femea"
+                android:text="Fêmea"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClicked"
+                />
+
+        </RadioGroup>
+
+        <EditText
                 android:id="@+id/detalhesTextView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
