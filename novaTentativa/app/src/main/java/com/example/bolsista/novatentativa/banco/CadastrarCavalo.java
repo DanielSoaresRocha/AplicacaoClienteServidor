@@ -9,6 +9,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -17,6 +18,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.RadioButton;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -44,24 +46,24 @@ import java.util.Date;
 * atividade
 */
 
-public class CadastrarCavalo extends AppCompatActivity implements DatePickerDialog.OnDateSetListener{
+public class CadastrarCavalo extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, AdapterView.OnItemSelectedListener {
 
     Button cadastrarCavaloBtn,cancelarBtn;
     EditText nome, raca, detalhes;
     Context contextActivity;
     ImageView dataNascimentoI;
     TextView dataNascimentoE;
-    AutoCompleteTextView autoComplete;
+    Spinner ativitiesSpinner;
+
+    ArrayAdapter<CharSequence> adapter;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     @SuppressLint("SimpleDateFormat")
     SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
     Date dataNascimento;
+    String atividade;
+
     String sexo = "";
-    private static final String[] tasks = new String[] {
-            "Equitação (escola)", "Passeio", "Enduro", "Vaquejada", "Tambores", "Lida pecuária",
-            "Militar", "Equoterapia", "Adestramento", "Volteio", "Corrida/Turfe"
-    };
 
     Cavalo cavalo;
     FirebaseAuth usuario;
@@ -73,6 +75,7 @@ public class CadastrarCavalo extends AppCompatActivity implements DatePickerDial
         setContentView(R.layout.activity_cadastrar_cavalo);
 
         inicializar();
+        spinner();
         listener();
 
         usuario = FirebaseAuth.getInstance();
@@ -80,13 +83,14 @@ public class CadastrarCavalo extends AppCompatActivity implements DatePickerDial
     }
 
     private void listener() {
+        ativitiesSpinner.setOnItemSelectedListener(this);
         cadastrarCavaloBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if((dataNascimentoE.getText().toString().length() >= 8) && (nome.getText().toString()
                         .length() > 1)) {
                     cavalo = new Cavalo(nome.getText().toString(), raca.getText().toString(),
-                            dataNascimento, detalhes.getText().toString(),sexo, autoComplete.getText().toString(), usuarioRef);
+                            dataNascimento, detalhes.getText().toString(),sexo, atividade, usuarioRef);
 
                     addFireStore();
 
@@ -116,6 +120,14 @@ public class CadastrarCavalo extends AppCompatActivity implements DatePickerDial
                 showDatePickerDialog();
             }
         });
+    }
+
+    public void spinner(){
+        adapter = ArrayAdapter.createFromResource(contextActivity,
+                R.array.planets_array, android.R.layout.simple_spinner_item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ativitiesSpinner.setAdapter(adapter);
+
     }
 
     public void onRadioButtonClicked(View view) {
@@ -195,12 +207,22 @@ public class CadastrarCavalo extends AppCompatActivity implements DatePickerDial
         detalhes = findViewById(R.id.detalhesTextView);
         dataNascimentoI =findViewById(R.id.dataNascimentoI);
         dataNascimentoE = findViewById(R.id.dataNascimentoE);
-        autoComplete = findViewById(R.id.autoComplete);
+        ativitiesSpinner = findViewById(R.id.ativitiesSpinner);
         contextActivity = this;
+        ativitiesSpinner = findViewById(R.id.ativitiesSpinner);
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(contextActivity,
-                android.R.layout.simple_dropdown_item_1line, tasks);
-        autoComplete.setAdapter(adapter);
         //autoComplete.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
+        String text = parent.getItemAtPosition(position).toString();
+        atividade = text;
+        // Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
     }
 }

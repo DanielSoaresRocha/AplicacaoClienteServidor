@@ -77,11 +77,12 @@
                 android:hint="@string/raca"
                 />
 
-        <AutoCompleteTextView
-            android:id="@+id/autoComplete"
-            android:layout_width="match_parent"
+        <Spinner
+            android:id="@+id/ativitiesSpinner"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:hint="Atividade" />
+            android:paddingVertical="20sp"
+            />
 
         <TextView
             android:layout_width="match_parent"

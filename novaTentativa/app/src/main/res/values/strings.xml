@@ -57,6 +57,20 @@
     <string name="logoff">logoff</string>
     <string name="escolha_uma_configura_o">Escolha uma configuração:</string>
 
+    <!--Spnner -->
+    <string-array name="planets_array">
+        <item>Equitação (escola)</item>
+        <item>Passeio</item>
+        <item>Enduro</item>
+        <item>Vaquejada</item>
+        <item>Tambores</item>
+        <item>Lida pecuária</item>
+        <item>Militar</item>
+        <item>Equoterapia</item>
+        <item>Adestramento</item>
+        <item>Volteio</item>
+        <item>Corrida/Turfe</item>
+    </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
