@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.MultiAutoCompleteTextView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -49,19 +50,19 @@ import java.util.Date;
 public class CadastrarCavalo extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, AdapterView.OnItemSelectedListener {
 
     Button cadastrarCavaloBtn,cancelarBtn;
-    EditText nome, raca, detalhes;
+    EditText nome, detalhes;
     Context contextActivity;
     ImageView dataNascimentoI;
     TextView dataNascimentoE;
-    Spinner ativitiesSpinner;
+    Spinner ativitiesSpinner, racasSpinner;
 
-    ArrayAdapter<CharSequence> adapter;
+    ArrayAdapter<CharSequence> ativitiesAdapter, racasAdapter;
 
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     @SuppressLint("SimpleDateFormat")
     SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
     Date dataNascimento;
-    String atividade;
+    String atividade, racaText;
 
     String sexo = "";
 
@@ -75,7 +76,7 @@ public class CadastrarCavalo extends AppCompatActivity implements DatePickerDial
         setContentView(R.layout.activity_cadastrar_cavalo);
 
         inicializar();
-        spinner();
+        spinners();
         listener();
 
         usuario = FirebaseAuth.getInstance();
@@ -84,18 +85,19 @@ public class CadastrarCavalo extends AppCompatActivity implements DatePickerDial
 
     private void listener() {
         ativitiesSpinner.setOnItemSelectedListener(this);
+        racasSpinner.setOnItemSelectedListener(this);
+
         cadastrarCavaloBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if((dataNascimentoE.getText().toString().length() >= 8) && (nome.getText().toString()
                         .length() > 1)) {
-                    cavalo = new Cavalo(nome.getText().toString(), raca.getText().toString(),
+                    cavalo = new Cavalo(nome.getText().toString(), racaText,
                             dataNascimento, detalhes.getText().toString(),sexo, atividade, usuarioRef);
 
                     addFireStore();
 
                     nome.setText("");
-                    raca.setText("");
                     dataNascimentoE.setText("");
                     detalhes.setText("");
                     Toast.makeText(getApplicationContext(), "Cavalo cadastrado", Toast.LENGTH_SHORT).show();
@@ -122,12 +124,19 @@ public class CadastrarCavalo extends AppCompatActivity implements DatePickerDial
         });
     }
 
-    public void spinner(){
-        adapter = ArrayAdapter.createFromResource(contextActivity,
-                R.array.planets_array, android.R.layout.simple_spinner_item);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        ativitiesSpinner.setAdapter(adapter);
+    public void spinners(){
+        // atividades
 
+        ativitiesAdapter = ArrayAdapter.createFromResource(contextActivity,
+                R.array.ativities_array, android.R.layout.simple_spinner_item);
+        ativitiesAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        ativitiesSpinner.setAdapter(ativitiesAdapter);
+        // raças
+
+        racasAdapter = ArrayAdapter.createFromResource(contextActivity,
+                R.array.racas_array, android.R.layout.simple_spinner_item);
+        racasAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        racasSpinner.setAdapter(racasAdapter);
     }
 
     public void onRadioButtonClicked(View view) {
@@ -203,13 +212,13 @@ public class CadastrarCavalo extends AppCompatActivity implements DatePickerDial
         cadastrarCavaloBtn = findViewById(R.id.cadastrarCavaloBtn);
         cancelarBtn = findViewById(R.id.cancelarBtn);
         nome = findViewById(R.id.nomeTextView);
-        raca = findViewById(R.id.racaTextView);
         detalhes = findViewById(R.id.detalhesTextView);
         dataNascimentoI =findViewById(R.id.dataNascimentoI);
         dataNascimentoE = findViewById(R.id.dataNascimentoE);
         ativitiesSpinner = findViewById(R.id.ativitiesSpinner);
         contextActivity = this;
         ativitiesSpinner = findViewById(R.id.ativitiesSpinner);
+        racasSpinner = findViewById(R.id.racasSpinner);
 
         //autoComplete.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
     }
@@ -217,8 +226,21 @@ public class CadastrarCavalo extends AppCompatActivity implements DatePickerDial
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
         String text = parent.getItemAtPosition(position).toString();
+
+        switch(parent.getId()){
+            case R.id.ativitiesSpinner:
+                atividade = text;
+                break;
+            case  R.id.racasSpinner:
+                racaText = text;
+                break;
+        }
+
+        /*
+        String text = parent.getItemAtPosition(position).toString();
         atividade = text;
-        // Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();
+        System.out.println(parent);
+        // Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();*/
     }
 
     @Override

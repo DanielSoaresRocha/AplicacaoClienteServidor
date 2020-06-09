@@ -57,8 +57,8 @@
     <string name="logoff">logoff</string>
     <string name="escolha_uma_configura_o">Escolha uma configuração:</string>
 
-    <!--Spnner -->
-    <string-array name="planets_array">
+    <!--Spnner ativities -->
+    <string-array name="ativities_array">
         <item>Equitação (escola)</item>
         <item>Passeio</item>
         <item>Enduro</item>
@@ -70,6 +70,22 @@
         <item>Adestramento</item>
         <item>Volteio</item>
         <item>Corrida/Turfe</item>
+    </string-array>
+    <!--Spnner raças -->
+    <string-array name="racas_array">
+        <item>Quarto de milha</item>
+        <item>Crioulo</item>
+        <item>Campolina</item>
+        <item>Andaluz</item>
+        <item>Puro sangue Inglês</item>
+        <item>Árabe</item>
+        <item>Mangalarga</item>
+        <item>Brasileiro de hipismo</item>
+        <item>Pônei brasileiro</item>
+        <item>Piquira</item>
+        <item>Paint horse</item>
+        <item>Lusitano</item>
+        <item>Appaloosa</item>
     </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

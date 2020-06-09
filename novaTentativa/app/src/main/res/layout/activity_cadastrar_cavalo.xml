@@ -70,12 +70,29 @@
 
             </LinearLayout>
 
-            <EditText
-                android:id="@+id/racaTextView"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/raca"
-                />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Raça do cavalo:"
+            android:paddingVertical="10sp"
+            android:textSize="20sp"
+            >
+        </TextView>
+        <Spinner
+            android:id="@+id/racasSpinner"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:paddingVertical="20sp"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Atividade do cavalo:"
+            android:paddingVertical="10sp"
+            android:textSize="20sp"
+            >
+        </TextView>
 
         <Spinner
             android:id="@+id/ativitiesSpinner"
@@ -89,7 +106,7 @@
             android:layout_height="wrap_content"
             android:text="Sexo:"
             android:paddingVertical="5sp"
-            android:textSize="15sp"
+            android:textSize="20sp"
             >
 
         </TextView>
