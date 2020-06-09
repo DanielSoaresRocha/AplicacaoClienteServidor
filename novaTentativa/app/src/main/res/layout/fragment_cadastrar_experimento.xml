@@ -49,14 +49,6 @@
 
             </Button>
         </LinearLayout>
-        <EditText
-            android:id="@+id/nomeExperimento"
-            android:paddingVertical="20sp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="Nome para o experimento"
-            >
-        </EditText>
 
         <EditText
             android:id="@+id/descricaoExperimento"

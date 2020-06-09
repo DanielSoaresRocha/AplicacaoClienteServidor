@@ -11,22 +11,19 @@ public class Experimento {
     private DocumentReference equino;
     private Date data;
     private String descricao;
-    private String nome;
     private int number;
 
     public Experimento() {
     }
 
     public Experimento(String id, DocumentReference configuracao, DocumentReference usuario,
-                       DocumentReference equino, Date data, String descricao,
-                       String nome, int number) {
+                       DocumentReference equino, Date data, String descricao, int number) {
         this.id = id;
         this.configuracao = configuracao;
         this.usuario = usuario;
         this.equino = equino;
         this.data = data;
         this.descricao = descricao;
-        this.nome = nome;
         this.number = number;
     }
 
@@ -76,14 +73,6 @@ public class Experimento {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
     }
 
     public int getNumber() {

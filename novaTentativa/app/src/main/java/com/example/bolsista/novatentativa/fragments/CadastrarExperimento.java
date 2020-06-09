@@ -42,7 +42,7 @@ public class CadastrarExperimento extends Fragment {
     private Context contextoAtivity;
 
     private Button finalizarExperimento, btnNumExperiments;
-    private EditText nomeExperimento, descricaoExperimento;
+    private EditText descricaoExperimento;
     @SuppressLint("StaticFieldLeak")
     private static TextView numExpCavalo;
 
@@ -73,9 +73,7 @@ public class CadastrarExperimento extends Fragment {
         finalizarExperimento.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(nomeExperimento.getText().toString().length() > 0){
-                    instanciarExperimento();
-                }
+                instanciarExperimento();
             }
         });
 
@@ -95,7 +93,7 @@ public class CadastrarExperimento extends Fragment {
                 .document(IniciarConfiguracao.cavaloSelecionado.getId());
 
         IniciarConfiguracao.experimento = new Experimento("", configuracaoRef, usuarioRef, equinoRef, new Date(),
-                descricaoExperimento.getText().toString(), nomeExperimento.getText().toString(), numberExperiments);
+                descricaoExperimento.getText().toString(), numberExperiments);
 
         addExperimentoToFireBase();
         ListarViewModel.addExperimento(IniciarConfiguracao.experimento);
@@ -159,7 +157,6 @@ public class CadastrarExperimento extends Fragment {
 
     private void inicializar() {
         finalizarExperimento = v.findViewById(R.id.finalizarExperimento);
-        nomeExperimento = v.findViewById(R.id.nomeExperimento);
         descricaoExperimento = v.findViewById(R.id.descricaoExperimento);
         numExpCavalo = v.findViewById(R.id.numExpCavalo);
         btnNumExperiments = v.findViewById(R.id.btnNumExperiments);
