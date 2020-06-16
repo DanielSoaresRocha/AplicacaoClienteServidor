@@ -2,7 +2,6 @@ package com.example.bolsista.novatentativa.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -23,7 +22,6 @@ import android.widget.Toast;
 
 import com.example.bolsista.novatentativa.IniciarConfiguracao;
 import com.example.bolsista.novatentativa.R;
-import com.example.bolsista.novatentativa.adapters.CavaloAdapter;
 import com.example.bolsista.novatentativa.adapters.ConfiguracaoAdapter;
 import com.example.bolsista.novatentativa.modelo.Configuracao;
 import com.example.bolsista.novatentativa.recycleOnTouchLinesters.ListarCavalosOnItemTouch;
@@ -40,7 +38,7 @@ import com.google.firebase.firestore.QuerySnapshot;
 * colocar sessão atual para determinado cavalo
 */
 
-public class ListarConfiguracoes extends Fragment {
+public class ListarTestes extends Fragment {
     private ListarViewModel mViewModel;
     private View v;
     private Context contextoAtivity;
@@ -61,7 +59,7 @@ public class ListarConfiguracoes extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        v = inflater.inflate(R.layout.fragment_listar_configuracoes, container, false);
+        v = inflater.inflate(R.layout.fragment_listar_testes, container, false);
         return v;
     }
 

@@ -9,7 +9,7 @@ import android.os.Bundle;
 import com.example.bolsista.novatentativa.adapters.FixedTabsPageAdapter;
 import com.example.bolsista.novatentativa.fragments.CadastrarExperimento;
 import com.example.bolsista.novatentativa.fragments.ListarCavalos;
-import com.example.bolsista.novatentativa.fragments.ListarConfiguracoes;
+import com.example.bolsista.novatentativa.fragments.ListarTestes;
 import com.example.bolsista.novatentativa.modelo.Cavalo;
 import com.example.bolsista.novatentativa.modelo.Configuracao;
 import com.example.bolsista.novatentativa.modelo.Experimento;
@@ -39,8 +39,8 @@ public class IniciarConfiguracao extends AppCompatActivity {
 
     private void pageAdapter() {
         pageAdapter = new FixedTabsPageAdapter(getSupportFragmentManager());
-        pageAdapter.adicionar(new ListarCavalos(), "Cavalos");
-        pageAdapter.adicionar(new ListarConfiguracoes(), "Configurações");
+        pageAdapter.adicionar(new ListarCavalos(), "Equino");
+        pageAdapter.adicionar(new ListarTestes(), "Testes");
         pageAdapter.adicionar(new CadastrarExperimento(), "Experimento");
 
         viewPager.setAdapter(pageAdapter);
