@@ -175,9 +175,9 @@ public class Definir extends AppCompatActivity {
                 Intent telaCadastro = new Intent(this, CadastrarCavalo.class);
                 startActivity(telaCadastro);
                 return true;
-            case R.id.cadastrarConfiguracao:
-                Intent cadastroConfig = new Intent(this, ConfigurarTeste.class);
-                startActivity(cadastroConfig);
+            case R.id.novoExperimento:
+                Intent iniciarConfiguracao = new Intent(Definir.this, IniciarConfiguracao.class);
+                startActivity(iniciarConfiguracao);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

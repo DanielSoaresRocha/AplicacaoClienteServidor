@@ -30,5 +30,4 @@
         android:src="@drawable/more_icon2"
         android:layout_marginRight="20sp"
          />
-
 </LinearLayout>

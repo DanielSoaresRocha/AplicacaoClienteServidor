@@ -2,6 +2,7 @@ package com.example.bolsista.novatentativa.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -23,16 +24,21 @@ import android.widget.Toast;
 import com.example.bolsista.novatentativa.IniciarConfiguracao;
 import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.adapters.TesteAdapter;
+import com.example.bolsista.novatentativa.configuracao.ConfigurarTeste;
 import com.example.bolsista.novatentativa.modelo.Configuracao;
 import com.example.bolsista.novatentativa.recycleOnTouchLinesters.ListarCavalosOnItemTouch;
 import com.example.bolsista.novatentativa.viewsModels.ListarViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /*
 * colocar sessão atual para determinado cavalo
@@ -45,6 +51,7 @@ public class ListarTestes extends Fragment {
 
     private RecyclerView configuracaoRecycle;
     private ProgressBar progressBarConfig;
+    private FloatingActionButton floatingActionButton;
 
     @SuppressLint("StaticFieldLeak")
     public static TesteAdapter adapter;
@@ -68,12 +75,50 @@ public class ListarTestes extends Fragment {
         mViewModel = ViewModelProviders.of(getActivity()).get(ListarViewModel.class);
         // TODO: Use the ViewModel
         inicializar();
+        listener();
 
         if(mViewModel.cavalos.getValue().size() == 0){ // se a lista estiver vazia
-            getConfiguracoesFireStore();// pegar do banco
+            //getConfiguracoesFireStore();// pegar do banco
+            ArrayList<Integer> imagens = new ArrayList<Integer>() {
+                {
+                    add(1);
+                    add(2);
+                    add(3);
+                }
+            };
+            ListarViewModel.addConfiguracao(new Configuracao("id", "Pré-teste",
+                    "Teste gabor", imagens, 10, 5, 5,
+                    234, 435, null));
+            ListarViewModel.addConfiguracao(new Configuracao("id", "Teste de aprendizagem L1",
+                    "Teste gabor", imagens, 20, 5, 5, 234,
+                    435, null));
+            ListarViewModel.addConfiguracao(new Configuracao("id", "Teste de aprendizagem L2",
+                    "Teste gabor", imagens, 15, 5, 5, 234,
+                    435, null));
+            ListarViewModel.addConfiguracao(new Configuracao("id", "Teste de aprendizagem L3",
+                    "Teste gabor", imagens, 15, 5, 5, 234,
+                    435, null));
+            ListarViewModel.addConfiguracao(new Configuracao("id", "Teste de transferência T1",
+                    "Teste gabor", imagens, 15, 5, 5, 234,
+                    435, null));
+            ListarViewModel.addConfiguracao(new Configuracao("id", "Teste de transferência T2",
+                    "Teste gabor", imagens, 15, 5, 5, 234,
+                    435, null));
+            implementsRecycle();
+            observerList();
         }else{// se não
             implementsRecycle();// apenas implemente o recycle
         }
+    }
+
+    private void listener() {
+        floatingActionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent telaConfiguração = new Intent(getContext(), ConfigurarTeste.class);
+                startActivity(telaConfiguração);
+            }
+        });
     }
 
     private void getConfiguracoesFireStore() {
@@ -140,7 +185,7 @@ public class ListarTestes extends Fragment {
                                 intervalo2.setText(mViewModel.configuracoes.getValue().get(position)
                                         .getIntervalo2()+" segundos");
                                 qtdQuestoes.setText(mViewModel.configuracoes.getValue().get(position)
-                                        .getQtdQuestoes()+" segundos");
+                                        .getQtdQuestoes()+" questões");
 
                                 MaterialDialog m = new MaterialDialog(contextoAtivity)
                                         .setContentView(layout)
@@ -164,6 +209,7 @@ public class ListarTestes extends Fragment {
     private void inicializar() {
         configuracaoRecycle = v.findViewById(R.id.configuracaoRecycle);
         progressBarConfig = v.findViewById(R.id.progressBarConfig);
+        floatingActionButton = v.findViewById(R.id.floatingActionButton);
 
         contextoAtivity = getActivity();
 
