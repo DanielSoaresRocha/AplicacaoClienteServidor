@@ -15,11 +15,11 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ConfiguracaoAdapter extends RecyclerView.Adapter<ConfiguracaoViewHolder> {
+public class TesteAdapter extends RecyclerView.Adapter<ConfiguracaoViewHolder> {
     Context c;
     static List<Configuracao> configuracoes;
 
-    public ConfiguracaoAdapter(Context c, List<Configuracao> configuracoes) {
+    public TesteAdapter(Context c, List<Configuracao> configuracoes) {
         this.c = c;
         this.configuracoes = configuracoes;
     }
@@ -27,7 +27,7 @@ public class ConfiguracaoAdapter extends RecyclerView.Adapter<ConfiguracaoViewHo
     @NonNull
     @Override
     public ConfiguracaoViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View v = LayoutInflater.from(c).inflate(R.layout.configuracao_inflater,parent,false);
+        View v = LayoutInflater.from(c).inflate(R.layout.teste_inflater,parent,false);
         Log.i("configuracaoAdapter", "listando config...");
         return new ConfiguracaoViewHolder(v);
     }

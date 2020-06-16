@@ -12,58 +12,53 @@
     android:foreground="?android:attr/selectableItemBackground"
     >
     <LinearLayout
-        android:orientation="vertical"
+        android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        >
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_weight="9"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             >
 
             <TextView
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
+                android:layout_height="wrap_content"
                 android:id="@+id/nomeConfig"
                 android:drawableLeft="@drawable/settings"
                 android:gravity="center_vertical"
-                android:layout_weight="7"
                 android:text="Nome da configuração"
                 android:textSize="30sp"
                 android:textColor="@color/black_de"
                 android:paddingVertical="10sp"
                 />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_weight="3"
-                android:gravity="center"
-                >
-
-                <ImageView
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="2"
-                    android:src="@drawable/info_detalhes">
-                </ImageView>
-
                 <TextView
-                    android:id="@+id/detalhesConfig"
-                    android:layout_width="wrap_content"
-                    android:gravity="center_vertical"
                     android:layout_height="wrap_content"
-                    android:layout_weight="8"
+                    android:layout_width="match_parent"
+                    android:drawableLeft="@drawable/info_detalhes"
+                    android:id="@+id/detalhesConfig"
+                    android:gravity="center_vertical"
                     android:text="detalhes"
                     android:textSize="20sp"
                     android:textColor="@color/black_de"
                     />
-
-            </LinearLayout>
-
         </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <CheckBox
+            android:id="@+id/checkBox"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:checked="true"
+            />
+    </LinearLayout>
     </LinearLayout>
 </androidx.cardview.widget.CardView>

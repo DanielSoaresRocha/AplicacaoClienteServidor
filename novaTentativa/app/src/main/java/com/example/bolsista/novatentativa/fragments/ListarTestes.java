@@ -22,7 +22,7 @@ import android.widget.Toast;
 
 import com.example.bolsista.novatentativa.IniciarConfiguracao;
 import com.example.bolsista.novatentativa.R;
-import com.example.bolsista.novatentativa.adapters.ConfiguracaoAdapter;
+import com.example.bolsista.novatentativa.adapters.TesteAdapter;
 import com.example.bolsista.novatentativa.modelo.Configuracao;
 import com.example.bolsista.novatentativa.recycleOnTouchLinesters.ListarCavalosOnItemTouch;
 import com.example.bolsista.novatentativa.viewsModels.ListarViewModel;
@@ -47,7 +47,7 @@ public class ListarTestes extends Fragment {
     private ProgressBar progressBarConfig;
 
     @SuppressLint("StaticFieldLeak")
-    public static ConfiguracaoAdapter adapter;
+    public static TesteAdapter adapter;
 
     //FireBase FireStore
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -102,7 +102,7 @@ public class ListarTestes extends Fragment {
     }
 
     private void implementsRecycle(){
-        adapter = new ConfiguracaoAdapter(contextoAtivity,mViewModel.configuracoes.getValue());
+        adapter = new TesteAdapter(contextoAtivity,mViewModel.configuracoes.getValue());
         configuracaoRecycle.setAdapter(adapter);
 
         LinearLayoutManager layout = new LinearLayoutManager(contextoAtivity,LinearLayoutManager.VERTICAL,false);
