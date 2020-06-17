@@ -24,7 +24,7 @@ import com.example.bolsista.novatentativa.IniciarConfiguracao;
 import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.adapters.CavaloAdapter;
 import com.example.bolsista.novatentativa.modelo.Cavalo;
-import com.example.bolsista.novatentativa.recycleOnTouchLinesters.ListarCavalosOnItemTouch;
+import com.example.bolsista.novatentativa.recycleOnTouchLinesters.GenericOnItemTouch;
 import com.example.bolsista.novatentativa.viewsModels.ListarViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -111,10 +111,10 @@ public class ListarCavalos extends Fragment {
         cavalosRecycle.setLayoutManager(layout);
 
         cavalosRecycle.addOnItemTouchListener(
-                new ListarCavalosOnItemTouch(
+                new GenericOnItemTouch(
                         contextoAtivity,
                         cavalosRecycle,
-                        new ListarCavalosOnItemTouch.OnItemClickListener(){
+                        new GenericOnItemTouch.OnItemClickListener(){
 
                             @Override
                             public void onItemClick(View view, int position) {

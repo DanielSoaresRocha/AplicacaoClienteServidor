@@ -1,6 +1,5 @@
 package com.example.bolsista.novatentativa.othersActivities;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -9,31 +8,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Bundle;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.bolsista.novatentativa.IniciarConfiguracao;
 import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.adapters.ExperimentoAdapter;
-import com.example.bolsista.novatentativa.fragments.CadastrarExperimento;
 import com.example.bolsista.novatentativa.modelo.Configuracao;
-import com.example.bolsista.novatentativa.modelo.Experimento;
 import com.example.bolsista.novatentativa.modelo.Experimento2;
-import com.example.bolsista.novatentativa.recycleOnTouchLinesters.ListarCavalosOnItemTouch;
-import com.example.bolsista.novatentativa.viewsModels.ListarViewModel;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.example.bolsista.novatentativa.recycleOnTouchLinesters.GenericOnItemTouch;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.Date;
-
-import me.drakeet.materialdialog.MaterialDialog;
 
 public class ExperimentosAndamento extends AppCompatActivity {
     private RecyclerView experimentosRecycle;
@@ -106,10 +94,10 @@ public class ExperimentosAndamento extends AppCompatActivity {
         actionbar.setTitle(R.string.exp_andamento);
 
         experimentosRecycle.addOnItemTouchListener(
-                new ListarCavalosOnItemTouch(
+                new GenericOnItemTouch(
                         contextActivity,
                         experimentosRecycle,
-                        new ListarCavalosOnItemTouch.OnItemClickListener(){
+                        new GenericOnItemTouch.OnItemClickListener(){
 
                             @Override
                             public void onItemClick(View view, int position) {

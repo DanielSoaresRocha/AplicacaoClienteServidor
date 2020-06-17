@@ -9,7 +9,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class ListarCavalosOnItemTouch implements RecyclerView.OnItemTouchListener {
+public class GenericOnItemTouch implements RecyclerView.OnItemTouchListener {
     GestureDetector myGestureDetector;
 
     public interface OnItemClickListener{
@@ -17,7 +17,7 @@ public class ListarCavalosOnItemTouch implements RecyclerView.OnItemTouchListene
         void onItemLongClick(View view, int position);
     }
 
-    public ListarCavalosOnItemTouch(Context context, RecyclerView recyclerView, OnItemClickListener listener){
+    public GenericOnItemTouch(Context context, RecyclerView recyclerView, OnItemClickListener listener){
         myGestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener(){
             @Override
             public boolean onSingleTapUp(MotionEvent motionEvent) {
