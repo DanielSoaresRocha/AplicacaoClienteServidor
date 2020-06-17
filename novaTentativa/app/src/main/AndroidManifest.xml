@@ -18,11 +18,11 @@
         android:theme="@style/AppTheme">
         <activity android:name=".Resultado"></activity>
         <activity android:name=".IniciarConfiguracao" />
-        <activity android:name=".banco.CadastrarCavalo" />
+        <activity android:name=".cadastros.CadastrarCavalo" />
         <activity android:name=".arquitetura.Remoto" />
         <activity android:name=".Jogar" />
         <activity android:name=".ControleRemoto" />
-        <activity android:name=".configuracao.ConfigurarTeste" />
+        <activity android:name=".cadastros.ConfigurarTeste" />
         <activity android:name=".arquitetura.Definir">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -24,7 +24,7 @@ import android.widget.Toast;
 import com.example.bolsista.novatentativa.IniciarConfiguracao;
 import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.adapters.TesteAdapter;
-import com.example.bolsista.novatentativa.configuracao.ConfigurarTeste;
+import com.example.bolsista.novatentativa.cadastros.ConfigurarTeste;
 import com.example.bolsista.novatentativa.modelo.Configuracao;
 import com.example.bolsista.novatentativa.recycleOnTouchLinesters.ListarCavalosOnItemTouch;
 import com.example.bolsista.novatentativa.viewsModels.ListarViewModel;
@@ -38,7 +38,6 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /*
 * colocar sessão atual para determinado cavalo

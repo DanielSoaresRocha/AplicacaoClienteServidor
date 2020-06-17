@@ -1,4 +1,4 @@
-package com.example.bolsista.novatentativa.banco;
+package com.example.bolsista.novatentativa.cadastros;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;

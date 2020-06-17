@@ -1,8 +1,6 @@
-package com.example.bolsista.novatentativa.configuracao;
+package com.example.bolsista.novatentativa.cadastros;
 
-import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.media.MediaPlayer;
 
 import androidx.annotation.NonNull;

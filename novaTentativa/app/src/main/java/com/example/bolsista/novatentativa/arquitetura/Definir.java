@@ -11,14 +11,12 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.bolsista.novatentativa.IniciarConfiguracao;
-import com.example.bolsista.novatentativa.banco.CadastrarCavalo;
+import com.example.bolsista.novatentativa.cadastros.CadastrarCavalo;
 import com.example.bolsista.novatentativa.R;
-import com.example.bolsista.novatentativa.configuracao.ConfigurarTeste;
 import com.example.bolsista.novatentativa.modelo.Usuario;
 import com.example.bolsista.novatentativa.viewsModels.ListarViewModel;
 import com.firebase.ui.auth.AuthUI;
