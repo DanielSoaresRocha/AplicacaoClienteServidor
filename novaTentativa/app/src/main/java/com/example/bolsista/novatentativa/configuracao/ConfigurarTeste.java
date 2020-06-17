@@ -1,6 +1,7 @@
 package com.example.bolsista.novatentativa.configuracao;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 
@@ -9,10 +10,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,18 +31,22 @@ import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
-public class ConfigurarTeste extends AppCompatActivity {
+public class ConfigurarTeste extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
     EditText qtdQuestao, intervaloQuestoes, intervalo2,nomeConfigEdit,detalhesConfigEdit;
     ImageView info1, info2,info3;
     TextView info1TextView, info2TextView,info3TextView;
     Button somErro1, somErro2, somErro3, somAcerto1, somAcerto2, somAcerto3;
     CheckBox formas, preenchimento, tamanho;
     Button irPara, cadastrarTestBtn;
+    Spinner qtdDesafiosSessao, qtdEnsaiosSessao, qtdRepDesafiosSessao;
 
     private MediaPlayer mp;
+    private Context contextActivity;
 
     private int erroEscolhido;
     private int acertoEscolhido;
+    ArrayAdapter<CharSequence> qtdDesafiosAdapter, qtdEnsaiosAdapter, qtdRepDesafiosAdapter;
+    private String qtdDesText, qtdEnsTex, qtdRepDesText;
 
     public static Configuracao configuracao;
 
@@ -58,11 +66,36 @@ public class ConfigurarTeste extends AppCompatActivity {
         usuarioRef = db.collection("users").document(usuario.getCurrentUser().getUid());
 
         inicializar();
+        spinners();
         listener();
 
     }
 
+    private void spinners() {
+        // Quantidade de desafios
+        qtdDesafiosAdapter = ArrayAdapter.createFromResource(contextActivity,
+                R.array.qtdDesafios_array, android.R.layout.simple_spinner_item);
+        qtdDesafiosAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        qtdDesafiosSessao.setAdapter(qtdDesafiosAdapter);
+
+        // Quantidade de ensaios
+        qtdEnsaiosAdapter = ArrayAdapter.createFromResource(contextActivity,
+                R.array.qtdEnsaios_array, android.R.layout.simple_spinner_item);
+        qtdEnsaiosAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        qtdEnsaiosSessao.setAdapter(qtdEnsaiosAdapter);
+
+        //Quantidade máxima de repetição de cada desafio
+        qtdRepDesafiosAdapter = ArrayAdapter.createFromResource(contextActivity,
+                R.array.qtdDesafios_array, android.R.layout.simple_spinner_item);
+        qtdRepDesafiosAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        qtdRepDesafiosSessao.setAdapter(qtdRepDesafiosAdapter);
+    }
+
     private void listener() {
+        qtdDesafiosSessao.setOnItemSelectedListener(this);
+        qtdEnsaiosSessao.setOnItemSelectedListener(this);
+        qtdRepDesafiosSessao.setOnItemSelectedListener(this);
+
         info1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -291,6 +324,28 @@ public class ConfigurarTeste extends AppCompatActivity {
             return imagens;
     }
 
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
+        String text = parent.getItemAtPosition(position).toString();
+
+        switch(parent.getId()){
+            case R.id.qtdDesafiosSessao:
+                qtdDesText = text;
+                break;
+            case  R.id.qtdEnsaiosSessao:
+                qtdEnsTex = text;
+                break;
+            case  R.id.qtdRepDesafiosSessao:
+                qtdRepDesText = text;
+                break;
+        }
+    }
+
+    @Override
+    public void onNothingSelected(AdapterView<?> adapterView) {
+
+    }
+
     private void inicializar() {
         qtdQuestao = findViewById(R.id.qtdQuestao);
         intervaloQuestoes = findViewById(R.id.intervaloQuestoes);
@@ -315,6 +370,12 @@ public class ConfigurarTeste extends AppCompatActivity {
         preenchimento = findViewById(R.id.preenchimentoBtn);
         tamanho = findViewById(R.id.tamanhoBtn);
 
+        qtdDesafiosSessao = findViewById(R.id.qtdDesafiosSessao);
+        qtdEnsaiosSessao = findViewById(R.id.qtdEnsaiosSessao);
+        qtdRepDesafiosSessao = findViewById(R.id.qtdRepDesafiosSessao);
+
+
+        contextActivity = this;
         irPara = findViewById(R.id.irPara);
         cadastrarTestBtn = findViewById(R.id.cadastrarTestBtn);
         nomeConfigEdit = findViewById(R.id.nomeConfigEdit);

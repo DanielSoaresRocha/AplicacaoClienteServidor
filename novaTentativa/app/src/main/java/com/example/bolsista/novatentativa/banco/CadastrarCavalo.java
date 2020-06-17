@@ -235,12 +235,6 @@ public class CadastrarCavalo extends AppCompatActivity implements DatePickerDial
                 racaText = text;
                 break;
         }
-
-        /*
-        String text = parent.getItemAtPosition(position).toString();
-        atividade = text;
-        System.out.println(parent);
-        // Toast.makeText(parent.getContext(), text, Toast.LENGTH_SHORT).show();*/
     }
 
     @Override

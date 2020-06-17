@@ -17,7 +17,7 @@
         android:id="@+id/experimentosAndamento"
         android:checked="true"
         android:icon="@drawable/horse"
-        android:title="Experimento em andamento" />
+        android:title="Experimentos em andamento" />
 
     <item
         android:id="@+id/experimentosFinalizados"
