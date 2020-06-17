@@ -3,6 +3,8 @@ package com.example.bolsista.novatentativa.othersActivities;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Context;
 import android.os.Bundle;
@@ -10,6 +12,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.example.bolsista.novatentativa.R;
+import com.example.bolsista.novatentativa.adapters.ExperimentoAdapter;
 import com.example.bolsista.novatentativa.modelo.Configuracao;
 import com.example.bolsista.novatentativa.modelo.Experimento;
 import com.example.bolsista.novatentativa.modelo.Experimento2;
@@ -24,11 +27,12 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class ExperimentosAndamento extends AppCompatActivity {
-
+    private RecyclerView experimentosRecycle;
 
     Context contextActivity;
+    private ExperimentoAdapter adapter;
 
-    ArrayList<Experimento2> experimento2 = new ArrayList<>();
+    ArrayList<Experimento2> experimentos2 = new ArrayList<>();
 
     //FireBase
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -46,6 +50,7 @@ public class ExperimentosAndamento extends AppCompatActivity {
 
         inicializar();
         preencher();
+        implementsRecycle();
     }
 
     private void preencher() {
@@ -68,15 +73,24 @@ public class ExperimentosAndamento extends AppCompatActivity {
         testes.add(c1);
         testes.add(c2);
 
-        experimento2.add(new Experimento2("id1", "cavalo 1", "experimento 1", new Date(),
+        experimentos2.add(new Experimento2("id1", "cavalo 1", "experimento 1", new Date(),
                 new Date(), testes));
-        experimento2.add(new Experimento2("id2", "cavalo 2", "experimento 2", new Date(),
+        experimentos2.add(new Experimento2("id2", "cavalo 2", "experimento 2", new Date(),
                 new Date(), testes));
-        experimento2.add(new Experimento2("id3", "cavalo 3", "experimento 3", new Date(),
+        experimentos2.add(new Experimento2("id3", "cavalo 3", "experimento 3", new Date(),
                 new Date(), testes));
     }
 
+    private void implementsRecycle(){
+        adapter = new ExperimentoAdapter(contextActivity, experimentos2);
+        experimentosRecycle.setAdapter(adapter);
+
+        LinearLayoutManager layout = new LinearLayoutManager(contextActivity,LinearLayoutManager.VERTICAL,false);
+        experimentosRecycle.setLayoutManager(layout);
+    }
+
     private void inicializar() {
+        experimentosRecycle = findViewById(R.id.experimentosRecycle);
         contextActivity = this;
 
         ActionBar actionbar = getSupportActionBar();
