@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
@@ -14,6 +15,7 @@ import android.widget.Toast;
 import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.adapters.ExperimentoAdapter;
 import com.example.bolsista.novatentativa.modelo.Configuracao;
+import com.example.bolsista.novatentativa.modelo.Experimento;
 import com.example.bolsista.novatentativa.modelo.Experimento2;
 import com.example.bolsista.novatentativa.recycleOnTouchLinesters.GenericOnItemTouch;
 import com.google.firebase.auth.FirebaseAuth;
@@ -29,7 +31,7 @@ public class ExperimentosAndamento extends AppCompatActivity {
     Context contextActivity;
     private ExperimentoAdapter adapter;
 
-    ArrayList<Experimento2> experimentos2 = new ArrayList<>();
+    public static ArrayList<Experimento2> experimentos2 = new ArrayList<>();
 
     //FireBase
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -101,7 +103,9 @@ public class ExperimentosAndamento extends AppCompatActivity {
 
                             @Override
                             public void onItemClick(View view, int position) {
-                                Toast.makeText(contextActivity, "vai para outra tela", Toast.LENGTH_SHORT).show();
+                                Intent it = new Intent(contextActivity, ExperimentoExpecifico.class);
+                                it.putExtra("idExperimento", position);
+                                startActivity(it);
                             }
 
                             @SuppressLint("SetTextI18n")
