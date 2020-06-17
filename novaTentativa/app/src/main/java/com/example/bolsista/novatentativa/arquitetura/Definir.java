@@ -18,6 +18,7 @@ import com.example.bolsista.novatentativa.IniciarConfiguracao;
 import com.example.bolsista.novatentativa.cadastros.CadastrarCavalo;
 import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.modelo.Usuario;
+import com.example.bolsista.novatentativa.othersActivities.ExperimentosAndamento;
 import com.example.bolsista.novatentativa.viewsModels.ListarViewModel;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -176,6 +177,10 @@ public class Definir extends AppCompatActivity {
             case R.id.novoExperimento:
                 Intent iniciarConfiguracao = new Intent(Definir.this, IniciarConfiguracao.class);
                 startActivity(iniciarConfiguracao);
+                return true;
+            case R.id.experimentosAndamento:
+                Intent experimentosAndamento = new Intent(Definir.this, ExperimentosAndamento.class);
+                startActivity(experimentosAndamento);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
