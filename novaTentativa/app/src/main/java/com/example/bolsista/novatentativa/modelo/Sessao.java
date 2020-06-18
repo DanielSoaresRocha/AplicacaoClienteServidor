@@ -9,6 +9,9 @@ public class Sessao {
     private int taxaAcerto;
     private Usuario experimentador;
 
+    public Sessao() {
+    }
+
     public Sessao(String id, String nome, Date data, int taxaAcerto, Usuario experimentador) {
         this.id = id;
         this.nome = nome;

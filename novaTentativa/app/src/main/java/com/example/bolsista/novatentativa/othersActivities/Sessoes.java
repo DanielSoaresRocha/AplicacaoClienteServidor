@@ -1,5 +1,6 @@
 package com.example.bolsista.novatentativa.othersActivities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -8,16 +9,33 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.adapters.SessaoAdapter;
 import com.example.bolsista.novatentativa.adapters.TesteAdapter;
+import com.example.bolsista.novatentativa.modelo.Cavalo;
+import com.example.bolsista.novatentativa.modelo.Configuracao;
+import com.example.bolsista.novatentativa.modelo.Experimento;
+import com.example.bolsista.novatentativa.modelo.Experimento2;
 import com.example.bolsista.novatentativa.modelo.Sessao;
 import com.example.bolsista.novatentativa.modelo.Usuario;
+import com.example.bolsista.novatentativa.viewsModels.ListarViewModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -26,6 +44,7 @@ import java.util.Date;
 public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
     private RecyclerView sessaoRecycleView;
     private Spinner experimentadorSpinner;
+    Button verGrafico;
 
     private int POSITION_EXPERIMENTO;
     private int POSITION_TESTE;
@@ -33,6 +52,12 @@ public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSele
     private SessaoAdapter adapter;
     ArrayAdapter<CharSequence> sessoesAdapter;
     Context contextActivity;
+
+    //FireBase
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    DocumentReference usuarioRef;
+    //Fire Base Auth
+    FirebaseAuth usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +70,9 @@ public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSele
         implementsRecycle();
         listener();
         spinner();
+
+        usuario = FirebaseAuth.getInstance();
+        usuarioRef = db.collection("users").document(usuario.getCurrentUser().getUid());
     }
 
     private void spinner() {
@@ -62,6 +90,63 @@ public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSele
 
     private void listener() {
         experimentadorSpinner.setOnItemSelectedListener(this);
+
+        verGrafico.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                addToFireBase();
+            }
+        });
+    }
+
+    private void addToFireBase(){
+        /*
+        Experimento2 experimento2 = ExperimentosAndamento.experimentos2.get(POSITION_EXPERIMENTO);
+        experimento2.getTestes().get(POSITION_TESTE).setSessoes(sessoes);
+
+        db.collection("configuracoes2")
+                .add(experimento2)
+                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+                    @Override
+                    public void onSuccess(DocumentReference documentReference) {
+                        documentReference.update("id",documentReference.getId());//adiciona ao campo id o id gerado pelo firebase
+                        experimento2.setId(documentReference.getId());
+                        Toast.makeText(contextActivity, "Experimento adicionado", Toast.LENGTH_SHORT).show();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.i("DataBase-FireStore-add", "Error adding document", e);
+                    }
+                });*/
+        ArrayList<Experimento2> experimentos2 = new ArrayList<>();
+        db.collection("configuracoes2")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Experimento2 experimento2 = document.toObject(Experimento2.class);
+                                experimentos2.add(experimento2);
+                            }
+
+                            for(Experimento2 experimento2: experimentos2){
+                                try {
+                                    System.out.println("-------------------------------------");
+                                    System.out.println(experimento2.getTestes().get(0).getSessoes()
+                                            .get(0).getExperimentador().getNome());
+                                }catch (java.lang.NullPointerException e){
+                                    System.out.println("Esse nao deu");
+                                }
+
+                            }
+                        } else {
+                            Log.i("DataBase-FireStore-get", "Error getting documents.", task.getException());
+                        }
+                    }
+                });
     }
 
     private void preencherArray() {
@@ -100,6 +185,7 @@ public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSele
     }
 
     private void inicializar() {
+        verGrafico = findViewById(R.id.verGrafico);
         sessaoRecycleView = findViewById(R.id.sessaoRecycleView);
         experimentadorSpinner = findViewById(R.id.experimentadorSpinner);
         contextActivity = this;
