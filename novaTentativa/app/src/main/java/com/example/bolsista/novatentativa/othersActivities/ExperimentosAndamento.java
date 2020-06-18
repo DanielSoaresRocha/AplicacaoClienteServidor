@@ -61,16 +61,26 @@ public class ExperimentosAndamento extends AppCompatActivity {
             }
         };
 
-        Configuracao c1 = new Configuracao("id", "Pré-teste", "Teste gabor",
-                imagens, 10, 5, 5, 234, 435,
-                null);
-        Configuracao c2 = new Configuracao("id2", "Pré-teste2", "Teste gabor2",
-                imagens, 10, 5, 5, 234, 435,
-                null);
-
         ArrayList<Configuracao> testes = new ArrayList<>();
-        testes.add(c1);
-        testes.add(c2);
+
+        testes.add(new Configuracao("id1", "Pré-teste",
+                "Teste gabor", imagens, 10, 5, 5,
+                234, 435, null,true));
+        testes.add(new Configuracao("id2", "Teste de aprendizagem L1",
+                "Teste gabor", imagens, 20, 5, 5, 234,
+                435, null,true));
+        testes.add(new Configuracao("id3", "Teste de aprendizagem L2",
+                "Teste gabor", imagens, 15, 5, 5, 234,
+                435, null,false));
+        testes.add(new Configuracao("id4", "Teste de aprendizagem L3",
+                "Teste gabor", imagens, 15, 5, 5, 234,
+                435, null,false));
+        testes.add(new Configuracao("id5", "Teste de transferência T1",
+                "Teste gabor", imagens, 15, 5, 5, 234,
+                435, null,false));
+        testes.add(new Configuracao("id6", "Teste de transferência T2",
+                "Teste gabor", imagens, 15, 5, 5, 234,
+                435, null,false));
 
         experimentos2.add(new Experimento2("id1", "cavalo 1", "experimento 1", new Date(),
                 new Date(), testes));

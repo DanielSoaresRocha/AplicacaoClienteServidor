@@ -87,22 +87,22 @@ public class ListarTestes extends Fragment {
             };
             ListarViewModel.addConfiguracao(new Configuracao("id", "Pré-teste",
                     "Teste gabor", imagens, 10, 5, 5,
-                    234, 435, null));
+                    234, 435, null,true));
             ListarViewModel.addConfiguracao(new Configuracao("id", "Teste de aprendizagem L1",
                     "Teste gabor", imagens, 20, 5, 5, 234,
-                    435, null));
+                    435, null,true));
             ListarViewModel.addConfiguracao(new Configuracao("id", "Teste de aprendizagem L2",
                     "Teste gabor", imagens, 15, 5, 5, 234,
-                    435, null));
+                    435, null,true));
             ListarViewModel.addConfiguracao(new Configuracao("id", "Teste de aprendizagem L3",
                     "Teste gabor", imagens, 15, 5, 5, 234,
-                    435, null));
+                    435, null,true));
             ListarViewModel.addConfiguracao(new Configuracao("id", "Teste de transferência T1",
                     "Teste gabor", imagens, 15, 5, 5, 234,
-                    435, null));
+                    435, null,true));
             ListarViewModel.addConfiguracao(new Configuracao("id", "Teste de transferência T2",
                     "Teste gabor", imagens, 15, 5, 5, 234,
-                    435, null));
+                    435, null,true));
             implementsRecycle();
             observerList();
         }else{// se não
@@ -146,7 +146,7 @@ public class ListarTestes extends Fragment {
     }
 
     private void implementsRecycle(){
-        adapter = new TesteAdapter(contextoAtivity,mViewModel.configuracoes.getValue());
+        adapter = new TesteAdapter(contextoAtivity,mViewModel.configuracoes.getValue(),false);
         configuracaoRecycle.setAdapter(adapter);
 
         LinearLayoutManager layout = new LinearLayoutManager(contextoAtivity,LinearLayoutManager.VERTICAL,false);
