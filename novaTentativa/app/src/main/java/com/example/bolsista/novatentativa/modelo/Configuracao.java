@@ -18,6 +18,7 @@ public class Configuracao implements Serializable{
     private int somAcerto;
     private boolean completo;
     private DocumentReference usuario;
+    private ArrayList<Sessao> sessoes;
 
     public Configuracao(){
     }
@@ -35,6 +36,22 @@ public class Configuracao implements Serializable{
         this.somErro = somErro;
         this.somAcerto = somAcerto;
         this.usuario = usuario;
+    }
+
+    public Configuracao(String id, String nome, String detalhes, ArrayList<Integer> imagens,
+                        int qtdQuestoes, int intervalo1, int intervalo2, int somErro, int somAcerto,
+                        DocumentReference usuario, ArrayList<Sessao> sessoes) {
+        this.id = id;
+        this.nome = nome;
+        this.detalhes = detalhes;
+        this.imagens = imagens;
+        this.qtdQuestoes = qtdQuestoes;
+        this.intervalo1 = intervalo1;
+        this.intervalo2 = intervalo2;
+        this.somErro = somErro;
+        this.somAcerto = somAcerto;
+        this.usuario = usuario;
+        this.sessoes = sessoes;
     }
 
     public Configuracao(String id, String nome, String detalhes, ArrayList<Integer> imagens,
@@ -139,6 +156,14 @@ public class Configuracao implements Serializable{
 
     public void setCompleto(boolean completo) {
         this.completo = completo;
+    }
+
+    public ArrayList<Sessao> getSessoes() {
+        return sessoes;
+    }
+
+    public void setSessoes(ArrayList<Sessao> sessoes) {
+        this.sessoes = sessoes;
     }
 
     /*

@@ -114,7 +114,7 @@ public class ExperimentosAndamento extends AppCompatActivity {
                             @Override
                             public void onItemClick(View view, int position) {
                                 Intent it = new Intent(contextActivity, ExperimentoExpecifico.class);
-                                it.putExtra("idExperimento", position);
+                                it.putExtra("positionExperimento", position);
                                 startActivity(it);
                             }
 

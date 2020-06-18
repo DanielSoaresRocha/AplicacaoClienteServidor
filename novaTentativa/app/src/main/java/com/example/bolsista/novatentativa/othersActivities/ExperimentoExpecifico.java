@@ -32,12 +32,13 @@ public class ExperimentoExpecifico extends AppCompatActivity {
 
     private Experimento2 experimento;
     private TesteAdapter adapter;
+    private int POSITION_EXPERIMENTO;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_experimento_expecifico);
 
-        pegarId();
+        pegarPosicao();
         inicializar();
         preencher();
         implementsRecycle();
@@ -71,7 +72,12 @@ public class ExperimentoExpecifico extends AppCompatActivity {
 
                             @Override
                             public void onItemClick(View view, int position) {
-
+                                Intent it = new Intent(contextActivity, Sessoes.class);
+                                it.putExtra("positionExperimento", POSITION_EXPERIMENTO);
+                                it.putExtra("positionTeste", position);
+                                it.putExtra("nomeTeste", experimento.getTestes()
+                                        .get(position).getNome());
+                                startActivity(it);
                             }
 
                             @SuppressLint("SetTextI18n")
@@ -104,10 +110,10 @@ public class ExperimentoExpecifico extends AppCompatActivity {
         );
     }
 
-    private void pegarId() {
+    private void pegarPosicao() {
         Intent it = getIntent();
-        int id = it.getIntExtra("idExperimento", 0);
-        experimento = ExperimentosAndamento.experimentos2.get(id);
+        POSITION_EXPERIMENTO = it.getIntExtra("positionExperimento", 0);
+        experimento = ExperimentosAndamento.experimentos2.get(POSITION_EXPERIMENTO);
     }
 
     private void inicializar() {
