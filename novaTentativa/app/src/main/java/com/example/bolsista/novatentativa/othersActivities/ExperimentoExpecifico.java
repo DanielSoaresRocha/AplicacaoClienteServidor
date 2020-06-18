@@ -9,14 +9,21 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.bolsista.novatentativa.IniciarConfiguracao;
 import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.adapters.TesteAdapter;
 import com.example.bolsista.novatentativa.modelo.Experimento2;
+import com.example.bolsista.novatentativa.recycleOnTouchLinesters.GenericOnItemTouch;
 
 import java.util.Calendar;
+
+import me.drakeet.materialdialog.MaterialDialog;
 
 public class ExperimentoExpecifico extends AppCompatActivity {
     private Context contextActivity;
@@ -55,6 +62,46 @@ public class ExperimentoExpecifico extends AppCompatActivity {
 
         LinearLayoutManager layout = new LinearLayoutManager(contextActivity, LinearLayoutManager.VERTICAL, false);
         testesRecycleView.setLayoutManager(layout);
+
+        testesRecycleView.addOnItemTouchListener(
+                new GenericOnItemTouch(
+                        contextActivity,
+                        testesRecycleView,
+                        new GenericOnItemTouch.OnItemClickListener(){
+
+                            @Override
+                            public void onItemClick(View view, int position) {
+
+                            }
+
+                            @SuppressLint("SetTextI18n")
+                            @Override
+                            public void onItemLongClick(View view, int position) {
+                                View layout = LayoutInflater.from(contextActivity)
+                                        .inflate(R.layout.configuracaoinformacao_inflater,null,false);
+
+                                TextView detalhes = layout.findViewById(R.id.detalhesConfigInfo);
+                                TextView intervalo1 = layout.findViewById(R.id.intervalo1ConfigInfo);
+                                TextView intervalo2 = layout.findViewById(R.id.intervalo2ConfigInfo);
+                                TextView qtdQuestoes = layout.findViewById(R.id.qtdQuestoesConfigInfo);
+
+                                detalhes.setText(experimento.getTestes().get(position)
+                                        .getDetalhes());
+                                intervalo1.setText(experimento.getTestes().get(position)
+                                        .getIntervalo1()+" segundos");
+                                intervalo2.setText(experimento.getTestes().get(position)
+                                        .getIntervalo2()+" segundos");
+                                qtdQuestoes.setText(experimento.getTestes().get(position)
+                                        .getQtdQuestoes()+" questões");
+
+                                MaterialDialog m = new MaterialDialog(contextActivity)
+                                        .setContentView(layout)
+                                        .setCanceledOnTouchOutside(true);
+
+                                m.show();
+                            }
+                        })
+        );
     }
 
     private void pegarId() {
