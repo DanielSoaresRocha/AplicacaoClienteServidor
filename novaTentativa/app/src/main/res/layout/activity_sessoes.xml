@@ -4,13 +4,69 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.bolsista.novatentativa.othersActivities.Sessoes">
+    tools:context="com.example.bolsista.novatentativa.othersActivities.Sessoes"
+    android:orientation="vertical"
+    android:gravity="center|top"
+    >
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/sessaoRecycleView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
+        android:layout_height="wrap_content"
+        android:layout_weight="9"
+        >
     </androidx.recyclerview.widget.RecyclerView>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:gravity="center"
+        android:layout_weight="1"
+        >
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ver gráfico de evolução"
+            android:background="@color/cardview_shadow_start_color"
+            android:padding="10sp"
+            android:fontFamily="sans-serif-black"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingVertical="30sp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Experimentador:"
+                android:textSize="24sp"
+                android:textColor="@color/preto"
+                />
+
+            <Spinner
+                android:id="@+id/experimentadorSpinner"
+                android:layout_width="200sp"
+                android:layout_height="match_parent"
+                >
+            </Spinner>
+        </LinearLayout>
+
+        <Button
+
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Iniciar nova sessão"
+            android:layout_gravity="end"
+            android:background="@color/verde_claro"
+            android:padding="10sp"
+            android:fontFamily="sans-serif-black"
+            android:layout_marginRight="15sp"
+            />
+
+    </LinearLayout>
 </LinearLayout>

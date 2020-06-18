@@ -18,7 +18,9 @@
         android:theme="@style/AppTheme">
         <activity android:name=".othersActivities.Sessoes"></activity>
         <activity android:name=".othersActivities.ExperimentoExpecifico" />
-        <activity android:name=".othersActivities.ExperimentosAndamento" />
+        <activity android:name=".othersActivities.ExperimentosAndamento"
+            android:parentActivityName="com.example.bolsista.novatentativa.arquitetura.Definir"
+            />
         <activity android:name=".Resultado" />
         <activity android:name=".IniciarConfiguracao" />
         <activity android:name=".cadastros.CadastrarCavalo" />

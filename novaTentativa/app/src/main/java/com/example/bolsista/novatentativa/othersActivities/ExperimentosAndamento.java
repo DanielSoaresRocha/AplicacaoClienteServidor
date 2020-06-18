@@ -31,7 +31,7 @@ public class ExperimentosAndamento extends AppCompatActivity {
     Context contextActivity;
     private ExperimentoAdapter adapter;
 
-    public static ArrayList<Experimento2> experimentos2 = new ArrayList<>();
+    public static ArrayList<Experimento2> experimentos2;
 
     //FireBase
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -102,7 +102,10 @@ public class ExperimentosAndamento extends AppCompatActivity {
         experimentosRecycle = findViewById(R.id.experimentosRecycle);
         contextActivity = this;
 
+        experimentos2 = new ArrayList<>();
+
         ActionBar actionbar = getSupportActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setTitle(R.string.exp_andamento);
 
         experimentosRecycle.addOnItemTouchListener(
