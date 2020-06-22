@@ -48,7 +48,6 @@ public class ExperimentoAdapter extends RecyclerView.Adapter<ExperimentoViewHold
         holder.dataInicioE.setText(calendar.get(Calendar.DAY_OF_MONTH)+"/"+calendar.get(Calendar.MONTH)
         +"/"+calendar.get(Calendar.YEAR));
 
-
     }
 
     @Override

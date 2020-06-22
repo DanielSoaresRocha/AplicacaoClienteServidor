@@ -1,6 +1,5 @@
 package com.example.bolsista.novatentativa.adapters;
 
-import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,9 +16,9 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class TesteAdapter extends RecyclerView.Adapter<ConfiguracaoViewHolder> {
-    Context c;
+    private Context c;
     static List<Configuracao> configuracoes;
-    boolean changeColor;
+    private boolean changeColor;
 
     public TesteAdapter(Context c, List<Configuracao> configuracoes, Boolean changeColor) {
         this.c = c;
@@ -44,6 +43,7 @@ public class TesteAdapter extends RecyclerView.Adapter<ConfiguracaoViewHolder> {
 
         //mudar background
         if(changeColor) {
+            holder.testCheckBox.setVisibility(View.GONE);
             if (configEscolhida.isCompleto())
                 holder.testCardView.setBackgroundResource(R.drawable.fundo_verde);
         }

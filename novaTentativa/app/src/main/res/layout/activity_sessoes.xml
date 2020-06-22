@@ -42,6 +42,7 @@
             >
 
             <TextView
+                android:id="@+id/experimentadorTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Experimentador:"
@@ -58,15 +59,13 @@
         </LinearLayout>
 
         <Button
-
+            android:id="@+id/IniciarSessaoBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Iniciar nova sessão"
-            android:layout_gravity="end"
             android:background="@color/verde_claro"
             android:padding="10sp"
             android:fontFamily="sans-serif-black"
-            android:layout_marginRight="15sp"
             />
 
     </LinearLayout>

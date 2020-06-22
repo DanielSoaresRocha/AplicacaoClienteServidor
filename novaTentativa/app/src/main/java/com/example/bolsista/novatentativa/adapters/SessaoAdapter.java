@@ -11,9 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bolsista.novatentativa.R;
-import com.example.bolsista.novatentativa.modelo.Configuracao;
 import com.example.bolsista.novatentativa.modelo.Sessao;
-import com.example.bolsista.novatentativa.viewHolders.ConfiguracaoViewHolder;
 import com.example.bolsista.novatentativa.viewHolders.SessaoViewHolder;
 
 import java.util.Calendar;
@@ -54,5 +52,9 @@ public class SessaoAdapter extends RecyclerView.Adapter<SessaoViewHolder> {
     @Override
     public int getItemCount() {
         return sessoes.size();
+    }
+
+    private void verificaFinalizado(){
+
     }
 }

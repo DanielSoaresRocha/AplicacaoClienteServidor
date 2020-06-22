@@ -15,6 +15,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bolsista.novatentativa.R;
@@ -42,15 +43,16 @@ import java.util.ArrayList;
 import java.util.Date;
 
 public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
+    private Button IniciarSessaoBtn;
+    private TextView experimentadorTextView;
     private RecyclerView sessaoRecycleView;
     private Spinner experimentadorSpinner;
     Button verGrafico;
 
     private int POSITION_EXPERIMENTO;
     private int POSITION_TESTE;
-    private ArrayList<Sessao> sessoes = new ArrayList<>();
+    private ArrayList<Sessao> sessoes;
     private SessaoAdapter adapter;
-    ArrayAdapter<CharSequence> sessoesAdapter;
     Context contextActivity;
 
     //FireBase
@@ -64,9 +66,9 @@ public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSele
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sessoes);
 
-        pegarPosicao();
-        preencherArray();
         inicializar();
+        preencherArray();
+        pegarPosicao();
         implementsRecycle();
         listener();
         spinner();
@@ -175,6 +177,12 @@ public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSele
         POSITION_TESTE = it.getIntExtra("positionTeste", 0);
         POSITION_TESTE = it.getIntExtra("positionTeste", 0);
 
+        // se o experimento tiver sido completado remover estas Views
+        if(it.getBooleanExtra("completo",false)){
+            experimentadorTextView.setVisibility(View.GONE);
+            experimentadorSpinner.setVisibility(View.GONE);
+            IniciarSessaoBtn.setVisibility(View.GONE);
+        }
         // mudar Titulo da barra
         ActionBar actionbar = getSupportActionBar();
         actionbar.setTitle(it.getStringExtra("nomeTeste"));
@@ -185,10 +193,13 @@ public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSele
     }
 
     private void inicializar() {
+        IniciarSessaoBtn = findViewById(R.id.IniciarSessaoBtn);
+        experimentadorTextView = findViewById(R.id.experimentadorTextView);
         verGrafico = findViewById(R.id.verGrafico);
         sessaoRecycleView = findViewById(R.id.sessaoRecycleView);
         experimentadorSpinner = findViewById(R.id.experimentadorSpinner);
         contextActivity = this;
+        sessoes = new ArrayList<>();
     }
 
     @Override

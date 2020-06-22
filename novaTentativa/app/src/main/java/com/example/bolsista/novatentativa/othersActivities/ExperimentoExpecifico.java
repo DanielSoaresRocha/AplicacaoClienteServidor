@@ -77,6 +77,8 @@ public class ExperimentoExpecifico extends AppCompatActivity {
                                 it.putExtra("positionTeste", position);
                                 it.putExtra("nomeTeste", experimento.getTestes()
                                         .get(position).getNome());
+                                it.putExtra("completo", experimento.getTestes()
+                                        .get(position).isCompleto());
                                 startActivity(it);
                             }
 
