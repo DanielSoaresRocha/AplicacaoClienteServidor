@@ -48,6 +48,7 @@ public class ExperimentoExpecifico extends AppCompatActivity {
     @SuppressLint("SetTextI18n")
     private void preencher() {
         ActionBar actionbar = getSupportActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setTitle(experimento.getNome());
 
         nomeEquinoText.setText(experimento.getEquino());

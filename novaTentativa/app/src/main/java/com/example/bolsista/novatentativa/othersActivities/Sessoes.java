@@ -176,6 +176,7 @@ public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSele
         }
         // mudar Titulo da barra
         ActionBar actionbar = getSupportActionBar();
+        actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setTitle(it.getStringExtra("nomeTeste"));
         /*
         sessoes = ExperimentosAndamento.experimentos2.get(POSITION_EXPERIMENTO)
