@@ -20,6 +20,7 @@ import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.adapters.TesteAdapter;
 import com.example.bolsista.novatentativa.modelo.Experimento2;
 import com.example.bolsista.novatentativa.recycleOnTouchLinesters.GenericOnItemTouch;
+import com.example.bolsista.novatentativa.viewsModels.ExperimentoViewModel;
 
 import java.util.Calendar;
 
@@ -115,7 +116,8 @@ public class ExperimentoExpecifico extends AppCompatActivity {
     private void pegarPosicao() {
         Intent it = getIntent();
         POSITION_EXPERIMENTO = it.getIntExtra("positionExperimento", 0);
-        experimento = ExperimentosAndamento.experimentos2.get(POSITION_EXPERIMENTO);
+        experimento = ExperimentoViewModel.experimentos.getValue().get(POSITION_EXPERIMENTO);
+        //ExperimentosAndamento.experimentos2.get(POSITION_EXPERIMENTO);
     }
 
     private void inicializar() {
@@ -124,4 +126,17 @@ public class ExperimentoExpecifico extends AppCompatActivity {
         testesRecycleView = findViewById(R.id.testesRecycleView);
         contextActivity = this;
     }
+
+    /*
+    private void observerList() {
+        ExperimentoViewModel.experimentos.observe(this, experimento2s -> {
+            // update UI
+
+        });
+
+        mViewModel.cavalos.observe(this, clientes -> {
+            // update UI
+            adapter.notifyDataSetChanged();
+        });
+    }*/
 }

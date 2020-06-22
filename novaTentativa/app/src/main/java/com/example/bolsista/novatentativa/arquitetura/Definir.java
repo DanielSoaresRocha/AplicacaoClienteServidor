@@ -17,8 +17,11 @@ import android.widget.Toast;
 import com.example.bolsista.novatentativa.IniciarConfiguracao;
 import com.example.bolsista.novatentativa.cadastros.CadastrarCavalo;
 import com.example.bolsista.novatentativa.R;
+import com.example.bolsista.novatentativa.modelo.Experimento;
 import com.example.bolsista.novatentativa.modelo.Usuario;
 import com.example.bolsista.novatentativa.othersActivities.ExperimentosAndamento;
+import com.example.bolsista.novatentativa.othersActivities.ExperimentosFinalizados;
+import com.example.bolsista.novatentativa.viewsModels.ExperimentoViewModel;
 import com.example.bolsista.novatentativa.viewsModels.ListarViewModel;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -182,6 +185,10 @@ public class Definir extends AppCompatActivity {
                 Intent experimentosAndamento = new Intent(Definir.this, ExperimentosAndamento.class);
                 startActivity(experimentosAndamento);
                 return true;
+            case R.id.experimentosFinalizados:
+                Intent experimentosFinalizados = new Intent(Definir.this, ExperimentosFinalizados.class);
+                startActivity(experimentosFinalizados);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -207,5 +214,6 @@ public class Definir extends AppCompatActivity {
         escravo = findViewById(R.id.escravoImgView);
 
         ListarViewModel.carregarListas();
+        ExperimentoViewModel.carregarLista();
     }
 }

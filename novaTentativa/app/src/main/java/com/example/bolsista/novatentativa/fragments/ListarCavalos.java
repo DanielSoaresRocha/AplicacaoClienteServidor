@@ -172,7 +172,7 @@ public class ListarCavalos extends Fragment {
     }
 
     private void observerList() {
-        mViewModel.cavalos.observe(this, clientes ->{
+        mViewModel.cavalos.observe(this, clientes -> {
             // update UI
             adapter.notifyDataSetChanged();
         });

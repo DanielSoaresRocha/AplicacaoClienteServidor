@@ -25,8 +25,8 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class ExperimentosAndamento extends AppCompatActivity {
-    private RecyclerView experimentosRecycle;
+public class ExperimentosFinalizados extends AppCompatActivity {
+    RecyclerView experimentosFRecycle;
 
     Context contextActivity;
     private ExperimentoAdapter adapter;
@@ -42,7 +42,7 @@ public class ExperimentosAndamento extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_experimentos_andamento);
+        setContentView(R.layout.activity_experimentos_finalizados);
 
         usuario = FirebaseAuth.getInstance();
         usuarioRef = db.collection("users").document(usuario.getCurrentUser().getUid());
@@ -50,6 +50,35 @@ public class ExperimentosAndamento extends AppCompatActivity {
         inicializar();
         preencher();
         implementsRecycle();
+    }
+
+    private void implementsRecycle(){
+        adapter = new ExperimentoAdapter(contextActivity, experimentos2);
+        experimentosFRecycle.setAdapter(adapter);
+
+        LinearLayoutManager layout = new LinearLayoutManager(contextActivity,LinearLayoutManager.VERTICAL,false);
+        experimentosFRecycle.setLayoutManager(layout);
+
+        experimentosFRecycle.addOnItemTouchListener(
+                new GenericOnItemTouch(
+                        contextActivity,
+                        experimentosFRecycle,
+                        new GenericOnItemTouch.OnItemClickListener(){
+
+                            @Override
+                            public void onItemClick(View view, int position) {
+                                Intent it = new Intent(contextActivity, ExperimentoExpecifico.class);
+                                it.putExtra("positionExperimento", position);
+                                startActivity(it);
+                            }
+
+                            @SuppressLint("SetTextI18n")
+                            @Override
+                            public void onItemLongClick(View view, int position) {
+                                Toast.makeText(contextActivity, "Visualizar informações", Toast.LENGTH_SHORT).show();
+                            }
+                        })
+        );
     }
 
     private void preencher() {
@@ -71,64 +100,31 @@ public class ExperimentosAndamento extends AppCompatActivity {
                 435, null,true));
         testes.add(new Configuracao("id3", "Teste de aprendizagem L2",
                 "Teste gabor", imagens, 15, 5, 5, 234,
-                435, null,false));
+                435, null,true));
         testes.add(new Configuracao("id4", "Teste de aprendizagem L3",
                 "Teste gabor", imagens, 15, 5, 5, 234,
-                435, null,false));
+                435, null,true));
         testes.add(new Configuracao("id5", "Teste de transferência T1",
                 "Teste gabor", imagens, 15, 5, 5, 234,
-                435, null,false));
+                435, null,true));
         testes.add(new Configuracao("id6", "Teste de transferência T2",
                 "Teste gabor", imagens, 15, 5, 5, 234,
-                435, null,false));
+                435, null,true));
 
-        experimentos2.add(new Experimento2("id1", "cavalo 1", "experimento 1", new Date(),
-                new Date(), testes));
-        experimentos2.add(new Experimento2("id2", "cavalo 2", "experimento 2", new Date(),
-                new Date(), testes));
-        experimentos2.add(new Experimento2("id3", "cavalo 3", "experimento 3", new Date(),
+        experimentos2.add(new Experimento2("id1", "cavalo 1", "experimento 0", new Date(),
                 new Date(), testes));
 
         ExperimentoViewModel.experimentos.setValue(experimentos2);
     }
 
-    private void implementsRecycle(){
-        adapter = new ExperimentoAdapter(contextActivity, experimentos2);
-        experimentosRecycle.setAdapter(adapter);
-
-        LinearLayoutManager layout = new LinearLayoutManager(contextActivity,LinearLayoutManager.VERTICAL,false);
-        experimentosRecycle.setLayoutManager(layout);
-
-        experimentosRecycle.addOnItemTouchListener(
-                new GenericOnItemTouch(
-                        contextActivity,
-                        experimentosRecycle,
-                        new GenericOnItemTouch.OnItemClickListener(){
-
-                            @Override
-                            public void onItemClick(View view, int position) {
-                                Intent it = new Intent(contextActivity, ExperimentoExpecifico.class);
-                                it.putExtra("positionExperimento", position);
-                                startActivity(it);
-                            }
-
-                            @SuppressLint("SetTextI18n")
-                            @Override
-                            public void onItemLongClick(View view, int position) {
-                                Toast.makeText(contextActivity, "Visualizar informações", Toast.LENGTH_SHORT).show();
-                            }
-                        })
-        );
-    }
-
     private void inicializar() {
-        experimentosRecycle = findViewById(R.id.experimentosRecycle);
+        experimentosFRecycle = findViewById(R.id.experimentosFRecycle);
         contextActivity = this;
 
         experimentos2 = new ArrayList<>();
 
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
-        actionbar.setTitle(R.string.exp_andamento);
+        actionbar.setTitle(R.string.exp_finalizado);
     }
 }
