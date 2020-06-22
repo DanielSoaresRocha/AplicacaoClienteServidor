@@ -16,11 +16,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".othersActivities.ExperimentosFinalizados"></activity>
-        <activity android:name=".othersActivities.Sessoes" />
-        <activity android:name=".othersActivities.ExperimentoExpecifico" />
+        <activity
+            android:name=".othersActivities.ExperimentosFinalizados"
+            android:parentActivityName=".arquitetura.Definir" />
         <activity
             android:name=".othersActivities.ExperimentosAndamento"
+            android:parentActivityName=".arquitetura.Definir" />
+        <activity
+            android:name=".othersActivities.Sessoes"
+            android:parentActivityName=".othersActivities.ExperimentoExpecifico" />
+        <activity
+            android:name=".othersActivities.ExperimentoExpecifico"
             android:parentActivityName=".arquitetura.Definir" />
         <activity android:name=".Resultado" />
         <activity android:name=".IniciarConfiguracao" />
