@@ -38,9 +38,9 @@ public class ResultadoAdapter extends RecyclerView.Adapter<ResultadoViewHolder>{
     public void onBindViewHolder(@NonNull ResultadoViewHolder holder, int position) {
         Desafio desafioEscolhido = desafios.get(position);
         holder.imgCorreta.setImageResource(desafioEscolhido.getImgCorreta());
-        holder.imgErrada.setImageResource(desafioEscolhido.getImgErrada());
-        holder.qtdErros.setText(Integer.toString(desafioEscolhido.getQtdErros()));
-        holder.tempo.setText(Long.toString(desafioEscolhido.getTempoAcerto()));
+        //holder.imgErrada.setImageResource(desafioEscolhido.getImgErrada());
+        //holder.qtdErros.setText(Integer.toString(desafioEscolhido.getQtdErros()));
+        //holder.tempo.setText(Long.toString(desafioEscolhido.getTempoAcerto()));
     }
 
     @Override

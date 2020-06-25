@@ -38,11 +38,11 @@ public class TesteAdapter extends RecyclerView.Adapter<ConfiguracaoViewHolder> {
     public void onBindViewHolder(@NonNull ConfiguracaoViewHolder holder, int position) {
         Configuracao configEscolhida = configuracoes.get(position);
         holder.nomeConfig.setText(configEscolhida.getNome());
-        holder.detalhesConfig.setText(configEscolhida.getDetalhes());
-        holder.testCheckBox.setChecked(configEscolhida.isCompleto());
+        holder.detalhesConfig.setText(configEscolhida.getObservacoes());
+        holder.testCheckBox.setChecked(true);
 
         //mudar background
-        if(changeColor) {
+        if(configEscolhida.isCompleto()) {
             holder.testCheckBox.setVisibility(View.GONE);
             if (configEscolhida.isCompleto())
                 holder.testCardView.setBackgroundResource(R.drawable.fundo_verde);

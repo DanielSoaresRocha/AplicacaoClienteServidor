@@ -86,7 +86,6 @@ public class Cliente {
         try {
             Configuracao configuracao = (Configuracao) leitor.readObject();
             Log.i("OBJETO","Objeto recebido do servidor ");
-            Log.i("OBJETO","vetor = "+ configuracao.getQtdQuestoes());
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {

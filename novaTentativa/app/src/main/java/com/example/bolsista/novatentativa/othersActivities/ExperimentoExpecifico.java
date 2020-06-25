@@ -96,13 +96,13 @@ public class ExperimentoExpecifico extends AppCompatActivity {
                                 TextView qtdQuestoes = layout.findViewById(R.id.qtdQuestoesConfigInfo);
 
                                 detalhes.setText(experimento.getTestes().get(position)
-                                        .getDetalhes());
+                                        .getObservacoes());
                                 intervalo1.setText(experimento.getTestes().get(position)
                                         .getIntervalo1()+" segundos");
                                 intervalo2.setText(experimento.getTestes().get(position)
                                         .getIntervalo2()+" segundos");
                                 qtdQuestoes.setText(experimento.getTestes().get(position)
-                                        .getQtdQuestoes()+" questões");
+                                        .getQtdEnsaiosPorSessao()+" ensaios");
 
                                 MaterialDialog m = new MaterialDialog(contextActivity)
                                         .setContentView(layout)

@@ -37,7 +37,7 @@ public class GerenciadorDeClientes extends Thread{
     private ArrayList<Desafio> desafios = new ArrayList<>();
 
     private int imgAtual;
-    private Desafio desafio = new Desafio();
+    //private Desafio desafio = new Desafio();
 
     static Jogar jogar;
 
@@ -66,12 +66,12 @@ public class GerenciadorDeClientes extends Thread{
                     //enviarObjeto();
                     imgAtual = R.drawable.circuloo; //////////////////DESTAQUE
                     vetor = IniciarConfiguracao.configuracaoSelecionada.getImagens();
-                    int numRodadas = IniciarConfiguracao.configuracaoSelecionada.getQtdQuestoes();
+                    int numRodadas = IniciarConfiguracao.configuracaoSelecionada.getQtdEnsaiosPorSessao();
                     int rodada = 1;
                     while (rodada <= numRodadas) {
                         msg = leitor.readInt();
                         imgAtual = server.numberAleatorio;
-                        desafio.setImgCorreta(imgAtual);
+                        //desafio.setImgCorreta(imgAtual);
                         Log.i("COMUNICACAO", "MENSAGEM RECEBIDA DO CLIENTE");
                         Log.i("COMUNICACAO", "cliente -- " + msg + " server = " + imgAtual);
                         if (clientes.size() >= 2) {
@@ -89,12 +89,12 @@ public class GerenciadorDeClientes extends Thread{
                                 desconectarControle();
                                 break;
                             } else { //O cavalo errou
-                                desafio.setQtdErros(desafio.getQtdErros()+1);
+                                //desafio.setQtdErros(desafio.getQtdErros()+1);
                                 jogar.tocarError();
                             }
                         }
                         rodada++;
-                        desafios.add(desafio);
+                        //desafios.add(desafio);
                     }
                     terminar();
                     jogar.terminar(desafios, IniciarConfiguracao.experimento.getId());
@@ -306,7 +306,7 @@ public class GerenciadorDeClientes extends Thread{
                 }
 
                 int outraImg = vetor.get(aleatorio);
-                desafio.setImgErrada(outraImg);
+                //desafio.setImgErrada(outraImg);
                 Log.i("ENVIAR","ENVIADA 2 "+ outraImg);
 
                 GerenciadorDeClientes destino = clientes.get(i);

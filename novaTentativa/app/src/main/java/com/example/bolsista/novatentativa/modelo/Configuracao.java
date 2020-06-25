@@ -9,65 +9,75 @@ import java.util.ArrayList;
 public class Configuracao implements Serializable{
     private String id;
     private String nome;
-    private String detalhes;
-    private ArrayList<Integer> imagens;
-    private int qtdQuestoes;
     private int intervalo1;
     private int intervalo2;
-    private int somErro;
+    private int qtdDesafios;
     private int somAcerto;
-    private boolean completo;
-    private DocumentReference usuario;
+    private int somErro;
+    private ArrayList<Desafio> desafios;
+    private String observacoes;
+    private int tipo;
+    private int aleatoriedade;
     private ArrayList<Sessao> sessoes;
+    private Boolean preTeste;
+    private int qtdEnsaiosPorSessao;
+    private int maxVezesConsecutivas;
+    private int criterioAprendizagem;
+    private boolean completo;
+
+    ///Vai ser apagado
+    private ArrayList<Integer> imagens;
+    private DocumentReference usuario;
 
     public Configuracao(){
     }
 
-    public Configuracao(String id, String nome, String detalhes, ArrayList<Integer> imagens,
-                        int qtdQuestoes, int intervalo1, int intervalo2, int somErro, int somAcerto,
-                        DocumentReference usuario) {
+    public Configuracao(String id, String nome, int intervalo1, int intervalo2, int qtdDesafios,
+                        int somAcerto, int somErro, ArrayList<Desafio> desafios, String observacoes,
+                        int tipo, int aleatoriedade, ArrayList<Sessao> sessoes, Boolean preTeste,
+                        int qtdEnsaiosPorSessao, int maxVezesConsecutivas, int criterioAprendizagem,
+                        boolean completo) {
         this.id = id;
         this.nome = nome;
-        this.detalhes = detalhes;
-        this.imagens = imagens;
-        this.qtdQuestoes = qtdQuestoes;
         this.intervalo1 = intervalo1;
         this.intervalo2 = intervalo2;
-        this.somErro = somErro;
+        this.qtdDesafios = qtdDesafios;
         this.somAcerto = somAcerto;
-        this.usuario = usuario;
-    }
-
-    public Configuracao(String id, String nome, String detalhes, ArrayList<Integer> imagens,
-                        int qtdQuestoes, int intervalo1, int intervalo2, int somErro, int somAcerto,
-                        DocumentReference usuario, ArrayList<Sessao> sessoes) {
-        this.id = id;
-        this.nome = nome;
-        this.detalhes = detalhes;
-        this.imagens = imagens;
-        this.qtdQuestoes = qtdQuestoes;
-        this.intervalo1 = intervalo1;
-        this.intervalo2 = intervalo2;
         this.somErro = somErro;
-        this.somAcerto = somAcerto;
-        this.usuario = usuario;
+        this.desafios = desafios;
+        this.observacoes = observacoes;
+        this.tipo = tipo;
+        this.aleatoriedade = aleatoriedade;
         this.sessoes = sessoes;
+        this.preTeste = preTeste;
+        this.qtdEnsaiosPorSessao = qtdEnsaiosPorSessao;
+        this.maxVezesConsecutivas = maxVezesConsecutivas;
+        this.criterioAprendizagem = criterioAprendizagem;
+        this.completo = completo;
     }
-
-    public Configuracao(String id, String nome, String detalhes, ArrayList<Integer> imagens,
-                        int qtdQuestoes, int intervalo1, int intervalo2, int somErro, int somAcerto,
+    /*
+    public Configuracao(String id, String nome, String observacoes, ArrayList<Integer> imagens,
+                        int qtdDesafios, int intervalo1, int intervalo2, int somErro, int somAcerto,
                         DocumentReference usuario, Boolean completo) {
         this.id = id;
         this.nome = nome;
-        this.detalhes = detalhes;
+        this.observacoes = observacoes;
         this.imagens = imagens;
-        this.qtdQuestoes = qtdQuestoes;
+        this.qtdDesafios = qtdDesafios;
         this.intervalo1 = intervalo1;
         this.intervalo2 = intervalo2;
         this.somErro = somErro;
         this.somAcerto = somAcerto;
         this.usuario = usuario;
         this.completo = completo;
+    }*/
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public String getNome() {
@@ -76,38 +86,6 @@ public class Configuracao implements Serializable{
 
     public void setNome(String nome) {
         this.nome = nome;
-    }
-
-    public String getDetalhes() {
-        return detalhes;
-    }
-
-    public void setDetalhes(String detalhes) {
-        this.detalhes = detalhes;
-    }
-
-    public DocumentReference getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(DocumentReference usuario) {
-        this.usuario = usuario;
-    }
-
-    public ArrayList<Integer> getImagens() {
-        return imagens;
-    }
-
-    public void setImagens(ArrayList<Integer> imagens) {
-        this.imagens = imagens;
-    }
-
-    public int getQtdQuestoes() {
-        return qtdQuestoes;
-    }
-
-    public void setQtdQuestoes(int qtdQuestoes) {
-        this.qtdQuestoes = qtdQuestoes;
     }
 
     public int getIntervalo1() {
@@ -126,12 +104,12 @@ public class Configuracao implements Serializable{
         this.intervalo2 = intervalo2;
     }
 
-    public int getSomErro() {
-        return somErro;
+    public int getQtdDesafios() {
+        return qtdDesafios;
     }
 
-    public void setSomErro(int somErro) {
-        this.somErro = somErro;
+    public void setQtdDesafios(int qtdDesafios) {
+        this.qtdDesafios = qtdDesafios;
     }
 
     public int getSomAcerto() {
@@ -142,20 +120,44 @@ public class Configuracao implements Serializable{
         this.somAcerto = somAcerto;
     }
 
-    public String getId() {
-        return id;
+    public int getSomErro() {
+        return somErro;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setSomErro(int somErro) {
+        this.somErro = somErro;
     }
 
-    public boolean isCompleto() {
-        return completo;
+    public ArrayList<Desafio> getDesafios() {
+        return desafios;
     }
 
-    public void setCompleto(boolean completo) {
-        this.completo = completo;
+    public void setDesafios(ArrayList<Desafio> desafios) {
+        this.desafios = desafios;
+    }
+
+    public String getObservacoes() {
+        return observacoes;
+    }
+
+    public void setObservacoes(String observacoes) {
+        this.observacoes = observacoes;
+    }
+
+    public int getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(int tipo) {
+        this.tipo = tipo;
+    }
+
+    public int getAleatoriedade() {
+        return aleatoriedade;
+    }
+
+    public void setAleatoriedade(int aleatoriedade) {
+        this.aleatoriedade = aleatoriedade;
     }
 
     public ArrayList<Sessao> getSessoes() {
@@ -166,12 +168,59 @@ public class Configuracao implements Serializable{
         this.sessoes = sessoes;
     }
 
-    /*
-    public String getMensagem() {
-        return mensagem;
+    public Boolean getPreTeste() {
+        return preTeste;
     }
 
-    public void setMensagem(String mensagem) {
-        this.mensagem = mensagem;
-    }*/
+    public void setPreTeste(Boolean preTeste) {
+        this.preTeste = preTeste;
+    }
+
+    public int getQtdEnsaiosPorSessao() {
+        return qtdEnsaiosPorSessao;
+    }
+
+    public void setQtdEnsaiosPorSessao(int qtdEnsaiosPorSessao) {
+        this.qtdEnsaiosPorSessao = qtdEnsaiosPorSessao;
+    }
+
+    public int getMaxVezesConsecutivas() {
+        return maxVezesConsecutivas;
+    }
+
+    public void setMaxVezesConsecutivas(int maxVezesConsecutivas) {
+        this.maxVezesConsecutivas = maxVezesConsecutivas;
+    }
+
+    public int getCriterioAprendizagem() {
+        return criterioAprendizagem;
+    }
+
+    public void setCriterioAprendizagem(int criterioAprendizagem) {
+        this.criterioAprendizagem = criterioAprendizagem;
+    }
+
+    public ArrayList<Integer> getImagens() {
+        return imagens;
+    }
+
+    public void setImagens(ArrayList<Integer> imagens) {
+        this.imagens = imagens;
+    }
+
+    public boolean isCompleto() {
+        return completo;
+    }
+
+    public void setCompleto(boolean completo) {
+        this.completo = completo;
+    }
+
+    public DocumentReference getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(DocumentReference usuario) {
+        this.usuario = usuario;
+    }
 }

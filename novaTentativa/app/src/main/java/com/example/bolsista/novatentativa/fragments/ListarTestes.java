@@ -26,6 +26,8 @@ import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.adapters.TesteAdapter;
 import com.example.bolsista.novatentativa.cadastros.ConfigurarTeste;
 import com.example.bolsista.novatentativa.modelo.Configuracao;
+import com.example.bolsista.novatentativa.modelo.Desafio;
+import com.example.bolsista.novatentativa.modelo.Sessao;
 import com.example.bolsista.novatentativa.recycleOnTouchLinesters.GenericOnItemTouch;
 import com.example.bolsista.novatentativa.viewsModels.ListarViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -78,31 +80,59 @@ public class ListarTestes extends Fragment {
 
         if(mViewModel.cavalos.getValue().size() == 0){ // se a lista estiver vazia
             //getConfiguracoesFireStore();// pegar do banco
-            ArrayList<Integer> imagens = new ArrayList<Integer>() {
-                {
-                    add(1);
-                    add(2);
-                    add(3);
-                }
-            };
-            ListarViewModel.addConfiguracao(new Configuracao("id", "Pré-teste",
-                    "Teste gabor", imagens, 10, 5, 5,
-                    234, 435, null,true));
-            ListarViewModel.addConfiguracao(new Configuracao("id", "Teste de aprendizagem L1",
-                    "Teste gabor", imagens, 20, 5, 5, 234,
-                    435, null,true));
-            ListarViewModel.addConfiguracao(new Configuracao("id", "Teste de aprendizagem L2",
-                    "Teste gabor", imagens, 15, 5, 5, 234,
-                    435, null,true));
-            ListarViewModel.addConfiguracao(new Configuracao("id", "Teste de aprendizagem L3",
-                    "Teste gabor", imagens, 15, 5, 5, 234,
-                    435, null,true));
-            ListarViewModel.addConfiguracao(new Configuracao("id", "Teste de transferência T1",
-                    "Teste gabor", imagens, 15, 5, 5, 234,
-                    435, null,true));
-            ListarViewModel.addConfiguracao(new Configuracao("id", "Teste de transferência T2",
-                    "Teste gabor", imagens, 15, 5, 5, 234,
-                    435, null,true));
+            /*
+            Preste atenção que a ordem das figuras está como nos testes de gabor, onde a figura do meio
+            representa a img certa, e as laterais sendo a certa ou a errada
+            */
+            //DESAFIOS TESTE L1
+            ArrayList<Desafio> desafiosL1 = new ArrayList<>();
+            desafiosL1.add(new Desafio("1", R.drawable.branco, R.drawable.estrela2, R.drawable.estrela2));
+            desafiosL1.add(new Desafio("2", R.drawable.estrela2, R.drawable.estrela2, R.drawable.branco));
+            desafiosL1.add(new Desafio("3", R.drawable.branco, R.drawable.circulo,  R.drawable.circulo));
+            desafiosL1.add(new Desafio("4", R.drawable.circulo, R.drawable.circulo,  R.drawable.branco));
+            //DESAFIOS TESTE L2
+            ArrayList<Desafio> desafiosL2 = new ArrayList<>();
+            desafiosL2.add(new Desafio("5",R.drawable.circulo, R.drawable.estrela2, R.drawable.estrela2));
+            desafiosL2.add(new Desafio("6",R.drawable.estrela2, R.drawable.estrela2, R.drawable.circulo));
+            desafiosL2.add(new Desafio("7",R.drawable.estrela2, R.drawable.circulo, R.drawable.circulo));
+            desafiosL2.add(new Desafio("8",R.drawable.circulo, R.drawable.circulo, R.drawable.estrela2));
+            //DESAFIOS TESTE T1
+            ArrayList<Desafio> desafiosT1 = new ArrayList<>();
+            desafiosT1.add(new Desafio("10",R.drawable.triangulo, R.drawable.triangulo, R.drawable.retanguloo));
+            desafiosT1.add(new Desafio("11",R.drawable.retanguloo, R.drawable.triangulo, R.drawable.triangulo));
+            desafiosT1.add(new Desafio("12",R.drawable.triangulo, R.drawable.retanguloo, R.drawable.retanguloo));
+            desafiosT1.add(new Desafio("13",R.drawable.retanguloo, R.drawable.retanguloo, R.drawable.triangulo));
+
+            //PRE-TESTE
+            ListarViewModel.addConfiguracao(new Configuracao("0", "Pré-teste", 0,
+                    0, 0, R.raw.sucess, R.raw.error, new ArrayList<Desafio>(),
+                    "Teste Gabor", 0, 0, new ArrayList<Sessao>(),
+                    true, 0, 0, 0,
+                    false));
+            //TESTE L1
+            ListarViewModel.addConfiguracao(new Configuracao("1", "Teste de aprendizagem L1",
+                    5, 5, desafiosL1.size(), R.raw.sucess, R.raw.error,
+                    desafiosL1, "Teste Gabor", 0, 2,
+                    new ArrayList<Sessao>(), false, 20, 3,
+                    85,false));
+            //TESTE L2
+            ListarViewModel.addConfiguracao(new Configuracao("2", "Teste de aprendizagem L2",
+                    5, 5, desafiosL2.size(), R.raw.sucess, R.raw.error,
+                    desafiosL2, "Teste Gabor", 0, 2,
+                    new ArrayList<Sessao>(), false, 20, 3,
+                    85,false));
+            //TESTE T1
+            ListarViewModel.addConfiguracao(new Configuracao("3", "Teste de transferência T1",
+                    5, 5, desafiosT1.size(), R.raw.sucess, R.raw.error,
+                    desafiosT1, "Teste Gabor", 0, 2,
+                    new ArrayList<Sessao>(), false, 20, 3,
+                    85,false));
+            //TESTE T2
+            ListarViewModel.addConfiguracao(new Configuracao("4", "Teste de transferência T2",
+                    5, 5, desafiosT1.size(), R.raw.sucess, R.raw.error,
+                    desafiosT1, "Teste Gabor", 0, 2,
+                    new ArrayList<Sessao>(), false, 20, 3,
+                    85,false));
             implementsRecycle();
             observerList();
         }else{// se não
@@ -178,13 +208,13 @@ public class ListarTestes extends Fragment {
                                 TextView qtdQuestoes = layout.findViewById(R.id.qtdQuestoesConfigInfo);
 
                                 detalhes.setText(mViewModel.configuracoes.getValue().get(position)
-                                        .getDetalhes());
+                                        .getObservacoes());
                                 intervalo1.setText(mViewModel.configuracoes.getValue().get(position)
                                         .getIntervalo1()+" segundos");
                                 intervalo2.setText(mViewModel.configuracoes.getValue().get(position)
                                         .getIntervalo2()+" segundos");
                                 qtdQuestoes.setText(mViewModel.configuracoes.getValue().get(position)
-                                        .getQtdQuestoes()+" questões");
+                                        .getQtdDesafios()+" questões");
 
                                 MaterialDialog m = new MaterialDialog(contextoAtivity)
                                         .setContentView(layout)

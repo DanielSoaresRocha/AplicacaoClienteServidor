@@ -291,8 +291,8 @@ public class ConfigurarTeste extends AppCompatActivity implements AdapterView.On
 
         configuracao = new Configuracao();
         configuracao.setNome(nomeConfigEdit.getText().toString());
-        configuracao.setDetalhes(detalhesConfigEdit.getText().toString());
-        configuracao.setQtdQuestoes(Integer.parseInt(qtdQuestao.getText().toString()));
+        configuracao.setObservacoes(detalhesConfigEdit.getText().toString());
+        configuracao.setQtdEnsaiosPorSessao(Integer.parseInt(qtdQuestao.getText().toString()));
         configuracao.setIntervalo1(Integer.parseInt(intervaloQuestoes.getText().toString()));
         configuracao.setIntervalo2(Integer.parseInt(intervalo2.getText().toString()));
         configuracao.setSomErro(erroEscolhido);

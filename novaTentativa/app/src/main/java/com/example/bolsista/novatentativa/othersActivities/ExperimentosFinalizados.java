@@ -92,6 +92,7 @@ public class ExperimentosFinalizados extends AppCompatActivity {
 
         ArrayList<Configuracao> testes = new ArrayList<>();
 
+        /*
         testes.add(new Configuracao("id1", "Pré-teste",
                 "Teste gabor", imagens, 10, 5, 5,
                 234, 435, null,true));
@@ -109,7 +110,7 @@ public class ExperimentosFinalizados extends AppCompatActivity {
                 435, null,true));
         testes.add(new Configuracao("id6", "Teste de transferência T2",
                 "Teste gabor", imagens, 15, 5, 5, 234,
-                435, null,true));
+                435, null,true));*/
 
         experimentos2.add(new Experimento2("id1", "cavalo 1", "experimento 0", new Date(),
                 new Date(), testes));
