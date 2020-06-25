@@ -10,7 +10,7 @@ import com.example.bolsista.novatentativa.adapters.FixedTabsPageAdapter;
 import com.example.bolsista.novatentativa.fragments.CadastrarExperimento;
 import com.example.bolsista.novatentativa.fragments.ListarCavalos;
 import com.example.bolsista.novatentativa.fragments.ListarTestes;
-import com.example.bolsista.novatentativa.modelo.Cavalo;
+import com.example.bolsista.novatentativa.modelo.Equino;
 import com.example.bolsista.novatentativa.modelo.Configuracao;
 import com.example.bolsista.novatentativa.modelo.Experimento;
 import com.example.bolsista.novatentativa.viewsModels.ListarViewModel;
@@ -24,7 +24,7 @@ public class IniciarConfiguracao extends AppCompatActivity {
     FixedTabsPageAdapter pageAdapter;
     public static int identificaAba = 0; //Identifica aba em que está no momento
 
-    public static Cavalo cavaloSelecionado;
+    public static Equino cavaloSelecionado;
     public static Configuracao configuracaoSelecionada;
     public static Experimento experimento;
 

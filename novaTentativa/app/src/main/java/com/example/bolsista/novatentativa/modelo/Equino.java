@@ -4,26 +4,25 @@ import com.google.firebase.firestore.DocumentReference;
 
 import java.util.Date;
 
-public class Cavalo {
+public class Equino {
     private String id;
     private String nome;
     private String raca;
     private Date dataNascimento;
-    private String detalhes;
+    private String observacoes;
     private String sexo;
     private String atividade;
     private DocumentReference usuario; //referencia a outro documento de outra coleção ("chave estrangeira")
 
-    public Cavalo() {
+    public Equino() {
     }
 
-    public Cavalo(String nome, String raca, Date dataNascimento, String detalhes,
+    public Equino(String nome, String raca, Date dataNascimento, String observacoes,
                   String sexo, String atividade, DocumentReference usuario) {
-        this.id = id;
         this.nome = nome;
         this.raca = raca;
         this.dataNascimento = dataNascimento;
-        this.detalhes = detalhes;
+        this.observacoes = observacoes;
         this.sexo = sexo;
         this.atividade = atividade;
         this.usuario = usuario;
@@ -61,12 +60,12 @@ public class Cavalo {
         this.dataNascimento = dataNascimento;
     }
 
-    public String getDetalhes() {
-        return detalhes;
+    public String getObservacoes() {
+        return observacoes;
     }
 
-    public void setDetalhes(String detalhes) {
-        this.detalhes = detalhes;
+    public void setObservacoes(String observacoes) {
+        this.observacoes = observacoes;
     }
 
     public String getSexo() {

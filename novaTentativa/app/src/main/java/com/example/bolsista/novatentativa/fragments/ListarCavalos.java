@@ -23,7 +23,7 @@ import android.widget.Toast;
 import com.example.bolsista.novatentativa.IniciarConfiguracao;
 import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.adapters.CavaloAdapter;
-import com.example.bolsista.novatentativa.modelo.Cavalo;
+import com.example.bolsista.novatentativa.modelo.Equino;
 import com.example.bolsista.novatentativa.recycleOnTouchLinesters.GenericOnItemTouch;
 import com.example.bolsista.novatentativa.viewsModels.ListarViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -87,7 +87,7 @@ public class ListarCavalos extends Fragment {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Cavalo cavalo = document.toObject(Cavalo.class);
+                                Equino cavalo = document.toObject(Equino.class);
                                 mViewModel.addCavalo(cavalo);
                                 Log.i("DataBase-FireStore-get", "referencia de => ." +
                                         cavalo.getNome() + " = " +

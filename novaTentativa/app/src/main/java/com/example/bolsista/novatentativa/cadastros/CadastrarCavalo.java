@@ -11,31 +11,23 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.MultiAutoCompleteTextView;
 import android.widget.RadioButton;
 import android.widget.Spinner;
-import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bolsista.novatentativa.R;
-import com.example.bolsista.novatentativa.modelo.Cavalo;
+import com.example.bolsista.novatentativa.modelo.Equino;
 import com.example.bolsista.novatentativa.viewsModels.ListarViewModel;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.Timestamp;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -66,7 +58,7 @@ public class CadastrarCavalo extends AppCompatActivity implements DatePickerDial
 
     String sexo = "";
 
-    Cavalo cavalo;
+    Equino cavalo;
     FirebaseAuth usuario;
     DocumentReference usuarioRef;
 
@@ -92,7 +84,7 @@ public class CadastrarCavalo extends AppCompatActivity implements DatePickerDial
             public void onClick(View v) {
                 if((dataNascimentoE.getText().toString().length() >= 8) && (nome.getText().toString()
                         .length() > 1)) {
-                    cavalo = new Cavalo(nome.getText().toString(), racaText,
+                    cavalo = new Equino(nome.getText().toString(), racaText,
                             dataNascimento, detalhes.getText().toString(),sexo, atividade, usuarioRef);
 
                     addFireStore();

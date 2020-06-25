@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.bolsista.novatentativa.R;
-import com.example.bolsista.novatentativa.modelo.Cavalo;
+import com.example.bolsista.novatentativa.modelo.Equino;
 import com.example.bolsista.novatentativa.viewHolders.CavaloViewHolder;
 
 import java.util.List;
@@ -18,9 +18,9 @@ import androidx.recyclerview.widget.RecyclerView;
 public class CavaloAdapter extends RecyclerView.Adapter<CavaloViewHolder>{
 
     Context c;
-    static List<Cavalo> cavalos;
+    static List<Equino> cavalos;
 
-    public CavaloAdapter(Context c, List<Cavalo> cavalos) {
+    public CavaloAdapter(Context c, List<Equino> cavalos) {
         this.c = c;
         this.cavalos = cavalos;
     }
@@ -35,7 +35,7 @@ public class CavaloAdapter extends RecyclerView.Adapter<CavaloViewHolder>{
 
     @Override
     public void onBindViewHolder(@NonNull CavaloViewHolder holder, int position) {
-        Cavalo cavaloEscolhido = cavalos.get(position);
+        Equino cavaloEscolhido = cavalos.get(position);
         holder.nomeCavalo.setText(cavaloEscolhido.getNome());
         holder.detalhesCavalo.setText(cavaloEscolhido.getRaca());
     }
