@@ -88,9 +88,6 @@ public class ListarEquinos extends Fragment {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Equino equino = document.toObject(Equino.class);
                                 mViewModel.addCavalo(equino);
-                                Log.i("DataBase-FireStore-get", "referencia de => ." +
-                                        equino.getNome() + " = " +
-                                        document.getDocumentReference("usuario").getId());
                             }
                             implementsRecycle();
                             observerList();
