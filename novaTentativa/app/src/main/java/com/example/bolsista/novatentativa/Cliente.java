@@ -7,7 +7,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import com.example.bolsista.novatentativa.arquitetura.ClienteActivity;
-import com.example.bolsista.novatentativa.modelo.Configuracao;
+import com.example.bolsista.novatentativa.modelo.Teste;
 
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -84,7 +84,7 @@ public class Cliente {
 
     private void receberObjeto() {
         try {
-            Configuracao configuracao = (Configuracao) leitor.readObject();
+            Teste teste = (Teste) leitor.readObject();
             Log.i("OBJETO","Objeto recebido do servidor ");
         } catch (IOException e) {
             e.printStackTrace();

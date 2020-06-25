@@ -6,7 +6,7 @@ import com.google.firebase.firestore.DocumentReference;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class Configuracao implements Serializable{
+public class Teste implements Serializable{
     private String id;
     private String nome;
     private int intervalo1;
@@ -29,14 +29,14 @@ public class Configuracao implements Serializable{
     private ArrayList<Integer> imagens;
     private DocumentReference usuario;
 
-    public Configuracao(){
+    public Teste(){
     }
 
-    public Configuracao(String id, String nome, int intervalo1, int intervalo2, int qtdDesafios,
-                        int somAcerto, int somErro, ArrayList<Desafio> desafios, String observacoes,
-                        int tipo, int aleatoriedade, ArrayList<Sessao> sessoes, Boolean preTeste,
-                        int qtdEnsaiosPorSessao, int maxVezesConsecutivas, int criterioAprendizagem,
-                        boolean completo) {
+    public Teste(String id, String nome, int intervalo1, int intervalo2, int qtdDesafios,
+                 int somAcerto, int somErro, ArrayList<Desafio> desafios, String observacoes,
+                 int tipo, int aleatoriedade, ArrayList<Sessao> sessoes, Boolean preTeste,
+                 int qtdEnsaiosPorSessao, int maxVezesConsecutivas, int criterioAprendizagem,
+                 boolean completo) {
         this.id = id;
         this.nome = nome;
         this.intervalo1 = intervalo1;

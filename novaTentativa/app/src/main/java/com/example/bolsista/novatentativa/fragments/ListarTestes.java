@@ -25,7 +25,7 @@ import com.example.bolsista.novatentativa.IniciarConfiguracao;
 import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.adapters.TesteAdapter;
 import com.example.bolsista.novatentativa.cadastros.ConfigurarTeste;
-import com.example.bolsista.novatentativa.modelo.Configuracao;
+import com.example.bolsista.novatentativa.modelo.Teste;
 import com.example.bolsista.novatentativa.modelo.Desafio;
 import com.example.bolsista.novatentativa.modelo.Sessao;
 import com.example.bolsista.novatentativa.recycleOnTouchLinesters.GenericOnItemTouch;
@@ -104,31 +104,31 @@ public class ListarTestes extends Fragment {
             desafiosT1.add(new Desafio("13",R.drawable.retanguloo, R.drawable.retanguloo, R.drawable.triangulo));
 
             //PRE-TESTE
-            ListarViewModel.addConfiguracao(new Configuracao("0", "Pré-teste", 0,
+            ListarViewModel.addConfiguracao(new Teste("0", "Pré-teste", 0,
                     0, 0, R.raw.sucess, R.raw.error, new ArrayList<Desafio>(),
                     "Teste Gabor", 0, 0, new ArrayList<Sessao>(),
                     true, 0, 0, 0,
                     false));
             //TESTE L1
-            ListarViewModel.addConfiguracao(new Configuracao("1", "Teste de aprendizagem L1",
+            ListarViewModel.addConfiguracao(new Teste("1", "Teste de aprendizagem L1",
                     5, 5, desafiosL1.size(), R.raw.sucess, R.raw.error,
                     desafiosL1, "Teste Gabor", 0, 2,
                     new ArrayList<Sessao>(), false, 20, 3,
                     85,false));
             //TESTE L2
-            ListarViewModel.addConfiguracao(new Configuracao("2", "Teste de aprendizagem L2",
+            ListarViewModel.addConfiguracao(new Teste("2", "Teste de aprendizagem L2",
                     5, 5, desafiosL2.size(), R.raw.sucess, R.raw.error,
                     desafiosL2, "Teste Gabor", 0, 2,
                     new ArrayList<Sessao>(), false, 20, 3,
                     85,false));
             //TESTE T1
-            ListarViewModel.addConfiguracao(new Configuracao("3", "Teste de transferência T1",
+            ListarViewModel.addConfiguracao(new Teste("3", "Teste de transferência T1",
                     5, 5, desafiosT1.size(), R.raw.sucess, R.raw.error,
                     desafiosT1, "Teste Gabor", 0, 2,
                     new ArrayList<Sessao>(), false, 20, 3,
                     85,false));
             //TESTE T2
-            ListarViewModel.addConfiguracao(new Configuracao("4", "Teste de transferência T2",
+            ListarViewModel.addConfiguracao(new Teste("4", "Teste de transferência T2",
                     5, 5, desafiosT1.size(), R.raw.sucess, R.raw.error,
                     desafiosT1, "Teste Gabor", 0, 2,
                     new ArrayList<Sessao>(), false, 20, 3,
@@ -159,10 +159,10 @@ public class ListarTestes extends Fragment {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Configuracao configuracao = document.toObject(Configuracao.class);
-                                mViewModel.addConfiguracao(configuracao);
+                                Teste teste = document.toObject(Teste.class);
+                                mViewModel.addConfiguracao(teste);
                                 Log.i("DataBase-FireStore-get", "referencia de => ." +
-                                        configuracao.getNome() + " = " +
+                                        teste.getNome() + " = " +
                                         document.getDocumentReference("usuario").getId());
                             }
                             implementsRecycle();
@@ -190,7 +190,7 @@ public class ListarTestes extends Fragment {
 
                             @Override
                             public void onItemClick(View view, int position) {
-                                IniciarConfiguracao.configuracaoSelecionada = mViewModel.configuracoes.getValue().get(position);
+                                IniciarConfiguracao.testeSelecionada = mViewModel.configuracoes.getValue().get(position);
                                 Toast.makeText(contextoAtivity,"Configuracao selecionada",
                                         Toast.LENGTH_SHORT).show();
                                 Log.i("Teste", "onSingleTapUp2");

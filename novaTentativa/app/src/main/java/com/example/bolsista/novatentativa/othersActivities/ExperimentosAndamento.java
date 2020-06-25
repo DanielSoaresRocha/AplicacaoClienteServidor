@@ -14,7 +14,7 @@ import android.widget.Toast;
 
 import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.adapters.ExperimentoAdapter;
-import com.example.bolsista.novatentativa.modelo.Configuracao;
+import com.example.bolsista.novatentativa.modelo.Teste;
 import com.example.bolsista.novatentativa.modelo.Experimento2;
 import com.example.bolsista.novatentativa.recycleOnTouchLinesters.GenericOnItemTouch;
 import com.example.bolsista.novatentativa.viewsModels.ExperimentoViewModel;
@@ -61,7 +61,7 @@ public class ExperimentosAndamento extends AppCompatActivity {
             }
         };
 
-        ArrayList<Configuracao> testes = new ArrayList<>();
+        ArrayList<Teste> testes = new ArrayList<>();
         /*
         testes.add(new Configuracao("id1", "Pré-teste",
                 "Teste gabor", imagens, 10, 5, 5,

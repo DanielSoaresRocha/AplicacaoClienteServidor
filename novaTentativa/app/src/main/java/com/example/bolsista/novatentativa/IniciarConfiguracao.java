@@ -11,7 +11,7 @@ import com.example.bolsista.novatentativa.fragments.CadastrarExperimento;
 import com.example.bolsista.novatentativa.fragments.ListarEquinos;
 import com.example.bolsista.novatentativa.fragments.ListarTestes;
 import com.example.bolsista.novatentativa.modelo.Equino;
-import com.example.bolsista.novatentativa.modelo.Configuracao;
+import com.example.bolsista.novatentativa.modelo.Teste;
 import com.example.bolsista.novatentativa.modelo.Experimento;
 import com.example.bolsista.novatentativa.viewsModels.ListarViewModel;
 import com.google.android.material.tabs.TabLayout;
@@ -25,7 +25,7 @@ public class IniciarConfiguracao extends AppCompatActivity {
     public static int identificaAba = 0; //Identifica aba em que está no momento
 
     public static Equino equinoSelecionado;
-    public static Configuracao configuracaoSelecionada;
+    public static Teste testeSelecionada;
     public static Experimento experimento;
 
     @Override

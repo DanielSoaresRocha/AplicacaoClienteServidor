@@ -9,12 +9,12 @@ public class Experimento2 {
     private String nome;
     private Date dataInicio;
     private Date dataFim;
-    private ArrayList<Configuracao> testes;
+    private ArrayList<Teste> testes;
 
     public Experimento2() {
     }
 
-    public Experimento2(String id, String equino, String nome, Date dataInicio, Date dataFim, ArrayList<Configuracao> testes) {
+    public Experimento2(String id, String equino, String nome, Date dataInicio, Date dataFim, ArrayList<Teste> testes) {
         this.id = id;
         Equino = equino;
         this.nome = nome;
@@ -63,11 +63,11 @@ public class Experimento2 {
         this.dataFim = dataFim;
     }
 
-    public ArrayList<Configuracao> getTestes() {
+    public ArrayList<Teste> getTestes() {
         return testes;
     }
 
-    public void setTestes(ArrayList<Configuracao> testes) {
+    public void setTestes(ArrayList<Teste> testes) {
         this.testes = testes;
     }
 }

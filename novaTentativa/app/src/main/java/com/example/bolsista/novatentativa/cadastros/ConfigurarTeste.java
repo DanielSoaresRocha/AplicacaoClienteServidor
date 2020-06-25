@@ -19,7 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bolsista.novatentativa.R;
-import com.example.bolsista.novatentativa.modelo.Configuracao;
+import com.example.bolsista.novatentativa.modelo.Teste;
 import com.example.bolsista.novatentativa.viewsModels.ListarViewModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -46,7 +46,7 @@ public class ConfigurarTeste extends AppCompatActivity implements AdapterView.On
     ArrayAdapter<CharSequence> qtdDesafiosAdapter, qtdEnsaiosAdapter, qtdRepDesafiosAdapter;
     private String qtdDesText, qtdEnsTex, qtdRepDesText;
 
-    public static Configuracao configuracao;
+    public static Teste teste;
 
     //FireBase
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -265,15 +265,15 @@ public class ConfigurarTeste extends AppCompatActivity implements AdapterView.On
 
     private void addTestToFireBase(){
         db.collection("configuracoes")
-                .add(configuracao)
+                .add(teste)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         Log.i("DataBase-FireStore-add", "DocumentSnapshot added with ID: " + documentReference.getId()
                                 + "path = "+ documentReference.getPath());
                         documentReference.update("id",documentReference.getId());//adiciona ao campo id o id gerado pelo firebase
-                        configuracao.setId(documentReference.getId());
-                        ListarViewModel.addConfiguracao(configuracao);
+                        teste.setId(documentReference.getId());
+                        ListarViewModel.addConfiguracao(teste);
 
                     }
                 })
@@ -289,16 +289,16 @@ public class ConfigurarTeste extends AppCompatActivity implements AdapterView.On
 
     private void fazerConfiguracao(){
 
-        configuracao = new Configuracao();
-        configuracao.setNome(nomeConfigEdit.getText().toString());
-        configuracao.setObservacoes(detalhesConfigEdit.getText().toString());
-        configuracao.setQtdEnsaiosPorSessao(Integer.parseInt(qtdQuestao.getText().toString()));
-        configuracao.setIntervalo1(Integer.parseInt(intervaloQuestoes.getText().toString()));
-        configuracao.setIntervalo2(Integer.parseInt(intervalo2.getText().toString()));
-        configuracao.setSomErro(erroEscolhido);
-        configuracao.setSomAcerto(acertoEscolhido);
-        configuracao.setImagens(getImagens());
-        configuracao.setUsuario(usuarioRef);
+        teste = new Teste();
+        teste.setNome(nomeConfigEdit.getText().toString());
+        teste.setObservacoes(detalhesConfigEdit.getText().toString());
+        teste.setQtdEnsaiosPorSessao(Integer.parseInt(qtdQuestao.getText().toString()));
+        teste.setIntervalo1(Integer.parseInt(intervaloQuestoes.getText().toString()));
+        teste.setIntervalo2(Integer.parseInt(intervalo2.getText().toString()));
+        teste.setSomErro(erroEscolhido);
+        teste.setSomAcerto(acertoEscolhido);
+        teste.setImagens(getImagens());
+        teste.setUsuario(usuarioRef);
     }
 
     private ArrayList<Integer> getImagens(){

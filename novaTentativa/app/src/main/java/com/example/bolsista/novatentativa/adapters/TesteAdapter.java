@@ -7,7 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.bolsista.novatentativa.R;
-import com.example.bolsista.novatentativa.modelo.Configuracao;
+import com.example.bolsista.novatentativa.modelo.Teste;
 import com.example.bolsista.novatentativa.viewHolders.ConfiguracaoViewHolder;
 
 import java.util.List;
@@ -17,10 +17,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class TesteAdapter extends RecyclerView.Adapter<ConfiguracaoViewHolder> {
     private Context c;
-    static List<Configuracao> configuracoes;
+    static List<Teste> configuracoes;
     private boolean changeColor;
 
-    public TesteAdapter(Context c, List<Configuracao> configuracoes, Boolean changeColor) {
+    public TesteAdapter(Context c, List<Teste> configuracoes, Boolean changeColor) {
         this.c = c;
         this.configuracoes = configuracoes;
         this.changeColor = changeColor;
@@ -36,7 +36,7 @@ public class TesteAdapter extends RecyclerView.Adapter<ConfiguracaoViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ConfiguracaoViewHolder holder, int position) {
-        Configuracao configEscolhida = configuracoes.get(position);
+        Teste configEscolhida = configuracoes.get(position);
         holder.nomeConfig.setText(configEscolhida.getNome());
         holder.detalhesConfig.setText(configEscolhida.getObservacoes());
         holder.testCheckBox.setChecked(true);

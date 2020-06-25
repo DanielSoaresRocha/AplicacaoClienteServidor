@@ -65,8 +65,8 @@ public class GerenciadorDeClientes extends Thread{
                     Log.i("OBJETO", "Criou input do servidor");
                     //enviarObjeto();
                     imgAtual = R.drawable.circuloo; //////////////////DESTAQUE
-                    vetor = IniciarConfiguracao.configuracaoSelecionada.getImagens();
-                    int numRodadas = IniciarConfiguracao.configuracaoSelecionada.getQtdEnsaiosPorSessao();
+                    vetor = IniciarConfiguracao.testeSelecionada.getImagens();
+                    int numRodadas = IniciarConfiguracao.testeSelecionada.getQtdEnsaiosPorSessao();
                     int rodada = 1;
                     while (rodada <= numRodadas) {
                         msg = leitor.readInt();
@@ -80,7 +80,7 @@ public class GerenciadorDeClientes extends Thread{
                                 esperar(); //mudar imagens para branco, e espera um novo sorteio
                                 esp32(ABRIR_MOTOR);//enviar comando para abrir o servo no esp32
                                 if (!server.controleRemoto) {  // se o controle remoto não estiver conectado
-                                    dormir(IniciarConfiguracao.configuracaoSelecionada.getIntervalo1()); // tempo de espera do mestre
+                                    dormir(IniciarConfiguracao.testeSelecionada.getIntervalo1()); // tempo de espera do mestre
                                     sortear(); //fazer nova interação de imagens entre os tablets
                                 }
                             } else if (msg == TROCAR_IMAGENS) {//trocar imagens
@@ -109,7 +109,7 @@ public class GerenciadorDeClientes extends Thread{
 
     private void enviarObjeto() {
         try {
-            escritor.writeObject(IniciarConfiguracao.configuracaoSelecionada);
+            escritor.writeObject(IniciarConfiguracao.testeSelecionada);
             escritor.flush();
 
             Log.i("OBJETO","OBJETO ENVIADO PARA O CLIENTE");
@@ -284,7 +284,7 @@ public class GerenciadorDeClientes extends Thread{
 
         mudarImagem(imgAtual);
 
-        dormir(IniciarConfiguracao.configuracaoSelecionada.getIntervalo2());
+        dormir(IniciarConfiguracao.testeSelecionada.getIntervalo2());
 
         //sortear o escolhido para herdar imagem
         Random radom = new Random();

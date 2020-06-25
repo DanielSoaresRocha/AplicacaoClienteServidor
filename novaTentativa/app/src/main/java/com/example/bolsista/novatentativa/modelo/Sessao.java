@@ -5,7 +5,7 @@ import java.util.Date;
 
 public class Sessao {
     private String id;
-    private Configuracao teste;
+    private Teste teste;
     private Usuario experimentador;
     private String nome;
     private ArrayList<Ensaio> ensaios;
@@ -63,11 +63,11 @@ public class Sessao {
         this.experimentador = experimentador;
     }
 
-    public Configuracao getTeste() {
+    public Teste getTeste() {
         return teste;
     }
 
-    public void setTeste(Configuracao teste) {
+    public void setTeste(Teste teste) {
         this.teste = teste;
     }
 

@@ -75,7 +75,7 @@ public class Jogar extends AppCompatActivity {
 
     public void tocarError(){
 
-        mp = MediaPlayer.create(Jogar.this, IniciarConfiguracao.configuracaoSelecionada.getSomErro());
+        mp = MediaPlayer.create(Jogar.this, IniciarConfiguracao.testeSelecionada.getSomErro());
         mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener(){
             public void onCompletion(MediaPlayer mp) {
                 mp.stop();
@@ -87,7 +87,7 @@ public class Jogar extends AppCompatActivity {
     }
 
     public void tocarAcerto(){
-        mp = MediaPlayer.create(Jogar.this, IniciarConfiguracao.configuracaoSelecionada.getSomAcerto());
+        mp = MediaPlayer.create(Jogar.this, IniciarConfiguracao.testeSelecionada.getSomAcerto());
         mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener(){
             public void onCompletion(MediaPlayer mp) {
                 mp.stop();

@@ -1,7 +1,7 @@
 package com.example.bolsista.novatentativa.viewsModels;
 
 import com.example.bolsista.novatentativa.modelo.Equino;
-import com.example.bolsista.novatentativa.modelo.Configuracao;
+import com.example.bolsista.novatentativa.modelo.Teste;
 import com.example.bolsista.novatentativa.modelo.Experimento;
 
 import java.util.ArrayList;
@@ -11,7 +11,7 @@ import androidx.lifecycle.ViewModel;
 
 public class ListarViewModel  extends ViewModel {
     public static MutableLiveData<ArrayList<Equino>> cavalos;
-    public static MutableLiveData<ArrayList<Configuracao>> configuracoes;
+    public static MutableLiveData<ArrayList<Teste>> configuracoes;
     public static MutableLiveData<ArrayList<Experimento>> experimentos;
 
     public ListarViewModel(){
@@ -34,8 +34,8 @@ public class ListarViewModel  extends ViewModel {
         cavalos.setValue(cavalos.getValue());
     }
 
-    public static void addConfiguracao(Configuracao configuracao) {
-        configuracoes.getValue().add(configuracao);
+    public static void addConfiguracao(Teste teste) {
+        configuracoes.getValue().add(teste);
         configuracoes.setValue(configuracoes.getValue());
     }
 
