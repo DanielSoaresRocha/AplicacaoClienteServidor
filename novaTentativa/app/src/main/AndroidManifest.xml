@@ -30,7 +30,7 @@
             android:parentActivityName=".arquitetura.Definir" />
         <activity android:name=".Resultado" />
         <activity android:name=".IniciarConfiguracao" />
-        <activity android:name=".cadastros.CadastrarCavalo" />
+        <activity android:name=".cadastros.CadastrarEquino" />
         <activity android:name=".arquitetura.Remoto" />
         <activity android:name=".Jogar" />
         <activity android:name=".ControleRemoto" />

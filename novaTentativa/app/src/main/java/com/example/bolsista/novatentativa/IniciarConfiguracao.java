@@ -8,7 +8,7 @@ import android.os.Bundle;
 
 import com.example.bolsista.novatentativa.adapters.FixedTabsPageAdapter;
 import com.example.bolsista.novatentativa.fragments.CadastrarExperimento;
-import com.example.bolsista.novatentativa.fragments.ListarCavalos;
+import com.example.bolsista.novatentativa.fragments.ListarEquinos;
 import com.example.bolsista.novatentativa.fragments.ListarTestes;
 import com.example.bolsista.novatentativa.modelo.Equino;
 import com.example.bolsista.novatentativa.modelo.Configuracao;
@@ -24,7 +24,7 @@ public class IniciarConfiguracao extends AppCompatActivity {
     FixedTabsPageAdapter pageAdapter;
     public static int identificaAba = 0; //Identifica aba em que está no momento
 
-    public static Equino cavaloSelecionado;
+    public static Equino equinoSelecionado;
     public static Configuracao configuracaoSelecionada;
     public static Experimento experimento;
 
@@ -39,7 +39,7 @@ public class IniciarConfiguracao extends AppCompatActivity {
 
     private void pageAdapter() {
         pageAdapter = new FixedTabsPageAdapter(getSupportFragmentManager());
-        pageAdapter.adicionar(new ListarCavalos(), "Equino");
+        pageAdapter.adicionar(new ListarEquinos(), "Equino");
         pageAdapter.adicionar(new ListarTestes(), "Testes");
         pageAdapter.adicionar(new CadastrarExperimento(), "Experimento");
 

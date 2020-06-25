@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.bolsista.novatentativa.cadastros.CadastrarCavalo"
+    tools:context="com.example.bolsista.novatentativa.cadastros.CadastrarEquino"
     android:orientation="vertical"
     android:gravity="top"
     >
@@ -73,7 +73,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Raça do cavalo:"
+            android:text="Raça do equino:"
             android:paddingVertical="10sp"
             android:textSize="20sp"
             >
@@ -88,7 +88,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Atividade do cavalo:"
+            android:text="Atividade do equino:"
             android:paddingVertical="10sp"
             android:textSize="20sp"
             >

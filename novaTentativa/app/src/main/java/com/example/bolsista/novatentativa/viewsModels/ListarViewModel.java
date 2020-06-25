@@ -29,8 +29,8 @@ public class ListarViewModel  extends ViewModel {
         }
     }
 
-    public static void addCavalo(Equino cavalo){
-        cavalos.getValue().add(cavalo);
+    public static void addCavalo(Equino equino){
+        cavalos.getValue().add(equino);
         cavalos.setValue(cavalos.getValue());
     }
 

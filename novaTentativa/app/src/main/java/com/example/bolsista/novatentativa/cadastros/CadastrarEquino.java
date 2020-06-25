@@ -39,7 +39,7 @@ import java.util.Date;
 * atividade
 */
 
-public class CadastrarCavalo extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, AdapterView.OnItemSelectedListener {
+public class CadastrarEquino extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, AdapterView.OnItemSelectedListener {
 
     Button cadastrarCavaloBtn,cancelarBtn;
     EditText nome, detalhes;
@@ -58,10 +58,7 @@ public class CadastrarCavalo extends AppCompatActivity implements DatePickerDial
 
     String sexo = "";
 
-    Equino cavalo;
-    FirebaseAuth usuario;
-    DocumentReference usuarioRef;
-
+    Equino equino;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,9 +67,6 @@ public class CadastrarCavalo extends AppCompatActivity implements DatePickerDial
         inicializar();
         spinners();
         listener();
-
-        usuario = FirebaseAuth.getInstance();
-        usuarioRef = db.collection("users").document(usuario.getCurrentUser().getUid());
     }
 
     private void listener() {
@@ -84,8 +78,8 @@ public class CadastrarCavalo extends AppCompatActivity implements DatePickerDial
             public void onClick(View v) {
                 if((dataNascimentoE.getText().toString().length() >= 8) && (nome.getText().toString()
                         .length() > 1)) {
-                    cavalo = new Equino(nome.getText().toString(), racaText,
-                            dataNascimento, detalhes.getText().toString(),sexo, atividade, usuarioRef);
+                    equino = new Equino(nome.getText().toString(), racaText,
+                            dataNascimento, detalhes.getText().toString(),sexo, atividade);
 
                     addFireStore();
 
@@ -150,13 +144,13 @@ public class CadastrarCavalo extends AppCompatActivity implements DatePickerDial
 
     public void addFireStore(){
         db.collection("equinos")
-                .add(cavalo)
+                .add(equino)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         documentReference.update("id",documentReference.getId());//adiciona ao campo id o id gerado pelo firebase
-                        cavalo.setId(documentReference.getId());
-                        ListarViewModel.addCavalo(cavalo);
+                        equino.setId(documentReference.getId());
+                        ListarViewModel.addCavalo(equino);
                         Toast.makeText(contextActivity, "Equino adicionado", Toast.LENGTH_SHORT).show();
                     }
                 })
@@ -211,8 +205,6 @@ public class CadastrarCavalo extends AppCompatActivity implements DatePickerDial
         contextActivity = this;
         ativitiesSpinner = findViewById(R.id.ativitiesSpinner);
         racasSpinner = findViewById(R.id.racasSpinner);
-
-        //autoComplete.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
     }
 
     @Override

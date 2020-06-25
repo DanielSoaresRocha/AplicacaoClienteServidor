@@ -22,7 +22,7 @@ import android.widget.Toast;
 
 import com.example.bolsista.novatentativa.IniciarConfiguracao;
 import com.example.bolsista.novatentativa.R;
-import com.example.bolsista.novatentativa.adapters.CavaloAdapter;
+import com.example.bolsista.novatentativa.adapters.EquinoAdapter;
 import com.example.bolsista.novatentativa.modelo.Equino;
 import com.example.bolsista.novatentativa.recycleOnTouchLinesters.GenericOnItemTouch;
 import com.example.bolsista.novatentativa.viewsModels.ListarViewModel;
@@ -39,7 +39,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 
-public class ListarCavalos extends Fragment {
+public class ListarEquinos extends Fragment {
     private ListarViewModel mViewModel;
     private View v;
     private Context contextoAtivity;
@@ -48,8 +48,7 @@ public class ListarCavalos extends Fragment {
     private ProgressBar progressBarCavalos;
 
     @SuppressLint("StaticFieldLeak")
-    public static CavaloAdapter adapter;
-    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+    public static EquinoAdapter adapter;
 
     //FireBase FireStore
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -87,10 +86,10 @@ public class ListarCavalos extends Fragment {
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Equino cavalo = document.toObject(Equino.class);
-                                mViewModel.addCavalo(cavalo);
+                                Equino equino = document.toObject(Equino.class);
+                                mViewModel.addCavalo(equino);
                                 Log.i("DataBase-FireStore-get", "referencia de => ." +
-                                        cavalo.getNome() + " = " +
+                                        equino.getNome() + " = " +
                                         document.getDocumentReference("usuario").getId());
                             }
                             implementsRecycle();
@@ -104,7 +103,7 @@ public class ListarCavalos extends Fragment {
     }
 
     private void implementsRecycle(){
-        adapter = new CavaloAdapter(contextoAtivity,mViewModel.cavalos.getValue());
+        adapter = new EquinoAdapter(contextoAtivity,mViewModel.cavalos.getValue());
         cavalosRecycle.setAdapter(adapter);
 
         LinearLayoutManager layout = new LinearLayoutManager(contextoAtivity,LinearLayoutManager.VERTICAL,false);
@@ -118,8 +117,8 @@ public class ListarCavalos extends Fragment {
 
                             @Override
                             public void onItemClick(View view, int position) {
-                                IniciarConfiguracao.cavaloSelecionado = mViewModel.cavalos.getValue().get(position);
-                                CadastrarExperimento.verififyNumberExperiments(IniciarConfiguracao.cavaloSelecionado.getId());
+                                IniciarConfiguracao.equinoSelecionado = mViewModel.cavalos.getValue().get(position);
+                                CadastrarExperimento.verififyNumberExperiments(IniciarConfiguracao.equinoSelecionado.getId());
                                 Toast.makeText(contextoAtivity,"Cavalo selecionado",
                                         Toast.LENGTH_SHORT).show();
                                 Log.i("Teste", "onSingleTapUp2");
@@ -137,7 +136,7 @@ public class ListarCavalos extends Fragment {
                                 TextView raca = layout.findViewById(R.id.racaEquinoInfo);
 
                                 nomeCavalo.setText(mViewModel.cavalos.getValue().get(position).getNome());
-                                detalhes.setText(mViewModel.cavalos.getValue().get(position).getDetalhes());
+                                detalhes.setText(mViewModel.cavalos.getValue().get(position).getObservacoes());
                                 idade.setText(calculaIdade(mViewModel.cavalos.getValue()
                                         .get(position).getDataNascimento()) + " anos");
                                 raca.setText(mViewModel.cavalos.getValue().get(position).getRaca());

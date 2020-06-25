@@ -15,9 +15,8 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.bolsista.novatentativa.IniciarConfiguracao;
-import com.example.bolsista.novatentativa.cadastros.CadastrarCavalo;
+import com.example.bolsista.novatentativa.cadastros.CadastrarEquino;
 import com.example.bolsista.novatentativa.R;
-import com.example.bolsista.novatentativa.modelo.Experimento;
 import com.example.bolsista.novatentativa.modelo.Usuario;
 import com.example.bolsista.novatentativa.othersActivities.ExperimentosAndamento;
 import com.example.bolsista.novatentativa.othersActivities.ExperimentosFinalizados;
@@ -174,7 +173,7 @@ public class Definir extends AppCompatActivity {
                 telaLogin();
                 return true;
             case R.id.cadastrarCavalo:
-                Intent telaCadastro = new Intent(this, CadastrarCavalo.class);
+                Intent telaCadastro = new Intent(this, CadastrarEquino.class);
                 startActivity(telaCadastro);
                 return true;
             case R.id.novoExperimento:
