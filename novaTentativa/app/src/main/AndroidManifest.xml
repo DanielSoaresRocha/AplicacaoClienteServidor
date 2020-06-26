@@ -16,9 +16,16 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Inicio">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
             android:name=".othersActivities.ExperimentosFinalizados"
-            android:parentActivityName=".arquitetura.Definir"></activity>
+            android:parentActivityName=".arquitetura.Definir" />
         <activity
             android:name=".othersActivities.ExperimentosAndamento"
             android:parentActivityName=".arquitetura.Definir" />
@@ -36,11 +43,7 @@
         <activity android:name=".ControleRemoto" />
         <activity android:name=".cadastros.ConfigurarTeste" />
         <activity android:name=".arquitetura.Definir">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+            <!-- sldfsdfasdf -->
         </activity>
         <activity android:name=".arquitetura.Servidor" />
         <activity android:name=".arquitetura.ClienteActivity" />
