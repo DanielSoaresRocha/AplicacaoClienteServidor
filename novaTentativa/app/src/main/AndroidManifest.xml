@@ -18,7 +18,7 @@
         android:theme="@style/AppTheme">
         <activity
             android:name=".othersActivities.ExperimentosFinalizados"
-            android:parentActivityName=".arquitetura.Definir" />
+            android:parentActivityName=".arquitetura.Definir"></activity>
         <activity
             android:name=".othersActivities.ExperimentosAndamento"
             android:parentActivityName=".arquitetura.Definir" />
