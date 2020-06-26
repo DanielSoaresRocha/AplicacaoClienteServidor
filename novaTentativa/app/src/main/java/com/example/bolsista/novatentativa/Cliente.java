@@ -185,7 +185,6 @@ public class Cliente {
 
     public static void definirTela(Jogar jogarr){
         jogar = jogarr;
-
     }
 
 }
