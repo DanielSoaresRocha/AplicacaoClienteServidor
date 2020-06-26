@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.adapters.SessaoAdapter;
@@ -90,59 +91,9 @@ public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSele
         verGrafico.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                addToFireBase();
+                Toast.makeText(contextActivity, "Ainda não implementado", Toast.LENGTH_SHORT).show();
             }
         });
-    }
-
-    private void addToFireBase(){
-        /*
-        Experimento2 experimento2 = ExperimentosAndamento.experimentos2.get(POSITION_EXPERIMENTO);
-        experimento2.getTestes().get(POSITION_TESTE).setSessoes(sessoes);
-
-        db.collection("configuracoes2")
-                .add(experimento2)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        documentReference.update("id",documentReference.getId());//adiciona ao campo id o id gerado pelo firebase
-                        experimento2.setId(documentReference.getId());
-                        Toast.makeText(contextActivity, "Experimento adicionado", Toast.LENGTH_SHORT).show();
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.i("DataBase-FireStore-add", "Error adding document", e);
-                    }
-                });*/
-        ArrayList<Experimento> experimentos2 = new ArrayList<>();
-        db.collection("configuracoes2")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Experimento experimento = document.toObject(Experimento.class);
-                                experimentos2.add(experimento);
-                            }
-
-                            for(Experimento experimento : experimentos2){
-                                try {
-                                    System.out.println("-------------------------------------");
-                                    System.out.println(experimento.getTestes().get(0).getSessoes()
-                                            .get(0).getExperimentador().getNome());
-                                }catch (java.lang.NullPointerException e){
-                                    System.out.println("Esse nao deu");
-                                }
-
-                            }
-                        } else {
-                            Log.i("DataBase-FireStore-get", "Error getting documents.", task.getException());
-                        }
-                    }
-                });
     }
 
     private void implementsRecycle() {
@@ -163,6 +114,7 @@ public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSele
         if(sessoes.size() == 0){
             sessaoRecycleView.setVisibility(View.GONE);
             nenhumeSessaoLayouth.setVisibility(View.VISIBLE);
+            verGrafico.setVisibility(View.GONE);
         }
 
         // se o experimento tiver sido completado remover estas Views

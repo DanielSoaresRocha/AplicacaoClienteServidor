@@ -12,6 +12,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.bolsista.novatentativa.R;
@@ -33,6 +34,7 @@ import java.util.ArrayList;
 
 public class ExperimentosAndamento extends AppCompatActivity {
     private RecyclerView experimentosRecycle;
+    private ProgressBar progressBarAndamento;
 
     Context contextActivity;
     private ExperimentoAdapter adapter;
@@ -105,12 +107,13 @@ public class ExperimentosAndamento extends AppCompatActivity {
                             }
                         })
         );
-
+        progressBarAndamento.setVisibility(View.GONE);
         ExperimentoViewModel.experimentos.setValue(experimentos);
     }
 
     private void inicializar() {
         experimentosRecycle = findViewById(R.id.experimentosRecycle);
+        progressBarAndamento = findViewById(R.id.progressBarAndamento);
         contextActivity = this;
 
         experimentos = new ArrayList<>();

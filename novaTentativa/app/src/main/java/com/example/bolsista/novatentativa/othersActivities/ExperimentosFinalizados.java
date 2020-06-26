@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.example.bolsista.novatentativa.R;
@@ -30,7 +31,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 import java.util.ArrayList;
 
 public class ExperimentosFinalizados extends AppCompatActivity {
-    RecyclerView experimentosFRecycle;
+    private RecyclerView experimentosFRecycle;
+    private ProgressBar progressBarFinalizados;
 
     Context contextActivity;
     private ExperimentoAdapter adapter;
@@ -104,11 +106,13 @@ public class ExperimentosFinalizados extends AppCompatActivity {
                         })
         );
 
+        progressBarFinalizados.setVisibility(View.GONE);
         ExperimentoViewModel.experimentos.setValue(experimentos);
     }
 
     private void inicializar() {
         experimentosFRecycle = findViewById(R.id.experimentosFRecycle);
+        progressBarFinalizados = findViewById(R.id.progressBarFinalizados);
         contextActivity = this;
 
         experimentos = new ArrayList<>();

@@ -6,7 +6,11 @@
     tools:context="com.example.bolsista.novatentativa.othersActivities.ExperimentosFinalizados"
     android:orientation="vertical"
     >
-
+    <ProgressBar
+        android:id="@+id/progressBarFinalizados"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/experimentosFRecycle"
         android:layout_width="match_parent"
