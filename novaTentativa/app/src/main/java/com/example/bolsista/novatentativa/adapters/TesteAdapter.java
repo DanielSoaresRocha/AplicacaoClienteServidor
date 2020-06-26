@@ -45,18 +45,23 @@ public class TesteAdapter extends RecyclerView.Adapter<ConfiguracaoViewHolder> {
         holder.detalhesConfig.setText(testeEscolhido.getObservacoes());
         holder.testCheckBox.setChecked(true);
 
-        // Se desmarcar
-        adicionarTeste(testeEscolhido);
-        holder.testCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
-                if(checked)
-                    adicionarTeste(testeEscolhido);
-                else
-                    removerTeste(testeEscolhido);
-                //Toast.makeText(c, "Mudou no indice: " + position+ "para => "+ checked, Toast.LENGTH_SHORT).show();
-            }
-        });
+        if(!changeColor) { // se não activity de "novoExperimento"
+            // Se desmarcar
+            adicionarTeste(testeEscolhido);
+            holder.testCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+                @Override
+                public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                    if (checked)
+                        adicionarTeste(testeEscolhido);
+                    else
+                        removerTeste(testeEscolhido);
+                }
+            });
+        }else {
+            holder.testCheckBox.setVisibility(View.GONE);
+            if(testeEscolhido.isCompleto())
+                holder.testCardView.setBackgroundResource(R.drawable.fundo_verde);
+        }
 
         //mudar background
         if(testeEscolhido.isCompleto()) {

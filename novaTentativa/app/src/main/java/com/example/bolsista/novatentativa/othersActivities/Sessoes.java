@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
@@ -22,6 +23,7 @@ import com.example.bolsista.novatentativa.adapters.SessaoAdapter;
 import com.example.bolsista.novatentativa.modelo.Experimento;
 import com.example.bolsista.novatentativa.modelo.Sessao;
 import com.example.bolsista.novatentativa.modelo.Usuario;
+import com.example.bolsista.novatentativa.viewsModels.ExperimentoViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -38,6 +40,7 @@ public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSele
     private TextView experimentadorTextView;
     private RecyclerView sessaoRecycleView;
     private Spinner experimentadorSpinner;
+    LinearLayout nenhumeSessaoLayouth;
     Button verGrafico;
 
     private int POSITION_EXPERIMENTO;
@@ -58,8 +61,7 @@ public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSele
         setContentView(R.layout.activity_sessoes);
 
         inicializar();
-        preencherArray();
-        pegarPosicao();
+        preencher();
         implementsRecycle();
         listener();
         spinner();
@@ -70,6 +72,7 @@ public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSele
 
     private void spinner() {
         ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
+
         usuarios.add(new Usuario("id1", "Daniel"));
         usuarios.add(new Usuario("id1", "Mário"));
         usuarios.add(new Usuario("id1", "Leonardo"));
@@ -142,19 +145,6 @@ public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSele
                 });
     }
 
-    private void preencherArray() {
-        sessoes.add(new Sessao("id1", "Sessao 1", new Date(), 25,
-                new Usuario("id1", "Daniel")));
-        sessoes.add(new Sessao("id2", "Sessao 2", new Date(), 40,
-                new Usuario("id2", "Roberto")));
-        sessoes.add(new Sessao("id3", "Sessao 3", new Date(), 65,
-                new Usuario("id3", "Sara")));
-        sessoes.add(new Sessao("id4", "Sessao 4", new Date(), 80,
-                new Usuario("id4", "Cristina")));
-        sessoes.add(new Sessao("id5", "Sessao 5", new Date(), 95,
-                new Usuario("id6", "Lucas")));
-    }
-
     private void implementsRecycle() {
         adapter = new SessaoAdapter(contextActivity, sessoes);
         sessaoRecycleView.setAdapter(adapter);
@@ -162,11 +152,18 @@ public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSele
         LinearLayoutManager layout = new LinearLayoutManager(contextActivity, LinearLayoutManager.VERTICAL, false);
         sessaoRecycleView.setLayoutManager(layout);
     }
-    private void pegarPosicao() {
+    private void preencher() {
         Intent it = getIntent();
         POSITION_EXPERIMENTO = it.getIntExtra("positionExperimento", 0);
         POSITION_TESTE = it.getIntExtra("positionTeste", 0);
-        POSITION_TESTE = it.getIntExtra("positionTeste", 0);
+
+        sessoes = ExperimentoViewModel.experimentos.getValue().get(POSITION_EXPERIMENTO)
+                .getTestes().get(POSITION_TESTE).getSessoes();
+        //Se não tiver nenhuma sessao
+        if(sessoes.size() == 0){
+            sessaoRecycleView.setVisibility(View.GONE);
+            nenhumeSessaoLayouth.setVisibility(View.VISIBLE);
+        }
 
         // se o experimento tiver sido completado remover estas Views
         if(it.getBooleanExtra("completo",false)){
@@ -178,10 +175,6 @@ public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSele
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setTitle(it.getStringExtra("nomeTeste"));
-        /*
-        sessoes = ExperimentosAndamento.experimentos2.get(POSITION_EXPERIMENTO)
-                .getTestes().get(POSITION_TESTE)
-                .getSessoes();*/
     }
 
     private void inicializar() {
@@ -190,6 +183,7 @@ public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSele
         verGrafico = findViewById(R.id.verGrafico);
         sessaoRecycleView = findViewById(R.id.sessaoRecycleView);
         experimentadorSpinner = findViewById(R.id.experimentadorSpinner);
+        nenhumeSessaoLayouth = findViewById(R.id.nenhumeSessaoLayouth);
         contextActivity = this;
         sessoes = new ArrayList<>();
     }

@@ -48,7 +48,7 @@ public class ExperimentoExpecifico extends AppCompatActivity {
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setTitle(experimento.getNome());
 
-        //nomeEquinoText.setText(experimento.getEquino());
+        nomeEquinoText.setText(experimento.getEquino().getNome());
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(experimento.getDataInicio());
@@ -115,7 +115,6 @@ public class ExperimentoExpecifico extends AppCompatActivity {
         Intent it = getIntent();
         POSITION_EXPERIMENTO = it.getIntExtra("positionExperimento", 0);
         experimento = ExperimentoViewModel.experimentos.getValue().get(POSITION_EXPERIMENTO);
-        //ExperimentosAndamento.experimentos2.get(POSITION_EXPERIMENTO);
     }
 
     private void inicializar() {

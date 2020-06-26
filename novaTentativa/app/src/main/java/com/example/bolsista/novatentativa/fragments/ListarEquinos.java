@@ -95,7 +95,6 @@ public class ListarEquinos extends Fragment {
                         }
                     }
                 });
-
     }
 
     private void implementsRecycle(){

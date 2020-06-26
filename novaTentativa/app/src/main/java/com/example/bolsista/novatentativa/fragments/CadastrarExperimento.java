@@ -46,14 +46,11 @@ public class CadastrarExperimento extends Fragment implements DatePickerDialog.O
     private TextView dataExperimentoT;
 
     @SuppressLint("SimpleDateFormat")
-    SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-    Date dataExperimento;
+    private SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+    private Date dataExperimento;
 
     //FireBase FireStore
-    static FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private DocumentReference usuarioRef;
-    //FireBase autenth
-    private FirebaseAuth usuario;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -90,7 +87,7 @@ public class CadastrarExperimento extends Fragment implements DatePickerDialog.O
     private void instanciarExperimento(){
         Experimento experimento = new Experimento("", NovoExperimento.equinoSelecionado,
                 nomeExperimento.getText().toString(), dataExperimento, new Date(),
-                NovoExperimento.testes);
+                NovoExperimento.testes, false);
 
         addExperimentoToFireBase(experimento);
     }
@@ -155,12 +152,5 @@ public class CadastrarExperimento extends Fragment implements DatePickerDialog.O
         contextoAtivity = getActivity();
         dataExperimentoT = v.findViewById(R.id.dataExperimentoT);
         dataExperimentoI = v.findViewById(R.id.dataExperimentoI);
-
-        usuario = FirebaseAuth.getInstance();
-        try {
-            usuarioRef = db.collection("users").document(usuario.getCurrentUser().getUid());
-        }catch (java.lang.NullPointerException e){
-            usuarioRef = db.collection("users").document("zl1hFltVOlJONAVUeIsY");
-        }
     }
 }

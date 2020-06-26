@@ -11,18 +11,28 @@ public class Experimento {
     private Date dataInicio;
     private Date dataFim;
     private ArrayList<Teste> testes;
+    private Boolean finalizado;
 
     public Experimento() {
     }
 
     public Experimento(String id, Equino equino, String nome, Date dataInicio, Date dataFim,
-                       ArrayList<Teste> testes) {
+                       ArrayList<Teste> testes, Boolean finalizado) {
         this.id = id;
         this.equino = equino;
         this.nome = nome;
         this.dataInicio = dataInicio;
         this.dataFim = dataFim;
         this.testes = testes;
+        this.finalizado = finalizado;
+    }
+
+    public Boolean getFinalizado() {
+        return finalizado;
+    }
+
+    public void setFinalizado(Boolean finalizado) {
+        this.finalizado = finalizado;
     }
 
     public String getId() {

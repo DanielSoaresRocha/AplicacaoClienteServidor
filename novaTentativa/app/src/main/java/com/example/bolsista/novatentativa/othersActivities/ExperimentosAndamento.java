@@ -1,5 +1,6 @@
 package com.example.bolsista.novatentativa.othersActivities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -9,17 +10,24 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
 import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.adapters.ExperimentoAdapter;
+import com.example.bolsista.novatentativa.modelo.Equino;
 import com.example.bolsista.novatentativa.modelo.Teste;
 import com.example.bolsista.novatentativa.modelo.Experimento;
 import com.example.bolsista.novatentativa.recycleOnTouchLinesters.GenericOnItemTouch;
+import com.example.bolsista.novatentativa.viewsModels.ExperimentoViewModel;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
@@ -29,7 +37,7 @@ public class ExperimentosAndamento extends AppCompatActivity {
     Context contextActivity;
     private ExperimentoAdapter adapter;
 
-    public static ArrayList<Experimento> experimentos2;
+    public static ArrayList<Experimento> experimentos;
 
     //FireBase
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -46,53 +54,32 @@ public class ExperimentosAndamento extends AppCompatActivity {
         usuarioRef = db.collection("users").document(usuario.getCurrentUser().getUid());
 
         inicializar();
-        preencher();
-        implementsRecycle();
+        getExperimentosFireStore();
     }
 
-    private void preencher() {
-        ArrayList<Integer> imagens = new ArrayList<Integer>() {
-            {
-                add(1);
-                add(2);
-                add(3);
-            }
-        };
-
-        ArrayList<Teste> testes = new ArrayList<>();
-        /*
-        testes.add(new Configuracao("id1", "Pré-teste",
-                "Teste gabor", imagens, 10, 5, 5,
-                234, 435, null,true));
-        testes.add(new Configuracao("id2", "Teste de aprendizagem L1",
-                "Teste gabor", imagens, 20, 5, 5, 234,
-                435, null,true));
-        testes.add(new Configuracao("id3", "Teste de aprendizagem L2",
-                "Teste gabor", imagens, 15, 5, 5, 234,
-                435, null,false));
-        testes.add(new Configuracao("id4", "Teste de aprendizagem L3",
-                "Teste gabor", imagens, 15, 5, 5, 234,
-                435, null,false));
-        testes.add(new Configuracao("id5", "Teste de transferência T1",
-                "Teste gabor", imagens, 15, 5, 5, 234,
-                435, null,false));
-        testes.add(new Configuracao("id6", "Teste de transferência T2",
-                "Teste gabor", imagens, 15, 5, 5, 234,
-                435, null,false));
-
-        experimentos2.add(new Experimento2("id1", "cavalo 1", "experimento 1", new Date(),
-                new Date(), testes));
-        experimentos2.add(new Experimento2("id2", "cavalo 2", "experimento 2", new Date(),
-                new Date(), testes));
-        experimentos2.add(new Experimento2("id3", "cavalo 3", "experimento 3", new Date(),
-                new Date(), testes));
-
-        ExperimentoViewModel.experimentos.setValue(experimentos2);
-                */
+    private void getExperimentosFireStore() {
+        db.collection("experimentos")
+                //.whereEqualTo("users", usuarioRef)//referencia do usuario que adicionou o cavalo
+                .whereEqualTo("finalizado", false)
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Experimento experimento = document.toObject(Experimento.class);
+                                experimentos.add(experimento);
+                            }
+                            implementsRecycle();
+                        } else {
+                            Log.i("DataBase-FireStore-get", "Error getting documents.", task.getException());
+                        }
+                    }
+                });
     }
 
     private void implementsRecycle(){
-        adapter = new ExperimentoAdapter(contextActivity, experimentos2);
+        adapter = new ExperimentoAdapter(contextActivity, experimentos);
         experimentosRecycle.setAdapter(adapter);
 
         LinearLayoutManager layout = new LinearLayoutManager(contextActivity,LinearLayoutManager.VERTICAL,false);
@@ -118,13 +105,15 @@ public class ExperimentosAndamento extends AppCompatActivity {
                             }
                         })
         );
+
+        ExperimentoViewModel.experimentos.setValue(experimentos);
     }
 
     private void inicializar() {
         experimentosRecycle = findViewById(R.id.experimentosRecycle);
         contextActivity = this;
 
-        experimentos2 = new ArrayList<>();
+        experimentos = new ArrayList<>();
 
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
