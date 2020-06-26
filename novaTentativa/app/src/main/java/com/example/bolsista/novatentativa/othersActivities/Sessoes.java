@@ -34,6 +34,7 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 
 public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
@@ -47,6 +48,7 @@ public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSele
     private int POSITION_EXPERIMENTO;
     private int POSITION_TESTE;
     private ArrayList<Sessao> sessoes;
+    ArrayList<Usuario> usuarios;
     private SessaoAdapter adapter;
     Context contextActivity;
 
@@ -65,21 +67,42 @@ public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSele
         preencher();
         implementsRecycle();
         listener();
-        spinner();
+        pegarUsuariosFireStore();
 
         usuario = FirebaseAuth.getInstance();
         usuarioRef = db.collection("users").document(usuario.getCurrentUser().getUid());
     }
 
+    private void pegarUsuariosFireStore() {
+        db.collection("users")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Usuario usuario = document.toObject(Usuario.class);
+                                usuarios.add(usuario);
+                            }
+                            trocarPosicao();
+                            spinner();
+                        } else {
+                            Log.i("DataBase-FireStore-get", "Error getting documents.", task.getException());
+                        }
+                    }
+                });
+    }
+
+    //colocar o usuario logado como primeiro no ArrayList
+    private void trocarPosicao(){
+        for(int i = 0; i < usuarios.size(); i++){
+            if(usuarios.get(i).getNome().equals(usuario.getCurrentUser().getDisplayName())){
+                Collections.swap(usuarios, i, 0); //troca as posições
+            }
+        }
+    }
+
     private void spinner() {
-        ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
-
-        usuarios.add(new Usuario("id1", "Daniel"));
-        usuarios.add(new Usuario("id1", "Mário"));
-        usuarios.add(new Usuario("id1", "Leonardo"));
-        usuarios.add(new Usuario("id1", "Marcos"));
-        usuarios.add(new Usuario("id1", "Beatriz"));
-
         ArrayAdapter adapter = new ArrayAdapter(this, android.R.layout.simple_spinner_item, usuarios);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         experimentadorSpinner.setAdapter(adapter);
@@ -117,7 +140,7 @@ public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSele
             verGrafico.setVisibility(View.GONE);
         }
 
-        // se o experimento tiver sido completado remover estas Views
+        // se o teste já tiver sido completado remover estas Views
         if(it.getBooleanExtra("completo",false)){
             experimentadorTextView.setVisibility(View.GONE);
             experimentadorSpinner.setVisibility(View.GONE);
@@ -138,6 +161,7 @@ public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSele
         nenhumeSessaoLayouth = findViewById(R.id.nenhumeSessaoLayouth);
         contextActivity = this;
         sessoes = new ArrayList<>();
+        usuarios = new ArrayList<>();
     }
 
     @Override
