@@ -3,12 +3,12 @@ package com.example.bolsista.novatentativa.viewsModels;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-import com.example.bolsista.novatentativa.modelo.Experimento2;
+import com.example.bolsista.novatentativa.modelo.Experimento;
 
 import java.util.ArrayList;
 
 public class ExperimentoViewModel extends ViewModel {
-    public static MutableLiveData<ArrayList<Experimento2>> experimentos;
+    public static MutableLiveData<ArrayList<Experimento>> experimentos;
 
     public ExperimentoViewModel(){
     }
@@ -19,7 +19,7 @@ public class ExperimentoViewModel extends ViewModel {
     }
 
 
-    public void setExperimento(ArrayList<Experimento2> exp){
+    public void setExperimento(ArrayList<Experimento> exp){
         experimentos.setValue(exp);
     }
 }

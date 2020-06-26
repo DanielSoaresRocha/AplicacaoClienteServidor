@@ -9,16 +9,13 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.bolsista.novatentativa.IniciarConfiguracao;
 import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.adapters.TesteAdapter;
-import com.example.bolsista.novatentativa.modelo.Experimento2;
+import com.example.bolsista.novatentativa.modelo.Experimento;
 import com.example.bolsista.novatentativa.recycleOnTouchLinesters.GenericOnItemTouch;
 import com.example.bolsista.novatentativa.viewsModels.ExperimentoViewModel;
 
@@ -31,7 +28,7 @@ public class ExperimentoExpecifico extends AppCompatActivity {
     private TextView nomeEquinoText, dataInicioText;
     private RecyclerView testesRecycleView;
 
-    private Experimento2 experimento;
+    private Experimento experimento;
     private TesteAdapter adapter;
     private int POSITION_EXPERIMENTO;
     @Override
@@ -51,7 +48,7 @@ public class ExperimentoExpecifico extends AppCompatActivity {
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setTitle(experimento.getNome());
 
-        nomeEquinoText.setText(experimento.getEquino());
+        //nomeEquinoText.setText(experimento.getEquino());
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(experimento.getDataInicio());

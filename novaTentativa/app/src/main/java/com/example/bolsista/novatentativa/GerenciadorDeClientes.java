@@ -65,8 +65,8 @@ public class GerenciadorDeClientes extends Thread{
                     Log.i("OBJETO", "Criou input do servidor");
                     //enviarObjeto();
                     imgAtual = R.drawable.circuloo; //////////////////DESTAQUE
-                    vetor = IniciarConfiguracao.testeSelecionada.getImagens();
-                    int numRodadas = IniciarConfiguracao.testeSelecionada.getQtdEnsaiosPorSessao();
+                    //vetor = NovoExperimento.testeSelecionada.getImagens();//*************** RETIRADO
+                    int numRodadas = NovoExperimento.testeSelecionada.getQtdEnsaiosPorSessao();
                     int rodada = 1;
                     while (rodada <= numRodadas) {
                         msg = leitor.readInt();
@@ -80,7 +80,7 @@ public class GerenciadorDeClientes extends Thread{
                                 esperar(); //mudar imagens para branco, e espera um novo sorteio
                                 esp32(ABRIR_MOTOR);//enviar comando para abrir o servo no esp32
                                 if (!server.controleRemoto) {  // se o controle remoto não estiver conectado
-                                    dormir(IniciarConfiguracao.testeSelecionada.getIntervalo1()); // tempo de espera do mestre
+                                    dormir(NovoExperimento.testeSelecionada.getIntervalo1()); // tempo de espera do mestre
                                     sortear(); //fazer nova interação de imagens entre os tablets
                                 }
                             } else if (msg == TROCAR_IMAGENS) {//trocar imagens
@@ -97,7 +97,7 @@ public class GerenciadorDeClientes extends Thread{
                         //desafios.add(desafio);
                     }
                     terminar();
-                    jogar.terminar(desafios, IniciarConfiguracao.experimento.getId());
+                    //jogar.terminar(desafios, NovoExperimento.experimento.getId()); //************** RETIRADO
                 } catch (IOException e) {
                     Log.i("COMUNICACAO", "ERRO = " + e.getMessage());
                     desconectarCliente();
@@ -109,7 +109,7 @@ public class GerenciadorDeClientes extends Thread{
 
     private void enviarObjeto() {
         try {
-            escritor.writeObject(IniciarConfiguracao.testeSelecionada);
+            escritor.writeObject(NovoExperimento.testeSelecionada);
             escritor.flush();
 
             Log.i("OBJETO","OBJETO ENVIADO PARA O CLIENTE");
@@ -284,7 +284,7 @@ public class GerenciadorDeClientes extends Thread{
 
         mudarImagem(imgAtual);
 
-        dormir(IniciarConfiguracao.testeSelecionada.getIntervalo2());
+        dormir(NovoExperimento.testeSelecionada.getIntervalo2());
 
         //sortear o escolhido para herdar imagem
         Random radom = new Random();

@@ -21,7 +21,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.bolsista.novatentativa.IniciarConfiguracao;
+import com.example.bolsista.novatentativa.NovoExperimento;
 import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.adapters.TesteAdapter;
 import com.example.bolsista.novatentativa.cadastros.ConfigurarTeste;
@@ -190,10 +190,6 @@ public class ListarTestes extends Fragment {
 
                             @Override
                             public void onItemClick(View view, int position) {
-                                IniciarConfiguracao.testeSelecionada = mViewModel.configuracoes.getValue().get(position);
-                                Toast.makeText(contextoAtivity,"Configuracao selecionada",
-                                        Toast.LENGTH_SHORT).show();
-                                Log.i("Teste", "onSingleTapUp2");
                             }
 
                             @SuppressLint("SetTextI18n")

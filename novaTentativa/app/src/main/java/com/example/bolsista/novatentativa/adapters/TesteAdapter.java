@@ -5,11 +5,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CompoundButton;
+import android.widget.Toast;
 
+import com.example.bolsista.novatentativa.NovoExperimento;
 import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.modelo.Teste;
 import com.example.bolsista.novatentativa.viewHolders.ConfiguracaoViewHolder;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -36,15 +40,28 @@ public class TesteAdapter extends RecyclerView.Adapter<ConfiguracaoViewHolder> {
 
     @Override
     public void onBindViewHolder(@NonNull ConfiguracaoViewHolder holder, int position) {
-        Teste configEscolhida = configuracoes.get(position);
-        holder.nomeConfig.setText(configEscolhida.getNome());
-        holder.detalhesConfig.setText(configEscolhida.getObservacoes());
+        Teste testeEscolhido = configuracoes.get(position);
+        holder.nomeConfig.setText(testeEscolhido.getNome());
+        holder.detalhesConfig.setText(testeEscolhido.getObservacoes());
         holder.testCheckBox.setChecked(true);
 
+        // Se desmarcar
+        adicionarTeste(testeEscolhido);
+        holder.testCheckBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton compoundButton, boolean checked) {
+                if(checked)
+                    adicionarTeste(testeEscolhido);
+                else
+                    removerTeste(testeEscolhido);
+                //Toast.makeText(c, "Mudou no indice: " + position+ "para => "+ checked, Toast.LENGTH_SHORT).show();
+            }
+        });
+
         //mudar background
-        if(configEscolhida.isCompleto()) {
+        if(testeEscolhido.isCompleto()) {
             holder.testCheckBox.setVisibility(View.GONE);
-            if (configEscolhida.isCompleto())
+            if (testeEscolhido.isCompleto())
                 holder.testCardView.setBackgroundResource(R.drawable.fundo_verde);
         }
     }
@@ -53,4 +70,17 @@ public class TesteAdapter extends RecyclerView.Adapter<ConfiguracaoViewHolder> {
     public int getItemCount() {
         return configuracoes.size();
     }
+
+    private void adicionarTeste(Teste teste){
+        if(!NovoExperimento.testes.contains(teste)){
+            NovoExperimento.testes.add(teste);
+        }
+    }
+
+    private void removerTeste(Teste teste){
+        if(NovoExperimento.testes.contains(teste)){
+            NovoExperimento.testes.remove(teste);
+        }
+    }
+
 }

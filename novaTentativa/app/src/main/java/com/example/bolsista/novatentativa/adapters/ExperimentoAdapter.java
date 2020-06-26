@@ -11,19 +11,18 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.bolsista.novatentativa.R;
-import com.example.bolsista.novatentativa.modelo.Experimento2;
+import com.example.bolsista.novatentativa.modelo.Experimento;
 import com.example.bolsista.novatentativa.viewHolders.ExperimentoViewHolder;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 
 public class ExperimentoAdapter extends RecyclerView.Adapter<ExperimentoViewHolder> {
     Context c;
-    private List<Experimento2> experimentos;
+    private List<Experimento> experimentos;
 
-    public ExperimentoAdapter(Context c, List<Experimento2> experimentos) {
+    public ExperimentoAdapter(Context c, List<Experimento> experimentos) {
         this.c = c;
         this.experimentos = experimentos;
     }
@@ -39,9 +38,9 @@ public class ExperimentoAdapter extends RecyclerView.Adapter<ExperimentoViewHold
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(@NonNull ExperimentoViewHolder holder, int position) {
-        Experimento2 cavaloEscolhido = experimentos.get(position);
+        Experimento cavaloEscolhido = experimentos.get(position);
         holder.nomeExperimento2.setText(cavaloEscolhido.getNome());
-        holder.nomeEquino.setText(cavaloEscolhido.getEquino());
+        holder.nomeEquino.setText(cavaloEscolhido.getEquino().getNome());
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(cavaloEscolhido.getDataInicio());

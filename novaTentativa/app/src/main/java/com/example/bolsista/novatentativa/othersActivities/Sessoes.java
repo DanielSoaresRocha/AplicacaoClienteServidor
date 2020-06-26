@@ -19,7 +19,7 @@ import android.widget.TextView;
 
 import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.adapters.SessaoAdapter;
-import com.example.bolsista.novatentativa.modelo.Experimento2;
+import com.example.bolsista.novatentativa.modelo.Experimento;
 import com.example.bolsista.novatentativa.modelo.Sessao;
 import com.example.bolsista.novatentativa.modelo.Usuario;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -113,7 +113,7 @@ public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSele
                         Log.i("DataBase-FireStore-add", "Error adding document", e);
                     }
                 });*/
-        ArrayList<Experimento2> experimentos2 = new ArrayList<>();
+        ArrayList<Experimento> experimentos2 = new ArrayList<>();
         db.collection("configuracoes2")
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -121,14 +121,14 @@ public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSele
                     public void onComplete(@NonNull Task<QuerySnapshot> task) {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
-                                Experimento2 experimento2 = document.toObject(Experimento2.class);
-                                experimentos2.add(experimento2);
+                                Experimento experimento = document.toObject(Experimento.class);
+                                experimentos2.add(experimento);
                             }
 
-                            for(Experimento2 experimento2: experimentos2){
+                            for(Experimento experimento : experimentos2){
                                 try {
                                     System.out.println("-------------------------------------");
-                                    System.out.println(experimento2.getTestes().get(0).getSessoes()
+                                    System.out.println(experimento.getTestes().get(0).getSessoes()
                                             .get(0).getExperimentador().getNome());
                                 }catch (java.lang.NullPointerException e){
                                     System.out.println("Esse nao deu");

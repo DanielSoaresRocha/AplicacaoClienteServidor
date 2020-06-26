@@ -29,7 +29,7 @@
             android:name=".othersActivities.ExperimentoExpecifico"
             android:parentActivityName=".arquitetura.Definir" />
         <activity android:name=".Resultado" />
-        <activity android:name=".IniciarConfiguracao" />
+        <activity android:name=".NovoExperimento" />
         <activity android:name=".cadastros.CadastrarEquino" />
         <activity android:name=".arquitetura.Remoto" />
         <activity android:name=".Jogar" />

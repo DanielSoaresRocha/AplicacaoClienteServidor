@@ -15,15 +15,13 @@ import android.widget.Toast;
 import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.adapters.ExperimentoAdapter;
 import com.example.bolsista.novatentativa.modelo.Teste;
-import com.example.bolsista.novatentativa.modelo.Experimento2;
+import com.example.bolsista.novatentativa.modelo.Experimento;
 import com.example.bolsista.novatentativa.recycleOnTouchLinesters.GenericOnItemTouch;
-import com.example.bolsista.novatentativa.viewsModels.ExperimentoViewModel;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
-import java.util.Date;
 
 public class ExperimentosAndamento extends AppCompatActivity {
     private RecyclerView experimentosRecycle;
@@ -31,7 +29,7 @@ public class ExperimentosAndamento extends AppCompatActivity {
     Context contextActivity;
     private ExperimentoAdapter adapter;
 
-    public static ArrayList<Experimento2> experimentos2;
+    public static ArrayList<Experimento> experimentos2;
 
     //FireBase
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -80,7 +78,7 @@ public class ExperimentosAndamento extends AppCompatActivity {
                 435, null,false));
         testes.add(new Configuracao("id6", "Teste de transferência T2",
                 "Teste gabor", imagens, 15, 5, 5, 234,
-                435, null,false));*/
+                435, null,false));
 
         experimentos2.add(new Experimento2("id1", "cavalo 1", "experimento 1", new Date(),
                 new Date(), testes));
@@ -90,6 +88,7 @@ public class ExperimentosAndamento extends AppCompatActivity {
                 new Date(), testes));
 
         ExperimentoViewModel.experimentos.setValue(experimentos2);
+                */
     }
 
     private void implementsRecycle(){

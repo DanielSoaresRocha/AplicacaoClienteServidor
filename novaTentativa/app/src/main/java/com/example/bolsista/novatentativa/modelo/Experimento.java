@@ -1,30 +1,28 @@
 package com.example.bolsista.novatentativa.modelo;
 
-import com.google.firebase.firestore.DocumentReference;
 
+import java.util.ArrayList;
 import java.util.Date;
 
 public class Experimento {
     private String id;
-    private DocumentReference configuracao;
-    private DocumentReference usuario;
-    private DocumentReference equino;
-    private Date data;
-    private String descricao;
-    private int number;
+    private Equino equino;
+    private String nome;
+    private Date dataInicio;
+    private Date dataFim;
+    private ArrayList<Teste> testes;
 
     public Experimento() {
     }
 
-    public Experimento(String id, DocumentReference configuracao, DocumentReference usuario,
-                       DocumentReference equino, Date data, String descricao, int number) {
+    public Experimento(String id, Equino equino, String nome, Date dataInicio, Date dataFim,
+                       ArrayList<Teste> testes) {
         this.id = id;
-        this.configuracao = configuracao;
-        this.usuario = usuario;
         this.equino = equino;
-        this.data = data;
-        this.descricao = descricao;
-        this.number = number;
+        this.nome = nome;
+        this.dataInicio = dataInicio;
+        this.dataFim = dataFim;
+        this.testes = testes;
     }
 
     public String getId() {
@@ -35,51 +33,43 @@ public class Experimento {
         this.id = id;
     }
 
-    public DocumentReference getConfiguracao() {
-        return configuracao;
-    }
-
-    public void setConfiguracao(DocumentReference configuracao) {
-        this.configuracao = configuracao;
-    }
-
-    public DocumentReference getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(DocumentReference usuario) {
-        this.usuario = usuario;
-    }
-
-    public DocumentReference getEquino() {
+    public Equino getEquino() {
         return equino;
     }
 
-    public void setEquino(DocumentReference equino) {
+    public void setEquino(Equino equino) {
         this.equino = equino;
     }
 
-    public Date getData() {
-        return data;
+    public String getNome() {
+        return nome;
     }
 
-    public void setData(Date data) {
-        this.data = data;
+    public void setNome(String nome) {
+        this.nome = nome;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public Date getDataInicio() {
+        return dataInicio;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setDataInicio(Date dataInicio) {
+        this.dataInicio = dataInicio;
     }
 
-    public int getNumber() {
-        return number;
+    public Date getDataFim() {
+        return dataFim;
     }
 
-    public void setNumber(int number) {
-        this.number = number;
+    public void setDataFim(Date dataFim) {
+        this.dataFim = dataFim;
+    }
+
+    public ArrayList<Teste> getTestes() {
+        return testes;
+    }
+
+    public void setTestes(ArrayList<Teste> testes) {
+        this.testes = testes;
     }
 }

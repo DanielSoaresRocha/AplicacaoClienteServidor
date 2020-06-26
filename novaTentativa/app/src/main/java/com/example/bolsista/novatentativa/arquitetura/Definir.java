@@ -14,7 +14,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.example.bolsista.novatentativa.IniciarConfiguracao;
+import com.example.bolsista.novatentativa.NovoExperimento;
 import com.example.bolsista.novatentativa.cadastros.CadastrarEquino;
 import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.modelo.Usuario;
@@ -144,7 +144,7 @@ public class Definir extends AppCompatActivity {
                 /*
                 Intent telaMestre = new Intent(Definir.this, Servidor.class);
                 startActivity(telaMestre);*/
-                Intent iniciarConfiguracao = new Intent(Definir.this, IniciarConfiguracao.class);
+                Intent iniciarConfiguracao = new Intent(Definir.this, NovoExperimento.class);
                 startActivity(iniciarConfiguracao);
             }
         });
@@ -177,7 +177,7 @@ public class Definir extends AppCompatActivity {
                 startActivity(telaCadastro);
                 return true;
             case R.id.novoExperimento:
-                Intent iniciarConfiguracao = new Intent(Definir.this, IniciarConfiguracao.class);
+                Intent iniciarConfiguracao = new Intent(Definir.this, NovoExperimento.class);
                 startActivity(iniciarConfiguracao);
                 return true;
             case R.id.experimentosAndamento:

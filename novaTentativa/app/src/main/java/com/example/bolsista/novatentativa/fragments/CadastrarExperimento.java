@@ -1,10 +1,8 @@
 package com.example.bolsista.novatentativa.fragments;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -17,20 +15,15 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.bolsista.novatentativa.IniciarConfiguracao;
+import com.example.bolsista.novatentativa.NovoExperimento;
 import com.example.bolsista.novatentativa.R;
-import com.example.bolsista.novatentativa.arquitetura.Servidor;
 import com.example.bolsista.novatentativa.modelo.Experimento;
 import com.example.bolsista.novatentativa.viewsModels.ListarViewModel;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -62,7 +55,6 @@ public class CadastrarExperimento extends Fragment implements DatePickerDialog.O
     //FireBase autenth
     private FirebaseAuth usuario;
 
-    private static int numberExperiments = 0;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -96,28 +88,22 @@ public class CadastrarExperimento extends Fragment implements DatePickerDialog.O
     }
 
     private void instanciarExperimento(){
-        getActivity().finish();
-        /*
-        DocumentReference configuracaoRef = db.collection("configuracoes")
-                .document(IniciarConfiguracao.configuracaoSelecionada.getId());
-        DocumentReference equinoRef = db.collection("equinos")
-                .document(IniciarConfiguracao.cavaloSelecionado.getId());
+        Experimento experimento = new Experimento("", NovoExperimento.equinoSelecionado,
+                nomeExperimento.getText().toString(), dataExperimento, new Date(),
+                NovoExperimento.testes);
 
-        IniciarConfiguracao.experimento = new Experimento("", configuracaoRef, usuarioRef, equinoRef, new Date(),
-                nomeExperimento.getText().toString(), numberExperiments);
-
-        addExperimentoToFireBase();
-        ListarViewModel.addExperimento(IniciarConfiguracao.experimento);*/
+        addExperimentoToFireBase(experimento);
     }
 
-    private void addExperimentoToFireBase(){
+    private void addExperimentoToFireBase(Experimento experimento){
         db.collection("experimentos")
-                .add(IniciarConfiguracao.experimento)
+                .add(experimento)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         documentReference.update("id",documentReference.getId());//adiciona ao campo id o id gerado pelo firebase
-                        IniciarConfiguracao.experimento.setId(documentReference.getId());
+                        NovoExperimento.experimento = experimento;
+                        NovoExperimento.experimento.setId(documentReference.getId());
                         Toast.makeText(contextoAtivity, "Experimento adicionado", Toast.LENGTH_SHORT).show();
                     }
                 })
@@ -127,42 +113,8 @@ public class CadastrarExperimento extends Fragment implements DatePickerDialog.O
                         Log.i("DataBase-FireStore-add", "Error adding document", e);
                     }
                 });
-        iniciarServidor();
-    }
 
-    public static void verififyNumberExperiments(String id){
-        System.out.println("=>>>> ID = "+ id);
-        DocumentReference equinoRef = db.collection("equinos")
-                .document(id);
-
-        db.collection("experimentos")
-                .whereEqualTo("equino", equinoRef)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @SuppressLint("SetTextI18n")
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            numberExperiments = 0;
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d("entrou "+numberExperiments+" vezes", document.getId()
-                                        + " => " + document.getData());
-                                numberExperiments++;
-                            }
-
-                            if(numberExperiments == 0)
-                                numberExperiments = 1;
-                        } else {
-                            Log.d("notOK", "Error getting documents: ", task.getException());
-                        }
-                    }
-                });
-    }
-
-    private void iniciarServidor() {
         getActivity().finish();
-        Intent iniciarServidor = new Intent(contextoAtivity, Servidor.class);
-        startActivity(iniciarServidor);
     }
 
     private void showDatePickerDialog(){

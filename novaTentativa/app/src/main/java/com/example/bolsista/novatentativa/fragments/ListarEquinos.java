@@ -20,7 +20,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.bolsista.novatentativa.IniciarConfiguracao;
+import com.example.bolsista.novatentativa.NovoExperimento;
 import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.adapters.EquinoAdapter;
 import com.example.bolsista.novatentativa.modelo.Equino;
@@ -34,7 +34,6 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -114,8 +113,7 @@ public class ListarEquinos extends Fragment {
 
                             @Override
                             public void onItemClick(View view, int position) {
-                                IniciarConfiguracao.equinoSelecionado = mViewModel.cavalos.getValue().get(position);
-                                CadastrarExperimento.verififyNumberExperiments(IniciarConfiguracao.equinoSelecionado.getId());
+                                NovoExperimento.equinoSelecionado = mViewModel.cavalos.getValue().get(position);
                                 Toast.makeText(contextoAtivity,"Cavalo selecionado",
                                         Toast.LENGTH_SHORT).show();
                                 Log.i("Teste", "onSingleTapUp2");

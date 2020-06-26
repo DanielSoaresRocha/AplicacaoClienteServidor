@@ -5,6 +5,7 @@ import com.google.firebase.firestore.DocumentReference;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Teste implements Serializable{
     private String id;
@@ -24,10 +25,6 @@ public class Teste implements Serializable{
     private int maxVezesConsecutivas;
     private int criterioAprendizagem;
     private boolean completo;
-
-    ///Vai ser apagado
-    private ArrayList<Integer> imagens;
-    private DocumentReference usuario;
 
     public Teste(){
     }
@@ -55,6 +52,7 @@ public class Teste implements Serializable{
         this.criterioAprendizagem = criterioAprendizagem;
         this.completo = completo;
     }
+
     /*
     public Configuracao(String id, String nome, String observacoes, ArrayList<Integer> imagens,
                         int qtdDesafios, int intervalo1, int intervalo2, int somErro, int somAcerto,
@@ -200,27 +198,11 @@ public class Teste implements Serializable{
         this.criterioAprendizagem = criterioAprendizagem;
     }
 
-    public ArrayList<Integer> getImagens() {
-        return imagens;
-    }
-
-    public void setImagens(ArrayList<Integer> imagens) {
-        this.imagens = imagens;
-    }
-
     public boolean isCompleto() {
         return completo;
     }
 
     public void setCompleto(boolean completo) {
         this.completo = completo;
-    }
-
-    public DocumentReference getUsuario() {
-        return usuario;
-    }
-
-    public void setUsuario(DocumentReference usuario) {
-        this.usuario = usuario;
     }
 }

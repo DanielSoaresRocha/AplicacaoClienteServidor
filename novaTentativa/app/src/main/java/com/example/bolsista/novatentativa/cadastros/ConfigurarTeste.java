@@ -297,8 +297,6 @@ public class ConfigurarTeste extends AppCompatActivity implements AdapterView.On
         teste.setIntervalo2(Integer.parseInt(intervalo2.getText().toString()));
         teste.setSomErro(erroEscolhido);
         teste.setSomAcerto(acertoEscolhido);
-        teste.setImagens(getImagens());
-        teste.setUsuario(usuarioRef);
     }
 
     private ArrayList<Integer> getImagens(){
