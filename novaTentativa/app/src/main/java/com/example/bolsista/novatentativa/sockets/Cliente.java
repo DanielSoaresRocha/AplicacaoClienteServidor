@@ -57,7 +57,7 @@ public class Cliente {
             enviarIdentificacao();
             escritor = new ObjectOutputStream(cliente.getOutputStream());
             Log.i("OBJETO","Criou output do CLIENTE");
-            escritor.flush();
+            escritor.flush();// ESTÁ LINHA É EXTREMAMENTE IMPORTANTE PARA O SERVIDOR CONSEGUIR LER OS DADOS DO CLIENTE;
             leitor = new ObjectInputStream(cliente.getInputStream());
             Log.i("OBJETO","Criou input do CLIENTE");
         new Thread(new Runnable() {

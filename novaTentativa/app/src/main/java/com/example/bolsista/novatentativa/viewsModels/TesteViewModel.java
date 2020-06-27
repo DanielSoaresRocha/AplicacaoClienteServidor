@@ -2,6 +2,7 @@ package com.example.bolsista.novatentativa.viewsModels;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.bolsista.novatentativa.modelo.Experimento;
 import com.example.bolsista.novatentativa.modelo.Teste;
 
 import java.util.ArrayList;

@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 public class ExperimentoViewModel extends ViewModel {
     public static MutableLiveData<ArrayList<Experimento>> experimentos;
+    public static MutableLiveData<Experimento> experimento;
 
     public ExperimentoViewModel(){
     }

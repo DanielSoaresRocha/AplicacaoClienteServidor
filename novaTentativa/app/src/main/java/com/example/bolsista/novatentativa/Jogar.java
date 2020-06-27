@@ -17,6 +17,7 @@ import com.example.bolsista.novatentativa.arquitetura.Servidor;
 import com.example.bolsista.novatentativa.modelo.Desafio;
 import com.example.bolsista.novatentativa.sockets.Cliente;
 import com.example.bolsista.novatentativa.sockets.PreTeste;
+import com.example.bolsista.novatentativa.viewsModels.TesteViewModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
@@ -98,8 +99,7 @@ public class Jogar extends AppCompatActivity {
     }
 
     public void tocarAcerto(){
-        System.out.println(NovoExperimento.testeSelecionada.getSomAcerto()+"---------------------------");
-        mp = MediaPlayer.create(Jogar.this, NovoExperimento.testeSelecionada.getSomAcerto());
+        mp = MediaPlayer.create(Jogar.this, TesteViewModel.teste.getValue().getSomAcerto());
         mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener(){
             public void onCompletion(MediaPlayer mp) {
                 mp.stop();
