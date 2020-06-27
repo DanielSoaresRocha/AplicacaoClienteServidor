@@ -15,16 +15,19 @@ import android.widget.Toast;
 import com.example.bolsista.novatentativa.arquitetura.ClienteActivity;
 import com.example.bolsista.novatentativa.arquitetura.Servidor;
 import com.example.bolsista.novatentativa.modelo.Desafio;
+import com.example.bolsista.novatentativa.sockets.Cliente;
+import com.example.bolsista.novatentativa.sockets.PreTeste;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 public class Jogar extends AppCompatActivity {
-    Button imagemButton;
+    public Button imagemButton;
     MediaPlayer mp;
 
     public static ArrayList<Desafio> desafios;
@@ -43,27 +46,35 @@ public class Jogar extends AppCompatActivity {
         setContentView(R.layout.activity_jogar);
 
         inicializar();
-        escutar();
+        listener();
 
-        if(Servidor.serverIdentificado){
-            GerenciadorDeClientes.definirTela(this);
+        if(Servidor.preTeste){
+            Toast.makeText(this, "definiu", Toast.LENGTH_SHORT).show();
+            PreTeste.definirTela(this);
             int imagemAtual = Servidor.numberAleatorio;//pegar a imagem atual que está no servidor
 
             imagemButton.setBackgroundResource(imagemAtual);
-
         }else{
             Cliente.definirTela(this);
         }
 
+        /*if(Servidor.serverIdentificado){
+            GerenciadorDeClientes.definirTela(this);
+            int imagemAtual = Servidor.numberAleatorio;//pegar a imagem atual que está no servidor
+
+            imagemButton.setBackgroundResource(imagemAtual);
+        }else{
+            Cliente.definirTela(this);
+        }
         modoFullScreean();
+        */
     }
 
-    private void escutar(){
-
+    private void listener(){
             imagemButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(!Servidor.serverIdentificado) { //Se não for o servidor
+                    if(!Servidor.preTeste) { //Se não for o servidor
                         ClienteActivity.enviar();
                     }else {
                         tocarError();
@@ -87,6 +98,7 @@ public class Jogar extends AppCompatActivity {
     }
 
     public void tocarAcerto(){
+        System.out.println(NovoExperimento.testeSelecionada.getSomAcerto()+"---------------------------");
         mp = MediaPlayer.create(Jogar.this, NovoExperimento.testeSelecionada.getSomAcerto());
         mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener(){
             public void onCompletion(MediaPlayer mp) {
@@ -98,12 +110,12 @@ public class Jogar extends AppCompatActivity {
         mp.start();
     }
 
-    public void informarDesconexao(){
+    public void informarDesconexao(int numberClientes){
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 Toast.makeText(Jogar.this,"Um cliente foi desconectado",Toast.LENGTH_LONG).show();
-                if(GerenciadorDeClientes.clientes.size()<2){
+                if(numberClientes < 2){
                     voltarTela();
                 }
             }
@@ -120,16 +132,21 @@ public class Jogar extends AppCompatActivity {
     }
 
     // Terminar o teste recebendo todos os desafios realizados para enviar ao banco
+    public void terminar(){
+        telaResultado();
+    }
+
+    /*
     public void terminar(ArrayList<Desafio> desafios, String idExperimento){
         this.desafios = desafios;
-        /*
         DocumentReference experimentoRef = db.collection("experimentos").document(idExperimento);
         for (int i = 0; i < desafios.size(); i++){
             desafios.get(i).setExperimento(experimentoRef);
             addDesafioFireStore(desafios.get(i));
         }
-        telaResultado();*/
+        telaResultado();
     }
+        */
 
     // Tela para exibir o resultado
     private void telaResultado() {

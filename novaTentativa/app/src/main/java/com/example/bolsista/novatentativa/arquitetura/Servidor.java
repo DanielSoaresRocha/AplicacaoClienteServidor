@@ -16,15 +16,17 @@ import android.widget.Toast;
 import com.example.bolsista.novatentativa.GerenciadorDeClientes;
 import com.example.bolsista.novatentativa.Jogar;
 import com.example.bolsista.novatentativa.R;
+import com.example.bolsista.novatentativa.sockets.PreTeste;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Servidor extends AppCompatActivity {
-    public Button comecarServerBtn, criarServerBtn;
+    public static Button comecarServerBtn, criarServerBtn;
     LinearLayout serverDiv2;
     TextView ipTextView;
+    Context contextActivity;
 
     static final int PICK_CONTACT_REQUEST = 1;
 
@@ -36,6 +38,7 @@ public class Servidor extends AppCompatActivity {
 
     public static int numberAleatorio;
     public static boolean serverIdentificado = false;
+    public static boolean preTeste = false;
     public static boolean controleRemoto = false;
 
     @Override
@@ -70,15 +73,41 @@ public class Servidor extends AppCompatActivity {
     }
 
     private void criarServidor() {
+        numberAleatorio = R.drawable.branco;
+
+        preTeste = true;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Log.i("SERVIDOR", "STARTANDO SERVIDOR");
+                    servidor = new ServerSocket(9999);
+                    Log.i("SERVIDOR", "Esperando conexão...");
+                    pegarIp();
+
+                    numCliente = 0;
+                    while (true) {
+                        Socket cliente = servidor.accept();
+                        Log.i("SERVIDOR", "CLIENTE FOI CONECTADO = " + cliente.getInetAddress());
+                        new PreTeste(cliente,numCliente, contextActivity);
+                        numCliente++;
+                    }
+                } catch (IOException e) {
+                    Log.i("ERRO", "PORTA OCUPADA OU SERVER FOI FECHADO:" + e.getMessage());
+                }
+            }
+        }).start();
+    }
+
+    /*private void criarServidor() {
         final Servidor server = this;
-        numberAleatorio = R.drawable.circuloo;
+        numberAleatorio = R.drawable.branco;
 
         serverIdentificado = true;
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-
                     Log.i("SERVIDOR", "STARTANDO SERVIDOR");
                     servidor = new ServerSocket(9999);
                     Log.i("SERVIDOR", "Esperando conexão...");
@@ -92,13 +121,12 @@ public class Servidor extends AppCompatActivity {
 
                         numCliente++;
                     }
-
                 } catch (IOException e) {
                     Log.i("ERRO", "PORTA OCUPADA OU SERVER FOI FECHADO:" + e.getMessage());
                 }
             }
         }).start();
-    }
+    }*/
 
     //este método retorna o ip de conexão wifi no android
     private void pegarIp(){
@@ -139,6 +167,7 @@ public class Servidor extends AppCompatActivity {
         ipTextView = findViewById(R.id.ipTextView);
 
         comecarServerBtn.setVisibility(View.GONE);
+        contextActivity= this;
     }
 
 }

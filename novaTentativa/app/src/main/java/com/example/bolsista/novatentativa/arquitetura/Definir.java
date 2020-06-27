@@ -36,11 +36,8 @@ public class Definir extends AppCompatActivity {
         mestre.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*
-                Intent telaMestre = new Intent(Definir.this, Servidor.class);
-                startActivity(telaMestre);*/
-                Intent iniciarConfiguracao = new Intent(Definir.this, NovoExperimento.class);
-                startActivity(iniciarConfiguracao);
+                Intent telaServidor = new Intent(Definir.this, Servidor.class);
+                startActivity(telaServidor);
             }
         });
 

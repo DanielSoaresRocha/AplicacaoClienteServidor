@@ -21,10 +21,13 @@ import android.widget.Toast;
 
 import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.adapters.SessaoAdapter;
+import com.example.bolsista.novatentativa.arquitetura.Definir;
 import com.example.bolsista.novatentativa.modelo.Experimento;
 import com.example.bolsista.novatentativa.modelo.Sessao;
+import com.example.bolsista.novatentativa.modelo.Teste;
 import com.example.bolsista.novatentativa.modelo.Usuario;
 import com.example.bolsista.novatentativa.viewsModels.ExperimentoViewModel;
+import com.example.bolsista.novatentativa.viewsModels.TesteViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
@@ -115,6 +118,18 @@ public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSele
             @Override
             public void onClick(View view) {
                 Toast.makeText(contextActivity, "Ainda não implementado", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        IniciarSessaoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Teste teste = ExperimentoViewModel.experimentos.getValue().get(POSITION_EXPERIMENTO)
+                        .getTestes().get(POSITION_TESTE);
+                TesteViewModel.iniciarTeste(teste);
+
+                Intent telaDefinir = new Intent(Sessoes.this, Definir.class);
+                startActivity(telaDefinir);
             }
         });
     }

@@ -51,7 +51,6 @@ public class GerenciadorDeClientes extends Thread{
         this.server = server;
         this.numCliente = numCliente;
         start();
-
     }
 
     @Override
@@ -76,8 +75,8 @@ public class GerenciadorDeClientes extends Thread{
                         Log.i("COMUNICACAO", "cliente -- " + msg + " server = " + imgAtual);
                         if (clientes.size() >= 2) {
                             if (msg == imgAtual) {
-                                jogar.tocarAcerto(); // cavalo acertou
-                                esperar(); //mudar imagens para branco, e espera um novo sorteio
+                                jogar.tocarAcerto();
+                                esperar();
                                 esp32(ABRIR_MOTOR);//enviar comando para abrir o servo no esp32
                                 if (!server.controleRemoto) {  // se o controle remoto não estiver conectado
                                     dormir(NovoExperimento.testeSelecionada.getIntervalo1()); // tempo de espera do mestre
@@ -136,7 +135,7 @@ public class GerenciadorDeClientes extends Thread{
             clientes.put(numCliente,null);
             enviarImagemCorreta();
             reestabelecer();
-            jogar.informarDesconexao();
+            jogar.informarDesconexao(clientes.size());
             Log.i("REMOTO", "CLIENTE PADRÃO DESCONECTADO");
 
             leitor.close();
@@ -187,7 +186,6 @@ public class GerenciadorDeClientes extends Thread{
     private void adicionarCliente() {
         clientes.put(numCliente,this);
         exibirMensagem("pronto para comecar",true);
-
     }
 
     //este método faz aparecer o botao começar
@@ -332,6 +330,7 @@ public class GerenciadorDeClientes extends Thread{
         return numeroTmp;
     }
 
+    //mudar imagens para branco, e espera um novo sorteio
     private void esperar() throws IOException{
         mudarImagem(999);
 
@@ -344,7 +343,6 @@ public class GerenciadorDeClientes extends Thread{
 
     public static void definirTela(Jogar jogarr){
         jogar = jogarr;
-
     }
 
     // Informar e fechar todos os sockets (clientes)
