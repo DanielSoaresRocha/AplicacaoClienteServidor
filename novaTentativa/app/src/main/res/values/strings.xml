@@ -55,6 +55,7 @@
     <string name="cadastrar">cadastrar</string>
     <string name="cancelar">cancelar</string>
     <string name="logoff">logoff</string>
+    <string name="conectar">Apenas conectar</string>
     <string name="escolha_uma_configura_o">Escolha uma configuração:</string>
     <string name="exp_andamento">Experimentos em andamento</string>
     <string name="exp_finalizado">Experimentos finalizados</string>

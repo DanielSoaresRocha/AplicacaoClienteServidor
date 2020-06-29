@@ -162,6 +162,10 @@ public class Inicio extends AppCompatActivity {
                 Intent experimentosFinalizados = new Intent(Inicio.this, ExperimentosFinalizados.class);
                 startActivity(experimentosFinalizados);
                 return true;
+            case R.id.conectar:
+                Intent telaDefinir = new Intent(Inicio.this, Definir.class);
+                startActivity(telaDefinir);
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

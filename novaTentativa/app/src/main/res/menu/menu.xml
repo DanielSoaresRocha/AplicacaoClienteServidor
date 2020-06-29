@@ -26,6 +26,12 @@
         android:title="Experimentos finalizados" />
 
     <item
+        android:id="@+id/conectar"
+        android:checked="true"
+        android:icon="@mipmap/ic_launcher"
+        android:title="@string/conectar"/>
+
+    <item
         android:id="@+id/logoff"
         android:checked="true"
         android:icon="@mipmap/ic_launcher"

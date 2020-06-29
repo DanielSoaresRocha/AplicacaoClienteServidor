@@ -22,6 +22,7 @@ import android.widget.Toast;
 import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.adapters.SessaoAdapter;
 import com.example.bolsista.novatentativa.arquitetura.Definir;
+import com.example.bolsista.novatentativa.arquitetura.Servidor;
 import com.example.bolsista.novatentativa.modelo.Experimento;
 import com.example.bolsista.novatentativa.modelo.Sessao;
 import com.example.bolsista.novatentativa.modelo.Teste;
@@ -128,8 +129,8 @@ public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSele
                         .getTestes().get(POSITION_TESTE);
                 TesteViewModel.iniciarTeste(teste);
 
-                Intent telaDefinir = new Intent(Sessoes.this, Definir.class);
-                startActivity(telaDefinir);
+                Intent telaServidor = new Intent(Sessoes.this, Servidor.class);
+                startActivity(telaServidor);
             }
         });
     }
