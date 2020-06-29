@@ -11,5 +11,5 @@
         android:id="@+id/imagemButton"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/circuloo" />
+        android:background="@drawable/branco" />
 </androidx.constraintlayout.widget.ConstraintLayout>

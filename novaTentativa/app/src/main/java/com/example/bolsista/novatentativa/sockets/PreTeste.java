@@ -1,5 +1,6 @@
 package com.example.bolsista.novatentativa.sockets;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
@@ -72,6 +73,7 @@ public class PreTeste extends Thread {
                 Log.i("OBJETO", "Criou output do servidor");
                 leitor = new ObjectInputStream(cliente.getInputStream());
                 Log.i("OBJETO", "Criou input do servidor");
+                incrementaEscravos();
 
                 imgAtual = R.drawable.branco;
                 int numRodadas = Objects.requireNonNull(TesteViewModel.teste.getValue()).getQtdEnsaiosPorSessao();
@@ -96,6 +98,18 @@ public class PreTeste extends Thread {
                 desconectarCliente();
             }
         }
+    }
+
+    //incrementar número de escravos conectados na activity servidor
+    private void incrementaEscravos() {
+        Servidor.criarServerBtn.post(new Runnable() {
+            @SuppressLint("SetTextI18n")
+            @Override
+            public void run() {
+                Servidor.numEscravos.setVisibility(View.VISIBLE);
+                Servidor.numEscravo.setText(Integer.toString(clientes.size()));
+            }
+        });
     }
 
     private void enviarObjeto() throws IOException{

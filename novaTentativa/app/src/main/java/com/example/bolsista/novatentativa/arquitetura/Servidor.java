@@ -26,9 +26,9 @@ public class Servidor extends AppCompatActivity {
     public static Button comecarServerBtn, criarServerBtn;
     LinearLayout serverDiv2;
     TextView ipTextView;
+    public static TextView numEscravo;
+    public static LinearLayout numEscravos;
     Context contextActivity;
-
-    static final int PICK_CONTACT_REQUEST = 1;
 
     ServerSocket servidor;
 
@@ -162,9 +162,11 @@ public class Servidor extends AppCompatActivity {
 
     private void inicializar() {
         criarServerBtn = findViewById(R.id.criarServerBtn);
+        numEscravos = findViewById(R.id.numEscravos);
         comecarServerBtn = findViewById(R.id.comecarServerBtn);
         serverDiv2 = findViewById(R.id.serverDiv2);
         ipTextView = findViewById(R.id.ipTextView);
+        numEscravo = findViewById(R.id.numEscravo);
 
         comecarServerBtn.setVisibility(View.GONE);
         contextActivity= this;

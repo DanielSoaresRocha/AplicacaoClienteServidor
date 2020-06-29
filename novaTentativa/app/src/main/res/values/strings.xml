@@ -37,13 +37,13 @@
     <string name="mestre">Mestre</string>
     <string name="escravo">Escravo</string>
     <string name="remoto">Remoto</string>
-    <string name="servidor">Criar Servidor</string>
+    <string name="servidor">Criar Mestre</string>
     <string name="precisa_configurar">Voce precida configurar um teste</string>
     <string name="precisa_cliente">Você precisa informar um ip</string>
     <string name="com_ecar">comecar</string>
     <string name="ip_para_conecao">Ip para conexão:</string>
     <string name="esperando">esperando...</string>
-    <string name="criar_cliente">Criar Cliente</string>
+    <string name="criar_cliente">Criar Escravo</string>
     <string name="pronto_para_criar">Pronto para criar</string>
     <string name="controle_remoto">Controle Remoto</string>
     <string name="iniciar_controle_remoto">Iniciar controle remoto</string>

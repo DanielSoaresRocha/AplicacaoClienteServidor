@@ -72,6 +72,38 @@
 
             />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:id="@+id/numEscravos"
+            android:visibility="gone"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Número de escravos conectados:"
+                android:gravity="center"
+                android:textColor="@color/preto"
+                android:fontFamily="casual"
+                android:textSize="20sp"
+                />
+
+            <TextView
+                android:id="@+id/numEscravo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:gravity="center"
+                android:textColor="@color/preto"
+                android:fontFamily="casual"
+                android:textSize="20sp"
+                android:paddingLeft="10sp"
+                />
+
+        </LinearLayout>
+
     </LinearLayout>
 
 
