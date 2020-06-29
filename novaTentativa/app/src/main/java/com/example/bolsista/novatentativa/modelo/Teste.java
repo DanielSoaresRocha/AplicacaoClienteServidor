@@ -1,11 +1,7 @@
 package com.example.bolsista.novatentativa.modelo;
 
-
-import com.google.firebase.firestore.DocumentReference;
-
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class Teste implements Serializable{
     private String id;

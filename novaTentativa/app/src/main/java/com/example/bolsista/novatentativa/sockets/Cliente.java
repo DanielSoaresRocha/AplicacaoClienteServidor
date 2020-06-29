@@ -1,5 +1,6 @@
 package com.example.bolsista.novatentativa.sockets;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.os.StrictMode;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.widget.Toast;
 import com.example.bolsista.novatentativa.Jogar;
 import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.arquitetura.ClienteActivity;
+import com.example.bolsista.novatentativa.modelo.Mensagem;
 import com.example.bolsista.novatentativa.modelo.Teste;
 
 import java.io.IOException;
@@ -59,12 +61,12 @@ public class Cliente {
             Log.i("OBJETO","Criou output do CLIENTE");
             escritor.flush();// ESTÁ LINHA É EXTREMAMENTE IMPORTANTE PARA O SERVIDOR CONSEGUIR LER OS DADOS DO CLIENTE;
             leitor = new ObjectInputStream(cliente.getInputStream());
+            receberObjeto();
             Log.i("OBJETO","Criou input do CLIENTE");
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    //receberObjeto();
                     //Irá receber infinitamente mensagens do servidor
                     while (true){
                         int mensagem = leitor.readInt(); // o loop fica pausado aqui até que receba algum comando do servidor
@@ -88,8 +90,19 @@ public class Cliente {
 
     private void receberObjeto() {
         try {
-            Teste teste = (Teste) leitor.readObject();
-            Log.i("OBJETO","Objeto recebido do servidor ");
+            Mensagem mensagem = (Mensagem) leitor.readObject();
+            Log.i("OBJETO","Objeto recebido do servidor =  identificacao " + mensagem.getIdentificacao());
+
+            final ClienteActivity cliente = (ClienteActivity) client;
+
+            cliente.identificacaoCliente.post(new Runnable() {
+                @SuppressLint("SetTextI18n")
+                @Override
+                public void run() {
+                    cliente.identificacaoCliente.setVisibility(View.VISIBLE);
+                    cliente.numIdentificacao.setText(Integer.toString(mensagem.getIdentificacao()+1));
+                }
+            });
         } catch (IOException e) {
             e.printStackTrace();
         } catch (ClassNotFoundException e) {
@@ -130,7 +143,6 @@ public class Cliente {
 
             escritor.close();
             leitor.close();
-
             cliente.close();
 
             Log.i("REMOTO","CONEXÃO COM SERVIDOR FECHADA");

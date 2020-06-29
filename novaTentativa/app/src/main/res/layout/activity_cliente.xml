@@ -56,6 +56,39 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/com_ecar" />
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:id="@+id/identificacaoCliente"
+            android:visibility="gone"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Eu sou o cliente:"
+                android:gravity="center"
+                android:textColor="@color/preto"
+                android:fontFamily="casual"
+                android:textSize="20sp"
+                />
+
+            <TextView
+                android:id="@+id/numIdentificacao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="0"
+                android:gravity="center"
+                android:textColor="@color/preto"
+                android:fontFamily="casual"
+                android:textSize="20sp"
+                android:paddingLeft="10sp"
+                />
+
+        </LinearLayout>
     </LinearLayout>
 
 

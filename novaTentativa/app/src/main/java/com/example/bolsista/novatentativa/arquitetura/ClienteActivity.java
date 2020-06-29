@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bolsista.novatentativa.sockets.Cliente;
@@ -13,7 +15,8 @@ import com.example.bolsista.novatentativa.Jogar;
 import com.example.bolsista.novatentativa.R;
 
 public class ClienteActivity extends AppCompatActivity {
-
+    public LinearLayout identificacaoCliente;
+    public TextView numIdentificacao;
     EditText ipClientEdit;
     Button criarClientBtn;
     public Button comecarClientBtn;
@@ -73,5 +76,7 @@ public class ClienteActivity extends AppCompatActivity {
 
         criarClientBtn = findViewById(R.id.criarClientBtn);
         comecarClientBtn = findViewById(R.id.comecarClientBtn);
+        identificacaoCliente = findViewById(R.id.identificacaoCliente);
+        numIdentificacao = findViewById(R.id.numIdentificacao);
     }
 }

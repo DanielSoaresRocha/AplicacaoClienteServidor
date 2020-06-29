@@ -93,7 +93,6 @@ public class GerenciadorDeClientes extends Thread{
                             }
                         }
                         rodada++;
-                        //desafios.add(desafio);
                     }
                     terminar();
                     //jogar.terminar(desafios, NovoExperimento.experimento.getId()); //************** RETIRADO

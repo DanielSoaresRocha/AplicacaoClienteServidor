@@ -107,7 +107,7 @@ public class ListarTestes extends Fragment {
             ListarViewModel.addConfiguracao(new Teste("0", "Pré-teste", 0,
                     0, 0, R.raw.sucess, R.raw.error, new ArrayList<Desafio>(),
                     "Teste Gabor", 0, 0, new ArrayList<Sessao>(),
-                    true, 0, 0, 0,
+                    true, 10, 0, 0,
                     false));
             //TESTE L1
             ListarViewModel.addConfiguracao(new Teste("1", "Teste de aprendizagem L1",

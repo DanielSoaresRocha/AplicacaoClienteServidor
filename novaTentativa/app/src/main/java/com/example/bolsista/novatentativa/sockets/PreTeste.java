@@ -13,6 +13,7 @@ import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.arquitetura.Definir;
 import com.example.bolsista.novatentativa.arquitetura.Servidor;
 import com.example.bolsista.novatentativa.modelo.Desafio;
+import com.example.bolsista.novatentativa.modelo.Mensagem;
 import com.example.bolsista.novatentativa.viewsModels.TesteViewModel;
 
 import java.io.BufferedReader;
@@ -67,6 +68,7 @@ public class PreTeste extends Thread {
         if(!identificarCliente()) { //se o cliente não for o esp32
             try {
                 escritor = new ObjectOutputStream(cliente.getOutputStream());
+                enviarObjeto();
                 Log.i("OBJETO", "Criou output do servidor");
                 leitor = new ObjectInputStream(cliente.getInputStream());
                 Log.i("OBJETO", "Criou input do servidor");
@@ -78,7 +80,6 @@ public class PreTeste extends Thread {
                     Log.i("OBJETO", "Entrou no Wile - esperando mensagem do cliente...");
                     msg = leitor.readInt();
                     Log.i("OBJETO", "leu mensagem "+ msg);
-
 
                     if(clientes.size() >= 1){
                         jogar.tocarAcerto(); // cavalo acertou
@@ -95,6 +96,13 @@ public class PreTeste extends Thread {
                 desconectarCliente();
             }
         }
+    }
+
+    private void enviarObjeto() throws IOException{
+        Mensagem mensagem = new Mensagem(numCliente, 0);
+        escritor.writeObject(mensagem);
+        escritor.flush();
+        Log.i("OBJETO","Enviou objeto" + mensagem.getIdentificacao());
     }
 
     private void dormir(int tempo){
@@ -124,12 +132,10 @@ public class PreTeste extends Thread {
         try{
             clientes.remove(numCliente);//removendo da tabela hash
             jogar.informarDesconexao(clientes.size());
-            Log.i("REMOTO", "CLIENTE PADRÃO DESCONECTADO");
 
             leitor.close();
             escritor.close();
             cliente.close();
-
         }catch (IOException e){
             Log.i("ERRO", "ERRO AO FECHAR CONEXÃO = " + e.getMessage());
         }catch (java.lang.NullPointerException e){
