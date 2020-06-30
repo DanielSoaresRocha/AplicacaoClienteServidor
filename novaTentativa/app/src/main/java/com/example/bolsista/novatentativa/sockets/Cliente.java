@@ -30,6 +30,7 @@ public class Cliente {
 
     private ObjectInputStream leitor;//****
     private ObjectOutputStream escritor;//*****
+    private int indentificador;
 
     private String host;
 
@@ -93,7 +94,7 @@ public class Cliente {
         try {
             Mensagem mensagem = (Mensagem) leitor.readObject();
             Log.i("OBJETO","Objeto recebido do servidor =  identificacao " + mensagem.getIdentificacao());
-
+            indentificador = mensagem.getIdentificacao();
             final ClienteActivity cliente = (ClienteActivity) client;
 
             cliente.identificacaoCliente.post(new Runnable() {
@@ -116,7 +117,8 @@ public class Cliente {
     public void escrever(){
         try{
             Log.i("COMUNICACAO","MENSAGEM ENVIADA AO SERVIDOR:  "+ imgAtual);
-            escritor.writeInt(imgAtual);
+            escritor.writeObject(new Mensagem(indentificador, imgAtual));
+            //escritor.writeInt(imgAtual);
             escritor.flush();
 
         }catch (IOException e){

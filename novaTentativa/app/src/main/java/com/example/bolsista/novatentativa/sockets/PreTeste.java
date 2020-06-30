@@ -50,11 +50,11 @@ public class PreTeste extends Thread {
 
     //lista global que irá conter todos os clientes conectados
     public static Map<Integer,PreTeste> clientes = new HashMap<>();
+    public static Map<Integer, Integer> numClicks = new HashMap<>();
 
     //interações
-    private int imgAtual;
-    int msg;
-    Context context;
+    private Mensagem msg;
+    private Context context;
     static Jogar jogar;
 
     public PreTeste(Socket cliente, int numCliente, Context context){
@@ -75,19 +75,24 @@ public class PreTeste extends Thread {
                 Log.i("OBJETO", "Criou input do servidor");
                 incrementaEscravos();
 
-                imgAtual = R.drawable.branco;
                 int numRodadas = Objects.requireNonNull(TesteViewModel.teste.getValue()).getQtdEnsaiosPorSessao();
                 int rodada = 1;
                 while (rodada <= numRodadas){
                     Log.i("OBJETO", "Entrou no Wile - esperando mensagem do cliente...");
-                    msg = leitor.readInt();
+                    msg = (Mensagem) leitor.readObject();
                     Log.i("OBJETO", "leu mensagem "+ msg);
 
                     if(clientes.size() >= 1){
-                        jogar.tocarAcerto(); // cavalo acertou
-                        esp32(ABRIR_MOTOR);
-                        dormir(5);
-                        esp32(FECHAR_MOTOR);//enviar comando para o servo fechar no esp32
+                        int numClicksClient = numClicks.get(msg.getIdentificacao());
+                        if(numClicksClient < 3){ //Se este cliente tiver clicado menos de 3 vezes
+                            jogar.tocarAcerto(); // cavalo acertou
+                            esp32(ABRIR_MOTOR);
+                            dormir(5);
+                            esp32(FECHAR_MOTOR);//enviar comando para o servo fechar no esp32numClicks.put(msg.)
+                            numClicks.put(msg.getIdentificacao(), numClicksClient+1);
+                        }else {
+
+                        }
                     }
                     rodada++;
                 }
@@ -96,6 +101,8 @@ public class PreTeste extends Thread {
             } catch (IOException e) {
                 Log.i("COMUNICACAO", "ERRO = " + e.getMessage());
                 desconectarCliente();
+            } catch (ClassNotFoundException e) {
+                Log.i("COMUNICACAO", "Não foi possível ler o objeto = " + e.getMessage());
             }
         }
     }
@@ -202,6 +209,7 @@ public class PreTeste extends Thread {
 
     private void adicionarCliente() {
         clientes.put(numCliente,this);
+        numClicks.put(numCliente, 0);//este cliente inicia com 0 clicks
         //se houver mais do que dois tablets conectados:
         if(clientes.size()>=2){
             Servidor.criarServerBtn.post(new Runnable() {
