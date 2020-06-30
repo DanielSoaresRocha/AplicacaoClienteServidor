@@ -93,7 +93,7 @@ public class ExperimentoExpecifico extends AppCompatActivity {
                                 TextView qtdQuestoes = layout.findViewById(R.id.qtdQuestoesConfigInfo);
 
                                 detalhes.setText(experimento.getTestes().get(position)
-                                        .getObservacoes());
+                                        .getMaxVezesConsecutivas()+ " vezes consecutivas");
                                 intervalo1.setText(experimento.getTestes().get(position)
                                         .getIntervalo1()+" segundos");
                                 intervalo2.setText(experimento.getTestes().get(position)

@@ -85,6 +85,7 @@ public class PreTeste extends Thread {
                     if(clientes.size() >= 1){
                         int numClicksClient = numClicks.get(msg.getIdentificacao());
                         //Se este cliente tiver clicado menos a quantidada max de vezes consecutivas
+                        Log.i("Cliente "+ msg.getIdentificacao(), "clicks = "+ numClicksClient);
                         if(numClicksClient < TesteViewModel.teste.getValue().getMaxVezesConsecutivas()){
                             jogar.tocarAcerto(); // cavalo acertou
                             esp32(ABRIR_MOTOR);
@@ -116,6 +117,7 @@ public class PreTeste extends Thread {
             public void run() {
                 Servidor.numEscravos.setVisibility(View.VISIBLE);
                 Servidor.numEscravo.setText(Integer.toString(clientes.size()));
+                Servidor.comecarServerBtn.setVisibility(View.VISIBLE);
             }
         });
     }
@@ -139,6 +141,7 @@ public class PreTeste extends Thread {
 
     // Informar e fechar todos os sockets (clientes)
     private void terminar() throws IOException {
+        Log.i("TERMINAR", "QTD DE CLIENTE CONECTADOS:" + clientes.size());
         for(int i = 0; i < clientes.size(); i++){
             PreTeste destino = clientes.get(i);
             destino.getEscritor().writeInt(900);// comando para fechar socket no lado do cliente
@@ -152,11 +155,12 @@ public class PreTeste extends Thread {
 
     private void desconectarCliente(){
         try{
-            clientes.remove(numCliente);//removendo da tabela hash
+            //clientes.remove(numCliente);//removendo da tabela hash
+            //Servidor.numCliente--;// descontar 1
             jogar.informarDesconexao(clientes.size());
 
-            leitor.close();
             escritor.close();
+            leitor.close();
             cliente.close();
         }catch (IOException e){
             Log.i("ERRO", "ERRO AO FECHAR CONEXÃO = " + e.getMessage());
@@ -188,7 +192,6 @@ public class PreTeste extends Thread {
             Log.i("esp32","mensagem chegouuuu: "+ identificador);
 
             if(identificador.contains("padrao")){
-                enviarMensagem("Padrão conectado");
                 adicionarCliente();
                 return false;
             }else if(identificador.contains("remoto")){
@@ -209,6 +212,7 @@ public class PreTeste extends Thread {
     }
 
     private void adicionarCliente() {
+        removerThreadsParadas();
         clientes.put(numCliente,this);
         numClicks.put(numCliente, 0);//este cliente inicia com 0 clicks
         //se houver mais do que dois tablets conectados:
@@ -220,6 +224,23 @@ public class PreTeste extends Thread {
                     Servidor.comecarServerBtn.setVisibility(View.VISIBLE);
                 }
             });
+        }
+    }
+
+    //remover as threads que não deram certo
+    private void removerThreadsParadas() {
+        for(int i = 0; i < clientes.size(); i++){
+            try {
+                if(clientes.get(i).getLeitor() == null){
+                    clientes.get(i).cliente.close();
+                }
+            }catch (NullPointerException | IOException e){
+                Log.i("THREAD", "ENTROU NA EXCESSÃO");
+            }finally {
+                clientes.remove(i);
+                Servidor.numCliente--;
+                numCliente = numCliente -1;
+            }
         }
     }
 
