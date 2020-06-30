@@ -65,9 +65,9 @@ public class GerenciadorDeClientes extends Thread{
                     //enviarObjeto();
                     imgAtual = R.drawable.circuloo; //////////////////DESTAQUE
                     //vetor = NovoExperimento.testeSelecionada.getImagens();//*************** RETIRADO
-                    int numRodadas = NovoExperimento.testeSelecionada.getQtdEnsaiosPorSessao();
+                    //int numRodadas = NovoExperimento.testeSelecionada.getQtdEnsaiosPorSessao();
                     int rodada = 1;
-                    while (rodada <= numRodadas) {
+                    while (rodada <= 5 /*numRodadas*/) {
                         msg = leitor.readInt();
                         imgAtual = server.numberAleatorio;
                         //desafio.setImgCorreta(imgAtual);
@@ -79,7 +79,7 @@ public class GerenciadorDeClientes extends Thread{
                                 esperar();
                                 esp32(ABRIR_MOTOR);//enviar comando para abrir o servo no esp32
                                 if (!server.controleRemoto) {  // se o controle remoto não estiver conectado
-                                    dormir(NovoExperimento.testeSelecionada.getIntervalo1()); // tempo de espera do mestre
+                                    //dormir(NovoExperimento.testeSelecionada.getIntervalo1()); // tempo de espera do mestre
                                     sortear(); //fazer nova interação de imagens entre os tablets
                                 }
                             } else if (msg == TROCAR_IMAGENS) {//trocar imagens
@@ -107,7 +107,7 @@ public class GerenciadorDeClientes extends Thread{
 
     private void enviarObjeto() {
         try {
-            escritor.writeObject(NovoExperimento.testeSelecionada);
+            //escritor.writeObject(NovoExperimento.testeSelecionada);
             escritor.flush();
 
             Log.i("OBJETO","OBJETO ENVIADO PARA O CLIENTE");
@@ -281,7 +281,7 @@ public class GerenciadorDeClientes extends Thread{
 
         mudarImagem(imgAtual);
 
-        dormir(NovoExperimento.testeSelecionada.getIntervalo2());
+        //dormir(NovoExperimento.testeSelecionada.getIntervalo2());
 
         //sortear o escolhido para herdar imagem
         Random radom = new Random();

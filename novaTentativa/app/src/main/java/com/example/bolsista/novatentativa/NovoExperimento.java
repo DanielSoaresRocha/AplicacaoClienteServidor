@@ -29,7 +29,6 @@ public class NovoExperimento extends AppCompatActivity {
     public static Equino equinoSelecionado;
     public static ArrayList<Teste> testes;
     public static Experimento experimento;
-    public static Teste testeSelecionada; //vai deletar daqui
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

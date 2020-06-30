@@ -87,7 +87,7 @@ public class Jogar extends AppCompatActivity {
 
     public void tocarError(){
 
-        mp = MediaPlayer.create(Jogar.this, NovoExperimento.testeSelecionada.getSomErro());
+        mp = MediaPlayer.create(Jogar.this, TesteViewModel.teste.getValue().getSomErro());
         mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener(){
             public void onCompletion(MediaPlayer mp) {
                 mp.stop();
