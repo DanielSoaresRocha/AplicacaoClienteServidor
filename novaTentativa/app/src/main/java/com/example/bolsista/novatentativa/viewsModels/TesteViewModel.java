@@ -4,6 +4,7 @@ import android.util.Log;
 
 import androidx.lifecycle.MutableLiveData;
 
+import com.example.bolsista.novatentativa.modelo.Experimento;
 import com.example.bolsista.novatentativa.modelo.Sessao;
 import com.example.bolsista.novatentativa.modelo.Teste;
 import com.example.bolsista.novatentativa.modelo.Usuario;
@@ -33,10 +34,6 @@ public class TesteViewModel {
 
     public static void adicionarNovaSessao(){
         Objects.requireNonNull(teste.getValue()).getSessoes().add(sessao);
-
-
-        Log.i("InicioSessao", "QtdDeSessoes no teste:" + teste.getValue().getSessoes().size());
-        Log.i("InicioSessao", "QtdEnsaios na sessao:" + teste.getValue().getSessoes().get(0).getEnsaios().size());
-
+        ExperimentoViewModel.updateTeste(Integer.parseInt(teste.getValue().getId()), teste.getValue().getSessoes());
     }
 }

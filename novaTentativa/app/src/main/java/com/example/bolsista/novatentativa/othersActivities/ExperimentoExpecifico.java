@@ -115,6 +115,7 @@ public class ExperimentoExpecifico extends AppCompatActivity {
         Intent it = getIntent();
         POSITION_EXPERIMENTO = it.getIntExtra("positionExperimento", 0);
         experimento = ExperimentoViewModel.experimentos.getValue().get(POSITION_EXPERIMENTO);
+        ExperimentoViewModel.experimento.setValue(experimento);
     }
 
     private void inicializar() {

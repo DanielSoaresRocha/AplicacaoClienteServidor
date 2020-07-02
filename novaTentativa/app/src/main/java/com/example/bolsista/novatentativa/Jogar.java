@@ -31,14 +31,6 @@ public class Jogar extends AppCompatActivity {
     public Button imagemButton;
     MediaPlayer mp;
 
-    public static ArrayList<Desafio> desafios;
-
-    //FireBase FireStore
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-    DocumentReference usuarioRef;
-    //FireBase autenth
-    FirebaseAuth usuario;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -58,17 +50,6 @@ public class Jogar extends AppCompatActivity {
         }else{
             Cliente.definirTela(this);
         }
-
-        /*if(Servidor.serverIdentificado){
-            GerenciadorDeClientes.definirTela(this);
-            int imagemAtual = Servidor.numberAleatorio;//pegar a imagem atual que está no servidor
-
-            imagemButton.setBackgroundResource(imagemAtual);
-        }else{
-            Cliente.definirTela(this);
-        }
-        modoFullScreean();
-        */
     }
 
     private void listener(){
@@ -154,24 +135,6 @@ public class Jogar extends AppCompatActivity {
         startActivity(telaResultado);
     }
 
-    private void addDesafioFireStore(Desafio desafio){
-        db.collection("desafios")
-                .add(desafio)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        documentReference.update("id",documentReference.getId());//adiciona ao campo id o id gerado pelo firebase
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.i("DataBase-FireStore-add", "Error adding document", e);
-                    }
-                });
-    }
-
-
     private void modoFullScreean(){
         View decorView = getWindow().getDecorView();
 
@@ -183,13 +146,6 @@ public class Jogar extends AppCompatActivity {
 
     private void inicializar() {
         imagemButton = findViewById(R.id.imagemButton);
-
-        usuario = FirebaseAuth.getInstance();
-        try {
-            usuarioRef = db.collection("users").document(usuario.getCurrentUser().getUid());
-        }catch (java.lang.NullPointerException e){
-            usuarioRef = db.collection("users").document("zl1hFltVOlJONAVUeIsY");
-        }
     }
 
 
