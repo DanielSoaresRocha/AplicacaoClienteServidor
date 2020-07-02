@@ -55,6 +55,7 @@ public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSele
     ArrayList<Usuario> usuarios;
     private SessaoAdapter adapter;
     Context contextActivity;
+    private Usuario usuarioSelecionado;
 
     //FireBase
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -127,7 +128,7 @@ public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSele
             public void onClick(View view) {
                 Teste teste = ExperimentoViewModel.experimentos.getValue().get(POSITION_EXPERIMENTO)
                         .getTestes().get(POSITION_TESTE);
-                TesteViewModel.iniciarTeste(teste);
+                TesteViewModel.iniciarTeste(teste, sessoes.size(), usuarioSelecionado);
 
                 Intent telaServidor = new Intent(Sessoes.this, Servidor.class);
                 startActivity(telaServidor);
@@ -181,8 +182,14 @@ public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSele
     }
 
     @Override
-    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long l) {
+        String nomeUsuario = parent.getItemAtPosition(position).toString();
 
+        for(int i = 0; i < usuarios.size(); i++){
+            if(usuarios.get(i).getNome().equals(nomeUsuario)){
+                usuarioSelecionado = usuarios.get(i);
+            }
+        }
     }
 
     @Override

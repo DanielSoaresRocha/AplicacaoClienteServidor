@@ -15,11 +15,10 @@ public class Sessao {
     public Sessao() {
     }
 
-    public Sessao(String id, String nome, Date data, int taxaAcerto, Usuario experimentador) {
+    public Sessao(String id, String nome, Date data, Usuario experimentador) {
         this.id = id;
         this.nome = nome;
         this.data = data;
-        this.taxaAcerto = taxaAcerto;
         this.experimentador = experimentador;
     }
 

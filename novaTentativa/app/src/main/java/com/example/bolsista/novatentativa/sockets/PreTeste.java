@@ -14,7 +14,9 @@ import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.arquitetura.Definir;
 import com.example.bolsista.novatentativa.arquitetura.Servidor;
 import com.example.bolsista.novatentativa.modelo.Desafio;
+import com.example.bolsista.novatentativa.modelo.Ensaio;
 import com.example.bolsista.novatentativa.modelo.Mensagem;
+import com.example.bolsista.novatentativa.modelo.Sessao;
 import com.example.bolsista.novatentativa.viewsModels.TesteViewModel;
 
 import java.io.BufferedReader;
@@ -77,10 +79,13 @@ public class PreTeste extends Thread {
                 incrementaEscravos();
 
                 int numRodadas = Objects.requireNonNull(TesteViewModel.teste.getValue()).getQtdEnsaiosPorSessao();
+                Ensaio ensaio = new Ensaio(); // Iniciando um ensaio
                 while (rodada <= numRodadas){
+                    ensaio.setId(rodada+"");
                     Log.i("OBJETO", "Entrou no While - esperando mensagem do cliente...");
                     msg = (Mensagem) leitor.readObject();
                     Log.i("OBJETO", "leu mensagem "+ msg);
+                    ensaio.setIdDesafio(Integer.toString(rodada));
 
                     if(clientes.size() >= 1){
                         int numClicksClient = numClicks.get(msg.getIdentificacao());
@@ -93,11 +98,16 @@ public class PreTeste extends Thread {
                             esp32(FECHAR_MOTOR);//enviar comando para o servo fechar no esp32numClicks.put(msg.)
                             numClicks.put(msg.getIdentificacao(), numClicksClient+1);
                             rodada++;
+                            //ensaio
+                            ensaio.setAcerto(true);
                         }else {
                             jogar.tocarError();
+                            ensaio.setAcerto(false);
                         }
+                        TesteViewModel.sessao.getEnsaios().add(ensaio);
                     }
                 }
+                TesteViewModel.adicionarNovaSessao();
                 terminar();
                 jogar.terminar();
             } catch (IOException e) {

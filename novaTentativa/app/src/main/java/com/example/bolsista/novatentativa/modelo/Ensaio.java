@@ -1,41 +1,40 @@
 package com.example.bolsista.novatentativa.modelo;
 
 public class Ensaio {
-    private int id;
-    private int idSessao;
-    private int idDesafio;
+    private String id;
+    private String idSessao;
+    private String idDesafio;
     private int tempoAcerto;
     private Boolean acerto;
 
-    public Ensaio(int id, int idSessao, int idDesafio, int tempoAcerto, Boolean acerto) {
-        this.id = id;
+    public Ensaio(String idSessao) {
         this.idSessao = idSessao;
-        this.idDesafio = idDesafio;
-        this.tempoAcerto = tempoAcerto;
-        this.acerto = acerto;
     }
 
-    public int getId() {
+    public Ensaio() {
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public int getIdSessao() {
+    public String getIdSessao() {
         return idSessao;
     }
 
-    public void setIdSessao(int idSessao) {
+    public void setIdSessao(String idSessao) {
         this.idSessao = idSessao;
     }
 
-    public int getIdDesafio() {
+    public String getIdDesafio() {
         return idDesafio;
     }
 
-    public void setIdDesafio(int idDesafio) {
+    public void setIdDesafio(String idDesafio) {
         this.idDesafio = idDesafio;
     }
 
