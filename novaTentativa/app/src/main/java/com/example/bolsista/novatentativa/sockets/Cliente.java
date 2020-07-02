@@ -60,15 +60,13 @@ public class Cliente {
             enviarIdentificacao();
             escritor = new ObjectOutputStream(cliente.getOutputStream());
             Log.i("OBJETO","Criou output do CLIENTE");
-            //escritor.writeInt(0);
-            //escritor.flush();// ESTÁ LINHA É EXTREMAMENTE IMPORTANTE PARA O SERVIDOR CONSEGUIR LER OS DADOS DO CLIENTE;
             leitor = new ObjectInputStream(cliente.getInputStream());
-            receberObjeto();
             Log.i("OBJETO","Criou input do CLIENTE");
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
+                    receberObjeto();
                     //Irá receber infinitamente mensagens do servidor
                     while (true){
                         int mensagem = leitor.readInt(); // o loop fica pausado aqui até que receba algum comando do servidor
@@ -82,9 +80,6 @@ public class Cliente {
                 }
             }
         }).start();
-        if(!controleRemoto){
-            ativarBotao();
-        }
         }catch (IOException e){
             Log.i("ERRO","ERRO AO CONECTAR-SE AO SERVIDOR "+ e.getMessage());
         }
@@ -101,14 +96,19 @@ public class Cliente {
                 @SuppressLint("SetTextI18n")
                 @Override
                 public void run() {
-                    cliente.identificacaoCliente.setVisibility(View.VISIBLE);
-                    cliente.numIdentificacao.setText(Integer.toString(mensagem.getIdentificacao()+1));
+                    if(!controleRemoto){
+                        cliente.identificacaoCliente.setVisibility(View.VISIBLE);
+                        cliente.numIdentificacao.setText(Integer.toString(mensagem.getIdentificacao()+1));
+                        Toast.makeText(client.getApplicationContext(),R.string.comecar,Toast.LENGTH_LONG).show();
+                        cliente.comecarClientBtn.setVisibility(View.VISIBLE);
+                        cliente.criarClientBtn.setVisibility(View.GONE);
+                    }
                 }
             });
         } catch (IOException e) {
-            e.printStackTrace();
+            Log.i("OBJETO", "ERRO AO TENTAR RECEBER OBJETO:"+ e.getMessage());
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            Log.i("OBJETO", "ERRO AO TENTAR RECEBER OBJETO:"+e.getMessage());
         }
     }
 
@@ -164,6 +164,8 @@ public class Cliente {
                 public void run() {
                     if(comando == 999){
                         jogar.getImagemButton().setBackgroundResource(R.drawable.branco);
+                    }else if(comando == 900){
+                        jogar.terminar();
                     }else{
                         jogar.getImagemButton().setBackgroundResource(comando);
                     }
@@ -176,7 +178,7 @@ public class Cliente {
     private void ativarBotao() {
         final ClienteActivity cliente = (ClienteActivity) client;
 
-        cliente.comecarClientBtn.post(new Runnable() {
+        cliente.ipClientEdit.post(new Runnable() {
             @Override
             public void run() {
                 Toast.makeText(client.getApplicationContext(),R.string.comecar,Toast.LENGTH_LONG).show();

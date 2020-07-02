@@ -56,6 +56,7 @@ public class PreTeste extends Thread {
     private Mensagem msg;
     private Context context;
     static Jogar jogar;
+    private static int rodada = 1;
 
     public PreTeste(Socket cliente, int numCliente, Context context){
         this.cliente = cliente;
@@ -69,16 +70,15 @@ public class PreTeste extends Thread {
         if(!identificarCliente()) { //se o cliente não for o esp32
             try {
                 escritor = new ObjectOutputStream(cliente.getOutputStream());
-                enviarObjeto();
                 Log.i("OBJETO", "Criou output do servidor");
                 leitor = new ObjectInputStream(cliente.getInputStream());
                 Log.i("OBJETO", "Criou input do servidor");
+                enviarObjeto();
                 incrementaEscravos();
 
                 int numRodadas = Objects.requireNonNull(TesteViewModel.teste.getValue()).getQtdEnsaiosPorSessao();
-                int rodada = 1;
                 while (rodada <= numRodadas){
-                    Log.i("OBJETO", "Entrou no Wile - esperando mensagem do cliente...");
+                    Log.i("OBJETO", "Entrou no While - esperando mensagem do cliente...");
                     msg = (Mensagem) leitor.readObject();
                     Log.i("OBJETO", "leu mensagem "+ msg);
 
@@ -233,10 +233,12 @@ public class PreTeste extends Thread {
             try {
                 if(clientes.get(i).getLeitor() == null){
                     clientes.get(i).cliente.close();
+                    clientes.remove(i);
+                    Servidor.numCliente--;
+                    numCliente = numCliente -1;
                 }
             }catch (NullPointerException | IOException e){
                 Log.i("THREAD", "ENTROU NA EXCESSÃO");
-            }finally {
                 clientes.remove(i);
                 Servidor.numCliente--;
                 numCliente = numCliente -1;

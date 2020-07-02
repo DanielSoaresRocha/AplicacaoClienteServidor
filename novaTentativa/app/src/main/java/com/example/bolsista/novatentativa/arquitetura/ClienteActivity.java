@@ -17,8 +17,8 @@ import com.example.bolsista.novatentativa.R;
 public class ClienteActivity extends AppCompatActivity {
     public LinearLayout identificacaoCliente;
     public TextView numIdentificacao;
-    EditText ipClientEdit;
-    Button criarClientBtn;
+    public EditText ipClientEdit;
+    public Button criarClientBtn;
     public Button comecarClientBtn;
 
     static Cliente cliente;
@@ -63,7 +63,6 @@ public class ClienteActivity extends AppCompatActivity {
             final ClienteActivity client = this;
             cliente = new Cliente(ipClientEdit.getText().toString(),client,false);
             cliente.connect();
-            Toast.makeText(getApplicationContext(), R.string.cliente_criado, Toast.LENGTH_SHORT).show();
         }
     }
 
