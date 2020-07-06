@@ -77,39 +77,8 @@ public class PreTeste extends Thread {
                 Log.i("OBJETO", "Criou input do servidor");
                 enviarObjeto();
                 incrementaEscravos();
+                tratarConexao();
 
-                int numRodadas = Objects.requireNonNull(TesteViewModel.teste.getValue()).getQtdEnsaiosPorSessao();
-                Ensaio ensaio = new Ensaio(); // Iniciando um ensaio
-                while (rodada <= numRodadas){
-                    ensaio.setId(rodada+"");
-                    Log.i("OBJETO", "Entrou no While - esperando mensagem do cliente...");
-                    msg = (Mensagem) leitor.readObject();
-                    Log.i("OBJETO", "leu mensagem "+ msg);
-                    ensaio.setIdDesafio(Integer.toString(rodada));
-
-                    if(clientes.size() >= 1){
-                        int numClicksClient = numClicks.get(msg.getIdentificacao());
-                        //Se este cliente tiver clicado menos a quantidada max de vezes consecutivas
-                        Log.i("Cliente "+ msg.getIdentificacao(), "clicks = "+ numClicksClient);
-                        if(numClicksClient < TesteViewModel.teste.getValue().getMaxVezesConsecutivas()){
-                            jogar.tocarAcerto(); // cavalo acertou
-                            esp32(ABRIR_MOTOR);
-                            dormir(5);
-                            esp32(FECHAR_MOTOR);//enviar comando para o servo fechar no esp32numClicks.put(msg.)
-                            numClicks.put(msg.getIdentificacao(), numClicksClient+1);
-                            rodada++;
-                            //ensaio
-                            ensaio.setAcerto(true);
-                        }else {
-                            jogar.tocarError();
-                            ensaio.setAcerto(false);
-                        }
-                        TesteViewModel.sessao.getEnsaios().add(ensaio);
-                    }
-                }
-                TesteViewModel.adicionarNovaSessao();
-                terminar();
-                jogar.terminar();
             } catch (IOException e) {
                 Log.i("COMUNICACAO", "ERRO = " + e.getMessage());
                 desconectarCliente();
@@ -118,6 +87,42 @@ public class PreTeste extends Thread {
             }
         }
     }
+
+    private void tratarConexao() throws IOException, ClassNotFoundException {
+        int numRodadas = Objects.requireNonNull(TesteViewModel.teste.getValue()).getQtdEnsaiosPorSessao();
+        while (rodada <= numRodadas){
+            Ensaio ensaio = new Ensaio(); // Iniciando um ensaio
+            ensaio.setId(rodada+"");
+            Log.i("OBJETO", "Entrou no While - esperando mensagem do cliente...");
+            msg = (Mensagem) leitor.readObject();
+            Log.i("OBJETO", "leu mensagem "+ msg);
+            ensaio.setIdDesafio(Integer.toString(rodada));
+
+            if(clientes.size() >= 1){
+                int numClicksClient = numClicks.get(msg.getIdentificacao());
+                //Se este cliente tiver clicado menos a quantidada max de vezes consecutivas
+                Log.i("Cliente "+ msg.getIdentificacao(), "clicks = "+ numClicksClient);
+                if(numClicksClient < TesteViewModel.teste.getValue().getMaxVezesConsecutivas()){
+                    jogar.tocarAcerto(); // cavalo acertou
+                    esp32(ABRIR_MOTOR);
+                    dormir(5);
+                    esp32(FECHAR_MOTOR);//enviar comando para o servo fechar no esp32numClicks.put(msg.)
+                    numClicks.put(msg.getIdentificacao(), numClicksClient+1);
+                    rodada++;
+                    //ensaio
+                    ensaio.setAcerto(true);
+                }else {
+                    jogar.tocarError();
+                    ensaio.setAcerto(false);
+                }
+                TesteViewModel.sessao.getEnsaios().add(ensaio);
+            }
+        }
+        TesteViewModel.adicionarNovaSessao();
+        terminar();
+        jogar.terminar();
+    }
+
 
     //incrementar número de escravos conectados na activity servidor
     private void incrementaEscravos() {
