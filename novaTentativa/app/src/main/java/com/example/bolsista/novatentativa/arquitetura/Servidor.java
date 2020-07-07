@@ -37,7 +37,6 @@ public class Servidor extends AppCompatActivity {
     //static Cliente cliente;
 
     public static int numberAleatorio;
-    public static boolean serverIdentificado = false;
     public static boolean preTeste = false;
     public static boolean controleRemoto = false;
 

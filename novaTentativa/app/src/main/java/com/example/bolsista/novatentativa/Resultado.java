@@ -33,7 +33,8 @@ public class Resultado extends AppCompatActivity {
         setContentView(R.layout.activity_resultado);
 
         inicializar();
-        updateExperimento();
+        if(Servidor.preTeste)
+            updateExperimento();
     }
 
     private void updateExperimento() {
