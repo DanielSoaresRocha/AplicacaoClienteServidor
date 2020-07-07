@@ -105,7 +105,6 @@ public class PreTeste extends Thread {
                 if(numClicksClient < TesteViewModel.teste.getValue().getMaxVezesConsecutivas()){
                     jogar.tocarAcerto(); // cavalo acertou
                     esp32(ABRIR_MOTOR);
-                    dormir(5);
                     esp32(FECHAR_MOTOR);//enviar comando para o servo fechar no esp32numClicks.put(msg.)
                     numClicks.put(msg.getIdentificacao(), numClicksClient+1);
                     rodada++;

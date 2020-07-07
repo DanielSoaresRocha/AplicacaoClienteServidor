@@ -22,7 +22,7 @@ public class TesteViewModel {
         teste = new MutableLiveData<>();
         teste.setValue(testeDaVez);
 
-        sessao = new Sessao(numSessao+"", "Sessão " + numSessao, new Date(), usuario);
+        sessao = new Sessao(numSessao+"", "Sessão " + (numSessao+1), new Date(), usuario);
 
         if(Objects.requireNonNull(teste.getValue()).getSessoes() == null)
             teste.getValue().setSessoes(new ArrayList<>());
