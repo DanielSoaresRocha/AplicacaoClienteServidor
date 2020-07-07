@@ -113,6 +113,7 @@ public class PreTeste extends Thread {
                     ensaio.setAcerto(true);
                 }else {
                     jogar.tocarError();
+                    Log.i("TAXA_ACERTO", "CAVALO ERROU - ADICIONANDO ERRO");
                     ensaio.setAcerto(false);
                 }
                 TesteViewModel.sessao.getEnsaios().add(ensaio);
