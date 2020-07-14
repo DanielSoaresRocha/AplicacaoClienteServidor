@@ -115,25 +115,10 @@ public class Jogar extends AppCompatActivity {
 
     // Terminar o teste recebendo todos os desafios realizados para enviar ao banco
     public void terminar(){
-        telaResultado();
-    }
-
-    /*
-    public void terminar(ArrayList<Desafio> desafios, String idExperimento){
-        this.desafios = desafios;
-        DocumentReference experimentoRef = db.collection("experimentos").document(idExperimento);
-        for (int i = 0; i < desafios.size(); i++){
-            desafios.get(i).setExperimento(experimentoRef);
-            addDesafioFireStore(desafios.get(i));
-        }
-        telaResultado();
-    }
-        */
-
-    // Tela para exibir o resultado
-    private void telaResultado() {
         Intent telaResultado = new Intent(Jogar.this, Resultado.class);
         startActivity(telaResultado);
+
+        finish();
     }
 
     private void modoFullScreean(){

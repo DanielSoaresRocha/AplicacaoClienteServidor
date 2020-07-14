@@ -43,8 +43,8 @@ public class PreTeste extends Thread {
     static PrintStream esp32; // enviar dados para o esp
     public final int ABRIR_MOTOR = 1;
     public final int FECHAR_MOTOR = 0;
-    private final int FECHAR_SOCKET = 998;
-    private final int TROCAR_IMAGENS = 997;
+    public final int FECHAR_SOCKET = 998;
+    public final int TROCAR_IMAGENS = 997;
 
     // informações do cliente socket
     private Socket cliente; // o cliente recebido nesta Thread
@@ -180,6 +180,18 @@ public class PreTeste extends Thread {
         }catch (IOException e){
             Log.i("ERRO", "ERRO AO FECHAR CONEXÃO = " + e.getMessage());
         }catch (java.lang.NullPointerException e){
+            Log.i("ERRO", "ERRO AO FECHAR CONEXÃO = " + e.getMessage());
+        }
+    }
+
+    public void desconectarControle() {
+        try{
+            Servidor.controleRemoto = false;
+            leitor.close();
+            escritor.close();
+            cliente.close();
+            Log.i("REMOTO", "CONTROLE REMOTO DESCONECTADO");
+        }catch (IOException e){
             Log.i("ERRO", "ERRO AO FECHAR CONEXÃO = " + e.getMessage());
         }
     }
