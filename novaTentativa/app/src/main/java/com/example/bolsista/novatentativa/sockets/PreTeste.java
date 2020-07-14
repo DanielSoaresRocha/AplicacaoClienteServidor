@@ -36,13 +36,13 @@ import java.util.Objects;
 * */
 
 public class PreTeste extends Thread {
-    private ObjectInputStream leitor; // ler dados
+    public ObjectInputStream leitor; // ler dados
     private ObjectOutputStream escritor;// enviar dados
 
     //comandos para o exp32
     static PrintStream esp32; // enviar dados para o esp
-    private final int ABRIR_MOTOR = 1;
-    private final int FECHAR_MOTOR = 0;
+    public final int ABRIR_MOTOR = 1;
+    public final int FECHAR_MOTOR = 0;
     private final int FECHAR_SOCKET = 998;
     private final int TROCAR_IMAGENS = 997;
 
@@ -55,10 +55,10 @@ public class PreTeste extends Thread {
     public static Map<Integer, Integer> numClicks = new HashMap<>();
 
     //interações
-    private Mensagem msg;
+    public Mensagem msg;
     private Context context;
     static Jogar jogar;
-    private static int rodada = 1;
+    public static int rodada = 1;
 
     public PreTeste(Socket cliente, int numCliente, Context context){
         this.cliente = cliente;
@@ -88,7 +88,7 @@ public class PreTeste extends Thread {
         }
     }
 
-    private void tratarConexao() throws IOException, ClassNotFoundException {
+    public void tratarConexao() throws IOException, ClassNotFoundException {
         int numRodadas = Objects.requireNonNull(TesteViewModel.teste.getValue()).getQtdEnsaiosPorSessao();
         while (rodada <= numRodadas){
             Ensaio ensaio = new Ensaio(); // Iniciando um ensaio
@@ -144,7 +144,7 @@ public class PreTeste extends Thread {
         Log.i("OBJETO","Enviou objeto" + mensagem.getIdentificacao());
     }
 
-    private void dormir(int tempo){
+    public static void dormir(int tempo){
         try {
             tempo *= 1000; //transforma segundos em millisegundos
             sleep(tempo);
@@ -155,7 +155,7 @@ public class PreTeste extends Thread {
     }
 
     // Informar e fechar todos os sockets (clientes)
-    private void terminar() throws IOException {
+    public void terminar() throws IOException {
         Log.i("TERMINAR", "QTD DE CLIENTE CONECTADOS:" + clientes.size());
         for(int i = 0; i < clientes.size(); i++){
             PreTeste destino = clientes.get(i);

@@ -17,6 +17,8 @@ import com.example.bolsista.novatentativa.GerenciadorDeClientes;
 import com.example.bolsista.novatentativa.Jogar;
 import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.sockets.PreTeste;
+import com.example.bolsista.novatentativa.sockets.PseudoTeste;
+import com.example.bolsista.novatentativa.viewsModels.TesteViewModel;
 
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -55,7 +57,6 @@ public class Servidor extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 criarServidor();
-
             }
         });
 
@@ -63,9 +64,7 @@ public class Servidor extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent mudarTela = new Intent(Servidor.this,Jogar.class);
-
                 startActivity(mudarTela);
-
             }
         });
 
@@ -88,7 +87,10 @@ public class Servidor extends AppCompatActivity {
                     while (true) {
                         Socket cliente = servidor.accept();
                         Log.i("SERVIDOR", "CLIENTE FOI CONECTADO = " + cliente.getInetAddress());
-                        new PreTeste(cliente,numCliente, contextActivity);
+                        if(TesteViewModel.teste.getValue().getPreTeste()) // só se não for um pré-teste
+                            new PreTeste(cliente,numCliente, contextActivity);
+                        else
+                            new PseudoTeste(cliente,numCliente, contextActivity);
                         numCliente++;
                     }
                 } catch (IOException e) {

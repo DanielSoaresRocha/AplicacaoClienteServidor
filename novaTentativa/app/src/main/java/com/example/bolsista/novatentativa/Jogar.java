@@ -17,6 +17,7 @@ import com.example.bolsista.novatentativa.arquitetura.Servidor;
 import com.example.bolsista.novatentativa.modelo.Desafio;
 import com.example.bolsista.novatentativa.sockets.Cliente;
 import com.example.bolsista.novatentativa.sockets.PreTeste;
+import com.example.bolsista.novatentativa.sockets.PseudoTeste;
 import com.example.bolsista.novatentativa.viewsModels.TesteViewModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -44,9 +45,10 @@ public class Jogar extends AppCompatActivity {
         if(Servidor.preTeste){
             Toast.makeText(this, "definiu", Toast.LENGTH_SHORT).show();
             PreTeste.definirTela(this);
-            int imagemAtual = Servidor.numberAleatorio;//pegar a imagem atual que está no servidor
-
+            int imagemAtual = Servidor.numberAleatorio; //pegar a imagem atual que está no servidor
             imagemButton.setBackgroundResource(imagemAtual);
+            if(!TesteViewModel.teste.getValue().getPreTeste()) // só se não for um pré-teste
+                PseudoTeste.comecarInteracao();
         }else{
             Cliente.definirTela(this);
         }
@@ -67,7 +69,6 @@ public class Jogar extends AppCompatActivity {
         }
 
     public void tocarError(){
-
         mp = MediaPlayer.create(Jogar.this, TesteViewModel.teste.getValue().getSomErro());
         mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener(){
             public void onCompletion(MediaPlayer mp) {
