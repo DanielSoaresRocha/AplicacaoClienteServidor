@@ -40,7 +40,7 @@ public class Jogar extends AppCompatActivity {
         //getActionBar().hide();
         setContentView(R.layout.activity_jogar);
         //Colocar tela em landScape para melhor visualização
-        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
+        //this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
 
         inicializar();
         listener();
@@ -52,6 +52,7 @@ public class Jogar extends AppCompatActivity {
             imagemButton.setBackgroundResource(imagemAtual);
             if(!TesteViewModel.teste.getValue().getPreTeste()) // só se não for um pré-teste
                 PseudoTeste.comecarInteracao();
+            Log.i("ACTIVITYJOGAR", "MUDOU ESSA VEZ");
         }else{
             Cliente.definirTela(this);
         }

@@ -39,7 +39,11 @@
         <activity android:name=".NovoExperimento" />
         <activity android:name=".cadastros.CadastrarEquino" />
         <activity android:name=".arquitetura.Remoto" />
-        <activity android:name=".Jogar" />
+        <activity
+            android:name=".Jogar"
+            android:configChanges="orientation"
+            android:screenOrientation="landscape"
+            />
         <activity android:name=".ControleRemoto" />
         <activity android:name=".cadastros.ConfigurarTeste" />
         <activity android:name=".arquitetura.Definir">

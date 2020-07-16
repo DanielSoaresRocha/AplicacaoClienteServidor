@@ -66,7 +66,7 @@ public class PseudoTeste extends PreTeste{
         desafioAtual = TesteViewModel.teste.getValue().getDesafios().get(numDesafio);
 
         mudarImagem(desafioAtual.getImgCorreta());
-        dormir(TesteViewModel.teste.getValue().getIntervalo2());
+        dormir(/*TesteViewModel.teste.getValue().getIntervalo2()*/1);
 
         enviarParaEscravos(desafioAtual.getImg1(), desafioAtual.getImg2());
         rodada++;
