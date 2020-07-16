@@ -86,22 +86,22 @@ public class ListarTestes extends Fragment {
             */
             //DESAFIOS TESTE L1
             ArrayList<Desafio> desafiosL1 = new ArrayList<>();
-            desafiosL1.add(new Desafio("1", R.drawable.branco, R.drawable.estrela2, R.drawable.estrela2));
-            desafiosL1.add(new Desafio("2", R.drawable.estrela2, R.drawable.estrela2, R.drawable.branco));
-            desafiosL1.add(new Desafio("3", R.drawable.branco, R.drawable.circulo,  R.drawable.circulo));
-            desafiosL1.add(new Desafio("4", R.drawable.circulo, R.drawable.circulo,  R.drawable.branco));
+            desafiosL1.add(new Desafio("1", R.drawable.branco, R.drawable.cruz, R.drawable.cruz));
+            desafiosL1.add(new Desafio("2", R.drawable.cruz, R.drawable.cruz, R.drawable.branco));
+            desafiosL1.add(new Desafio("3", R.drawable.branco, R.drawable.circuloo,  R.drawable.circuloo));
+            desafiosL1.add(new Desafio("4", R.drawable.circuloo, R.drawable.circuloo,  R.drawable.branco));
             //DESAFIOS TESTE L2
             ArrayList<Desafio> desafiosL2 = new ArrayList<>();
-            desafiosL2.add(new Desafio("5",R.drawable.circulo, R.drawable.estrela2, R.drawable.estrela2));
-            desafiosL2.add(new Desafio("6",R.drawable.estrela2, R.drawable.estrela2, R.drawable.circulo));
-            desafiosL2.add(new Desafio("7",R.drawable.estrela2, R.drawable.circulo, R.drawable.circulo));
-            desafiosL2.add(new Desafio("8",R.drawable.circulo, R.drawable.circulo, R.drawable.estrela2));
+            desafiosL2.add(new Desafio("5",R.drawable.circuloo, R.drawable.cruz, R.drawable.cruz));
+            desafiosL2.add(new Desafio("6",R.drawable.cruz, R.drawable.cruz, R.drawable.circuloo));
+            desafiosL2.add(new Desafio("7",R.drawable.cruz, R.drawable.circuloo, R.drawable.circuloo));
+            desafiosL2.add(new Desafio("8",R.drawable.circuloo, R.drawable.circuloo, R.drawable.cruz));
             //DESAFIOS TESTE T1
             ArrayList<Desafio> desafiosT1 = new ArrayList<>();
-            desafiosT1.add(new Desafio("10",R.drawable.triangulo, R.drawable.triangulo, R.drawable.retanguloo));
-            desafiosT1.add(new Desafio("11",R.drawable.retanguloo, R.drawable.triangulo, R.drawable.triangulo));
-            desafiosT1.add(new Desafio("12",R.drawable.triangulo, R.drawable.retanguloo, R.drawable.retanguloo));
-            desafiosT1.add(new Desafio("13",R.drawable.retanguloo, R.drawable.retanguloo, R.drawable.triangulo));
+            desafiosT1.add(new Desafio("10",R.drawable.trianguloo, R.drawable.trianguloo, R.drawable.retanguloo));
+            desafiosT1.add(new Desafio("11",R.drawable.retanguloo, R.drawable.trianguloo, R.drawable.trianguloo));
+            desafiosT1.add(new Desafio("12",R.drawable.trianguloo, R.drawable.retanguloo, R.drawable.retanguloo));
+            desafiosT1.add(new Desafio("13",R.drawable.retanguloo, R.drawable.retanguloo, R.drawable.trianguloo));
 
             //PRE-TESTE
             ListarViewModel.addConfiguracao(new Teste("0", "Pré-teste", 0,

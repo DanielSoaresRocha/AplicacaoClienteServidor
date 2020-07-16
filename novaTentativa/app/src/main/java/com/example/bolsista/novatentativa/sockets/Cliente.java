@@ -163,7 +163,7 @@ public class Cliente {
                 @Override
                 public void run() {
                     if(comando == 999){
-                        jogar.getImagemButton().setBackgroundResource(R.drawable.branco);
+                        jogar.getImagemButton().setBackgroundResource(R.drawable.tela_preta);
                     }else if(comando == 900){
                         jogar.terminar();
                     }else{

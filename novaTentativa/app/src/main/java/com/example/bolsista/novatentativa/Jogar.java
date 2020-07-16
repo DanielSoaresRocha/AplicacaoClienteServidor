@@ -2,6 +2,7 @@ package com.example.bolsista.novatentativa;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.media.MediaPlayer;
 
 import androidx.annotation.NonNull;
@@ -38,6 +39,8 @@ public class Jogar extends AppCompatActivity {
         getSupportActionBar().hide(); //tirar barra de título
         //getActionBar().hide();
         setContentView(R.layout.activity_jogar);
+        //Colocar tela em landScape para melhor visualização
+        this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
 
         inicializar();
         listener();

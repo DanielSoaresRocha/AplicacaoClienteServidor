@@ -78,7 +78,7 @@ public class PseudoTeste extends PreTeste{
         }
     }
 
-    //mudar imagens para branco, e espera um novo sorteio
+    //mudar imagens para preto, e espera um novo sorteio
     private void esperar() throws IOException{
         mudarImagem(999);
 
@@ -95,7 +95,7 @@ public class PseudoTeste extends PreTeste{
             @Override
             public void run() {
                 if(comando == 999){
-                    jogar.getImagemButton().setBackgroundResource(R.drawable.branco);
+                    jogar.getImagemButton().setBackgroundResource(R.drawable.tela_preta);
                 }else{
                     jogar.getImagemButton().setBackgroundResource(comando);
                 }
