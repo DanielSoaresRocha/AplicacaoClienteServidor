@@ -50,7 +50,7 @@ public class Cliente {
     }
 
     public void connect(){
-        imgAtual = R.drawable.circulo;
+        imgAtual = R.drawable.tela_preta;
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);// permitir que execute algum comando sem precisar criar uma nova thread.

@@ -71,7 +71,7 @@ public class Servidor extends AppCompatActivity {
     }
 
     private void criarServidor() {
-        numberAleatorio = R.drawable.branco;
+        numberAleatorio = R.drawable.tela_preta;
 
         preTeste = true;
         new Thread(new Runnable() {
