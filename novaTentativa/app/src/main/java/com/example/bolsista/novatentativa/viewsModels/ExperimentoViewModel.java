@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel;
 
 import com.example.bolsista.novatentativa.modelo.Experimento;
 import com.example.bolsista.novatentativa.modelo.Sessao;
+import com.example.bolsista.novatentativa.modelo.Teste;
 
 import java.util.ArrayList;
 import java.util.Objects;
@@ -26,7 +27,7 @@ public class ExperimentoViewModel extends ViewModel {
         experimentos.setValue(exp);
     }
 
-    public static void updateTeste(int numTeste, ArrayList<Sessao> sessoes){
-        Objects.requireNonNull(experimento.getValue()).getTestes().get(numTeste).setSessoes(sessoes);
+    public static void updateTeste(int numTeste, Teste teste){
+        Objects.requireNonNull(experimento.getValue()).getTestes().set(numTeste, teste);
     }
 }

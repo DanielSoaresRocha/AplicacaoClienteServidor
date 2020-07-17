@@ -49,38 +49,16 @@ public class Graficos {
         graficoBarra.invalidate(); // refresh
     }
 
-    public void getGraficoLinha(final LineChart graficoLinha){
-
+    public void getGraficoLinha(final LineChart graficoLinha, ArrayList<Sessao> sessoes){
         entradasL = new ArrayList<Entry>();
-        sessoes = new ArrayList<Sessao>();
+        this.sessoes = sessoes;
 
-        db.collection("sessoes")
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            for (QueryDocumentSnapshot document : task.getResult()) {
+        LineData data = new LineData(addEntradasLin()); // Objeto responsável por receber os valores dos dados/ Objeto usado para plotar os gráficos
+        data.setDrawValues(false);
+        data.setValueTextSize(15f);
 
-                                sessoes.add((Sessao) document.toObject(Sessao.class));
-
-                                Log.i("FireStore", document.getId() + " => " + document.getData());
-                            }
-
-                        } else {
-                            Log.i("FireStore", "Error getting documents: ", task.getException());
-                        }
-
-                        LineData data = new LineData(addEntradasLin()); // Objeto responsável por receber os valores dos dados/ Objeto usado para plotar os gráficos
-                        data.setDrawValues(false);
-                        data.setValueTextSize(15f);
-
-                        graficoLinha.setData(data);
-                        graficoLinha.invalidate();
-                        System.out.println("A THREAD FINALIZOU SUA EXECUÇÃO");
-                    }
-
-                });
+        graficoLinha.setData(data);
+        graficoLinha.invalidate();
     }
 
     private BarDataSet addEntradasBar(){
@@ -97,11 +75,11 @@ public class Graficos {
 
         return barDataSet1;
     }
-//Classe estatística getMédia - da taxa de acerto
-// e getMediana - medianas - da taxa de acerto
+    //Classe estatística getMédia - da taxa de acerto
+    // e getMediana - medianas - da taxa de acerto
     private LineDataSet addEntradasLin(){
         for (int i = 0; i < sessoes.size(); i++) {
-            valX[i] = /*sessoes.get(i).getIdSessao();*/i;
+            valX[i] = Integer.parseInt(sessoes.get(i).getId())+1;
             valY[i] = sessoes.get(i).getTaxaAcerto();
         }
         ordena();

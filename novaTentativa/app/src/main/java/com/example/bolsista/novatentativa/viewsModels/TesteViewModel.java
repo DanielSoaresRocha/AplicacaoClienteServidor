@@ -35,10 +35,11 @@ public class TesteViewModel {
     public static void adicionarNovaSessao(){
         sessao.setTaxaAcerto(calculaPorcentagemAcerto());
         Objects.requireNonNull(teste.getValue()).getSessoes().add(sessao);
-        if(sessao.getTaxaAcerto() >= teste.getValue().getCriterioAprendizagem())
+        if(sessao.getTaxaAcerto() >= teste.getValue().getCriterioAprendizagem()) {
             teste.getValue().setCompleto(true);
+        }
 
-        ExperimentoViewModel.updateTeste(Integer.parseInt(teste.getValue().getId()), teste.getValue().getSessoes());
+        ExperimentoViewModel.updateTeste(Integer.parseInt(teste.getValue().getId()), teste.getValue());
     }
 
     private static int calculaPorcentagemAcerto(){

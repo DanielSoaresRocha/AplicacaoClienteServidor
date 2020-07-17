@@ -12,8 +12,8 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/sessaoRecycleView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="9"
+        android:layout_height="0dp"
+        android:layout_weight="6"
         >
     </androidx.recyclerview.widget.RecyclerView>
 
@@ -21,7 +21,7 @@
         android:id="@+id/nenhumeSessaoLayouth"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="9"
+        android:layout_weight="8"
         android:visibility="gone"
         android:gravity="center"
         >
@@ -38,20 +38,61 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
         android:orientation="vertical"
         android:gravity="center"
-        android:layout_weight="1"
+        android:layout_weight="4"
         >
-        <Button
-            android:id="@+id/verGrafico"
-            android:layout_width="wrap_content"
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ver gráfico de evolução"
-            android:background="@color/cardview_shadow_start_color"
-            android:padding="10sp"
-            android:fontFamily="sans-serif-black"
-            />
+            android:orientation="vertical"
+            android:id="@+id/verGraficos"
+            >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ver Gráficos de evolução"
+            android:gravity="center"
+            android:textSize="24sp"
+            android:textColor="@color/preto"
+            >
+
+        </TextView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            >
+
+            <Button
+                android:id="@+id/graficoBarraBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Barras"
+                android:background="@color/cardview_shadow_start_color"
+                android:padding="10sp"
+                android:fontFamily="sans-serif-black"
+                android:layout_marginHorizontal="20sp"
+                />
+
+            <Button
+                android:id="@+id/graficoLinhaBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Linha"
+                android:background="@color/cardview_shadow_start_color"
+                android:padding="10sp"
+                android:fontFamily="sans-serif-black"
+                android:layout_marginHorizontal="20sp"
+                />
+
+
+        </LinearLayout>
+    </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"

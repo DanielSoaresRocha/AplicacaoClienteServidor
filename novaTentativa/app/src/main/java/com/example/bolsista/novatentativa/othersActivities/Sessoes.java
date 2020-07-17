@@ -24,6 +24,7 @@ import com.example.bolsista.novatentativa.adapters.SessaoAdapter;
 import com.example.bolsista.novatentativa.arquitetura.Definir;
 import com.example.bolsista.novatentativa.arquitetura.Servidor;
 import com.example.bolsista.novatentativa.graficos.GraficoBarra;
+import com.example.bolsista.novatentativa.graficos.GraficoLinha;
 import com.example.bolsista.novatentativa.modelo.Experimento;
 import com.example.bolsista.novatentativa.modelo.Sessao;
 import com.example.bolsista.novatentativa.modelo.Teste;
@@ -43,12 +44,12 @@ import java.util.Collections;
 import java.util.Date;
 
 public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
-    private Button IniciarSessaoBtn;
+    private Button IniciarSessaoBtn, graficoBarraBtn, graficoLinhaBtn;
     private TextView experimentadorTextView;
     private RecyclerView sessaoRecycleView;
     private Spinner experimentadorSpinner;
     LinearLayout nenhumeSessaoLayouth;
-    Button verGrafico;
+    LinearLayout verGraficos;
 
     private int POSITION_EXPERIMENTO;
     private int POSITION_TESTE;
@@ -117,11 +118,21 @@ public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSele
     private void listener() {
         experimentadorSpinner.setOnItemSelectedListener(this);
 
-        verGrafico.setOnClickListener(new View.OnClickListener() {
+        graficoBarraBtn.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View view) {
+            public void onClick(View v) {
                 Intent it = new Intent(Sessoes.this, GraficoBarra.class);
-                // passando um objeto
+                // passando uma lista
+                it.putExtra("sessoes", sessoes);
+                startActivity(it);
+            }
+        });
+
+        graficoLinhaBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent it = new Intent(Sessoes.this, GraficoLinha.class);
+                // passando uma lista
                 it.putExtra("sessoes", sessoes);
                 startActivity(it);
             }
@@ -158,7 +169,7 @@ public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSele
         if(sessoes.size() == 0){
             sessaoRecycleView.setVisibility(View.GONE);
             nenhumeSessaoLayouth.setVisibility(View.VISIBLE);
-            verGrafico.setVisibility(View.GONE);
+            verGraficos.setVisibility(View.GONE);
         }
 
         // se o teste já tiver sido completado remover estas Views
@@ -176,10 +187,12 @@ public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSele
     private void inicializar() {
         IniciarSessaoBtn = findViewById(R.id.IniciarSessaoBtn);
         experimentadorTextView = findViewById(R.id.experimentadorTextView);
-        verGrafico = findViewById(R.id.verGrafico);
+        verGraficos = findViewById(R.id.verGraficos);
         sessaoRecycleView = findViewById(R.id.sessaoRecycleView);
         experimentadorSpinner = findViewById(R.id.experimentadorSpinner);
         nenhumeSessaoLayouth = findViewById(R.id.nenhumeSessaoLayouth);
+        graficoBarraBtn = findViewById(R.id.graficoBarraBtn);
+        graficoLinhaBtn = findViewById(R.id.graficoLinhaBtn);
         contextActivity = this;
         sessoes = new ArrayList<>();
         usuarios = new ArrayList<>();
