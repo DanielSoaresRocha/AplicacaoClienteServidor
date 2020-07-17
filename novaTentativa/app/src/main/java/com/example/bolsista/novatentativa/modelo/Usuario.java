@@ -1,6 +1,8 @@
 package com.example.bolsista.novatentativa.modelo;
 
-public class Usuario {
+import java.io.Serializable;
+
+public class Usuario implements Serializable {
     private String uid;
     private String nome;
 

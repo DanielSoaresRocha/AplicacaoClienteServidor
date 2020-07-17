@@ -1,6 +1,8 @@
 package com.example.bolsista.novatentativa.modelo;
 
-public class Ensaio {
+import java.io.Serializable;
+
+public class Ensaio implements Serializable {
     private String id;
     private String idSessao;
     private String idDesafio;

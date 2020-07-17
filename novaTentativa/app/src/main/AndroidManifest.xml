@@ -16,6 +16,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".graficos.GraficoBarra"></activity>
         <activity android:name=".Inicio">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -42,11 +43,11 @@
         <activity
             android:name=".Jogar"
             android:configChanges="orientation"
-            android:screenOrientation="landscape"
-            />
+            android:screenOrientation="landscape" />
         <activity android:name=".ControleRemoto" />
         <activity android:name=".cadastros.ConfigurarTeste" />
         <activity android:name=".arquitetura.Definir">
+
             <!-- sldfsdfasdf -->
         </activity>
         <activity android:name=".arquitetura.Servidor" />

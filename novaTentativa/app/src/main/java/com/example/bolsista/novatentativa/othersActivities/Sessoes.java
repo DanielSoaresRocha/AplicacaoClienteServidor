@@ -23,6 +23,7 @@ import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.adapters.SessaoAdapter;
 import com.example.bolsista.novatentativa.arquitetura.Definir;
 import com.example.bolsista.novatentativa.arquitetura.Servidor;
+import com.example.bolsista.novatentativa.graficos.GraficoBarra;
 import com.example.bolsista.novatentativa.modelo.Experimento;
 import com.example.bolsista.novatentativa.modelo.Sessao;
 import com.example.bolsista.novatentativa.modelo.Teste;
@@ -119,7 +120,10 @@ public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSele
         verGrafico.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(contextActivity, "Ainda não implementado", Toast.LENGTH_SHORT).show();
+                Intent it = new Intent(Sessoes.this, GraficoBarra.class);
+                // passando um objeto
+                it.putExtra("sessoes", sessoes);
+                startActivity(it);
             }
         });
 
