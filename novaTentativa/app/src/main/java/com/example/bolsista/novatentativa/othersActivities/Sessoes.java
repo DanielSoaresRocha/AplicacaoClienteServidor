@@ -124,6 +124,8 @@ public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSele
                 Intent it = new Intent(Sessoes.this, GraficoBarra.class);
                 // passando uma lista
                 it.putExtra("sessoes", sessoes);
+                it.putExtra("nomeEquino", ExperimentoViewModel.experimento.getValue()
+                .getEquino().getNome());
                 startActivity(it);
             }
         });
@@ -134,6 +136,8 @@ public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSele
                 Intent it = new Intent(Sessoes.this, GraficoLinha.class);
                 // passando uma lista
                 it.putExtra("sessoes", sessoes);
+                it.putExtra("nomeEquino", ExperimentoViewModel.experimento.getValue()
+                        .getEquino().getNome());
                 startActivity(it);
             }
         });

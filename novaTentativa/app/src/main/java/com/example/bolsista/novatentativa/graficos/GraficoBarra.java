@@ -18,6 +18,7 @@ public class GraficoBarra extends AppCompatActivity {
     Graficos g;
     BarChart graficoBarra;
     ArrayList<Sessao> sessoes;
+    String nomeEquino;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +29,12 @@ public class GraficoBarra extends AppCompatActivity {
         inicializar();
         layoutGraficoBarra();
 
-        g.getGraficoBarras(graficoBarra, sessoes);
+        g.getGraficoBarras(graficoBarra, sessoes, nomeEquino);
     }
 
     private void getSessoes() {
         sessoes = (ArrayList<Sessao>) getIntent().getSerializableExtra("sessoes");
+        nomeEquino = getIntent().getStringExtra("nomeEquino");
     }
 
     private void layoutGraficoBarra() {

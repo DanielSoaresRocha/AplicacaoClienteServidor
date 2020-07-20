@@ -105,7 +105,7 @@ public class PreTeste extends Thread {
                 if(numClicksClient < TesteViewModel.teste.getValue().getMaxVezesConsecutivas()){
                     jogar.tocarAcerto(); // cavalo acertou
                     esp32(ABRIR_MOTOR);
-                    esp32(FECHAR_MOTOR);//enviar comando para o servo fechar no esp32numClicks.put(msg.)
+                    //esp32(FECHAR_MOTOR);//enviar comando para o servo fechar no esp32numClicks.put(msg.)
                     numClicks.put(msg.getIdentificacao(), numClicksClient+1);
                     rodada++;
                     //ensaio
@@ -240,14 +240,15 @@ public class PreTeste extends Thread {
 
     private void adicionarCliente() {
         removerThreadsParadas();
-        clientes.put(numCliente,this);
+        clientes.put(numCliente,this);// incrementa mais um cliente na lista de clientes conectados
         numClicks.put(numCliente, 0);//este cliente inicia com 0 clicks
+
         //se houver mais do que dois tablets conectados:
         if(clientes.size()>=2){
             Servidor.criarServerBtn.post(new Runnable() {
                 @Override
                 public void run() {
-                    Toast.makeText(context, "Pronto para começar", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context, "Pronto para começar", Toast.LENGTH_SHORT).show();
                     Servidor.comecarServerBtn.setVisibility(View.VISIBLE);
                 }
             });

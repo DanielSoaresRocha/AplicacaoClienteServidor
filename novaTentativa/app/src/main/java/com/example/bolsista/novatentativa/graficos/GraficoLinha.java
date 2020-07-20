@@ -18,6 +18,7 @@ public class GraficoLinha extends AppCompatActivity {
     LineChart graficoLinha;
     Graficos g;
     ArrayList<Sessao> sessoes;
+    String nomeEquino;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,11 +29,12 @@ public class GraficoLinha extends AppCompatActivity {
         inicializar();
         layoutGraficoLinha();
 
-        g.getGraficoLinha(graficoLinha,sessoes);
+        g.getGraficoLinha(graficoLinha,sessoes, nomeEquino);
     }
 
     private void getSessoes() {
         sessoes = (ArrayList<Sessao>) getIntent().getSerializableExtra("sessoes");
+        nomeEquino = getIntent().getStringExtra("nomeEquino");
     }
 
     private void layoutGraficoLinha() {

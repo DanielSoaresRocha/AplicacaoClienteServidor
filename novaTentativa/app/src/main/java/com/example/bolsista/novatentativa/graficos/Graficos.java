@@ -31,14 +31,16 @@ public class Graficos {
     FirebaseFirestore db = FirebaseFirestore.getInstance();
     float valX[] = new float[100]; // declaração combinada
     float valY[] = new float[100];
+    String nomeEquino;
 
     public Graficos(){
 
     }
 
-    public void getGraficoBarras(final BarChart graficoBarra,ArrayList<Sessao> sessoes){
+    public void getGraficoBarras(final BarChart graficoBarra,ArrayList<Sessao> sessoes, String nomeEquino){
         entradas = new ArrayList<BarEntry>();
         this.sessoes = sessoes;
+        this.nomeEquino = nomeEquino;
 
         BarData temp = new BarData(addEntradasBar());
         temp.setDrawValues(false);
@@ -49,9 +51,10 @@ public class Graficos {
         graficoBarra.invalidate(); // refresh
     }
 
-    public void getGraficoLinha(final LineChart graficoLinha, ArrayList<Sessao> sessoes){
+    public void getGraficoLinha(final LineChart graficoLinha, ArrayList<Sessao> sessoes, String nomeEquino){
         entradasL = new ArrayList<Entry>();
         this.sessoes = sessoes;
+        this.nomeEquino = nomeEquino;
 
         LineData data = new LineData(addEntradasLin()); // Objeto responsável por receber os valores dos dados/ Objeto usado para plotar os gráficos
         data.setDrawValues(false);
@@ -69,7 +72,7 @@ public class Graficos {
             entradas.add(new BarEntry(valX[i], valY[i]));
         }
 
-        BarDataSet barDataSet1 = new BarDataSet(entradas, "Bennie");
+        BarDataSet barDataSet1 = new BarDataSet(entradas, nomeEquino);
         barDataSet1.setColor(Color.BLUE);
         barDataSet1.setBarBorderWidth(2f);
 
@@ -86,7 +89,7 @@ public class Graficos {
         for (int i = 0; i < sessoes.size(); i++) {
             entradasL.add(new Entry(valX[i], valY[i]));
         }
-        LineDataSet linEntradas1 = new LineDataSet(entradasL, "Bennie");
+        LineDataSet linEntradas1 = new LineDataSet(entradasL, nomeEquino);
         linEntradas1.setColor(Color.BLUE);
         linEntradas1.setLineWidth(5f);
 

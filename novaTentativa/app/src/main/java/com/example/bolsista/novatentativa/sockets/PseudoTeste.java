@@ -13,22 +13,36 @@ import com.example.bolsista.novatentativa.viewsModels.TesteViewModel;
 
 import java.io.IOException;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
+import java.util.Random;
 
 public class PseudoTeste extends PreTeste{
     private static Desafio desafioAtual;
-    private static int numDesafio;
+    private static ArrayList<Desafio> desafios = new ArrayList<>();
+    public static Map<Integer, Integer> numVezesDesafio = new HashMap<>();
 
     public PseudoTeste(Socket cliente, int numCliente, Context context) {
         super(cliente, numCliente, context);
-        numDesafio = 0;
+        preecherDesafios();
+    }
+
+    private void preecherDesafios() {
+        desafios = new ArrayList<>();
+        desafios.addAll(TesteViewModel.teste.getValue().getDesafios());
+        for(int i = 0 ; i < desafios.size(); i++){
+            numVezesDesafio.put(i, 0);
+        }
     }
 
     @Override
     public void tratarConexao() throws IOException, ClassNotFoundException {
         int numRodadas = Objects.requireNonNull(TesteViewModel.teste.getValue()).getQtdEnsaiosPorSessao();
 
-        while (rodada <= numRodadas){
+        while (rodada < numRodadas){
+            Log.i("NUMRODADA", "Rodada de número " + rodada);
             Ensaio ensaio = new Ensaio(); // Iniciando um ensaio
             ensaio.setId(rodada+"");
             msg = (Mensagem) leitor.readObject();
@@ -37,11 +51,12 @@ public class PseudoTeste extends PreTeste{
             if(clientes.size() >= 1){
                 if(msg.getComando() == desafioAtual.getImgCorreta()){
                     jogar.tocarAcerto();
+                    rodada++;
                     esp32(ABRIR_MOTOR);
                     esperar();
                     ensaio.setAcerto(true);
                     if (!Servidor.controleRemoto) {  // se o controle remoto não estiver conectado
-                        dormir(TesteViewModel.teste.getValue().getIntervalo1()); // tempo de espera do mestre
+                        //dormir(TesteViewModel.teste.getValue().getIntervalo1()); // tempo de espera do mestre
                         novaInteracao(); //fazer nova interação de imagens entre os tablets
                         }
                     }else if (msg.getComando() == TROCAR_IMAGENS) {//trocar imagens
@@ -56,6 +71,7 @@ public class PseudoTeste extends PreTeste{
                 TesteViewModel.sessao.getEnsaios().add(ensaio);
                 }
             }
+        Log.i("NUMRODADA", "ACABOU =>>> " + rodada);
         TesteViewModel.adicionarNovaSessao();
         terminar();
         jogar.terminar();
@@ -63,19 +79,12 @@ public class PseudoTeste extends PreTeste{
 
     private void novaInteracao(){
         esp32(FECHAR_MOTOR);//enviar comando para o servo fechar no esp32
-        desafioAtual = TesteViewModel.teste.getValue().getDesafios().get(numDesafio);
+        sortearDesafio();
 
         mudarImagem(desafioAtual.getImgCorreta());
-        dormir(/*TesteViewModel.teste.getValue().getIntervalo2()*/1);
+        //dormir(TesteViewModel.teste.getValue().getIntervalo2());
 
         enviarParaEscravos(desafioAtual.getImg1(), desafioAtual.getImg2());
-        rodada++;
-
-        if (numDesafio == TesteViewModel.teste.getValue().getDesafios().size()-1) { // Se já passaram todos os desafios
-            numDesafio = 0;
-        } else {
-            numDesafio++;
-        }
     }
 
     //mudar imagens para preto, e espera um novo sorteio
@@ -103,14 +112,39 @@ public class PseudoTeste extends PreTeste{
         });
     }
 
+    public static void sortearDesafio(){
+        int desafioDaVez = numeroAleatorio();
+        Log.i("PSEUDOTESTE", "Desafio da vez = "+ desafioDaVez);
+
+        desafioAtual = desafios.get(desafioDaVez);
+        numVezesDesafio.put(desafioDaVez, numVezesDesafio.get(desafioDaVez)+1);
+        if(numVezesDesafio.get(desafioDaVez) >= 5){
+            desafios.remove(desafioDaVez);
+            reodenarClicksDesafio(desafioDaVez);
+        }
+    }
+
+    private static void reodenarClicksDesafio(int inicio) {
+        for(int i = inicio; i < numVezesDesafio.size()-1; i++){
+            numVezesDesafio.put(i,numVezesDesafio.get(i+1));
+        }
+    }
+
+    //retorna um numero de 0 até o tamanho da lista
+    private static int numeroAleatorio() {
+        Log.i("NUMRODADA", "ENTROU EM NUMERO ALEATORIO +" + desafios.size());
+        Random radom  = new Random(); // gerar número aleatório
+        int numeroTmp = radom.nextInt(desafios.size());
+        return numeroTmp;
+    }
+
     /*
      Erros que este método pode acarretar:
      1 - Se o servidor começar antes de algum cliente, este respectivo cliente terá um erro
      2 - Se houver menos que dois clientes conectados ao mestre
     */
     public static void comecarInteracao(){
-        desafioAtual = TesteViewModel.teste.getValue().getDesafios().get(numDesafio);
-        numDesafio++;
+        sortearDesafio();
 
         enviarParaEscravos(desafioAtual.getImg1(), desafioAtual.getImg2());
 
