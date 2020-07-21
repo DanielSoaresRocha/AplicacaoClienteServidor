@@ -11,7 +11,7 @@
     <string name="comecar">Pronto para começar</string>
     <string name="qtd_de_quest_es">Quantidade de questões</string>
     <string name="informacao1">
-        Este campo dirá quantas questões o cavalo irá responder até o terminar o teste
+        Este campo dirá quantas questões o equino irá responder até o terminar o teste
     </string>
     <string name="informacao2">
         Definir tempo de intervalo entre as questões em que o tablet mestre permanece branco
@@ -37,13 +37,13 @@
     <string name="mestre">Mestre</string>
     <string name="escravo">Escravo</string>
     <string name="remoto">Remoto</string>
-    <string name="servidor">Criar Servidor</string>
+    <string name="servidor">Criar Mestre</string>
     <string name="precisa_configurar">Voce precida configurar um teste</string>
     <string name="precisa_cliente">Você precisa informar um ip</string>
     <string name="com_ecar">comecar</string>
     <string name="ip_para_conecao">Ip para conexão:</string>
     <string name="esperando">esperando...</string>
-    <string name="criar_cliente">Criar Cliente</string>
+    <string name="criar_cliente">Criar Escravo</string>
     <string name="pronto_para_criar">Pronto para criar</string>
     <string name="controle_remoto">Controle Remoto</string>
     <string name="iniciar_controle_remoto">Iniciar controle remoto</string>
@@ -55,7 +55,10 @@
     <string name="cadastrar">cadastrar</string>
     <string name="cancelar">cancelar</string>
     <string name="logoff">logoff</string>
+    <string name="conectar">Apenas conectar</string>
     <string name="escolha_uma_configura_o">Escolha uma configuração:</string>
+    <string name="exp_andamento">Experimentos em andamento</string>
+    <string name="exp_finalizado">Experimentos finalizados</string>
 
     <!--Spnner ativities -->
     <string-array name="ativities_array">
@@ -86,6 +89,42 @@
         <item>Paint horse</item>
         <item>Lusitano</item>
         <item>Appaloosa</item>
+    </string-array>
+    <!--Spnner raças -->
+
+    <string-array name="qtdDesafios_array">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+    </string-array>
+
+    <string-array name="qtdEnsaios_array">
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+        <item>14</item>
+        <item>15</item>
+        <item>16</item>
+        <item>17</item>
+        <item>18</item>
+        <item>19</item>
+        <item>20</item>
     </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

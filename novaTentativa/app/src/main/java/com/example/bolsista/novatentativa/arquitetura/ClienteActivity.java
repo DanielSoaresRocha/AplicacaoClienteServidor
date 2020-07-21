@@ -6,16 +6,19 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.bolsista.novatentativa.Cliente;
+import com.example.bolsista.novatentativa.sockets.Cliente;
 import com.example.bolsista.novatentativa.Jogar;
 import com.example.bolsista.novatentativa.R;
 
 public class ClienteActivity extends AppCompatActivity {
-
-    EditText ipClientEdit;
-    Button criarClientBtn;
+    public LinearLayout identificacaoCliente;
+    public TextView numIdentificacao;
+    public EditText ipClientEdit;
+    public Button criarClientBtn;
     public Button comecarClientBtn;
 
     static Cliente cliente;
@@ -60,7 +63,6 @@ public class ClienteActivity extends AppCompatActivity {
             final ClienteActivity client = this;
             cliente = new Cliente(ipClientEdit.getText().toString(),client,false);
             cliente.connect();
-            Toast.makeText(getApplicationContext(), R.string.cliente_criado, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -73,5 +75,7 @@ public class ClienteActivity extends AppCompatActivity {
 
         criarClientBtn = findViewById(R.id.criarClientBtn);
         comecarClientBtn = findViewById(R.id.comecarClientBtn);
+        identificacaoCliente = findViewById(R.id.identificacaoCliente);
+        numIdentificacao = findViewById(R.id.numIdentificacao);
     }
 }

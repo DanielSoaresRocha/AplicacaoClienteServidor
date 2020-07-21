@@ -1,34 +1,33 @@
 package com.example.bolsista.novatentativa.fragments;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.bolsista.novatentativa.IniciarConfiguracao;
+import com.example.bolsista.novatentativa.NovoExperimento;
 import com.example.bolsista.novatentativa.R;
-import com.example.bolsista.novatentativa.arquitetura.Servidor;
 import com.example.bolsista.novatentativa.modelo.Experimento;
 import com.example.bolsista.novatentativa.viewsModels.ListarViewModel;
-import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.QueryDocumentSnapshot;
-import com.google.firebase.firestore.QuerySnapshot;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 import androidx.annotation.NonNull;
@@ -36,23 +35,23 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
-public class CadastrarExperimento extends Fragment {
+public class CadastrarExperimento extends Fragment implements DatePickerDialog.OnDateSetListener {
     private ListarViewModel mViewModel;
     private View v;
     private Context contextoAtivity;
 
-    private Button finalizarExperimento, btnNumExperiments;
-    private EditText descricaoExperimento;
-    @SuppressLint("StaticFieldLeak")
-    private static TextView numExpCavalo;
+    private Button finalizarExperimento;
+    private EditText nomeExperimento;
+    private ImageView dataExperimentoI;
+    private TextView dataExperimentoT;
+
+    @SuppressLint("SimpleDateFormat")
+    private SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+    private Date dataExperimento;
 
     //FireBase FireStore
-    static FirebaseFirestore db = FirebaseFirestore.getInstance();
-    private DocumentReference usuarioRef;
-    //FireBase autenth
-    private FirebaseAuth usuario;
+    private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
-    private static int numberExperiments = 0;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -77,36 +76,31 @@ public class CadastrarExperimento extends Fragment {
             }
         });
 
-        btnNumExperiments.setOnClickListener(new View.OnClickListener() {
-            @SuppressLint("SetTextI18n")
+        dataExperimentoI.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                numExpCavalo.setText("Sessão número: "+numberExperiments);
+                showDatePickerDialog();
             }
         });
     }
 
     private void instanciarExperimento(){
-        DocumentReference configuracaoRef = db.collection("configuracoes")
-                .document(IniciarConfiguracao.configuracaoSelecionada.getId());
-        DocumentReference equinoRef = db.collection("equinos")
-                .document(IniciarConfiguracao.cavaloSelecionado.getId());
+        Experimento experimento = new Experimento("", NovoExperimento.equinoSelecionado,
+                nomeExperimento.getText().toString(), dataExperimento, new Date(),
+                NovoExperimento.testes, false);
 
-        IniciarConfiguracao.experimento = new Experimento("", configuracaoRef, usuarioRef, equinoRef, new Date(),
-                descricaoExperimento.getText().toString(), numberExperiments);
-
-        addExperimentoToFireBase();
-        ListarViewModel.addExperimento(IniciarConfiguracao.experimento);
+        addExperimentoToFireBase(experimento);
     }
 
-    private void addExperimentoToFireBase(){
+    private void addExperimentoToFireBase(Experimento experimento){
         db.collection("experimentos")
-                .add(IniciarConfiguracao.experimento)
+                .add(experimento)
                 .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         documentReference.update("id",documentReference.getId());//adiciona ao campo id o id gerado pelo firebase
-                        IniciarConfiguracao.experimento.setId(documentReference.getId());
+                        NovoExperimento.experimento = experimento;
+                        NovoExperimento.experimento.setId(documentReference.getId());
                         Toast.makeText(contextoAtivity, "Experimento adicionado", Toast.LENGTH_SHORT).show();
                     }
                 })
@@ -116,59 +110,47 @@ public class CadastrarExperimento extends Fragment {
                         Log.i("DataBase-FireStore-add", "Error adding document", e);
                     }
                 });
-        iniciarServidor();
-    }
 
-    public static void verififyNumberExperiments(String id){
-        System.out.println("=>>>> ID = "+ id);
-        DocumentReference equinoRef = db.collection("equinos")
-                .document(id);
-
-        db.collection("experimentos")
-                .whereEqualTo("equino", equinoRef)
-                .get()
-                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-                    @SuppressLint("SetTextI18n")
-                    @Override
-                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
-                        if (task.isSuccessful()) {
-                            numberExperiments = 0;
-                            for (QueryDocumentSnapshot document : task.getResult()) {
-                                Log.d("entrou "+numberExperiments+" vezes", document.getId()
-                                        + " => " + document.getData());
-                                numberExperiments++;
-                            }
-
-                            if(numberExperiments == 0)
-                                numberExperiments = 1;
-                        } else {
-                            Log.d("notOK", "Error getting documents: ", task.getException());
-                        }
-                    }
-                });
-    }
-
-    private void iniciarServidor() {
         getActivity().finish();
-        Intent iniciarServidor = new Intent(contextoAtivity, Servidor.class);
-        startActivity(iniciarServidor);
     }
 
+    private void showDatePickerDialog(){
+        Calendar hoje = Calendar.getInstance();
+        DatePickerDialog datePickerDialog = new DatePickerDialog(
+                contextoAtivity,
+                this,
+                hoje.get(Calendar.YEAR),
+                hoje.get(Calendar.MONTH),
+                hoje.get(Calendar.DAY_OF_MONTH)
+        );
+        datePickerDialog.show();
+    }
+
+    @Override
+    public void onDateSet(DatePicker datePicker, int year, int month, int dayOfMonth) {
+        Toast.makeText(contextoAtivity, dayOfMonth+"/"+(month+1)+"/"+year,Toast.LENGTH_SHORT).show();
+        String dataRecebida = dayOfMonth+"/"+(month+1)+"/"+year;
+
+        Date dataFormatada = formateDate(dataRecebida);
+        dataExperimento = dataFormatada;
+        dataExperimentoT.setText(dataRecebida);
+    }
+
+    private Date formateDate(String dataRecebida){
+        Date dataFormatada = null;
+        try {
+            dataFormatada = formato.parse(dataRecebida);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        return dataFormatada;
+    }
 
     private void inicializar() {
         finalizarExperimento = v.findViewById(R.id.finalizarExperimento);
-        descricaoExperimento = v.findViewById(R.id.descricaoExperimento);
-        numExpCavalo = v.findViewById(R.id.numExpCavalo);
-        btnNumExperiments = v.findViewById(R.id.btnNumExperiments);
-
+        nomeExperimento = v.findViewById(R.id.nomeExperimento);
         contextoAtivity = getActivity();
-        numExpCavalo.setText("Sessão número: "+numberExperiments);
-
-        usuario = FirebaseAuth.getInstance();
-        try {
-            usuarioRef = db.collection("users").document(usuario.getCurrentUser().getUid());
-        }catch (java.lang.NullPointerException e){
-            usuarioRef = db.collection("users").document("zl1hFltVOlJONAVUeIsY");
-        }
+        dataExperimentoT = v.findViewById(R.id.dataExperimentoT);
+        dataExperimentoI = v.findViewById(R.id.dataExperimentoI);
     }
 }

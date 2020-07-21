@@ -1,26 +1,19 @@
 package com.example.bolsista.novatentativa.modelo;
 
-import com.google.firebase.firestore.DocumentReference;
-
 public class Desafio {
     private String id;
     private int imgCorreta;
-    private int imgErrada;
-    private int qtdErros = 0;
-    private long tempoAcerto;
-    private DocumentReference experimento;
+    private int img1;
+    private int img2;
 
     public Desafio() {
     }
 
-    public Desafio(String id, int imgCorreta, int imgErrada, int qtdErros,
-                   long tempoAcerto, DocumentReference experimento) {
+    public Desafio(String id,int img1, int imgCorreta, int img2) {
         this.id = id;
         this.imgCorreta = imgCorreta;
-        this.imgErrada = imgErrada;
-        this.qtdErros = qtdErros;
-        this.tempoAcerto = tempoAcerto;
-        this.experimento = experimento;
+        this.img1 = img1;
+        this.img2 = img2;
     }
 
     public String getId() {
@@ -39,35 +32,19 @@ public class Desafio {
         this.imgCorreta = imgCorreta;
     }
 
-    public int getImgErrada() {
-        return imgErrada;
+    public int getImg1() {
+        return img1;
     }
 
-    public void setImgErrada(int imgErrada) {
-        this.imgErrada = imgErrada;
+    public void setImg1(int img1) {
+        this.img1 = img1;
     }
 
-    public int getQtdErros() {
-        return qtdErros;
+    public int getImg2() {
+        return img2;
     }
 
-    public void setQtdErros(int qtdErros) {
-        this.qtdErros = qtdErros;
-    }
-
-    public long getTempoAcerto() {
-        return tempoAcerto;
-    }
-
-    public void setTempoAcerto(long tempoAcerto) {
-        this.tempoAcerto = tempoAcerto;
-    }
-
-    public DocumentReference getExperimento() {
-        return experimento;
-    }
-
-    public void setExperimento(DocumentReference experimento) {
-        this.experimento = experimento;
+    public void setImg2(int img2) {
+        this.img2 = img2;
     }
 }

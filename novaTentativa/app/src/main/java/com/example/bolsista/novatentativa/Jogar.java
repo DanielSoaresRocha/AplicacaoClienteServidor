@@ -2,6 +2,7 @@ package com.example.bolsista.novatentativa;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.media.MediaPlayer;
 
 import androidx.annotation.NonNull;
@@ -15,25 +16,22 @@ import android.widget.Toast;
 import com.example.bolsista.novatentativa.arquitetura.ClienteActivity;
 import com.example.bolsista.novatentativa.arquitetura.Servidor;
 import com.example.bolsista.novatentativa.modelo.Desafio;
+import com.example.bolsista.novatentativa.sockets.Cliente;
+import com.example.bolsista.novatentativa.sockets.PreTeste;
+import com.example.bolsista.novatentativa.sockets.PseudoTeste;
+import com.example.bolsista.novatentativa.viewsModels.TesteViewModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 public class Jogar extends AppCompatActivity {
-    Button imagemButton;
+    public Button imagemButton;
     MediaPlayer mp;
-
-    public static ArrayList<Desafio> desafios;
-
-    //FireBase FireStore
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-    DocumentReference usuarioRef;
-    //FireBase autenth
-    FirebaseAuth usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,29 +39,30 @@ public class Jogar extends AppCompatActivity {
         getSupportActionBar().hide(); //tirar barra de título
         //getActionBar().hide();
         setContentView(R.layout.activity_jogar);
+        //Colocar tela em landScape para melhor visualização
+        //this.setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_USER_LANDSCAPE);
 
         inicializar();
-        escutar();
+        listener();
 
-        if(Servidor.serverIdentificado){
-            GerenciadorDeClientes.definirTela(this);
-            int imagemAtual = Servidor.numberAleatorio;//pegar a imagem atual que está no servidor
-
+        if(Servidor.preTeste){
+            Toast.makeText(this, "definiu", Toast.LENGTH_SHORT).show();
+            PreTeste.definirTela(this);
+            int imagemAtual = Servidor.numberAleatorio; //pegar a imagem atual que está no servidor
             imagemButton.setBackgroundResource(imagemAtual);
-
+            if(!TesteViewModel.teste.getValue().getPreTeste()) // só se não for um pré-teste
+                PseudoTeste.comecarInteracao();
+            Log.i("ACTIVITYJOGAR", "MUDOU ESSA VEZ");
         }else{
             Cliente.definirTela(this);
         }
-
-        modoFullScreean();
     }
 
-    private void escutar(){
-
+    private void listener(){
             imagemButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(!Servidor.serverIdentificado) { //Se não for o servidor
+                    if(!Servidor.preTeste) { //Se não for o servidor
                         ClienteActivity.enviar();
                     }else {
                         tocarError();
@@ -74,8 +73,7 @@ public class Jogar extends AppCompatActivity {
         }
 
     public void tocarError(){
-
-        mp = MediaPlayer.create(Jogar.this, IniciarConfiguracao.configuracaoSelecionada.getSomErro());
+        mp = MediaPlayer.create(Jogar.this, TesteViewModel.teste.getValue().getSomErro());
         mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener(){
             public void onCompletion(MediaPlayer mp) {
                 mp.stop();
@@ -87,7 +85,7 @@ public class Jogar extends AppCompatActivity {
     }
 
     public void tocarAcerto(){
-        mp = MediaPlayer.create(Jogar.this, IniciarConfiguracao.configuracaoSelecionada.getSomAcerto());
+        mp = MediaPlayer.create(Jogar.this, TesteViewModel.teste.getValue().getSomAcerto());
         mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener(){
             public void onCompletion(MediaPlayer mp) {
                 mp.stop();
@@ -98,12 +96,12 @@ public class Jogar extends AppCompatActivity {
         mp.start();
     }
 
-    public void informarDesconexao(){
+    public void informarDesconexao(int numberClientes){
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 Toast.makeText(Jogar.this,"Um cliente foi desconectado",Toast.LENGTH_LONG).show();
-                if(GerenciadorDeClientes.clientes.size()<2){
+                if(numberClientes < 2){
                     voltarTela();
                 }
             }
@@ -120,39 +118,12 @@ public class Jogar extends AppCompatActivity {
     }
 
     // Terminar o teste recebendo todos os desafios realizados para enviar ao banco
-    public void terminar(ArrayList<Desafio> desafios, String idExperimento){
-        this.desafios = desafios;
-        DocumentReference experimentoRef = db.collection("experimentos").document(idExperimento);
-        for (int i = 0; i < desafios.size(); i++){
-            desafios.get(i).setExperimento(experimentoRef);
-            addDesafioFireStore(desafios.get(i));
-        }
-        telaResultado();
-    }
-
-    // Tela para exibir o resultado
-    private void telaResultado() {
+    public void terminar(){
         Intent telaResultado = new Intent(Jogar.this, Resultado.class);
         startActivity(telaResultado);
-    }
 
-    private void addDesafioFireStore(Desafio desafio){
-        db.collection("desafios")
-                .add(desafio)
-                .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                    @Override
-                    public void onSuccess(DocumentReference documentReference) {
-                        documentReference.update("id",documentReference.getId());//adiciona ao campo id o id gerado pelo firebase
-                    }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        Log.i("DataBase-FireStore-add", "Error adding document", e);
-                    }
-                });
+        finish();
     }
-
 
     private void modoFullScreean(){
         View decorView = getWindow().getDecorView();
@@ -165,13 +136,6 @@ public class Jogar extends AppCompatActivity {
 
     private void inicializar() {
         imagemButton = findViewById(R.id.imagemButton);
-
-        usuario = FirebaseAuth.getInstance();
-        try {
-            usuarioRef = db.collection("users").document(usuario.getCurrentUser().getUid());
-        }catch (java.lang.NullPointerException e){
-            usuarioRef = db.collection("users").document("zl1hFltVOlJONAVUeIsY");
-        }
     }
 
 

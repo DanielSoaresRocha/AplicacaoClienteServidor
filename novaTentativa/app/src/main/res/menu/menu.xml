@@ -8,10 +8,28 @@
         android:title="Cadastrar equino" />
 
     <item
-        android:id="@+id/cadastrarConfiguracao"
+        android:id="@+id/novoExperimento"
         android:checked="true"
         android:icon="@drawable/horse"
-        android:title="Cadastrar configuração" />
+        android:title="Novo experimento" />
+
+    <item
+        android:id="@+id/experimentosAndamento"
+        android:checked="true"
+        android:icon="@drawable/horse"
+        android:title="Experimentos em andamento" />
+
+    <item
+        android:id="@+id/experimentosFinalizados"
+        android:checked="true"
+        android:icon="@drawable/horse"
+        android:title="Experimentos finalizados" />
+
+    <item
+        android:id="@+id/conectar"
+        android:checked="true"
+        android:icon="@mipmap/ic_launcher"
+        android:title="@string/conectar"/>
 
     <item
         android:id="@+id/logoff"

@@ -16,17 +16,21 @@ import android.widget.Toast;
 import com.example.bolsista.novatentativa.GerenciadorDeClientes;
 import com.example.bolsista.novatentativa.Jogar;
 import com.example.bolsista.novatentativa.R;
+import com.example.bolsista.novatentativa.sockets.PreTeste;
+import com.example.bolsista.novatentativa.sockets.PseudoTeste;
+import com.example.bolsista.novatentativa.viewsModels.TesteViewModel;
 
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
 public class Servidor extends AppCompatActivity {
-    public Button comecarServerBtn, criarServerBtn;
+    public static Button comecarServerBtn, criarServerBtn;
     LinearLayout serverDiv2;
     TextView ipTextView;
-
-    static final int PICK_CONTACT_REQUEST = 1;
+    public static TextView numEscravo;
+    public static LinearLayout numEscravos;
+    Context contextActivity;
 
     ServerSocket servidor;
 
@@ -35,7 +39,7 @@ public class Servidor extends AppCompatActivity {
     //static Cliente cliente;
 
     public static int numberAleatorio;
-    public static boolean serverIdentificado = false;
+    public static boolean preTeste = false;
     public static boolean controleRemoto = false;
 
     @Override
@@ -53,7 +57,6 @@ public class Servidor extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 criarServidor();
-
             }
         });
 
@@ -61,24 +64,51 @@ public class Servidor extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent mudarTela = new Intent(Servidor.this,Jogar.class);
-
                 startActivity(mudarTela);
-
             }
         });
 
     }
 
     private void criarServidor() {
+        numberAleatorio = R.drawable.tela_preta;
+
+        preTeste = true;
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    Log.i("SERVIDOR", "STARTANDO SERVIDOR");
+                    servidor = new ServerSocket(9999);
+                    Log.i("SERVIDOR", "Esperando conexão...");
+                    pegarIp();
+
+                    numCliente = 0;
+                    while (true) {
+                        Socket cliente = servidor.accept();
+                        Log.i("SERVIDOR", "CLIENTE FOI CONECTADO = " + cliente.getInetAddress());
+                        if(TesteViewModel.teste.getValue().getPreTeste()) // só se não for um pré-teste
+                            new PreTeste(cliente,numCliente, contextActivity);
+                        else
+                            new PseudoTeste(cliente,numCliente, contextActivity);
+                        numCliente++;
+                    }
+                } catch (IOException e) {
+                    Log.i("ERRO", "PORTA OCUPADA OU SERVER FOI FECHADO:" + e.getMessage());
+                }
+            }
+        }).start();
+    }
+
+    /*private void criarServidor() {
         final Servidor server = this;
-        numberAleatorio = R.drawable.circuloo;
+        numberAleatorio = R.drawable.branco;
 
         serverIdentificado = true;
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-
                     Log.i("SERVIDOR", "STARTANDO SERVIDOR");
                     servidor = new ServerSocket(9999);
                     Log.i("SERVIDOR", "Esperando conexão...");
@@ -92,13 +122,12 @@ public class Servidor extends AppCompatActivity {
 
                         numCliente++;
                     }
-
                 } catch (IOException e) {
                     Log.i("ERRO", "PORTA OCUPADA OU SERVER FOI FECHADO:" + e.getMessage());
                 }
             }
         }).start();
-    }
+    }*/
 
     //este método retorna o ip de conexão wifi no android
     private void pegarIp(){
@@ -134,11 +163,14 @@ public class Servidor extends AppCompatActivity {
 
     private void inicializar() {
         criarServerBtn = findViewById(R.id.criarServerBtn);
+        numEscravos = findViewById(R.id.numEscravos);
         comecarServerBtn = findViewById(R.id.comecarServerBtn);
         serverDiv2 = findViewById(R.id.serverDiv2);
         ipTextView = findViewById(R.id.ipTextView);
+        numEscravo = findViewById(R.id.numEscravo);
 
         comecarServerBtn.setVisibility(View.GONE);
+        contextActivity= this;
     }
 
 }

@@ -1,6 +1,8 @@
 package com.example.bolsista.novatentativa.modelo;
 
-public class Usuario {
+import java.io.Serializable;
+
+public class Usuario implements Serializable {
     private String uid;
     private String nome;
 
@@ -26,5 +28,11 @@ public class Usuario {
 
     public void setNome(String nome) {
         this.nome = nome;
+    }
+
+    @Override
+    public String toString()
+    {
+        return nome;
     }
 }

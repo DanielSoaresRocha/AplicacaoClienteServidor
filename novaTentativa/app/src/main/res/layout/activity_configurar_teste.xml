@@ -16,6 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="72dp"
             android:gravity="center"
+            android:textColor="@color/preto"
             android:text="@string/configurar_teste"
             android:textSize="30sp" />
 
@@ -154,7 +155,6 @@
             android:gravity="center"
             android:orientation="horizontal"
             android:paddingVertical="10sp"
-
             >
 
             <TextView
@@ -226,6 +226,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20sp"
+            android:textColor="@color/preto"
             android:text="@string/seleciona_a_categoria"
             />
 
@@ -254,6 +255,155 @@
                 android:layout_height="wrap_content"
                 android:text="@string/tamanho" />
 
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textColor="@color/preto"
+            android:text="Comportamento do teste:"
+            />
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:paddingVertical="10sp"
+
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Aleatoriedade:"
+                android:textSize="16sp" />
+
+            <RadioButton
+                android:id="@+id/aleatorio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/colorAccent"
+                android:color="@color/verde"
+                android:text="aleatório" />
+
+            <RadioButton
+                android:id="@+id/pseudoAleatorio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/colorAccent"
+                android:text="pseudo aleatório" />
+
+            <RadioButton
+                android:id="@+id/fixo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:buttonTint="@color/colorAccent"
+                android:text="fixo" />
+        </RadioGroup>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="left"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Quantidade de desafios:"
+                android:textSize="16sp"
+                android:paddingLeft="10sp"
+                />
+
+            <Spinner
+                android:id="@+id/qtdDesafiosSessao"
+                android:layout_width="100sp"
+                android:layout_height="wrap_content"
+                android:paddingVertical="20sp"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="left"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Quantidade de ensaios por sessão:"
+                android:textSize="16sp"
+                android:paddingLeft="10sp"
+                />
+
+            <Spinner
+                android:id="@+id/qtdEnsaiosSessao"
+                android:layout_width="100sp"
+                android:layout_height="wrap_content"
+                android:paddingVertical="20sp"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="left"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Desafio não pode ser repetido mais do que:"
+                android:textSize="16sp"
+                android:paddingLeft="10sp"
+                />
+
+            <Spinner
+                android:id="@+id/qtdRepDesafiosSessao"
+                android:layout_width="100sp"
+                android:layout_height="wrap_content"
+                android:paddingVertical="20sp"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Porcentagem de acerto:"
+                android:textSize="16sp"
+                android:paddingLeft="10sp"
+                />
+
+            <EditText
+                android:layout_width="80sp"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textSize="30sp"
+                android:inputType="number"
+                />
+
+            <TextView
+                android:layout_width="20sp"
+                android:layout_height="wrap_content"
+                android:text="%"
+                android:textSize="30sp"
+                />
 
         </LinearLayout>
 

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    android:id="@+id/testCardView"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    app:cardCornerRadius="5dp"
+    app:cardBackgroundColor="@color/cardview_light_background"
+    android:layout_margin="5dp"
+    android:focusable="true"
+    android:clickable="true"
+    android:foreground="?android:attr/selectableItemBackground"
+    >
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="9"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/nomeConfig"
+                android:drawableLeft="@drawable/settings"
+                android:gravity="center_vertical"
+                android:text="Nome da configuração"
+                android:textSize="30sp"
+                android:textColor="@color/black_de"
+                android:paddingVertical="10sp"
+                />
+                <TextView
+                    android:layout_height="wrap_content"
+                    android:layout_width="match_parent"
+                    android:drawableLeft="@drawable/info_detalhes"
+                    android:id="@+id/detalhesConfig"
+                    android:gravity="center_vertical"
+                    android:text="detalhes"
+                    android:textSize="20sp"
+                    android:textColor="@color/black_de"
+                    />
+        </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="0dp"
+        android:layout_weight="1"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <CheckBox
+            android:id="@+id/testCheckBox"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:checked="true"
+            />
+    </LinearLayout>
+    </LinearLayout>
+</androidx.cardview.widget.CardView>

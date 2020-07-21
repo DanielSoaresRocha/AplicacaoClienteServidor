@@ -16,19 +16,40 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Resultado"></activity>
-        <activity android:name=".IniciarConfiguracao" />
-        <activity android:name=".banco.CadastrarCavalo" />
-        <activity android:name=".arquitetura.Remoto" />
-        <activity android:name=".Jogar" />
-        <activity android:name=".ControleRemoto" />
-        <activity android:name=".configuracao.ConfigurarTeste" />
-        <activity android:name=".arquitetura.Definir">
+        <activity android:name=".graficos.GraficoLinha"></activity>
+        <activity android:name=".graficos.GraficoBarra" />
+        <activity android:name=".Inicio">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".othersActivities.ExperimentosFinalizados"
+            android:parentActivityName=".arquitetura.Definir" />
+        <activity
+            android:name=".othersActivities.ExperimentosAndamento"
+            android:parentActivityName=".arquitetura.Definir" />
+        <activity
+            android:name=".othersActivities.Sessoes"
+            android:parentActivityName=".othersActivities.ExperimentoExpecifico" />
+        <activity
+            android:name=".othersActivities.ExperimentoExpecifico"
+            android:parentActivityName=".arquitetura.Definir" />
+        <activity android:name=".Resultado" />
+        <activity android:name=".NovoExperimento" />
+        <activity android:name=".cadastros.CadastrarEquino" />
+        <activity android:name=".arquitetura.Remoto" />
+        <activity
+            android:name=".Jogar"
+            android:configChanges="orientation"
+            android:screenOrientation="landscape" />
+        <activity android:name=".ControleRemoto" />
+        <activity android:name=".cadastros.ConfigurarTeste" />
+        <activity android:name=".arquitetura.Definir">
+
+            <!-- sldfsdfasdf -->
         </activity>
         <activity android:name=".arquitetura.Servidor" />
         <activity android:name=".arquitetura.ClienteActivity" />

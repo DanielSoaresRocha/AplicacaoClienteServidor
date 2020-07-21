@@ -37,7 +37,7 @@ public class GerenciadorDeClientes extends Thread{
     private ArrayList<Desafio> desafios = new ArrayList<>();
 
     private int imgAtual;
-    private Desafio desafio = new Desafio();
+    //private Desafio desafio = new Desafio();
 
     static Jogar jogar;
 
@@ -51,7 +51,6 @@ public class GerenciadorDeClientes extends Thread{
         this.server = server;
         this.numCliente = numCliente;
         start();
-
     }
 
     @Override
@@ -65,22 +64,22 @@ public class GerenciadorDeClientes extends Thread{
                     Log.i("OBJETO", "Criou input do servidor");
                     //enviarObjeto();
                     imgAtual = R.drawable.circuloo; //////////////////DESTAQUE
-                    vetor = IniciarConfiguracao.configuracaoSelecionada.getImagens();
-                    int numRodadas = IniciarConfiguracao.configuracaoSelecionada.getQtdQuestoes();
+                    //vetor = NovoExperimento.testeSelecionada.getImagens();//*************** RETIRADO
+                    //int numRodadas = NovoExperimento.testeSelecionada.getQtdEnsaiosPorSessao();
                     int rodada = 1;
-                    while (rodada <= numRodadas) {
+                    while (rodada <= 5 /*numRodadas*/) {
                         msg = leitor.readInt();
                         imgAtual = server.numberAleatorio;
-                        desafio.setImgCorreta(imgAtual);
+                        //desafio.setImgCorreta(imgAtual);
                         Log.i("COMUNICACAO", "MENSAGEM RECEBIDA DO CLIENTE");
                         Log.i("COMUNICACAO", "cliente -- " + msg + " server = " + imgAtual);
                         if (clientes.size() >= 2) {
                             if (msg == imgAtual) {
-                                jogar.tocarAcerto(); // cavalo acertou
-                                esperar(); //mudar imagens para branco, e espera um novo sorteio
+                                jogar.tocarAcerto();
+                                esperar();
                                 esp32(ABRIR_MOTOR);//enviar comando para abrir o servo no esp32
                                 if (!server.controleRemoto) {  // se o controle remoto não estiver conectado
-                                    dormir(IniciarConfiguracao.configuracaoSelecionada.getIntervalo1()); // tempo de espera do mestre
+                                    //dormir(NovoExperimento.testeSelecionada.getIntervalo1()); // tempo de espera do mestre
                                     sortear(); //fazer nova interação de imagens entre os tablets
                                 }
                             } else if (msg == TROCAR_IMAGENS) {//trocar imagens
@@ -89,15 +88,14 @@ public class GerenciadorDeClientes extends Thread{
                                 desconectarControle();
                                 break;
                             } else { //O cavalo errou
-                                desafio.setQtdErros(desafio.getQtdErros()+1);
+                                //desafio.setQtdErros(desafio.getQtdErros()+1);
                                 jogar.tocarError();
                             }
                         }
                         rodada++;
-                        desafios.add(desafio);
                     }
                     terminar();
-                    jogar.terminar(desafios, IniciarConfiguracao.experimento.getId());
+                    //jogar.terminar(desafios, NovoExperimento.experimento.getId()); //************** RETIRADO
                 } catch (IOException e) {
                     Log.i("COMUNICACAO", "ERRO = " + e.getMessage());
                     desconectarCliente();
@@ -109,7 +107,7 @@ public class GerenciadorDeClientes extends Thread{
 
     private void enviarObjeto() {
         try {
-            escritor.writeObject(IniciarConfiguracao.configuracaoSelecionada);
+            //escritor.writeObject(NovoExperimento.testeSelecionada);
             escritor.flush();
 
             Log.i("OBJETO","OBJETO ENVIADO PARA O CLIENTE");
@@ -136,7 +134,7 @@ public class GerenciadorDeClientes extends Thread{
             clientes.put(numCliente,null);
             enviarImagemCorreta();
             reestabelecer();
-            jogar.informarDesconexao();
+            jogar.informarDesconexao(clientes.size());
             Log.i("REMOTO", "CLIENTE PADRÃO DESCONECTADO");
 
             leitor.close();
@@ -187,7 +185,6 @@ public class GerenciadorDeClientes extends Thread{
     private void adicionarCliente() {
         clientes.put(numCliente,this);
         exibirMensagem("pronto para comecar",true);
-
     }
 
     //este método faz aparecer o botao começar
@@ -284,7 +281,7 @@ public class GerenciadorDeClientes extends Thread{
 
         mudarImagem(imgAtual);
 
-        dormir(IniciarConfiguracao.configuracaoSelecionada.getIntervalo2());
+        //dormir(NovoExperimento.testeSelecionada.getIntervalo2());
 
         //sortear o escolhido para herdar imagem
         Random radom = new Random();
@@ -306,7 +303,7 @@ public class GerenciadorDeClientes extends Thread{
                 }
 
                 int outraImg = vetor.get(aleatorio);
-                desafio.setImgErrada(outraImg);
+                //desafio.setImgErrada(outraImg);
                 Log.i("ENVIAR","ENVIADA 2 "+ outraImg);
 
                 GerenciadorDeClientes destino = clientes.get(i);
@@ -332,6 +329,7 @@ public class GerenciadorDeClientes extends Thread{
         return numeroTmp;
     }
 
+    //mudar imagens para branco, e espera um novo sorteio
     private void esperar() throws IOException{
         mudarImagem(999);
 
@@ -344,7 +342,6 @@ public class GerenciadorDeClientes extends Thread{
 
     public static void definirTela(Jogar jogarr){
         jogar = jogarr;
-
     }
 
     // Informar e fechar todos os sockets (clientes)

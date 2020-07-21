@@ -28,7 +28,7 @@
                     android:id="@+id/nomeCavalo"
                     android:gravity="center_vertical"
                     android:layout_weight="7"
-                    android:text="Nome do cavalo"
+                    android:text="Nome do equino"
                     android:textSize="30sp"
                     android:textColor="@color/black_de"
                     android:drawableLeft="@drawable/horse"

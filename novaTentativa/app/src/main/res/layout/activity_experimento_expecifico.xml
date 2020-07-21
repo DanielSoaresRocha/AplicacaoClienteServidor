@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.bolsista.novatentativa.othersActivities.ExperimentoExpecifico">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10sp"
+            android:text="Equino:"
+            android:textSize="24sp"
+            android:textColor="@color/preto"
+            />
+
+        <TextView
+            android:id="@+id/nomeEquinoText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nome do equino"
+            android:textSize="22sp"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10sp"
+            android:text="Data de início:"
+            android:textSize="24sp"
+            android:textColor="@color/preto"
+            />
+
+        <TextView
+            android:id="@+id/dataInicioText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="28/04/2000"
+            android:textSize="22sp"
+            />
+    </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="2px"
+        android:background="@color/preto"
+        >
+    </TextView>
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/testesRecycleView"
+        android:paddingVertical="10sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </androidx.recyclerview.widget.RecyclerView>
+
+</LinearLayout>
