@@ -47,14 +47,6 @@ public class PseudoTeste extends PreTeste {
             msg = (Mensagem) leitor.readObject();
             ensaio.setIdDesafio(Integer.toString(rodada));
 
-            /*if(rodada == numRodadas){ // se for a rodada final
-                jogar.tocarAcerto();
-                esp32(ABRIR_MOTOR);
-                ensaio.setAcerto(true);
-                TesteViewModel.sessao.getEnsaios().add(ensaio);
-                break;
-            }*/
-
             if (msg.getComando() == desafioAtual.getImgCorreta()) {
                 jogar.tocarAcerto();
                 rodada++;
@@ -63,8 +55,6 @@ public class PseudoTeste extends PreTeste {
                 if (!Servidor.controleRemoto && rodada <= numRodadas) {
                     //dormir(TesteViewModel.teste.getValue().getIntervalo1()); // tempo de espera do mestre
                     novaInteracao(); //fazer nova interação de imagens entre os tablets
-                }else{
-                    Log.i("DEBUG", "RODADA FINAL");
                 }
             } else if (msg.getComando() == TROCAR_IMAGENS) {//trocar imagens
                 novaInteracao();
@@ -75,10 +65,8 @@ public class PseudoTeste extends PreTeste {
                 jogar.tocarError();
                 ensaio.setAcerto(false);
             }
-            Log.i("DEBUG", "FIM DO LAÇO");
             TesteViewModel.sessao.getEnsaios().add(ensaio);
         }
-        Log.i("NUMRODADA", "ACABOU =>>> " + rodada);
         TesteViewModel.adicionarNovaSessao();
         terminar();
         jogar.terminar();
@@ -121,12 +109,12 @@ public class PseudoTeste extends PreTeste {
 
     public static void sortearDesafio() {
         int desafioDaVez = numeroAleatorio();
-        Log.i("PSEUDOTESTE", "Desafio da vez = " + desafioDaVez);
 
         desafioAtual = desafios.get(desafioDaVez);
         numVezesDesafio.put(desafioDaVez, numVezesDesafio.get(desafioDaVez) + 1);
         if (numVezesDesafio.get(desafioDaVez) >= 5) {
             desafios.remove(desafioDaVez);
+            Log.i("DEBUGL1", "Removeu do ArrayList");
             reodenarClicksDesafio(desafioDaVez);
         }
     }
@@ -139,7 +127,6 @@ public class PseudoTeste extends PreTeste {
 
     //retorna um numero de 0 até o tamanho da lista
     private static int numeroAleatorio() {
-        Log.i("NUMRODADA", "ENTROU EM NUMERO ALEATORIO +" + desafios.size());
         Random radom = new Random(); // gerar número aleatório
         int numeroTmp = radom.nextInt(desafios.size());
         return numeroTmp;
