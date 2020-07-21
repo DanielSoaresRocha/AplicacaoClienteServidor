@@ -107,6 +107,13 @@ public class PseudoTeste extends PreTeste {
         });
     }
 
+    /*
+      Este método pode necessitar ser estudado minuciosamente para ser entendido. Deve-se compreender
+      a regra de negócio do Teste L1, onde um desafio não pode ser repetido mais de 5 vezes.
+      A maior sacada está no método reodernarClicksDesafio, que precisa ser chamado toda vez que um
+      determinado desafio ultrapassa o número de vezes. Para não se perder na contagem ele é reordenado
+      de forma estratégica. (Desenhar para entender melhor)
+    */
     public static void sortearDesafio() {
         int desafioDaVez = numeroAleatorio();
 
