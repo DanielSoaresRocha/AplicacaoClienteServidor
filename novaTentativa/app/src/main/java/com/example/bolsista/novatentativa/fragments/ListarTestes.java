@@ -115,6 +115,16 @@ public class ListarTestes extends Fragment {
             desafiosT1.add(new Desafio("6",R.drawable.retanguloo, R.drawable.trianguloo, R.drawable.trianguloo));
             desafiosT1.add(new Desafio("7",R.drawable.trianguloo, R.drawable.retanguloo, R.drawable.retanguloo));
             desafiosT1.add(new Desafio("8",R.drawable.retanguloo, R.drawable.retanguloo, R.drawable.trianguloo));
+            //DESAFIOS TESTE T2
+            ArrayList<Desafio> desafiosT2 = new ArrayList<>();
+            desafiosT1.add(new Desafio("1",R.drawable.trianguloo, R.drawable.trianguloo, R.drawable.retanguloo));
+            desafiosT1.add(new Desafio("2",R.drawable.retanguloo, R.drawable.trianguloo, R.drawable.trianguloo));
+            desafiosT1.add(new Desafio("3",R.drawable.trianguloo, R.drawable.retanguloo, R.drawable.retanguloo));
+            desafiosT1.add(new Desafio("4",R.drawable.retanguloo, R.drawable.retanguloo, R.drawable.trianguloo));
+            desafiosT2.add(new Desafio("5",R.drawable.yuan, R.drawable.plane, R.drawable.plane));
+            desafiosT2.add(new Desafio("6",R.drawable.pi, R.drawable.music, R.drawable.music));
+            desafiosT2.add(new Desafio("7",R.drawable.plane, R.drawable.pi, R.drawable.pi));
+            desafiosT2.add(new Desafio("8",R.drawable.music, R.drawable.yuan, R.drawable.yuan));
 
             //PRE-TESTE
             ListarViewModel.addConfiguracao(new Teste("0", "Pré-teste", 0,
@@ -148,8 +158,8 @@ public class ListarTestes extends Fragment {
                     85,false));
             //TESTE T2
             ListarViewModel.addConfiguracao(new Teste("5", "Teste de transferência T2",
-                    5, 5, desafiosT1.size(), R.raw.sucess, R.raw.error,
-                    desafiosT1, "Teste Gabor", 0, 2,
+                    5, 5, desafiosT2.size(), R.raw.sucess, R.raw.error,
+                    desafiosT2, "Teste Gabor", 0, 2,
                     new ArrayList<Sessao>(), false, 20, 3,
                     85,false));
             implementsRecycle();
