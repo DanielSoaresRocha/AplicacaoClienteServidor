@@ -74,6 +74,7 @@ public class PseudoTeste extends PreTeste {
 
     private void novaInteracao() {
         esp32(FECHAR_MOTOR);//enviar comando para o servo fechar no esp32
+
         sortearDesafio();
 
         mudarImagem(desafioAtual.getImgCorreta());
@@ -107,6 +108,30 @@ public class PseudoTeste extends PreTeste {
         });
     }
 
+    private static void sortearDesafio() {
+        if (desafios.size() > 4) // Testes L2, T1 e T2
+            l2();
+        else // somente o teste L1, L3
+            l1();
+
+    }
+
+    private static void l2() {
+        System.out.println("Hello World");
+        int desafioDaVez;
+        Log.i("DEBUGL2", "Numero da rodada = " + rodada);
+        if(rodada <= 10){
+            desafioDaVez = numeroAleatorio(0,3);
+            Log.i("DEBUGL2", "Entrou em rodada < 10");
+        } else {
+            desafioDaVez = numeroAleatorio(4, desafios.size() - 1);
+            Log.i("DEBUGL2", "Entrou em rodada > 10");
+        }
+
+        Log.i("DEBUGL2", "Desafio da vez = " + desafioDaVez);
+        desafioAtual = desafios.get(desafioDaVez);
+    }
+
     /*
       Este método pode necessitar ser estudado minuciosamente para ser entendido. Deve-se compreender
       a regra de negócio do Teste L1, onde um desafio não pode ser repetido mais de 5 vezes.
@@ -114,8 +139,8 @@ public class PseudoTeste extends PreTeste {
       determinado desafio ultrapassa o número de vezes. Para não se perder na contagem ele é reordenado
       de forma estratégica. (Desenhar para entender melhor)
     */
-    public static void sortearDesafio() {
-        int desafioDaVez = numeroAleatorio();
+    private static void l1() {
+        int desafioDaVez = numeroAleatorio(0, desafios.size()-1);
 
         desafioAtual = desafios.get(desafioDaVez);
         numVezesDesafio.put(desafioDaVez, numVezesDesafio.get(desafioDaVez) + 1);
@@ -133,9 +158,9 @@ public class PseudoTeste extends PreTeste {
     }
 
     //retorna um numero de 0 até o tamanho da lista
-    private static int numeroAleatorio() {
-        Random radom = new Random(); // gerar número aleatório
-        int numeroTmp = radom.nextInt(desafios.size());
+    private static int numeroAleatorio(int min, int max) {
+        Random random = new Random(); // gerar número aleatório
+        int numeroTmp = random.nextInt(max - (min - 1)) + min;
         return numeroTmp;
     }
 

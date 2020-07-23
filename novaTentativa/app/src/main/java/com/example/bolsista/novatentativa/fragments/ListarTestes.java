@@ -79,7 +79,6 @@ public class ListarTestes extends Fragment {
         listener();
 
         if(mViewModel.cavalos.getValue().size() == 0){ // se a lista estiver vazia
-            //getConfiguracoesFireStore();// pegar do banco
             /*
             Preste atenção que a ordem das figuras está como nos testes de gabor, onde a figura do meio
             representa a img certa, e as laterais sendo a certa ou a errada
@@ -92,16 +91,30 @@ public class ListarTestes extends Fragment {
             desafiosL1.add(new Desafio("4", R.drawable.circuloo, R.drawable.circuloo,  R.drawable.branco));
             //DESAFIOS TESTE L2
             ArrayList<Desafio> desafiosL2 = new ArrayList<>();
+            desafiosL2.add(new Desafio("1", R.drawable.branco, R.drawable.cruz, R.drawable.cruz));
+            desafiosL2.add(new Desafio("2", R.drawable.cruz, R.drawable.cruz, R.drawable.branco));
+            desafiosL2.add(new Desafio("3", R.drawable.branco, R.drawable.circuloo,  R.drawable.circuloo));
+            desafiosL2.add(new Desafio("4", R.drawable.circuloo, R.drawable.circuloo,  R.drawable.branco));
             desafiosL2.add(new Desafio("5",R.drawable.circuloo, R.drawable.cruz, R.drawable.cruz));
             desafiosL2.add(new Desafio("6",R.drawable.cruz, R.drawable.cruz, R.drawable.circuloo));
             desafiosL2.add(new Desafio("7",R.drawable.cruz, R.drawable.circuloo, R.drawable.circuloo));
             desafiosL2.add(new Desafio("8",R.drawable.circuloo, R.drawable.circuloo, R.drawable.cruz));
+            //DESAFIOS TESTE L3
+            ArrayList<Desafio> desafiosL3 = new ArrayList<>();
+            desafiosL3.add(new Desafio("5",R.drawable.circuloo, R.drawable.cruz, R.drawable.cruz));
+            desafiosL3.add(new Desafio("6",R.drawable.cruz, R.drawable.cruz, R.drawable.circuloo));
+            desafiosL3.add(new Desafio("7",R.drawable.cruz, R.drawable.circuloo, R.drawable.circuloo));
+            desafiosL3.add(new Desafio("8",R.drawable.circuloo, R.drawable.circuloo, R.drawable.cruz));
             //DESAFIOS TESTE T1
             ArrayList<Desafio> desafiosT1 = new ArrayList<>();
-            desafiosT1.add(new Desafio("10",R.drawable.trianguloo, R.drawable.trianguloo, R.drawable.retanguloo));
-            desafiosT1.add(new Desafio("11",R.drawable.retanguloo, R.drawable.trianguloo, R.drawable.trianguloo));
-            desafiosT1.add(new Desafio("12",R.drawable.trianguloo, R.drawable.retanguloo, R.drawable.retanguloo));
-            desafiosT1.add(new Desafio("13",R.drawable.retanguloo, R.drawable.retanguloo, R.drawable.trianguloo));
+            desafiosT1.add(new Desafio("1",R.drawable.circuloo, R.drawable.cruz, R.drawable.cruz));
+            desafiosT1.add(new Desafio("2",R.drawable.cruz, R.drawable.cruz, R.drawable.circuloo));
+            desafiosT1.add(new Desafio("3",R.drawable.cruz, R.drawable.circuloo, R.drawable.circuloo));
+            desafiosT1.add(new Desafio("4",R.drawable.circuloo, R.drawable.circuloo, R.drawable.cruz));
+            desafiosT1.add(new Desafio("5",R.drawable.trianguloo, R.drawable.trianguloo, R.drawable.retanguloo));
+            desafiosT1.add(new Desafio("6",R.drawable.retanguloo, R.drawable.trianguloo, R.drawable.trianguloo));
+            desafiosT1.add(new Desafio("7",R.drawable.trianguloo, R.drawable.retanguloo, R.drawable.retanguloo));
+            desafiosT1.add(new Desafio("8",R.drawable.retanguloo, R.drawable.retanguloo, R.drawable.trianguloo));
 
             //PRE-TESTE
             ListarViewModel.addConfiguracao(new Teste("0", "Pré-teste", 0,
@@ -121,14 +134,20 @@ public class ListarTestes extends Fragment {
                     desafiosL2, "Teste Gabor", 0, 2,
                     new ArrayList<Sessao>(), false, 20, 3,
                     85,false));
+            //TESTE L3
+            ListarViewModel.addConfiguracao(new Teste("3", "Teste de aprendizagem L3",
+                    5, 5, desafiosL3.size(), R.raw.sucess, R.raw.error,
+                    desafiosL3, "Teste Gabor", 0, 2,
+                    new ArrayList<Sessao>(), false, 20, 3,
+                    85,false));
             //TESTE T1
-            ListarViewModel.addConfiguracao(new Teste("3", "Teste de transferência T1",
+            ListarViewModel.addConfiguracao(new Teste("4", "Teste de transferência T1",
                     5, 5, desafiosT1.size(), R.raw.sucess, R.raw.error,
                     desafiosT1, "Teste Gabor", 0, 2,
                     new ArrayList<Sessao>(), false, 20, 3,
                     85,false));
             //TESTE T2
-            ListarViewModel.addConfiguracao(new Teste("4", "Teste de transferência T2",
+            ListarViewModel.addConfiguracao(new Teste("5", "Teste de transferência T2",
                     5, 5, desafiosT1.size(), R.raw.sucess, R.raw.error,
                     desafiosT1, "Teste Gabor", 0, 2,
                     new ArrayList<Sessao>(), false, 20, 3,
