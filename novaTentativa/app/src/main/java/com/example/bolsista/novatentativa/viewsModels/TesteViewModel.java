@@ -35,11 +35,9 @@ public class TesteViewModel {
     public static void adicionarNovaSessao(){
         sessao.setTaxaAcerto(calculaPorcentagemAcerto());
         Objects.requireNonNull(teste.getValue()).getSessoes().add(sessao);
-        if(sessao.getTaxaAcerto() >= teste.getValue().getCriterioAprendizagem()) {
-            Log.i("EXPERIMENTOCOMPLETO", "É MAIOR OU IGUAL");
-            teste.getValue().setCompleto(true);
-        }
 
+        teste.getValue().verificaAprendizagem();
+        
         ExperimentoViewModel.updateTeste(Integer.parseInt(teste.getValue().getId()), teste.getValue());
     }
 
