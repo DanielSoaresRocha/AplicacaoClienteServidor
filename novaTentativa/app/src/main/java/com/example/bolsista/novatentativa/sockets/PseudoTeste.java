@@ -22,7 +22,9 @@ import java.util.Random;
 public class PseudoTeste extends PreTeste {
     private static Desafio desafioAtual;
     private static ArrayList<Desafio> desafios = new ArrayList<>();
-    public static Map<Integer, Integer> numVezesDesafio = new HashMap<>();
+
+    private static String desafioAnterior = "";
+    private static int numRepeticoes = 0;
 
     public PseudoTeste(Socket cliente, int numCliente, Context context) {
         super(cliente, numCliente, context);
@@ -32,9 +34,6 @@ public class PseudoTeste extends PreTeste {
     private void preecherDesafios() {
         desafios = new ArrayList<>();
         desafios.addAll(TesteViewModel.teste.getValue().getDesafios());
-        for (int i = 0; i < desafios.size(); i++) {
-            numVezesDesafio.put(i, 0);
-        }
     }
 
     @Override
@@ -119,16 +118,12 @@ public class PseudoTeste extends PreTeste {
     private static void l2() {
         System.out.println("Hello World");
         int desafioDaVez;
-        Log.i("DEBUGL2", "Numero da rodada = " + rodada);
         if(rodada <= 10){
             desafioDaVez = numeroAleatorio(0,3);
-            Log.i("DEBUGL2", "Entrou em rodada < 10");
         } else {
             desafioDaVez = numeroAleatorio(4, desafios.size() - 1);
-            Log.i("DEBUGL2", "Entrou em rodada > 10");
         }
 
-        Log.i("DEBUGL2", "Desafio da vez = " + desafioDaVez);
         desafioAtual = desafios.get(desafioDaVez);
     }
 
@@ -140,21 +135,44 @@ public class PseudoTeste extends PreTeste {
       de forma estratégica. (Desenhar para entender melhor)
     */
     private static void l1() {
-        int desafioDaVez = numeroAleatorio(0, desafios.size()-1);
+        String desafioAtual2;
+        int desafioDaVez = numeroAleatorio(0,3);
+
+        if(desafioDaVez == 0 || desafioDaVez == 1){
+            desafioAtual2 = "simbolo1";
+            Log.i("DEBUGL1", "AGORA É ESTRELA ");
+        }else {
+            Log.i("DEBUGL1", "AGORA É CIRCULO ");
+            desafioAtual2 = "simbolo2";
+        }
+
+        if(desafioAtual2.equals(desafioAnterior)){
+            numRepeticoes++;
+            Log.i("DEBUGL1", "REPETIU " + numRepeticoes +" VEZES");
+        }else {
+            Log.i("DEBUGL1", "ZEROUUU ");
+            numRepeticoes = 0;
+        }
+
+        if(numRepeticoes >= 3){
+            if(desafioAnterior.equals("simbolo1")){
+                desafioDaVez = numeroAleatorio(2,3);
+                Log.i("DEBUGL1", "FORÇOU CIRCULO ");
+            }else{
+                desafioDaVez = numeroAleatorio(0,1);
+                Log.i("DEBUGL1", "FORÇOU TRIANGULO");
+            }
+            numRepeticoes = 0;
+            Log.i("DEBUGL1", "ZEROUUU ");
+        }
+
+        if(desafioDaVez == 0 || desafioDaVez == 1){
+            desafioAnterior = "simbolo1";
+        }else {
+            desafioAnterior = "simbolo2";
+        }
 
         desafioAtual = desafios.get(desafioDaVez);
-        numVezesDesafio.put(desafioDaVez, numVezesDesafio.get(desafioDaVez) + 1);
-        if (numVezesDesafio.get(desafioDaVez) >= 5) {
-            desafios.remove(desafioDaVez);
-            Log.i("DEBUGL1", "Removeu do ArrayList");
-            reodenarClicksDesafio(desafioDaVez);
-        }
-    }
-
-    private static void reodenarClicksDesafio(int inicio) {
-        for (int i = inicio; i < numVezesDesafio.size() - 1; i++) {
-            numVezesDesafio.put(i, numVezesDesafio.get(i + 1));
-        }
     }
 
     //retorna um numero de 0 até o tamanho da lista

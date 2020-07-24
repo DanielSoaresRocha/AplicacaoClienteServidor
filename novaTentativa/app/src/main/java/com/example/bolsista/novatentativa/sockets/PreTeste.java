@@ -33,6 +33,8 @@ import java.util.Objects;
 
 /*
 * Esta é a classe responsável pelo pré teste;
+*
+* ATUALIZAÇÃO : A melhor solução é usar o BufferedReader para entrada e um PrintWriter para saída, em vez de fluxos.
 * */
 
 public class PreTeste extends Thread {
