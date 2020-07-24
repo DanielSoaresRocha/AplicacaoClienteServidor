@@ -23,8 +23,13 @@ public class PseudoTeste extends PreTeste {
     private static Desafio desafioAtual;
     private static ArrayList<Desafio> desafios = new ArrayList<>();
 
+    // testes com 4 desafios
     private static String desafioAnterior = "";
     private static int numRepeticoes = 0;
+
+    // testes com 8 desafios
+    private static int desafios1 = 0;
+    private static int desafios2 = 0;
 
     public PseudoTeste(Socket cliente, int numCliente, Context context) {
         super(cliente, numCliente, context);
@@ -116,49 +121,55 @@ public class PseudoTeste extends PreTeste {
     }
 
     private static void l2() {
-        System.out.println("Hello World");
         int desafioDaVez;
-        if(rodada <= 10){
-            desafioDaVez = numeroAleatorio(0,3);
-        } else {
+
+        desafioDaVez = numeroAleatorio(0, desafios.size() - 1); // pega um desafio aleatório de 0 a 7
+
+        if(desafioDaVez < 4){ // se for menor que 4 desafios1 é incrementado
+            desafios1++;
+            Log.i("DEBUGL2", "Desafios 1 apareceram " + desafios1 +" vezes");
+        }else{// se não, desafios2 é incrementado
+            desafios2++;
+            Log.i("DEBUGL2", "Desafios 2 apareceram " + desafios2 +" vezes");
+        }
+
+        // se algum destes chegar a 10, somente o outro será chamado
+        if(desafios1 >= 10){
+            Log.i("DEBUGL2", "Desafios 1 ultrapassaram 10, agora somente desafios 2");
             desafioDaVez = numeroAleatorio(4, desafios.size() - 1);
+        }else if (desafios2 >= 10){
+            desafioDaVez = numeroAleatorio(0,3);
+            Log.i("DEBUGL2", "Desafios 2 ultrapassaram 10, agora somente desafios 1");
         }
 
         desafioAtual = desafios.get(desafioDaVez);
     }
 
-    /*
-      Este método pode necessitar ser estudado minuciosamente para ser entendido. Deve-se compreender
-      a regra de negócio do Teste L1, onde um desafio não pode ser repetido mais de 5 vezes.
-      A maior sacada está no método reodernarClicksDesafio, que precisa ser chamado toda vez que um
-      determinado desafio ultrapassa o número de vezes. Para não se perder na contagem ele é reordenado
-      de forma estratégica. (Desenhar para entender melhor)
-    */
     private static void l1() {
         String desafioAtual2;
-        int desafioDaVez = numeroAleatorio(0,3);
+        int desafioDaVez = numeroAleatorio(0,3);// pegar um desafio aleatório
 
-        if(desafioDaVez == 0 || desafioDaVez == 1){
+        if(desafioDaVez == 0 || desafioDaVez == 1){// se for um dos 2 primeiros é o simbolo 2
             desafioAtual2 = "simbolo1";
             Log.i("DEBUGL1", "AGORA É ESTRELA ");
-        }else {
+        }else {// se for um dos 2 ultimos é o simbolo 2
             Log.i("DEBUGL1", "AGORA É CIRCULO ");
             desafioAtual2 = "simbolo2";
         }
 
-        if(desafioAtual2.equals(desafioAnterior)){
+        if(desafioAtual2.equals(desafioAnterior)){ // se o desafio atualo for igual o desafio anterior
             numRepeticoes++;
             Log.i("DEBUGL1", "REPETIU " + numRepeticoes +" VEZES");
-        }else {
+        }else {// se não for igual o número de repetições zera
             Log.i("DEBUGL1", "ZEROUUU ");
             numRepeticoes = 0;
         }
 
-        if(numRepeticoes >= 3){
-            if(desafioAnterior.equals("simbolo1")){
+        if(numRepeticoes >= 3){// se o número de repeticoes chegar a 3 deve-se saber qual simbolo se repetiu
+            if(desafioAnterior.equals("simbolo1")){// se for o simbolo 1 na a próxima vez força o simbolo 2
                 desafioDaVez = numeroAleatorio(2,3);
                 Log.i("DEBUGL1", "FORÇOU CIRCULO ");
-            }else{
+            }else{ // se não força o simbolo 1
                 desafioDaVez = numeroAleatorio(0,1);
                 Log.i("DEBUGL1", "FORÇOU TRIANGULO");
             }
@@ -166,7 +177,7 @@ public class PseudoTeste extends PreTeste {
             Log.i("DEBUGL1", "ZEROUUU ");
         }
 
-        if(desafioDaVez == 0 || desafioDaVez == 1){
+        if(desafioDaVez == 0 || desafioDaVez == 1){ // o desafio anterior sempre é declarado no final da interação
             desafioAnterior = "simbolo1";
         }else {
             desafioAnterior = "simbolo2";
