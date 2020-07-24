@@ -1,5 +1,7 @@
 package com.example.bolsista.novatentativa.modelo;
 
+import android.util.Log;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,6 +23,20 @@ public class Sessao implements Serializable {
         this.nome = nome;
         this.data = data;
         this.experimentador = experimentador;
+    }
+
+    // Percorre todos os ensaios desta sessão e calcula a porcentagem de acerto
+    public void calculaPorcentagemAcerto(){
+        int qtdEnsaios = ensaios.size();
+        int qtdAcertos = 0;
+        for (int i = 0; i < qtdEnsaios; i++){
+            if(ensaios.get(i).getAcerto())
+                qtdAcertos++;
+        }
+        double divisao = (double) qtdAcertos/qtdEnsaios;
+        int porcentagem = (int) (divisao*100);
+
+        setTaxaAcerto(porcentagem);
     }
 
     public String getId() {

@@ -58,13 +58,8 @@ public class Teste implements Serializable{
         if(qtdSessoes > 1){
             if(sessoes.get(qtdSessoes-1).getTaxaAcerto() >= criterioAprendizagem &&
             sessoes.get(qtdSessoes-2).getTaxaAcerto() >= criterioAprendizagem){
-                Log.i("APRENDIZAGEM", "O CAVALO COMPLETOU");
                 setCompleto(true);
-            }else{
-                Log.i("APRENDIZAGEM", "O CAVALO NÃO COMPLETOU DUAS VEZES CONSECUTIVAS");
             }
-        }else {
-            Log.i("APRENDIZAGEM", "AINDA NÃO É POSSÍVEL CALCULAR");
         }
     }
 
