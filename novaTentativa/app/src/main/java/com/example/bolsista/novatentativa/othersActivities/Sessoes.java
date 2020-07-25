@@ -17,15 +17,11 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.adapters.SessaoAdapter;
-import com.example.bolsista.novatentativa.arquitetura.Definir;
 import com.example.bolsista.novatentativa.arquitetura.Servidor;
-import com.example.bolsista.novatentativa.graficos.GraficoBarra;
 import com.example.bolsista.novatentativa.graficos.GraficoLinha;
-import com.example.bolsista.novatentativa.modelo.Experimento;
 import com.example.bolsista.novatentativa.modelo.Sessao;
 import com.example.bolsista.novatentativa.modelo.Teste;
 import com.example.bolsista.novatentativa.modelo.Usuario;
@@ -41,10 +37,9 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Date;
 
 public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
-    private Button IniciarSessaoBtn, graficoBarraBtn, graficoLinhaBtn;
+    private Button IniciarSessaoBtn, graficoLinhaBtn;
     private TextView experimentadorTextView;
     private RecyclerView sessaoRecycleView;
     private Spinner experimentadorSpinner;
@@ -118,18 +113,6 @@ public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSele
     private void listener() {
         experimentadorSpinner.setOnItemSelectedListener(this);
 
-        graficoBarraBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent it = new Intent(Sessoes.this, GraficoBarra.class);
-                // passando uma lista
-                it.putExtra("sessoes", sessoes);
-                it.putExtra("nomeEquino", ExperimentoViewModel.experimento.getValue()
-                .getEquino().getNome());
-                startActivity(it);
-            }
-        });
-
         graficoLinhaBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -195,7 +178,6 @@ public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSele
         sessaoRecycleView = findViewById(R.id.sessaoRecycleView);
         experimentadorSpinner = findViewById(R.id.experimentadorSpinner);
         nenhumeSessaoLayouth = findViewById(R.id.nenhumeSessaoLayouth);
-        graficoBarraBtn = findViewById(R.id.graficoBarraBtn);
         graficoLinhaBtn = findViewById(R.id.graficoLinhaBtn);
         contextActivity = this;
         sessoes = new ArrayList<>();

@@ -1,5 +1,7 @@
 package com.example.bolsista.novatentativa.modelo;
 
+import android.util.Log;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -49,22 +51,17 @@ public class Teste implements Serializable{
         this.completo = completo;
     }
 
-    /*
-    public Configuracao(String id, String nome, String observacoes, ArrayList<Integer> imagens,
-                        int qtdDesafios, int intervalo1, int intervalo2, int somErro, int somAcerto,
-                        DocumentReference usuario, Boolean completo) {
-        this.id = id;
-        this.nome = nome;
-        this.observacoes = observacoes;
-        this.imagens = imagens;
-        this.qtdDesafios = qtdDesafios;
-        this.intervalo1 = intervalo1;
-        this.intervalo2 = intervalo2;
-        this.somErro = somErro;
-        this.somAcerto = somAcerto;
-        this.usuario = usuario;
-        this.completo = completo;
-    }*/
+    // verificar se as duas ultimas sessões obtveram sucesso
+    public void verificaAprendizagem(){
+        int qtdSessoes = sessoes.size();
+
+        if(qtdSessoes > 1){
+            if(sessoes.get(qtdSessoes-1).getTaxaAcerto() >= criterioAprendizagem &&
+            sessoes.get(qtdSessoes-2).getTaxaAcerto() >= criterioAprendizagem){
+                setCompleto(true);
+            }
+        }
+    }
 
     public String getId() {
         return id;
