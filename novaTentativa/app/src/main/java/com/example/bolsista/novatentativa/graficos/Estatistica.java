@@ -2,20 +2,27 @@ package com.example.bolsista.novatentativa.graficos;
 
 import com.example.bolsista.novatentativa.modelo.Sessao;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class Estatistica {
     float media = 0, mediana = 0;
     float valY[] = new float[100];
+    DecimalFormat f = new DecimalFormat("0.00");
+    ArrayList<Sessao> sessoes;
 
-    public float getMedia(final ArrayList<Sessao> sessoes){
-        calculaMedia(sessoes);
-        return media;
+    public Estatistica(ArrayList<Sessao> sessoes){
+        this.sessoes = sessoes;
     }
 
-    public float getMediana(final ArrayList<Sessao> sessoes){
+    public String getMedia(){
+        calculaMedia(sessoes);
+        return f.format(media);
+    }
+
+    public String getMediana(){
         calculaMediana(sessoes);
-        return mediana;
+        return f.format(mediana);
     }
 
     private void calculaMedia(ArrayList<Sessao> sessoes){

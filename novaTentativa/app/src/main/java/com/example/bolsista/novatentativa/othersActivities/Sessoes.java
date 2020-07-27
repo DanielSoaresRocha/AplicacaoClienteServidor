@@ -162,9 +162,9 @@ public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSele
             verGraficos.setVisibility(View.GONE);
         }else{
             // média e mediana
-            Estatistica estatistica = new Estatistica();
-            media.setText(Float.toString(estatistica.getMedia(sessoes)));
-            mediana.setText(Float.toString(estatistica.getMediana(sessoes)));
+            Estatistica estatistica = new Estatistica(sessoes);
+            media.setText(estatistica.getMedia());
+            mediana.setText(estatistica.getMediana());
         }
 
         // se o teste já tiver sido completado remover estas Views
