@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,6 +22,7 @@ import android.widget.TextView;
 import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.adapters.SessaoAdapter;
 import com.example.bolsista.novatentativa.arquitetura.Servidor;
+import com.example.bolsista.novatentativa.graficos.Estatistica;
 import com.example.bolsista.novatentativa.graficos.GraficoLinha;
 import com.example.bolsista.novatentativa.modelo.Sessao;
 import com.example.bolsista.novatentativa.modelo.Teste;
@@ -40,7 +42,7 @@ import java.util.Collections;
 
 public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
     private Button IniciarSessaoBtn, graficoLinhaBtn;
-    private TextView experimentadorTextView;
+    private TextView experimentadorTextView, media, mediana;
     private RecyclerView sessaoRecycleView;
     private Spinner experimentadorSpinner;
     LinearLayout nenhumeSessaoLayouth;
@@ -145,6 +147,7 @@ public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSele
         LinearLayoutManager layout = new LinearLayoutManager(contextActivity, LinearLayoutManager.VERTICAL, false);
         sessaoRecycleView.setLayoutManager(layout);
     }
+    @SuppressLint("SetTextI18n")
     private void preencher() {
         Intent it = getIntent();
         POSITION_EXPERIMENTO = it.getIntExtra("positionExperimento", 0);
@@ -157,6 +160,11 @@ public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSele
             sessaoRecycleView.setVisibility(View.GONE);
             nenhumeSessaoLayouth.setVisibility(View.VISIBLE);
             verGraficos.setVisibility(View.GONE);
+        }else{
+            // média e mediana
+            Estatistica estatistica = new Estatistica();
+            media.setText(Float.toString(estatistica.getMedia(sessoes)));
+            mediana.setText(Float.toString(estatistica.getMediana(sessoes)));
         }
 
         // se o teste já tiver sido completado remover estas Views
@@ -179,6 +187,8 @@ public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSele
         experimentadorSpinner = findViewById(R.id.experimentadorSpinner);
         nenhumeSessaoLayouth = findViewById(R.id.nenhumeSessaoLayouth);
         graficoLinhaBtn = findViewById(R.id.graficoLinhaBtn);
+        media = findViewById(R.id.media);
+        mediana = findViewById(R.id.mediana);
         contextActivity = this;
         sessoes = new ArrayList<>();
         usuarios = new ArrayList<>();

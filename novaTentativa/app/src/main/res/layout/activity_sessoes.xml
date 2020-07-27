@@ -50,6 +50,55 @@
             android:orientation="vertical"
             android:id="@+id/verGraficos"
             >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center"
+                android:paddingBottom="10sp"
+                >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Média: "
+                    android:textColor="@color/black_de"
+                    android:textSize="20sp"
+                    android:paddingHorizontal="10sp"
+                    />
+
+                <TextView
+                    android:id="@+id/media"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@color/vermelhoo"
+                    android:textSize="20sp"
+                    android:paddingHorizontal="10sp"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Mediana: "
+                    android:textColor="@color/black_de"
+                    android:textSize="20sp"
+                    android:paddingHorizontal="10sp"
+                    />
+
+                <TextView
+                    android:id="@+id/mediana"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@color/vermelhoo"
+                    android:textSize="20sp"
+                    android:paddingHorizontal="10sp"
+                    />
+
+            </LinearLayout>
+
             <Button
                 android:id="@+id/graficoLinhaBtn"
                 android:layout_gravity="center"
@@ -61,7 +110,6 @@
                 android:fontFamily="sans-serif-black"
                 android:layout_marginHorizontal="20sp"
                 />
-
     </LinearLayout>
 
 
