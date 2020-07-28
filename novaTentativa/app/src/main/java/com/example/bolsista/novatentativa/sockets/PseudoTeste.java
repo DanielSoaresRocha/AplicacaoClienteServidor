@@ -28,8 +28,7 @@ public class PseudoTeste extends PreTeste {
     private static int numRepeticoes = 0;
 
     // testes com 8 desafios
-    private static int desafios1 = 0;
-    private static int desafios2 = 0;
+    private static int desafios1 = 0, desafios2 = 0, ladoE = 0, ladoD = 0;
 
     public PseudoTeste(Socket cliente, int numCliente, Context context) {
         super(cliente, numCliente, context);
@@ -128,9 +127,17 @@ public class PseudoTeste extends PreTeste {
         if(desafioDaVez < 4){ // se for menor que 4 desafios1 é incrementado
             desafios1++;
             Log.i("DEBUGL2", "Desafios 1 apareceram " + desafios1 +" vezes");
+            if(desafioDaVez == 0 || desafioDaVez == 2)// posicoes onde o lado direito é correto
+                ladoD++;
+            else
+                ladoE++;
         }else{// se não, desafios2 é incrementado
             desafios2++;
             Log.i("DEBUGL2", "Desafios 2 apareceram " + desafios2 +" vezes");
+            if(desafioDaVez == 4 || desafioDaVez == 6)// posicoes onde o lado direito é correto
+                ladoD++;
+            else
+                ladoE++;
         }
 
         // se algum destes chegar a 10, somente o outro será chamado
@@ -140,6 +147,23 @@ public class PseudoTeste extends PreTeste {
         }else if (desafios2 >= 10){
             desafioDaVez = numeroAleatorio(0,3);
             Log.i("DEBUGL2", "Desafios 2 ultrapassaram 10, agora somente desafios 1");
+        }
+
+        // se ultrapassar o número de vezes de algum lado
+        if(ladoD > 10){
+            int[] ladoEsquerdo = {1,3,5,7}; // posições onde a img certa é no lado esquerdo
+            desafioDaVez = ladoEsquerdo[numeroAleatorio(0,3)];
+            if(desafios1 >= 10)
+                desafioDaVez = ladoEsquerdo[numeroAleatorio(2,3)];// pegar dasafios1 do vetor
+            else if(desafios2 >= 10)
+                desafioDaVez = ladoEsquerdo[numeroAleatorio(0,1)];
+        }else if(ladoE > 10){
+            int[] ladoDireito = {0,2,4,6}; // posições onde a img certa é no lado direito
+            desafioDaVez = ladoDireito[numeroAleatorio(0,3)];
+            if(desafios1 >= 10)
+                desafioDaVez = ladoDireito[numeroAleatorio(2,3)];
+            else if(desafios2 >= 10)
+                desafioDaVez = ladoDireito[numeroAleatorio(0,1)];
         }
 
         desafioAtual = desafios.get(desafioDaVez);
