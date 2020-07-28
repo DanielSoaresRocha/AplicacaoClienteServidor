@@ -141,28 +141,28 @@ public class PseudoTeste extends PreTeste {
         }
 
         // se algum destes chegar a 10, somente o outro será chamado
-        if(desafios1 >= 10){
-            Log.i("DEBUGL2", "Desafios 1 ultrapassaram 10, agora somente desafios 2");
+        if(desafios1 > 10){
+            Log.i("DEBUGL22", "Desafios 1 ultrapassaram 10, agora somente desafios 2");
             desafioDaVez = numeroAleatorio(4, desafios.size() - 1);
-        }else if (desafios2 >= 10){
+        }else if (desafios2 > 10){
             desafioDaVez = numeroAleatorio(0,3);
-            Log.i("DEBUGL2", "Desafios 2 ultrapassaram 10, agora somente desafios 1");
+            Log.i("DEBUGL22", "Desafios 2 ultrapassaram 10, agora somente desafios 1");
         }
 
         // se ultrapassar o número de vezes de algum lado
         if(ladoD > 10){
             int[] ladoEsquerdo = {1,3,5,7}; // posições onde a img certa é no lado esquerdo
             desafioDaVez = ladoEsquerdo[numeroAleatorio(0,3)];
-            if(desafios1 >= 10)
+            if(desafios1 > 10)
                 desafioDaVez = ladoEsquerdo[numeroAleatorio(2,3)];// pegar dasafios1 do vetor
-            else if(desafios2 >= 10)
+            else if(desafios2 > 10)
                 desafioDaVez = ladoEsquerdo[numeroAleatorio(0,1)];
         }else if(ladoE > 10){
             int[] ladoDireito = {0,2,4,6}; // posições onde a img certa é no lado direito
             desafioDaVez = ladoDireito[numeroAleatorio(0,3)];
-            if(desafios1 >= 10)
+            if(desafios1 > 10)
                 desafioDaVez = ladoDireito[numeroAleatorio(2,3)];
-            else if(desafios2 >= 10)
+            else if(desafios2 > 10)
                 desafioDaVez = ladoDireito[numeroAleatorio(0,1)];
         }
 
