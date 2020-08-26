@@ -119,6 +119,8 @@ public class PseudoTeste extends PreTeste {
 
     }
 
+    // desafio 1 e desafio 2 devem aparecer 10 vezes cada no tablet mestre
+    // as opções corretas na esquerda e direita são igualmente distribuídas
     private static void l2() {
         int desafioDaVez;
 
@@ -153,7 +155,7 @@ public class PseudoTeste extends PreTeste {
         if(ladoD > 10){
             int[] ladoEsquerdo = {1,3,5,7}; // posições onde a img certa é no lado esquerdo
             desafioDaVez = ladoEsquerdo[numeroAleatorio(0,3)];
-            if(desafios1 > 10)
+            if(desafios1 > 10)// verifica novamente se um desafio ultrapassou 10 vezes
                 desafioDaVez = ladoEsquerdo[numeroAleatorio(2,3)];// pegar dasafios1 do vetor
             else if(desafios2 > 10)
                 desafioDaVez = ladoEsquerdo[numeroAleatorio(0,1)];
@@ -169,6 +171,8 @@ public class PseudoTeste extends PreTeste {
         desafioAtual = desafios.get(desafioDaVez);
     }
 
+
+    // não deixar um simbolo se repetir mais do que 3 vezes consecutivas no tablet mestre
     private static void l1() {
         String desafioAtual2;
         int desafioDaVez = numeroAleatorio(0,3);// pegar um desafio aleatório
@@ -181,7 +185,7 @@ public class PseudoTeste extends PreTeste {
             desafioAtual2 = "simbolo2";
         }
 
-        if(desafioAtual2.equals(desafioAnterior)){ // se o desafio atualo for igual o desafio anterior
+        if(desafioAtual2.equals(desafioAnterior)){ // se o desafio atual for igual o desafio anterior
             numRepeticoes++;
             Log.i("DEBUGL1", "REPETIU " + numRepeticoes +" VEZES");
         }else {// se não for igual o número de repetições zera
@@ -210,7 +214,7 @@ public class PseudoTeste extends PreTeste {
         desafioAtual = desafios.get(desafioDaVez);
     }
 
-    //retorna um numero de 0 até o tamanho da lista
+    // retorna um numero aleatório do min ao max
     private static int numeroAleatorio(int min, int max) {
         Random random = new Random(); // gerar número aleatório
         int numeroTmp = random.nextInt(max - (min - 1)) + min;
