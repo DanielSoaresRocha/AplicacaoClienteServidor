@@ -112,7 +112,7 @@ public class PseudoTeste extends PreTeste {
     }
 
     private static void sortearDesafio() {
-        if (desafios.size() > 4) // Testes L2, T1 e T2
+        if (desafios.size() > 4) // Testes L2, T1 e T2 (L3)
             l2();
         else // somente o teste L1, L3
             l1();
