@@ -24,11 +24,11 @@ public class PseudoTeste extends PreTeste {
     private static ArrayList<Desafio> desafios = new ArrayList<>();
 
     // testes com 4 desafios
-    private static String desafioAnterior = "";
+    private static String simboloAnterior = "";
     private static int numRepeticoes = 0;
 
     // testes com 8 desafios
-    private static int desafios1 = 0, desafios2 = 0, ladoE = 0, ladoD = 0;
+    private static int familia1 = 0, familia2 = 0, ladoE = 0, ladoD = 0;
 
     public PseudoTeste(Socket cliente, int numCliente, Context context) {
         super(cliente, numCliente, context);
@@ -112,11 +112,114 @@ public class PseudoTeste extends PreTeste {
     }
 
     private static void sortearDesafio() {
+        /*
         if (desafios.size() > 4) // Testes L2, T1 e T2 (L3)
             l2();
         else // somente o teste L1, L3
             l1();
+        */
+        int testeId = Integer.parseInt(TesteViewModel.teste.getValue().getId());
+        switch (testeId){
+            case 1:
+                Log.i("TESTEL1", "Escolhido pelo case 1");
+                l11();
+                break;
+            case 2:
+                ///
+                break;
+            case 3:
+                ///
+                break;
+            case 4:
+                ///
+                break;
+            case 5:
+                ///
+                break;
+            default:
+                l11();
+                Log.i("TESTEL1", "Escolhido pelo default");
+        }
+    }
 
+    private static void l11(){
+        String simboloAtual;
+        int desafioDaVez = numeroAleatorio(0, desafios.size() - 1);// pegar um desafio aleatório
+
+        // Identificar o simbolo atual
+        if(desafioDaVez == 0 || desafioDaVez == 1){// se for um dos 2 primeiros é o simbolo 1
+            simboloAtual = "simbolo1";
+        }else {// se for um dos 2 ultimos é o simbolo 2
+            simboloAtual = "simbolo2";
+        }
+
+        // Incrementa se o símbolo atual for igual o símbolo anterior, se não, zera
+        if(simboloAtual.equals(simboloAnterior)){
+            numRepeticoes++;
+        }else {// se não for igual o número de repetições zera
+            numRepeticoes = 0;
+        }
+
+        // Se o número de repeticoes chegar a 3 deve-se saber qual símbolo se repetiu e forçar o outro
+        if(numRepeticoes >= 3){
+            if(simboloAnterior.equals("simbolo1")){// Se for o símbolo 1, força o símbolo 2
+                desafioDaVez = numeroAleatorio(2,3);
+            }else{ // Se não força o símbolo 1
+                desafioDaVez = numeroAleatorio(0,1);
+            }
+        }
+
+        // Identificar qual lado foi mostrado
+        if(desafioDaVez == 0 || desafioDaVez == 2)// Posicão onde o lado direito é correto
+            ladoD++;
+        else
+            ladoE++;
+
+        Log.i("TESTEL1_Lados", "Lado direito contando com "+ ladoD+ " vezes");
+        Log.i("TESTEL1_Lados", "Lado esquerdo contando com "+ ladoE+ " vezes");
+
+        // Se ultrapassar o número de vezes de algum lado
+        if(ladoD > 10){
+            int[] ladoEsquerdo = {1,3}; // posições onde a img certa é no lado esquerdo
+            desafioDaVez = ladoEsquerdo[numeroAleatorio(0,1)];
+
+            Log.i("TESTEL1_Lados", "Lado DIREITO atingiu limite");
+
+            if(numRepeticoes >= 3){
+                if(simboloAnterior.equals("simbolo1")){// Se for o símbolo 1, força o símbolo 2
+                    desafioDaVez = ladoEsquerdo[1];
+                }else{ // Se não força o símbolo 1
+                    desafioDaVez = ladoEsquerdo[0];
+                }
+            }
+
+        }else if(ladoE > 10){
+            int[] ladoDireito = {0,2}; // posições onde a img certa é no lado direito
+            desafioDaVez = ladoDireito[numeroAleatorio(0,1)];
+
+            Log.i("TESTEL1_Lados", "Lado ESQUERDO atingiu limite");
+
+            if(numRepeticoes >= 3){
+                if(simboloAnterior.equals("simbolo1")){// Se for o símbolo 1, força o símbolo 2
+                    desafioDaVez = ladoDireito[1];
+                }else{ // Se não força o símbolo 1
+                    desafioDaVez = ladoDireito[0];
+                }
+            }
+        }
+
+        // Por último, fala quem foi o símbolo escolhido para o desafio
+        if(desafioDaVez == 0 || desafioDaVez == 1){
+            simboloAnterior = "simbolo1";
+        }else {
+            simboloAnterior = "simbolo2";
+        }
+
+        // Zera número de repetições se chegar a 3, pois já foi tratada
+        if(numRepeticoes >= 3)
+            numRepeticoes = 0;
+
+        desafioAtual = desafios.get(desafioDaVez);
     }
 
     // desafio 1 e desafio 2 devem aparecer 10 vezes cada no tablet mestre
@@ -127,15 +230,15 @@ public class PseudoTeste extends PreTeste {
         desafioDaVez = numeroAleatorio(0, desafios.size() - 1); // pega um desafio aleatório de 0 a 7
 
         if(desafioDaVez < 4){ // se for menor que 4 desafios1 é incrementado
-            desafios1++;
-            Log.i("DEBUGL2", "Desafios 1 apareceram " + desafios1 +" vezes");
+            familia1++;
+            Log.i("DEBUGL2", "primeira família apareceram " + familia1 +" vezes");
             if(desafioDaVez == 0 || desafioDaVez == 2)// posicoes onde o lado direito é correto
                 ladoD++;
             else
                 ladoE++;
         }else{// se não, desafios2 é incrementado
-            desafios2++;
-            Log.i("DEBUGL2", "Desafios 2 apareceram " + desafios2 +" vezes");
+            familia2++;
+            Log.i("DEBUGL2", "segunda família apareceram " + familia2 +" vezes");
             if(desafioDaVez == 4 || desafioDaVez == 6)// posicoes onde o lado direito é correto
                 ladoD++;
             else
@@ -143,28 +246,28 @@ public class PseudoTeste extends PreTeste {
         }
 
         // se algum destes chegar a 10, somente o outro será chamado
-        if(desafios1 > 10){
-            Log.i("DEBUGL22", "Desafios 1 ultrapassaram 10, agora somente desafios 2");
+        if(familia1 > 10){
+            Log.i("DEBUGL22", "Primeira família ultrapassaram 10, agora somente desafios 2");
             desafioDaVez = numeroAleatorio(4, desafios.size() - 1);
-        }else if (desafios2 > 10){
+        }else if (familia2 > 10){
             desafioDaVez = numeroAleatorio(0,3);
-            Log.i("DEBUGL22", "Desafios 2 ultrapassaram 10, agora somente desafios 1");
+            Log.i("DEBUGL22", "Segunda família ultrapassaram 10, agora somente desafios 1");
         }
 
         // se ultrapassar o número de vezes de algum lado
         if(ladoD > 10){
             int[] ladoEsquerdo = {1,3,5,7}; // posições onde a img certa é no lado esquerdo
             desafioDaVez = ladoEsquerdo[numeroAleatorio(0,3)];
-            if(desafios1 > 10)// verifica novamente se um desafio ultrapassou 10 vezes
+            if(familia1 > 10)// verifica novamente se um desafio ultrapassou 10 vezes
                 desafioDaVez = ladoEsquerdo[numeroAleatorio(2,3)];// pegar dasafios1 do vetor
-            else if(desafios2 > 10)
+            else if(familia2 > 10)
                 desafioDaVez = ladoEsquerdo[numeroAleatorio(0,1)];
         }else if(ladoE > 10){
             int[] ladoDireito = {0,2,4,6}; // posições onde a img certa é no lado direito
             desafioDaVez = ladoDireito[numeroAleatorio(0,3)];
-            if(desafios1 > 10)
+            if(familia1 > 10)
                 desafioDaVez = ladoDireito[numeroAleatorio(2,3)];
-            else if(desafios2 > 10)
+            else if(familia2 > 10)
                 desafioDaVez = ladoDireito[numeroAleatorio(0,1)];
         }
 
@@ -185,7 +288,7 @@ public class PseudoTeste extends PreTeste {
             desafioAtual2 = "simbolo2";
         }
 
-        if(desafioAtual2.equals(desafioAnterior)){ // se o desafio atual for igual o desafio anterior
+        if(desafioAtual2.equals(simboloAnterior)){ // se o desafio atual for igual o desafio anterior
             numRepeticoes++;
             Log.i("DEBUGL1", "REPETIU " + numRepeticoes +" VEZES");
         }else {// se não for igual o número de repetições zera
@@ -194,7 +297,7 @@ public class PseudoTeste extends PreTeste {
         }
 
         if(numRepeticoes >= 3){// se o número de repeticoes chegar a 3 deve-se saber qual simbolo se repetiu
-            if(desafioAnterior.equals("simbolo1")){// se for o simbolo 1 na a próxima vez força o simbolo 2
+            if(simboloAnterior.equals("simbolo1")){// se for o simbolo 1 na a próxima vez força o simbolo 2
                 desafioDaVez = numeroAleatorio(2,3);
                 Log.i("DEBUGL1", "FORÇOU CIRCULO ");
             }else{ // se não força o simbolo 1
@@ -206,9 +309,9 @@ public class PseudoTeste extends PreTeste {
         }
 
         if(desafioDaVez == 0 || desafioDaVez == 1){ // o desafio anterior sempre é declarado no final da interação
-            desafioAnterior = "simbolo1";
+            simboloAnterior = "simbolo1";
         }else {
-            desafioAnterior = "simbolo2";
+            simboloAnterior = "simbolo2";
         }
 
         desafioAtual = desafios.get(desafioDaVez);
