@@ -10,10 +10,14 @@ import com.example.bolsista.novatentativa.modelo.Desafio;
 import com.example.bolsista.novatentativa.modelo.Ensaio;
 import com.example.bolsista.novatentativa.modelo.Mensagem;
 import com.example.bolsista.novatentativa.viewsModels.TesteViewModel;
+import com.google.android.gms.common.util.JsonUtils;
+
+import org.w3c.dom.ls.LSOutput;
 
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -23,11 +27,10 @@ public class PseudoTeste extends PreTeste {
     private static Desafio desafioAtual;
     private static ArrayList<Desafio> desafios = new ArrayList<>();
 
-    // testes com 4 desafios
+    // Variáveis para controle dos testes
     private static String simboloAnterior = "";
     private static int numRepeticoes = 0;
-
-    // testes com 8 desafios
+    private static int simbolo1 = 0, simbolo2 = 0;
     private static int familia1 = 0, familia2 = 0, ladoE = 0, ladoD = 0;
 
     public PseudoTeste(Socket cliente, int numCliente, Context context) {
@@ -55,6 +58,7 @@ public class PseudoTeste extends PreTeste {
                 rodada++;
                 esp32(ABRIR_MOTOR);
                 ensaio.setAcerto(true);
+                //esperar();
                 if (!Servidor.controleRemoto && rodada <= numRodadas) {
                     //dormir(TesteViewModel.teste.getValue().getIntervalo1()); // tempo de espera do mestre
                     novaInteracao(); //fazer nova interação de imagens entre os tablets
@@ -69,6 +73,8 @@ public class PseudoTeste extends PreTeste {
                 ensaio.setAcerto(false);
             }
             TesteViewModel.sessao.getEnsaios().add(ensaio);
+
+            Log.i("TESTE_Simbolos", "Simbolo se repetiu "+ numRepeticoes+ " vezes");
         }
         TesteViewModel.adicionarNovaSessao();
         terminar();
@@ -115,13 +121,13 @@ public class PseudoTeste extends PreTeste {
         int testeId = Integer.parseInt(TesteViewModel.teste.getValue().getId());
         switch (testeId){
             case 1:
-                l11();
+                l1();
                 break;
             case 2:
-                l22();
+                l2();
                 break;
             case 3:
-                ///
+                l3();
                 break;
             case 4:
                 ///
@@ -130,19 +136,27 @@ public class PseudoTeste extends PreTeste {
                 ///
                 break;
             default:
-                l11();
+                l1();
         }
     }
 
-    private static void l11(){
+    private static void l1(){
+        int[] interacoesL1 = {0, 2, 3, 2, 1, 3, 2, 0, 1, 0, 3, 0, 2, 1, 0, 3, 2, 1 ,3, 1};
+
+        desafioAtual = desafios.get(interacoesL1[rodada-1]);
+    }
+
+    private static void l3(){
         String simboloAtual;
         int desafioDaVez = numeroAleatorio(0, desafios.size() - 1);// pegar um desafio aleatório
 
         // Identificar o simbolo atual
         if(desafioDaVez == 0 || desafioDaVez == 1){// se for um dos 2 primeiros é o simbolo 1
             simboloAtual = "simbolo1";
+            simbolo1++;
         }else {// se for um dos 2 ultimos é o simbolo 2
             simboloAtual = "simbolo2";
+            simbolo2++;
         }
 
         // Incrementa se o símbolo atual for igual o símbolo anterior, se não, zera
@@ -161,17 +175,10 @@ public class PseudoTeste extends PreTeste {
             }
         }
 
-        // Identificar qual lado foi mostrado
-        if(desafioDaVez == 0 || desafioDaVez == 2)// Posicão onde o lado direito é correto
-            ladoD++;
-        else
-            ladoE++;
-
-        Log.i("TESTEL1_Lados", "Lado direito contando com "+ ladoD+ " vezes");
-        Log.i("TESTEL1_Lados", "Lado esquerdo contando com "+ ladoE+ " vezes");
+        // DISTRIBUIÇÃO
 
         // Se ultrapassar o número de vezes de algum lado
-        if(ladoD > 10){
+        if(ladoD >= 10){
             int[] ladoEsquerdo = {1,3}; // posições onde a img certa é no lado esquerdo
             desafioDaVez = ladoEsquerdo[numeroAleatorio(0,1)];
 
@@ -185,7 +192,7 @@ public class PseudoTeste extends PreTeste {
                 }
             }
 
-        }else if(ladoE > 10){
+        }else if(ladoE >= 10){
             int[] ladoDireito = {0,2}; // posições onde a img certa é no lado direito
             desafioDaVez = ladoDireito[numeroAleatorio(0,1)];
 
@@ -199,6 +206,12 @@ public class PseudoTeste extends PreTeste {
                 }
             }
         }
+
+        // Identificar qual lado foi mostrado
+        if(desafioDaVez == 0 || desafioDaVez == 2)// Posicão onde o lado direito é correto
+            ladoD++;
+        else
+            ladoE++;
 
         // Por último, fala quem foi o símbolo escolhido para o desafio
         if(desafioDaVez == 0 || desafioDaVez == 1){
@@ -214,9 +227,96 @@ public class PseudoTeste extends PreTeste {
         desafioAtual = desafios.get(desafioDaVez);
     }
 
-    private static void l22(){
+    private static void l2(){
         String simboloAtual;
         int desafioDaVez = numeroAleatorio(0, desafios.size() - 1);// pegar um desafio aleatório
+
+        // Se alguma família chegar a 10, somente a outra será chamada
+        if(familia1 >= 10)
+            desafioDaVez = numeroAleatorio(4, desafios.size() - 1);
+        else if (familia2 >= 10)
+            desafioDaVez = numeroAleatorio(0,3);
+
+        // Se ultrapassar o número de vezes de algum lado
+        if(ladoD >= 10){
+            Log.i("TESTEL2_Lados", "Lado DIREITO atingiu limite");
+
+            int[] ladoEsquerdo = {1,3,5,7}; // posições onde a img certa é no lado esquerdo
+            desafioDaVez = ladoEsquerdo[numeroAleatorio(0,3)];
+            if(familia1 >= 10)// verifica novamente se um desafio ultrapassou 10 vezes
+                desafioDaVez = ladoEsquerdo[numeroAleatorio(2,3)];// pegar dasafios1 do
+            else if(familia2 >= 10)
+                desafioDaVez = ladoEsquerdo[numeroAleatorio(0,1)];
+        }else if(ladoE >= 10){
+            Log.i("TESTEL2_Lados", "Lado ESQUERDO atingiu limite");
+
+            int[] ladoDireito = {0,2,4,6}; // posições onde a img certa é no lado direito
+            desafioDaVez = ladoDireito[numeroAleatorio(0,3)];
+            if(familia1 >= 10)
+                desafioDaVez = ladoDireito[numeroAleatorio(2,3)];
+            else if(familia2 >= 10)
+                desafioDaVez = ladoDireito[numeroAleatorio(0,1)];
+        }
+
+        // ------------------- TRATAR SIMBOLOS SEM QUEBRAR AS OUTRAS REGRAS ------------------------
+        // Se o número de repeticoes chegar a 3 deve-se saber qual símbolo se repetiu e forçar o outro
+        if(numRepeticoes >= 2){
+            if(simboloAnterior.equals("simbolo1")){// Se for o símbolo 1, força o símbolo 2
+                int[] simbolo2 = {2,3,6,7}; // posições onde o simbolo 2 está presente no meste
+                desafioDaVez = simbolo2[numeroAleatorio(0,3)];
+
+                // Verifica familias
+                if(familia1 >= 10)// verifica novamente se um desafio ultrapassou 10 vezes
+                    desafioDaVez = simbolo2[numeroAleatorio(2,3)];// pegar familia2 do vetor
+                else if(familia2 >= 10)
+                    desafioDaVez = simbolo2[numeroAleatorio(0,1)];// pegar familia1 do vetor
+
+                // Se ultrapassar o número de vezes de algum lado
+                if(ladoD >= 10){
+                    int[] ladoEsquerdo = {3,7}; // posições onde a img certa é no lado esquerdo
+                    desafioDaVez = ladoEsquerdo[numeroAleatorio(0,1)];
+                    if(familia1 >= 10)// verifica novamente se um desafio ultrapassou 10 vezes
+                        desafioDaVez = ladoEsquerdo[1];// pegar dasafios1 do vetor
+                    else if(familia2 >= 10)
+                        desafioDaVez = ladoEsquerdo[0];
+                }else if(ladoE >= 10){
+                    int[] ladoDireito = {2,6}; // posições onde a img certa é no lado direito
+                    desafioDaVez = ladoDireito[numeroAleatorio(0,1)];
+                    if(familia1 >= 10)
+                        desafioDaVez = ladoDireito[1];
+                    else if(familia2 >= 10)
+                        desafioDaVez = ladoDireito[0];
+                }
+
+            }else{ // Se não força o símbolo 1
+                int[] simbolo1 = {0,1,4,5}; // posições onde o simbolo 2 está presente no mestre
+                desafioDaVez = simbolo1[numeroAleatorio(0,3)];
+
+                // Verifica familias
+                if(familia1 >= 10)// verifica novamente se um desafio ultrapassou 10 vezes
+                    desafioDaVez = simbolo1[numeroAleatorio(2,3)];// pegar familia2 do vetor
+                else if(familia2 >= 10)
+                    desafioDaVez = simbolo1[numeroAleatorio(0,1)];// pegar familia1 do vetor
+
+                // Se ultrapassar o número de vezes de algum lado
+                if(ladoD >= 10){
+                    int[] ladoEsquerdo = {1,5}; // posições onde a img certa é no lado esquerdo
+                    desafioDaVez = ladoEsquerdo[numeroAleatorio(0,1)];
+                    if(familia1 >= 10)// verifica novamente se um desafio ultrapassou 10 vezes
+                        desafioDaVez = ladoEsquerdo[1];// pegar dasafios1 do vetor
+                    else if(familia2 >= 10)
+                        desafioDaVez = ladoEsquerdo[0];
+                }else if(ladoE >= 10){
+                    int[] ladoDireito = {0,4}; // posições onde a img certa é no lado direito
+                    desafioDaVez = ladoDireito[numeroAleatorio(0,1)];
+                    if(familia1 >= 10)
+                        desafioDaVez = ladoDireito[1];
+                    else if(familia2 >= 10)
+                        desafioDaVez = ladoDireito[0];
+                }
+            }
+            numRepeticoes = 0;
+        }
 
         // Verificar qual família foi escolhida
         if(desafioDaVez < 4){
@@ -225,91 +325,6 @@ public class PseudoTeste extends PreTeste {
             familia2++;
         }
 
-        // Se alguma família chegar a 10, somente a outra será chamada
-        if(familia1 > 10)
-            desafioDaVez = numeroAleatorio(4, desafios.size() - 1);
-        else if (familia2 > 10)
-            desafioDaVez = numeroAleatorio(0,3);
-
-        // Identificar qual lado foi mostrado
-        if(desafioDaVez == 0 || desafioDaVez == 2 || desafioDaVez == 4 || desafioDaVez == 6)// posicoes onde o lado direito é correto
-            ladoD++;
-        else
-            ladoE++;
-
-        Log.i("TESTEL2_Lados", "Lado direito contando com "+ ladoD+ " vezes");
-        Log.i("TESTEL2_Lados", "Lado esquerdo contando com "+ ladoE+ " vezes");
-
-        // Se ultrapassar o número de vezes de algum lado
-        if(ladoD > 10){
-            Log.i("TESTEL2_Lados", "Lado DIREITO atingiu limite");
-
-            int[] ladoEsquerdo = {1,3,5,7}; // posições onde a img certa é no lado esquerdo
-            desafioDaVez = ladoEsquerdo[numeroAleatorio(0,3)];
-            if(familia1 > 10)// verifica novamente se um desafio ultrapassou 10 vezes
-                desafioDaVez = ladoEsquerdo[numeroAleatorio(2,3)];// pegar dasafios1 do vetor
-            else if(familia2 > 10)
-                desafioDaVez = ladoEsquerdo[numeroAleatorio(0,1)];
-        }else if(ladoE > 10){
-            Log.i("TESTEL2_Lados", "Lado ESQUERDO atingiu limite");
-
-            int[] ladoDireito = {0,2,4,6}; // posições onde a img certa é no lado direito
-            desafioDaVez = ladoDireito[numeroAleatorio(0,3)];
-            if(familia1 > 10)
-                desafioDaVez = ladoDireito[numeroAleatorio(2,3)];
-            else if(familia2 > 10)
-                desafioDaVez = ladoDireito[numeroAleatorio(0,1)];
-        }
-
-        // ------------------- TRATAR SIMBOLOS SEM QUEBRAR AS OUTRAS REGRAS ------------------------
-        // Se o número de repeticoes chegar a 3 deve-se saber qual símbolo se repetiu e forçar o outro
-        if(numRepeticoes >= 3){
-            if(simboloAnterior.equals("simbolo1")){// Se for o símbolo 1, força o símbolo 2
-                int[] simbolo2 = {2,3,6,7}; // posições onde o simbolo 2 está presente no meste
-                desafioDaVez = simbolo2[numeroAleatorio(0,4)];
-
-                // Se ultrapassar o número de vezes de algum lado
-                if(ladoD > 10){
-                    int[] ladoEsquerdo = {3,7}; // posições onde a img certa é no lado esquerdo
-                    desafioDaVez = ladoEsquerdo[numeroAleatorio(0,1)];
-                    if(familia1 > 10)// verifica novamente se um desafio ultrapassou 10 vezes
-                        desafioDaVez = ladoEsquerdo[1];// pegar dasafios1 do vetor
-                    else if(familia2 > 10)
-                        desafioDaVez = ladoEsquerdo[0];
-                }else if(ladoE > 10){
-                    int[] ladoDireito = {2,6}; // posições onde a img certa é no lado direito
-                    desafioDaVez = ladoDireito[numeroAleatorio(0,1)];
-                    if(familia1 > 10)
-                        desafioDaVez = ladoDireito[1];
-                    else if(familia2 > 10)
-                        desafioDaVez = ladoDireito[0];
-                }
-            }else{ // Se não força o símbolo 1
-                int[] simbolo1 = {0,1,4,5}; // posições onde o simbolo 2 está presente no mestre
-                desafioDaVez = simbolo1[numeroAleatorio(0,4)];
-
-                // Se ultrapassar o número de vezes de algum lado
-                if(ladoD > 10){
-                    int[] ladoEsquerdo = {1,5}; // posições onde a img certa é no lado esquerdo
-                    desafioDaVez = ladoEsquerdo[numeroAleatorio(0,1)];
-                    if(familia1 > 10)// verifica novamente se um desafio ultrapassou 10 vezes
-                        desafioDaVez = ladoEsquerdo[1];// pegar dasafios1 do vetor
-                    else if(familia2 > 10)
-                        desafioDaVez = ladoEsquerdo[0];
-                }else if(ladoE > 10){
-                    int[] ladoDireito = {0,4}; // posições onde a img certa é no lado direito
-                    desafioDaVez = ladoDireito[numeroAleatorio(0,1)];
-                    if(familia1 > 10)
-                        desafioDaVez = ladoDireito[1];
-                    else if(familia2 > 10)
-                        desafioDaVez = ladoDireito[0];
-                }
-            }
-        }
-
-        Log.i("TESTEL2_Familias", "Primeira família foi selecionada "+ familia1+ " vezes");
-        Log.i("TESTEL2_Familias", "Segunda família foi selecionada "+ familia2+ " vezes");
-
         // Identificar o simbolo atual
         if(desafioDaVez == 0 || desafioDaVez == 1 || desafioDaVez == 4 || desafioDaVez == 5){// se for um desses é o simbolo 1
             simboloAtual = "simbolo1";
@@ -317,22 +332,61 @@ public class PseudoTeste extends PreTeste {
             simboloAtual = "simbolo2";
         }
 
+        // Identificar qual lado foi mostrado
+        if(desafioDaVez == 0 || desafioDaVez == 2 || desafioDaVez == 4 || desafioDaVez == 6)// posicoes onde o lado direito é correto
+            ladoD++;
+        else
+            ladoE++;
+
         // Incrementa se o símbolo atual for igual o símbolo anterior, se não, zera
         if(simboloAtual.equals(simboloAnterior)){
             numRepeticoes++;
         }else {// se não for igual o número de repetições zera
             numRepeticoes = 0;
         }
-        // Zera número de repetições se chegar a 3, pois já foi tratada
-        if(numRepeticoes >= 3)
-            numRepeticoes = 0;
+
+        // Por último, fala quem foi o símbolo escolhido para o desafio
+        if(desafioDaVez == 0 || desafioDaVez == 1 || desafioDaVez == 4 || desafioDaVez == 5){
+            simboloAnterior = "simbolo1";
+        }else {
+            simboloAnterior = "simbolo2";
+        }
+
+        Log.i("TESTE_Lados", "Lado direito contando com "+ ladoD+ " vezes");
+        Log.i("TESTE_Lados", "Lado esquerdo contando com "+ ladoE+ " vezes");
+        Log.i("TESTE_Familias", "Primeira família foi selecionada "+ familia1+ " vezes");
+        Log.i("TESTE_Familias", "Segunda família foi selecionada "+ familia2+ " vezes");
 
         desafioAtual = desafios.get(desafioDaVez);
     }
 
+    //
+
+    /**
+     * Retorna o simbolo que deve ser mostrado levando em conta a diferença
+     * entre dois.
+     *
+     * @param qtdSimbolo1 quantidade de vezes que o simbolo 1 apareceu
+     * @param qtdSimbolo2 quantidade de vezes que o simbolo 2 apareceu
+     * @return  o valor conrrespondente ao simbolo que deve ser mostrado
+     */
+    private static int simboloDaVez(int qtdSimbolo1, int qtdSimbolo2){
+        double diferenca = Math.abs(qtdSimbolo1 - qtdSimbolo2);
+        Log.i("SIMBOLO_VEZ", "Diferenca = " + diferenca);
+
+        if(diferenca > 2){
+            Log.i("SIMBOLO_VEZ", "Ultrapassou 3 vezes");
+            if(qtdSimbolo1 > qtdSimbolo2)
+                return 2;
+            else
+                return 1;
+        }
+        return 0;
+    }
+
     // desafio 1 e desafio 2 devem aparecer 10 vezes cada no tablet mestre
     // as opções corretas na esquerda e direita são igualmente distribuídas
-    private static void l2() {
+    /*private static void l2() {
         int desafioDaVez;
 
         desafioDaVez = numeroAleatorio(0, desafios.size() - 1); // pega um desafio aleatório de 0 a 7
@@ -380,11 +434,11 @@ public class PseudoTeste extends PreTeste {
         }
 
         desafioAtual = desafios.get(desafioDaVez);
-    }
+    }*/
 
 
     // não deixar um simbolo se repetir mais do que 3 vezes consecutivas no tablet mestre
-    private static void l1() {
+    /*private static void l1() {
         String desafioAtual2;
         int desafioDaVez = numeroAleatorio(0,3);// pegar um desafio aleatório
 
@@ -423,7 +477,7 @@ public class PseudoTeste extends PreTeste {
         }
 
         desafioAtual = desafios.get(desafioDaVez);
-    }
+    }*/
 
     // retorna um numero aleatório do min ao max
     private static int numeroAleatorio(int min, int max) {
