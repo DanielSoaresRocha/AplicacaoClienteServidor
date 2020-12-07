@@ -130,10 +130,10 @@ public class PseudoTeste extends PreTeste {
                 l3();
                 break;
             case 4:
-                ///
+                l2();
                 break;
             case 5:
-                ///
+                t2();
                 break;
             default:
                 l1();
@@ -360,126 +360,144 @@ public class PseudoTeste extends PreTeste {
         desafioAtual = desafios.get(desafioDaVez);
     }
 
-    //
+    private static void t2() {
+        String simboloAtual;
+        int desafioDaVez = numeroAleatorio(0, desafios.size() - 1);// pegar um desafio aleatório
 
-    /**
-     * Retorna o simbolo que deve ser mostrado levando em conta a diferença
-     * entre dois.
-     *
-     * @param qtdSimbolo1 quantidade de vezes que o simbolo 1 apareceu
-     * @param qtdSimbolo2 quantidade de vezes que o simbolo 2 apareceu
-     * @return  o valor conrrespondente ao simbolo que deve ser mostrado
-     */
-    private static int simboloDaVez(int qtdSimbolo1, int qtdSimbolo2){
-        double diferenca = Math.abs(qtdSimbolo1 - qtdSimbolo2);
-        Log.i("SIMBOLO_VEZ", "Diferenca = " + diferenca);
+        // Se ultrapassar o número de vezes de algum lado
+        if(ladoD >= 10){
+            Log.i("TESTEL2_Lados", "Lado DIREITO atingiu limite");
 
-        if(diferenca > 2){
-            Log.i("SIMBOLO_VEZ", "Ultrapassou 3 vezes");
-            if(qtdSimbolo1 > qtdSimbolo2)
-                return 2;
-            else
-                return 1;
-        }
-        return 0;
-    }
-
-    // desafio 1 e desafio 2 devem aparecer 10 vezes cada no tablet mestre
-    // as opções corretas na esquerda e direita são igualmente distribuídas
-    /*private static void l2() {
-        int desafioDaVez;
-
-        desafioDaVez = numeroAleatorio(0, desafios.size() - 1); // pega um desafio aleatório de 0 a 7
-
-        if(desafioDaVez < 4){ // se for menor que 4 desafios1 é incrementado
-            familia1++;
-            Log.i("DEBUGL2", "primeira família apareceram " + familia1 +" vezes");
-            if(desafioDaVez == 0 || desafioDaVez == 2)// posicoes onde o lado direito é correto
-                ladoD++;
-            else
-                ladoE++;
-        }else{// se não, desafios2 é incrementado
-            familia2++;
-            Log.i("DEBUGL2", "segunda família apareceram " + familia2 +" vezes");
-            if(desafioDaVez == 4 || desafioDaVez == 6)// posicoes onde o lado direito é correto
-                ladoD++;
-            else
-                ladoE++;
-        }
-
-        // se algum destes chegar a 10, somente o outro será chamado
-        if(familia1 > 10){
-            Log.i("DEBUGL22", "Primeira família ultrapassaram 10, agora somente desafios 2");
-            desafioDaVez = numeroAleatorio(4, desafios.size() - 1);
-        }else if (familia2 > 10){
-            desafioDaVez = numeroAleatorio(0,3);
-            Log.i("DEBUGL22", "Segunda família ultrapassaram 10, agora somente desafios 1");
-        }
-
-        // se ultrapassar o número de vezes de algum lado
-        if(ladoD > 10){
             int[] ladoEsquerdo = {1,3,5,7}; // posições onde a img certa é no lado esquerdo
             desafioDaVez = ladoEsquerdo[numeroAleatorio(0,3)];
-            if(familia1 > 10)// verifica novamente se um desafio ultrapassou 10 vezes
-                desafioDaVez = ladoEsquerdo[numeroAleatorio(2,3)];// pegar dasafios1 do vetor
-            else if(familia2 > 10)
-                desafioDaVez = ladoEsquerdo[numeroAleatorio(0,1)];
-        }else if(ladoE > 10){
+        }else if(ladoE >= 10){
+            Log.i("TESTEL2_Lados", "Lado ESQUERDO atingiu limite");
+
             int[] ladoDireito = {0,2,4,6}; // posições onde a img certa é no lado direito
             desafioDaVez = ladoDireito[numeroAleatorio(0,3)];
-            if(familia1 > 10)
-                desafioDaVez = ladoDireito[numeroAleatorio(2,3)];
-            else if(familia2 > 10)
-                desafioDaVez = ladoDireito[numeroAleatorio(0,1)];
         }
 
-        desafioAtual = desafios.get(desafioDaVez);
-    }*/
+        // ------------------- TRATAR SIMBOLOS SEM QUEBRAR AS OUTRAS REGRAS ------------------------
+        // Se o número de repeticoes chegar a 3 deve-se saber qual símbolo se repetiu e forçar o outro
+        if(numRepeticoes >= 2){
+            if(desafioDaVez <= 5){
+                desafioDaVez = desafioDaVez + 2; // pula dois desafios a frente para resolver a repetição
+                int desafioAux = desafioDaVez;// precisa-se guardar este valor para comparação
 
+                // Se ultrapassar o número de vezes de algum lado
+                if(ladoD >= 10){
+                    int[] ladoEsquerdo = {1,3,5,7}; // posições onde a img certa é no lado esquerdo
+                    int ladoAux = numeroAleatorio(0,3);// precisa-se guardar este valor para comparação
 
-    // não deixar um simbolo se repetir mais do que 3 vezes consecutivas no tablet mestre
-    /*private static void l1() {
-        String desafioAtual2;
-        int desafioDaVez = numeroAleatorio(0,3);// pegar um desafio aleatório
+                    desafioDaVez = ladoEsquerdo[ladoAux];
 
-        if(desafioDaVez == 0 || desafioDaVez == 1){// se for um dos 2 primeiros é o simbolo 2
-            desafioAtual2 = "simbolo1";
-            Log.i("DEBUGL1", "AGORA É ESTRELA ");
-        }else {// se for um dos 2 ultimos é o simbolo 2
-            Log.i("DEBUGL1", "AGORA É CIRCULO ");
-            desafioAtual2 = "simbolo2";
-        }
+                    if(desafioDaVez == desafioAux){// se for igual a o escolhido no primeiro if
+                        if (ladoAux == 0){
+                            desafioDaVez = ladoEsquerdo[1];
+                        }else if(ladoAux == 1){
+                            desafioDaVez = ladoEsquerdo[2];
+                        }else if(ladoAux == 2){
+                            desafioDaVez = ladoEsquerdo[3];
+                        }else{
+                            desafioDaVez = ladoEsquerdo[0];
+                        }
+                    }
 
-        if(desafioAtual2.equals(simboloAnterior)){ // se o desafio atual for igual o desafio anterior
-            numRepeticoes++;
-            Log.i("DEBUGL1", "REPETIU " + numRepeticoes +" VEZES");
-        }else {// se não for igual o número de repetições zera
-            Log.i("DEBUGL1", "ZEROUUU ");
-            numRepeticoes = 0;
-        }
+                }else if(ladoE >= 10){
+                    int[] ladoDireito = {0,2,4,6}; // posições onde a img certa é no lado direito
+                    int ladoAux = numeroAleatorio(0,3);// precisa-se guardar este valor para comparação
 
-        if(numRepeticoes >= 3){// se o número de repeticoes chegar a 3 deve-se saber qual simbolo se repetiu
-            if(simboloAnterior.equals("simbolo1")){// se for o simbolo 1 na a próxima vez força o simbolo 2
-                desafioDaVez = numeroAleatorio(2,3);
-                Log.i("DEBUGL1", "FORÇOU CIRCULO ");
-            }else{ // se não força o simbolo 1
-                desafioDaVez = numeroAleatorio(0,1);
-                Log.i("DEBUGL1", "FORÇOU TRIANGULO");
+                    desafioDaVez = ladoDireito[ladoAux];
+
+                    if(desafioDaVez == desafioAux){// se for igual a o escolhido no primeiro if
+                        if (ladoAux == 0){
+                            desafioDaVez = ladoDireito[1];
+                        }else if(ladoAux == 1){
+                            desafioDaVez = ladoDireito[2];
+                        }else if(ladoAux == 2){
+                            desafioDaVez = ladoDireito[3];
+                        }else{
+                            desafioDaVez = ladoDireito[0];
+                        }
+                    }
+
+                }
+            }else{
+                desafioDaVez = numeroAleatorio(0,5); // escolhe aleatóriamente um de trás
+                int desafioAux = desafioDaVez;// precisa-se guardar este valor para comparação
+
+                // Se ultrapassar o número de vezes de algum lado
+                if(ladoD >= 10){
+                    int[] ladoEsquerdo = {1,3,5}; // posições onde a img certa é no lado esquerdo
+                    int ladoAux = numeroAleatorio(0,2);// precisa-se guardar este valor para comparação
+
+                    desafioDaVez = ladoEsquerdo[ladoAux];
+
+                    if(desafioDaVez == desafioAux){// se for igual a o escolhido no primeiro if
+                        if (ladoAux == 0){
+                            desafioDaVez = ladoEsquerdo[1];
+                        }else if(ladoAux == 1){
+                            desafioDaVez = ladoEsquerdo[2];
+                        }else{
+                            desafioDaVez = ladoEsquerdo[0];
+                        }
+                    }
+
+                }else if(ladoE >= 10){
+                    int[] ladoDireito = {0,2,4}; // posições onde a img certa é no lado direito
+                    int ladoAux = numeroAleatorio(0,2);// precisa-se guardar este valor para comparação
+
+                    desafioDaVez = ladoDireito[ladoAux];
+
+                    if(desafioDaVez == desafioAux){// se for igual a o escolhido no primeiro if
+                        if (ladoAux == 0){
+                            desafioDaVez = ladoDireito[1];
+                        }else if(ladoAux == 1){
+                            desafioDaVez = ladoDireito[2];
+                        }else{
+                            desafioDaVez = ladoDireito[0];
+                        }
+                    }
+
+                }
             }
-            numRepeticoes = 0;
-            Log.i("DEBUGL1", "ZEROUUU ");
+        numRepeticoes = 0;
         }
-
-        if(desafioDaVez == 0 || desafioDaVez == 1){ // o desafio anterior sempre é declarado no final da interação
-            simboloAnterior = "simbolo1";
-        }else {
-            simboloAnterior = "simbolo2";
-        }
-
+        // Atribuir desafio para identificar
         desafioAtual = desafios.get(desafioDaVez);
-    }*/
 
-    // retorna um numero aleatório do min ao max
+        // Identificar o simbolo atual
+        simboloAtual = Integer.toString(desafioAtual.getImgCorreta());
+
+        // Identificar qual lado foi mostrado
+        if(desafioDaVez == 0 || desafioDaVez == 2 || desafioDaVez == 4 || desafioDaVez == 6)// posicoes onde o lado direito é correto
+            ladoD++;
+        else
+            ladoE++;
+
+        // Incrementa se o símbolo atual for igual o símbolo anterior, se não, zera
+        if(simboloAtual.equals(simboloAnterior)){
+            numRepeticoes++;
+        }else {// se não for igual o número de repetições zera
+            numRepeticoes = 0;
+        }
+
+        // Por último, fala quem foi o símbolo escolhido para o desafio
+        simboloAnterior = Integer.toString(desafioAtual.getImgCorreta());
+
+        Log.i("TESTE_Lados", "Lado direito contando com "+ ladoD+ " vezes");
+        Log.i("TESTE_Lados", "Lado esquerdo contando com "+ ladoE+ " vezes");
+        Log.i("TESTE_REPETICOES", "Numero de repetições = "+ numRepeticoes);
+    }
+
+    /**
+     * Retornar um número aleatório entre um valor máximo
+     * e mínimo recebidos pelo parâmetro.
+     *
+     * @param min valor mínimo que pode ser retornado
+     * @param max valor máximo que pode ser retornado
+     * @return um número aleatório
+     */
     private static int numeroAleatorio(int min, int max) {
         Random random = new Random(); // gerar número aleatório
         int numeroTmp = random.nextInt(max - (min - 1)) + min;

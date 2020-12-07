@@ -81,7 +81,7 @@ public class ListarTestes extends Fragment {
         if(mViewModel.cavalos.getValue().size() == 0){ // se a lista estiver vazia
             /*
             Preste atenção que a ordem das figuras está como nos testes de gabor, onde a figura do meio
-            representa a img certa, e as laterais sendo a certa ou a errada
+            representa a img certa, e as laterais sendo a certa ou a errada (não se aplica a T1 e T2)
             */
             //DESAFIOS TESTE L1
             ArrayList<Desafio> desafiosL1 = new ArrayList<>();
@@ -111,19 +111,19 @@ public class ListarTestes extends Fragment {
             desafiosT1.add(new Desafio("2",R.drawable.cruz, R.drawable.cruz, R.drawable.circuloo));
             desafiosT1.add(new Desafio("3",R.drawable.cruz, R.drawable.circuloo, R.drawable.circuloo));
             desafiosT1.add(new Desafio("4",R.drawable.circuloo, R.drawable.circuloo, R.drawable.cruz));
-            desafiosT1.add(new Desafio("5",R.drawable.trianguloo, R.drawable.trianguloo, R.drawable.retanguloo));
-            desafiosT1.add(new Desafio("6",R.drawable.retanguloo, R.drawable.trianguloo, R.drawable.trianguloo));
+            desafiosT1.add(new Desafio("5",R.drawable.retanguloo, R.drawable.trianguloo, R.drawable.trianguloo));
+            desafiosT1.add(new Desafio("6",R.drawable.trianguloo, R.drawable.trianguloo, R.drawable.retanguloo));
             desafiosT1.add(new Desafio("7",R.drawable.trianguloo, R.drawable.retanguloo, R.drawable.retanguloo));
             desafiosT1.add(new Desafio("8",R.drawable.retanguloo, R.drawable.retanguloo, R.drawable.trianguloo));
             //DESAFIOS TESTE T2
             ArrayList<Desafio> desafiosT2 = new ArrayList<>();
-            desafiosT2.add(new Desafio("1",R.drawable.retanguloo, R.drawable.trianguloo, R.drawable.trianguloo));
-            desafiosT2.add(new Desafio("2",R.drawable.trianguloo, R.drawable.trianguloo, R.drawable.retanguloo));
-            desafiosT2.add(new Desafio("3",R.drawable.trianguloo, R.drawable.retanguloo, R.drawable.retanguloo));
-            desafiosT2.add(new Desafio("4",R.drawable.retanguloo, R.drawable.retanguloo, R.drawable.trianguloo));
+            desafiosT2.add(new Desafio("5",R.drawable.peace, R.drawable.plane, R.drawable.plane));
             desafiosT2.add(new Desafio("5",R.drawable.plane, R.drawable.plane, R.drawable.peace));
             desafiosT2.add(new Desafio("6",R.drawable.pi, R.drawable.music, R.drawable.music));
+            desafiosT2.add(new Desafio("6",R.drawable.music, R.drawable.music, R.drawable.pi));
             desafiosT2.add(new Desafio("7",R.drawable.plane, R.drawable.pi, R.drawable.pi));
+            desafiosT2.add(new Desafio("7",R.drawable.pi, R.drawable.pi, R.drawable.plane));
+            desafiosT2.add(new Desafio("8",R.drawable.music, R.drawable.peace, R.drawable.peace));
             desafiosT2.add(new Desafio("8",R.drawable.peace, R.drawable.peace, R.drawable.music));
 
             //PRE-TESTE
