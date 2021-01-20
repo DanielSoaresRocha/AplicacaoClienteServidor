@@ -6,6 +6,7 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import androidx.appcompat.app.AppCompatActivity;
 import android.os.Bundle;
+import android.os.StrictMode;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -71,6 +72,9 @@ public class Servidor extends AppCompatActivity {
     }
 
     private void criarServidor() {
+        StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+        StrictMode.setThreadPolicy(policy);
+
         numberAleatorio = R.drawable.tela_preta;
 
         preTeste = true;

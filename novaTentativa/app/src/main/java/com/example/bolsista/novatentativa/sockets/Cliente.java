@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.example.bolsista.novatentativa.Jogar;
 import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.arquitetura.ClienteActivity;
+import com.example.bolsista.novatentativa.arquitetura.Remoto;
 import com.example.bolsista.novatentativa.modelo.Mensagem;
 import com.example.bolsista.novatentativa.modelo.Teste;
 
@@ -27,6 +28,8 @@ import java.net.Socket;
 * de cliente esta classe será através do parâmentro "controleRemoto" presente no construtor.
 * */
 public class Cliente {
+    public final int FECHAR_SOCKET = 998;
+    public final int TROCAR_IMAGENS = 997;
 
     private ObjectInputStream leitor;//****
     private ObjectOutputStream escritor;//*****
@@ -62,24 +65,24 @@ public class Cliente {
             Log.i("OBJETO","Criou output do CLIENTE");
             leitor = new ObjectInputStream(cliente.getInputStream());
             Log.i("OBJETO","Criou input do CLIENTE");
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    receberObjeto();
-                    //Irá receber infinitamente mensagens do servidor
-                    while (true){
-                        int mensagem = leitor.readInt(); // o loop fica pausado aqui até que receba algum comando do servidor
-                        Log.i("COMUNICACAO","MENSAGEM RECEBIDA DO SERVER ="+ mensagem);
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        receberObjeto();
+                        //Irá receber infinitamente mensagens do servidor
+                        while (true){
+                            int mensagem = leitor.readInt(); // o loop fica pausado aqui até que receba algum comando do servidor
+                            Log.i("COMUNICACAO","MENSAGEM RECEBIDA DO SERVER ="+ mensagem);
 
-                        mudarImagem(mensagem);
+                            mudarImagem(mensagem);
+                        }
+
+                    }catch (IOException e){
+                        Log.i("ERRO","IMPOSSÍVEL LER MENSAGEM "+ e.getMessage());
                     }
-
-                }catch (IOException e){
-                    Log.i("ERRO","IMPOSSÍVEL LER MENSAGEM");
                 }
-            }
-        }).start();
+            }).start();
         }catch (IOException e){
             Log.i("ERRO","ERRO AO CONECTAR-SE AO SERVIDOR "+ e.getMessage());
         }
@@ -90,21 +93,33 @@ public class Cliente {
             Mensagem mensagem = (Mensagem) leitor.readObject();
             Log.i("OBJETO","Objeto recebido do servidor =  identificacao " + mensagem.getIdentificacao());
             indentificador = mensagem.getIdentificacao();
-            final ClienteActivity cliente = (ClienteActivity) client;
 
-            cliente.identificacaoCliente.post(new Runnable() {
-                @SuppressLint("SetTextI18n")
-                @Override
-                public void run() {
-                    if(!controleRemoto){
+            if(!controleRemoto) {
+                final ClienteActivity cliente = (ClienteActivity) client;
+
+                cliente.identificacaoCliente.post(new Runnable() {
+                    @SuppressLint("SetTextI18n")
+                    @Override
+                    public void run() {
                         cliente.identificacaoCliente.setVisibility(View.VISIBLE);
-                        cliente.numIdentificacao.setText(Integer.toString(mensagem.getIdentificacao()+1));
-                        Toast.makeText(client.getApplicationContext(),R.string.comecar,Toast.LENGTH_LONG).show();
+                        cliente.numIdentificacao.setText(Integer.toString(mensagem.getIdentificacao() + 1));
+                        Toast.makeText(client.getApplicationContext(), R.string.comecar, Toast.LENGTH_LONG).show();
                         cliente.comecarClientBtn.setVisibility(View.VISIBLE);
                         cliente.criarClientBtn.setVisibility(View.GONE);
                     }
-                }
-            });
+                });
+            }else{
+                final Remoto remoto = (Remoto) client;
+
+                remoto.remotoEditText.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(client.getApplicationContext(), R.string.comecar, Toast.LENGTH_LONG).show();
+                        remoto.comecarRemotoBtn.setVisibility(View.VISIBLE);
+                        remoto.criarRemotoBtn.setVisibility(View.GONE);
+                    }
+                });
+            }
         } catch (IOException e) {
             Log.i("OBJETO", "ERRO AO TENTAR RECEBER OBJETO:"+ e.getMessage());
         } catch (ClassNotFoundException e) {
@@ -129,9 +144,9 @@ public class Cliente {
     //este método envia para o servidor um comando do controle remoto: 997 = mudar imagem
     public void controleRemoto(){
         try{
-            Log.i("COMUNICACAO", "CONTROLE REMOTO ACIONADO");
-            escritor.writeInt(997);
+            escritor.writeObject(new Mensagem(indentificador, TROCAR_IMAGENS));
             escritor.flush();
+            Log.i("COMUNICACAO", "CONTROLE REMOTO ACIONADO");
 
         }catch (IOException e){
             Log.i("ERRO", "erro ao enviar no controle remoto" + e.getMessage());
@@ -142,7 +157,8 @@ public class Cliente {
     public void desconect(){
 
         try{
-            escritor.writeInt(998);
+            escritor.writeObject(new Mensagem(indentificador, FECHAR_SOCKET));
+            escritor.flush();
 
             escritor.close();
             leitor.close();

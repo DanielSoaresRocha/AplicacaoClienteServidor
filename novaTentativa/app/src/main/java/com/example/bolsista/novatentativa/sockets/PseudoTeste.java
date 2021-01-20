@@ -58,12 +58,12 @@ public class PseudoTeste extends PreTeste {
                 rodada++;
                 esp32(ABRIR_MOTOR);
                 ensaio.setAcerto(true);
-                //esperar();
+                esperar();
                 if (!Servidor.controleRemoto && rodada <= numRodadas) {
-                    //dormir(TesteViewModel.teste.getValue().getIntervalo1()); // tempo de espera do mestre
+                    dormir(TesteViewModel.teste.getValue().getIntervalo1()); // tempo de espera do mestre
                     novaInteracao(); //fazer nova interação de imagens entre os tablets
                 }
-            } else if (msg.getComando() == TROCAR_IMAGENS) {//trocar imagens
+            } else if (msg.getComando() == TROCAR_IMAGENS) {//trocar imagens;
                 novaInteracao();
             } else if (msg.getComando() == FECHAR_SOCKET) {//fechar socket
                 desconectarControle();

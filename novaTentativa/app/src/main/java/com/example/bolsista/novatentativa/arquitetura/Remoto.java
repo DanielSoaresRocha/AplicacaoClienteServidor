@@ -13,8 +13,8 @@ import com.example.bolsista.novatentativa.ControleRemoto;
 import com.example.bolsista.novatentativa.R;
 
 public class Remoto extends AppCompatActivity {
-    EditText remotoEditText;
-    Button criarRemotoBtn;
+    public EditText remotoEditText;
+    public Button criarRemotoBtn, comecarRemotoBtn;
 
     public static Cliente cliente;
 
@@ -24,8 +24,13 @@ public class Remoto extends AppCompatActivity {
         setContentView(R.layout.activity_remoto);
 
         inicializar();
+        comecar();
         listener();
 
+    }
+
+    private void comecar() {
+        comecarRemotoBtn.setVisibility(View.GONE);
     }
 
     private void listener() {
@@ -33,6 +38,14 @@ public class Remoto extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 criarControleRemoto();
+            }
+        });
+
+        comecarRemotoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent controleRemoto = new Intent(Remoto.this, ControleRemoto.class);
+                startActivity(controleRemoto);
             }
         });
     }
@@ -45,15 +58,11 @@ public class Remoto extends AppCompatActivity {
 
             cliente = new Cliente(remotoEditText.getText().toString(),remoto,true);
             cliente.connect();
-            Toast.makeText(getApplicationContext(), R.string.controle_ativo, Toast.LENGTH_SHORT).show();
-
-            Intent controleRemoto = new Intent(Remoto.this, ControleRemoto.class);
-            startActivity(controleRemoto);
-
         }
     }
     private void inicializar() {
         remotoEditText = findViewById(R.id.remotoEditText);
         criarRemotoBtn = findViewById(R.id.criarRemotoBtn);
+        comecarRemotoBtn = findViewById(R.id.comecarRemotoBtn);
     }
 }
