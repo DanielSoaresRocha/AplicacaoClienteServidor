@@ -67,7 +67,6 @@ public class PseudoTeste extends PreTeste {
                 novaInteracao();
             } else if (msg.getComando() == FECHAR_SOCKET) {//fechar socket
                 desconectarControle();
-                break;
             } else { //O cavalo errou
                 jogar.tocarError();
                 ensaio.setAcerto(false);
