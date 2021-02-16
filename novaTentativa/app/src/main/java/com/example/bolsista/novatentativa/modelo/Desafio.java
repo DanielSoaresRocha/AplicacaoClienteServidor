@@ -16,6 +16,12 @@ public class Desafio {
         this.img2 = img2;
     }
 
+    // Para testes aleatórios
+    public Desafio(String id, int imgCorreta) {
+        this.id = id;
+        this.imgCorreta = imgCorreta;
+    }
+
     public String getId() {
         return id;
     }

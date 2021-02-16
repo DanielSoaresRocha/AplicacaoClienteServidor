@@ -117,7 +117,14 @@
             >
             <RadioButton
                 android:id="@+id/macho"
-                android:text="Macho"
+                android:text="Capão"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClicked"
+                />
+            <RadioButton
+                android:id="@+id/garanhao"
+                android:text="Garanhão"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="onRadioButtonClicked"

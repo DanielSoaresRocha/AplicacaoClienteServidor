@@ -19,6 +19,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bolsista.novatentativa.R;
+import com.example.bolsista.novatentativa.modelo.Desafio;
+import com.example.bolsista.novatentativa.modelo.Sessao;
 import com.example.bolsista.novatentativa.modelo.Teste;
 import com.example.bolsista.novatentativa.viewsModels.ListarViewModel;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -288,36 +290,32 @@ public class ConfigurarTeste extends AppCompatActivity implements AdapterView.On
     }
 
     private void fazerConfiguracao(){
-
-        teste = new Teste();
-        teste.setNome(nomeConfigEdit.getText().toString());
-        teste.setObservacoes(detalhesConfigEdit.getText().toString());
-        teste.setQtdEnsaiosPorSessao(Integer.parseInt(qtdQuestao.getText().toString()));
-        teste.setIntervalo1(Integer.parseInt(intervaloQuestoes.getText().toString()));
-        teste.setIntervalo2(Integer.parseInt(intervalo2.getText().toString()));
-        teste.setSomErro(erroEscolhido);
-        teste.setSomAcerto(acertoEscolhido);
+        teste = new Teste("999", nomeConfigEdit.getText().toString(), Integer.parseInt(intervaloQuestoes.getText().toString()),
+                Integer.parseInt(intervalo2.getText().toString()), 0, erroEscolhido, acertoEscolhido,
+                getDesafios(), detalhesConfigEdit.getText().toString(),2, 3,
+                new ArrayList<Sessao>(), false, Integer.parseInt(qtdQuestao.getText().toString()),
+                3, 85, false);
     }
 
-    private ArrayList<Integer> getImagens(){
-        ArrayList<Integer> imagens = new ArrayList<>();
+    private ArrayList<Desafio> getDesafios(){
+        ArrayList<Desafio> desafios = new ArrayList<>();
             if(formas.isChecked()){
-                imagens.add(R.drawable.circuloo);
-                imagens.add(R.drawable.trianguloo);
-                imagens.add(R.drawable.coracaoo);
-                imagens.add(R.drawable.estrela22);
-                imagens.add(R.drawable.hexagonoo);
-                imagens.add(R.drawable.retanguloo);
+                desafios.add(new Desafio("0", R.drawable.circuloo));
+                desafios.add(new Desafio("1", R.drawable.trianguloo));
+                desafios.add(new Desafio("2", R.drawable.coracaoo));
+                desafios.add(new Desafio("3", R.drawable.estrela22));
+                desafios.add(new Desafio("4", R.drawable.hexagonoo));
+                desafios.add(new Desafio("5", R.drawable.retanguloo));
             }
             if(preenchimento.isChecked()){
-                imagens.add(R.drawable.b_circuloo);
-                imagens.add(R.drawable.trianguloo);
-                imagens.add(R.drawable.b_coracaoo);
-                imagens.add(R.drawable.b_estrela22);
-                imagens.add(R.drawable.b_hexagonoo);
-                imagens.add(R.drawable.b_retanguloo);
+                desafios.add(new Desafio("0", R.drawable.b_circuloo));
+                desafios.add(new Desafio("0", R.drawable.trianguloo));
+                desafios.add(new Desafio("0", R.drawable.b_coracaoo));
+                desafios.add(new Desafio("0", R.drawable.b_estrela22));
+                desafios.add(new Desafio("0", R.drawable.b_hexagonoo));
+                desafios.add(new Desafio("0", R.drawable.b_retanguloo));
             }
-            return imagens;
+            return desafios;
     }
 
     @Override

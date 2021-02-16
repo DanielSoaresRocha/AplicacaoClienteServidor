@@ -135,31 +135,31 @@ public class ListarTestes extends Fragment {
             //TESTE L1
             ListarViewModel.addConfiguracao(new Teste("1", "Teste de aprendizagem L1",
                     5, 5, desafiosL1.size(), R.raw.sucess, R.raw.error,
-                    desafiosL1, "Teste Gabor", 0, 2,
+                    desafiosL1, "Teste Gabor", 1, 2,
                     new ArrayList<Sessao>(), false, 20, 3,
                     85,false));
             //TESTE L2
             ListarViewModel.addConfiguracao(new Teste("2", "Teste de aprendizagem L2",
                     5, 5, desafiosL2.size(), R.raw.sucess, R.raw.error,
-                    desafiosL2, "Teste Gabor", 0, 2,
+                    desafiosL2, "Teste Gabor", 1, 2,
                     new ArrayList<Sessao>(), false, 20, 3,
                     85,false));
             //TESTE L3
             ListarViewModel.addConfiguracao(new Teste("3", "Teste de aprendizagem L3",
                     5, 5, desafiosL3.size(), R.raw.sucess, R.raw.error,
-                    desafiosL3, "Teste Gabor", 0, 2,
+                    desafiosL3, "Teste Gabor", 1, 2,
                     new ArrayList<Sessao>(), false, 20, 3,
                     85,false));
             //TESTE T1
             ListarViewModel.addConfiguracao(new Teste("4", "Teste de transferência T1",
                     5, 5, desafiosT1.size(), R.raw.sucess, R.raw.error,
-                    desafiosT1, "Teste Gabor", 0, 2,
+                    desafiosT1, "Teste Gabor", 1, 2,
                     new ArrayList<Sessao>(), false, 20, 3,
                     85,false));
             //TESTE T2
             ListarViewModel.addConfiguracao(new Teste("5", "Teste de transferência T2",
                     5, 5, desafiosT2.size(), R.raw.sucess, R.raw.error,
-                    desafiosT2, "Teste Gabor", 0, 2,
+                    desafiosT2, "Teste Gabor", 1, 2,
                     new ArrayList<Sessao>(), false, 20, 3,
                     85,false));
             implementsRecycle();

@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.example.bolsista.novatentativa.arquitetura.ClienteActivity;
 import com.example.bolsista.novatentativa.arquitetura.Servidor;
 import com.example.bolsista.novatentativa.modelo.Desafio;
+import com.example.bolsista.novatentativa.sockets.AleatorioTeste;
 import com.example.bolsista.novatentativa.sockets.Cliente;
 import com.example.bolsista.novatentativa.sockets.PreTeste;
 import com.example.bolsista.novatentativa.sockets.PseudoTeste;
@@ -50,9 +51,11 @@ public class Jogar extends AppCompatActivity {
             PreTeste.definirTela(this);
             int imagemAtual = Servidor.numberAleatorio; //pegar a imagem atual que está no servidor
             imagemButton.setBackgroundResource(imagemAtual);
-            if(!TesteViewModel.teste.getValue().getPreTeste()) // só se não for um pré-teste
+
+            if(TesteViewModel.teste.getValue().getTipo() == 1) // só se não for um pré-teste
                 PseudoTeste.comecarInteracao();
-            Log.i("ACTIVITYJOGAR", "MUDOU ESSA VEZ");
+            else if(TesteViewModel.teste.getValue().getTipo() == 2)
+                AleatorioTeste.comecarInteracao();
         }else{
             Cliente.definirTela(this);
         }
