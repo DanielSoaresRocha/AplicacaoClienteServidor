@@ -1,14 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.bolsista.novatentativa.cadastros.CadastrarEquino"
     android:orientation="vertical"
-    android:gravity="top"
     >
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -120,21 +121,21 @@
                 android:text="Capão"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="onRadioButtonClicked"
+                android:onClick="onRadioButtonClickedSexo"
                 />
             <RadioButton
                 android:id="@+id/garanhao"
                 android:text="Garanhão"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="onRadioButtonClicked"
+                android:onClick="onRadioButtonClickedSexo"
                 />
             <RadioButton
                 android:id="@+id/femea"
                 android:text="Fêmea"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:onClick="onRadioButtonClicked"
+                android:onClick="onRadioButtonClickedSexo"
                 />
 
         </RadioGroup>
@@ -145,6 +146,329 @@
                 android:layout_height="wrap_content"
                 android:hint="@string/detalhes"
                 />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Sistema de criação:"
+            android:paddingVertical="5sp"
+            android:textSize="20sp"
+            >
+
+        </TextView>
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <RadioButton
+                android:id="@+id/baias"
+                android:text="Baias"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClickedCriacao"
+                />
+            <RadioButton
+                android:id="@+id/piqueteSozinho"
+                android:text="Piquetes sozinho"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClickedCriacao"
+                />
+            <RadioButton
+                android:id="@+id/piqueteGrupo"
+                android:text="Piquete grupo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClickedCriacao"
+                />
+
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nível de atividade/trabalho semanal:"
+            android:paddingVertical="5sp"
+            android:textSize="20sp"
+            >
+
+        </TextView>
+
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <RadioButton
+                android:id="@+id/vezesX1"
+                android:text="@string/x1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClickedVezes"
+                />
+            <RadioButton
+                android:id="@+id/vezesX2"
+                android:text="@string/x2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClickedVezes"
+                />
+            <RadioButton
+                android:id="@+id/vezesX3"
+                android:text="@string/x3"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClickedVezes"
+                />
+            <RadioButton
+                android:id="@+id/vezesX4"
+                android:text="@string/x4"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClickedVezes"
+                />
+            <RadioButton
+                android:id="@+id/vezesX5"
+                android:text="@string/x5"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClickedVezes"
+                />
+            <RadioButton
+                android:id="@+id/vezesX6"
+                android:text="@string/x6"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClickedVezes"
+                />
+            <RadioButton
+                android:id="@+id/vezesX7"
+                android:text="@string/x7"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClickedVezes"
+                />
+
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Intensidade da atividade:"
+            android:paddingVertical="5sp"
+            android:textSize="20sp"
+            >
+
+        </TextView>
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <RadioButton
+                android:id="@+id/pesada"
+                android:text="Pesada"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClickedItensidade"
+                />
+            <RadioButton
+                android:id="@+id/moderada"
+                android:text="Moderada"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClickedItensidade"
+                />
+            <RadioButton
+                android:id="@+id/leve"
+                android:text="Leve"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClickedItensidade"
+                />
+
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Suplemento mineral:"
+            android:paddingVertical="5sp"
+            android:textSize="20sp"
+            >
+
+        </TextView>
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <RadioButton
+                android:id="@+id/isMineral"
+                android:text="Sim"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClickedMineral"
+                />
+            <RadioButton
+                android:id="@+id/notMineral"
+                android:text="Não"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClickedMineral"
+                />
+
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Classificação de temperamento:"
+            android:paddingVertical="5sp"
+            android:textSize="20sp"
+            >
+
+        </TextView>
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <RadioButton
+                android:id="@+id/frio"
+                android:text="Frio"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClickedTemperamento"
+                />
+            <RadioButton
+                android:id="@+id/morno"
+                android:text="Morno"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClickedTemperamento"
+                />
+            <RadioButton
+                android:id="@+id/quente"
+                android:text="Quente"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClickedTemperamento"
+                />
+
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Alguma Exteriotipia/vício:"
+            android:paddingVertical="5sp"
+            android:textSize="20sp"
+            >
+
+        </TextView>
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <RadioButton
+                android:id="@+id/isVicio"
+                android:text="Sim"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClickedVicio"
+                />
+            <RadioButton
+                android:id="@+id/notVicio"
+                android:text="Não"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClickedVicio"
+                />
+
+        </RadioGroup>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Problema de saúde nos últimnos 60 dias:"
+            android:paddingVertical="5sp"
+            android:textSize="20sp"
+            >
+
+        </TextView>
+        <RadioGroup
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            >
+            <RadioButton
+                android:id="@+id/isProblemaSaude"
+                android:text="Sim"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClickedIsProblemaSaude"
+                />
+            <RadioButton
+                android:id="@+id/notProblemaSaude"
+                android:text="Não"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="onRadioButtonClickedIsProblemaSaude"
+                />
+
+        </RadioGroup>
+
+        <LinearLayout
+            android:id="@+id/problemaSaudeLinear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="gone"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Qual:"
+                android:paddingVertical="5sp"
+                android:textSize="20sp"
+                >
+
+            </TextView>
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                >
+                <RadioButton
+                    android:id="@+id/articular"
+                    android:text="Osteo-articular "
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="onRadioButtonClickedProblemaSaude"
+                    />
+                <RadioButton
+                    android:id="@+id/anemia"
+                    android:text="Anemia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="onRadioButtonClickedProblemaSaude"
+                    />
+                <RadioButton
+                    android:id="@+id/digestivo_colica"
+                    android:text="Digestivo/cólica"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:onClick="onRadioButtonClickedProblemaSaude"
+                    />
+
+            </RadioGroup>
+        </LinearLayout>
+
     </LinearLayout>
 
     <LinearLayout
@@ -171,7 +495,7 @@
             >
 
         </Button>
-
     </LinearLayout>
 
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>

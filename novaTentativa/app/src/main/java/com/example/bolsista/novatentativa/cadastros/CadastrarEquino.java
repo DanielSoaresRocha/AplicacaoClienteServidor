@@ -1,11 +1,13 @@
 package com.example.bolsista.novatentativa.cadastros;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.annotation.SuppressLint;
 import android.app.DatePickerDialog;
 import android.content.Context;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -15,7 +17,9 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,6 +51,7 @@ public class CadastrarEquino extends AppCompatActivity implements DatePickerDial
     ImageView dataNascimentoI;
     TextView dataNascimentoE;
     Spinner ativitiesSpinner, racasSpinner;
+    LinearLayout problemaSaudeLinear;
 
     ArrayAdapter<CharSequence> ativitiesAdapter, racasAdapter;
 
@@ -56,7 +61,8 @@ public class CadastrarEquino extends AppCompatActivity implements DatePickerDial
     Date dataNascimento;
     String atividade, racaText;
 
-    String sexo = "";
+    String sexo, sistemaCriacao, atividadeSemanal, itensidadeAtividade, temperamento, problemaSaude;
+    boolean suplementacaoMineral, vicio, isProblemaSaude;
 
     Equino equino;
     @Override
@@ -78,8 +84,11 @@ public class CadastrarEquino extends AppCompatActivity implements DatePickerDial
             public void onClick(View v) {
                 if((dataNascimentoE.getText().toString().length() >= 8) && (nome.getText().toString()
                         .length() > 1)) {
+
                     equino = new Equino(nome.getText().toString(), racaText,
-                            dataNascimento, detalhes.getText().toString(),sexo, atividade);
+                            dataNascimento, detalhes.getText().toString(),sexo, atividade,
+                            sistemaCriacao, atividadeSemanal, itensidadeAtividade, suplementacaoMineral,
+                            temperamento, vicio, isProblemaSaude, problemaSaude);
 
                     addFireStore();
 
@@ -125,7 +134,7 @@ public class CadastrarEquino extends AppCompatActivity implements DatePickerDial
         racasSpinner.setAdapter(racasAdapter);
     }
 
-    public void onRadioButtonClicked(View view) {
+    public void onRadioButtonClickedSexo(View view) {
         // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
 
@@ -139,6 +148,117 @@ public class CadastrarEquino extends AppCompatActivity implements DatePickerDial
                 if (checked)
                     sexo = "Fêmea";
                     break;
+        }
+    }
+
+    public void onRadioButtonClickedCriacao(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        if(view.getId() == R.id.baias || view.getId() == R.id.piqueteSozinho ||
+                view.getId() == R.id.piqueteGrupo){
+            if (checked)
+                sistemaCriacao = ((RadioButton) view).getText().toString();
+        }
+    }
+
+    public void onRadioButtonClickedVezes(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        if(view.getId() == R.id.vezesX1 || view.getId() == R.id.vezesX2 ||
+                view.getId() == R.id.vezesX3 || view.getId() == R.id.vezesX4 ||
+                view.getId() == R.id.vezesX5 || view.getId() == R.id.vezesX6 ||
+                view.getId() == R.id.vezesX7){
+            if (checked)
+                atividadeSemanal = ((RadioButton) view).getText().toString();
+        }
+    }
+
+    public void onRadioButtonClickedItensidade(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        if(view.getId() == R.id.moderada || view.getId() == R.id.leve ||
+                view.getId() == R.id.pesada){
+            if (checked)
+                itensidadeAtividade = ((RadioButton) view).getText().toString();
+        }
+    }
+
+    public void onRadioButtonClickedMineral(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        // Check which radio button was clicked
+        switch(view.getId()) {
+            case R.id.isMineral:
+                if (checked)
+                    suplementacaoMineral = true;
+                break;
+            case R.id.notMineral:
+                if (checked)
+                    suplementacaoMineral = false;
+                break;
+        }
+    }
+
+    public void onRadioButtonClickedTemperamento(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        if(view.getId() == R.id.frio || view.getId() == R.id.morno ||
+                view.getId() == R.id.quente){
+            if (checked)
+                temperamento = ((RadioButton) view).getText().toString();
+        }
+    }
+
+    public void onRadioButtonClickedVicio(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        // Check which radio button was clicked
+        switch(view.getId()) {
+            case R.id.isVicio:
+                if (checked)
+                    vicio = true;
+                break;
+            case R.id.notVicio:
+                if (checked)
+                    vicio = false;
+                break;
+        }
+    }
+
+    public void onRadioButtonClickedIsProblemaSaude(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        // Check which radio button was clicked
+        switch(view.getId()) {
+            case R.id.isProblemaSaude:
+                if (checked)
+                    isProblemaSaude = true;
+                    problemaSaudeLinear.setVisibility(View.VISIBLE);
+                break;
+            case R.id.notProblemaSaude:
+                if (checked)
+                    isProblemaSaude = false;
+                    problemaSaudeLinear.setVisibility(View.INVISIBLE);
+                    problemaSaude = "";
+                break;
+        }
+    }
+
+    public void onRadioButtonClickedProblemaSaude(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        if(view.getId() == R.id.articular || view.getId() == R.id.anemia ||
+                view.getId() == R.id.digestivo_colica){
+            if (checked)
+                problemaSaude = ((RadioButton) view).getText().toString();
         }
     }
 
@@ -205,6 +325,7 @@ public class CadastrarEquino extends AppCompatActivity implements DatePickerDial
         contextActivity = this;
         ativitiesSpinner = findViewById(R.id.ativitiesSpinner);
         racasSpinner = findViewById(R.id.racasSpinner);
+        problemaSaudeLinear = findViewById(R.id.problemaSaudeLinear);
     }
 
     @Override

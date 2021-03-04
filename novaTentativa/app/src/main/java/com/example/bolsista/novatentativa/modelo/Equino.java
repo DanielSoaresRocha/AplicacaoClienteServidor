@@ -12,6 +12,14 @@ public class Equino {
     private String observacoes;
     private String sexo;
     private String atividade;
+    private String sistemaCriacao;
+    private String atividadeSemanal;
+    private String itensidadeAtividade;
+    private boolean suplementacaoMineral;
+    private String temperamento;
+    private boolean vicio;
+    private boolean isProblemaSaude;
+    private String problemaSaude;
 
     public Equino() {
     }
@@ -24,6 +32,27 @@ public class Equino {
         this.observacoes = observacoes;
         this.sexo = sexo;
         this.atividade = atividade;
+    }
+
+    public Equino(String nome, String raca, Date dataNascimento, String observacoes,
+                  String sexo, String atividade, String sistemaCriacao, String atividadeSemanal,
+                  String itensidadeAtividade, boolean suplementacaoMineral, String temperamento,
+                  boolean vicio, boolean isProblemaSaude, String problemaSaude) {
+        this.id = id;
+        this.nome = nome;
+        this.raca = raca;
+        this.dataNascimento = dataNascimento;
+        this.observacoes = observacoes;
+        this.sexo = sexo;
+        this.atividade = atividade;
+        this.sistemaCriacao = sistemaCriacao;
+        this.atividadeSemanal = atividadeSemanal;
+        this.itensidadeAtividade = itensidadeAtividade;
+        this.suplementacaoMineral = suplementacaoMineral;
+        this.temperamento = temperamento;
+        this.vicio = vicio;
+        this.isProblemaSaude = isProblemaSaude;
+        this.problemaSaude = problemaSaude;
     }
 
     public String getId() {
@@ -80,5 +109,69 @@ public class Equino {
 
     public void setAtividade(String atividade) {
         this.atividade = atividade;
+    }
+
+    public String getSistemaCriacao() {
+        return sistemaCriacao;
+    }
+
+    public void setSistemaCriacao(String sistemaCriacao) {
+        this.sistemaCriacao = sistemaCriacao;
+    }
+
+    public String getAtividadeSemanal() {
+        return atividadeSemanal;
+    }
+
+    public void setAtividadeSemanal(String atividadeSemanal) {
+        this.atividadeSemanal = atividadeSemanal;
+    }
+
+    public String getItensidadeAtividade() {
+        return itensidadeAtividade;
+    }
+
+    public void setItensidadeAtividade(String itensidadeAtividade) {
+        this.itensidadeAtividade = itensidadeAtividade;
+    }
+
+    public boolean isSuplementacaoMineral() {
+        return suplementacaoMineral;
+    }
+
+    public void setSuplementacaoMineral(boolean suplementacaoMineral) {
+        this.suplementacaoMineral = suplementacaoMineral;
+    }
+
+    public String getTemperamento() {
+        return temperamento;
+    }
+
+    public void setTemperamento(String temperamento) {
+        this.temperamento = temperamento;
+    }
+
+    public boolean isVicio() {
+        return vicio;
+    }
+
+    public void setVicio(boolean vicio) {
+        this.vicio = vicio;
+    }
+
+    public boolean getIsProblemaSaude() {
+        return isProblemaSaude;
+    }
+
+    public void setIsProblemaSaude(boolean problemaSaude) {
+        isProblemaSaude = problemaSaude;
+    }
+
+    public String getProblemaSaude() {
+        return problemaSaude;
+    }
+
+    public void setProblemaSaude(String problemaSaude) {
+        this.problemaSaude = problemaSaude;
     }
 }
