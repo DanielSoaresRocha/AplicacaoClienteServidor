@@ -93,12 +93,14 @@ public class Servidor extends AppCompatActivity {
                     while (true) {
                         Socket cliente = servidor.accept();
                         Log.i("SERVIDOR", "CLIENTE FOI CONECTADO = " + cliente.getInetAddress());
-                        if(TesteViewModel.teste.getValue().getPreTeste()) // só se não for um pré-teste
-                            new PreTeste(cliente,numCliente, contextActivity);
-                        else if(TesteViewModel.teste.getValue().getTipo() == 1)
-                            new PseudoTeste(cliente,numCliente, contextActivity);
-                        else if(TesteViewModel.teste.getValue().getTipo() == 2)
+                        if (TesteViewModel.teste.getValue().getPreTeste()) { // só se não for um pré-teste
+                            new PreTeste(cliente, numCliente, contextActivity);
+                        } else if (TesteViewModel.teste.getValue().getTipo() == 1){
+                            System.out.println("CADEE EUUUU");
+                            new PseudoTeste(cliente, numCliente, contextActivity);
+                        }else if(TesteViewModel.teste.getValue().getTipo() == 2) {
                             new AleatorioTeste(cliente, numCliente, contextActivity);
+                        }
                         numCliente++;
                     }
                 } catch (IOException e) {

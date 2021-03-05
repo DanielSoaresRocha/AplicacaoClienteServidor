@@ -1,6 +1,8 @@
 package com.example.bolsista.novatentativa.modelo;
 
-public class Desafio {
+import java.io.Serializable;
+
+public class Desafio implements Serializable {
     private String id;
     private int imgCorreta;
     private int img1;

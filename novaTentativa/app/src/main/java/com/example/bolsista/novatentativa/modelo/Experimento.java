@@ -1,10 +1,11 @@
 package com.example.bolsista.novatentativa.modelo;
 
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Experimento {
+public class Experimento implements Serializable {
     private String id;
     private Equino equino;
     private String nome;

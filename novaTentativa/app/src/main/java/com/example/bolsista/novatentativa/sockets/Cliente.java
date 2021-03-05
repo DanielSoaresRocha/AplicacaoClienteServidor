@@ -14,7 +14,9 @@ import com.example.bolsista.novatentativa.arquitetura.Remoto;
 import com.example.bolsista.novatentativa.modelo.Mensagem;
 import com.example.bolsista.novatentativa.modelo.Teste;
 
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
@@ -31,8 +33,8 @@ public class Cliente {
     public final int FECHAR_SOCKET = 998;
     public final int TROCAR_IMAGENS = 997;
 
-    private ObjectInputStream leitor;//****
-    private ObjectOutputStream escritor;//*****
+    private BufferedReader leitor;//****
+    private PrintWriter escritor;//*****
     private int indentificador;
 
     private String host;
@@ -59,40 +61,48 @@ public class Cliente {
         StrictMode.setThreadPolicy(policy);// permitir que execute algum comando sem precisar criar uma nova thread.
 
         try {
-            cliente = new Socket(host,9999);
+            cliente = new Socket(host, 9999);
+            escritor = new PrintWriter(cliente.getOutputStream(), true);
+            Log.i("OBJETO", "Criou output do CLIENTE");
+            leitor = new BufferedReader(new InputStreamReader(cliente.getInputStream()));
+            Log.i("OBJETO", "Criou input do CLIENTE");
             enviarIdentificacao();
-            escritor = new ObjectOutputStream(cliente.getOutputStream());
-            Log.i("OBJETO","Criou output do CLIENTE");
-            leitor = new ObjectInputStream(cliente.getInputStream());
-            Log.i("OBJETO","Criou input do CLIENTE");
-            new Thread(new Runnable() {
-                @Override
-                public void run() {
-                    try {
-                        receberObjeto();
-                        //Irá receber infinitamente mensagens do servidor
-                        while (true){
-                            int mensagem = leitor.readInt(); // o loop fica pausado aqui até que receba algum comando do servidor
-                            Log.i("COMUNICACAO","MENSAGEM RECEBIDA DO SERVER ="+ mensagem);
 
-                            mudarImagem(mensagem);
-                        }
-
-                    }catch (IOException e){
-                        Log.i("ERRO","IMPOSSÍVEL LER MENSAGEM "+ e.getMessage());
-                    }
-                }
-            }).start();
         }catch (IOException e){
             Log.i("ERRO","ERRO AO CONECTAR-SE AO SERVIDOR "+ e.getMessage());
         }
     }
 
+
+    private void ouvirServidor(){
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    receberObjeto();
+                    //Irá receber infinitamente mensagens do servidor
+                    while (true){
+                        //int mensagem = leitor.readInt(); // o loop fica pausado aqui até que receba algum comando do servidor
+                        int mensagem = Integer.parseInt(leitor.readLine());
+                        Log.i("COMUNICACAO","MENSAGEM RECEBIDA DO SERVER ="+ mensagem);
+
+                        mudarImagem(mensagem);
+                    }
+
+                }catch (IOException e){
+                    Log.i("ERRO","IMPOSSÍVEL LER MENSAGEM "+ e.getMessage());
+                }
+            }
+        }).start();
+    }
+
     private void receberObjeto() {
         try {
-            Mensagem mensagem = (Mensagem) leitor.readObject();
-            Log.i("OBJETO","Objeto recebido do servidor =  identificacao " + mensagem.getIdentificacao());
-            indentificador = mensagem.getIdentificacao();
+            Log.i("OBJETO","Esperando receber objeto do server");
+            String mensagem[] = leitor.readLine().split("-");
+            Log.i("OBJETO","Objeto recebido do servidor =  identificacao " + mensagem[0]);
+
+            indentificador = Integer.parseInt(mensagem[0]);
 
             if(!controleRemoto) {
                 final ClienteActivity cliente = (ClienteActivity) client;
@@ -102,7 +112,7 @@ public class Cliente {
                     @Override
                     public void run() {
                         cliente.identificacaoCliente.setVisibility(View.VISIBLE);
-                        cliente.numIdentificacao.setText(Integer.toString(mensagem.getIdentificacao() + 1));
+                        cliente.numIdentificacao.setText(Integer.toString(Integer.parseInt(mensagem[0]) + 1));
                         Toast.makeText(client.getApplicationContext(), R.string.comecar, Toast.LENGTH_LONG).show();
                         cliente.comecarClientBtn.setVisibility(View.VISIBLE);
                         cliente.criarClientBtn.setVisibility(View.GONE);
@@ -122,42 +132,32 @@ public class Cliente {
             }
         } catch (IOException e) {
             Log.i("OBJETO", "ERRO AO TENTAR RECEBER OBJETO:"+ e.getMessage());
-        } catch (ClassNotFoundException e) {
-            Log.i("OBJETO", "ERRO AO TENTAR RECEBER OBJETO:"+e.getMessage());
         }
     }
 
 
     //escrevendo para o servidor - cliente Padrão
     public void escrever(){
-        try{
-            Log.i("COMUNICACAO","MENSAGEM ENVIADA AO SERVIDOR:  "+ imgAtual);
-            escritor.writeObject(new Mensagem(indentificador, imgAtual));
-            //escritor.writeInt(imgAtual);
-            escritor.flush();
-
-        }catch (IOException e){
-            Log.i("ERRO", "erro ao enviar mensagem ao servidor" + e.getMessage());
-        }
+        Log.i("COMUNICACAO","MENSAGEM ENVIADA AO SERVIDOR:  "+ imgAtual);
+        //escritor.writeObject(new Mensagem(indentificador, imgAtual));
+        escritor.println(indentificador+"-"+imgAtual);
+        //escritor.writeInt(imgAtual);
+        escritor.flush();
     }
 
     //este método envia para o servidor um comando do controle remoto: 997 = mudar imagem
     public void controleRemoto(){
-        try{
-            escritor.writeObject(new Mensagem(indentificador, TROCAR_IMAGENS));
+            //escritor.writeObject(new Mensagem(indentificador, TROCAR_IMAGENS));
+            escritor.println(indentificador+"-"+TROCAR_IMAGENS);
             escritor.flush();
             Log.i("COMUNICACAO", "CONTROLE REMOTO ACIONADO");
-
-        }catch (IOException e){
-            Log.i("ERRO", "erro ao enviar no controle remoto" + e.getMessage());
-        }
-
     }
 
     public void desconect(){
 
         try{
-            escritor.writeObject(new Mensagem(indentificador, FECHAR_SOCKET));
+            //escritor.writeObject(new Mensagem(indentificador, FECHAR_SOCKET));
+            escritor.println(indentificador+"-"+FECHAR_SOCKET);
             escritor.flush();
 
             escritor.close();
@@ -210,15 +210,16 @@ public class Cliente {
     */
     public void enviarIdentificacao() throws IOException{
         //PrintStream saida = new PrintStream(cliente.getOutputStream());
-        PrintWriter saida = new PrintWriter(cliente.getOutputStream());
+       // PrintWriter saida = new PrintWriter(cliente.getOutputStream());
         if(!controleRemoto){
-            saida.println("padrao");
-            saida.flush();
+            escritor.println("padrao");
+            escritor.flush();
         }else{
-            saida.println("remoto");
-            saida.flush();
+            escritor.println("remoto");
+            escritor.flush();
         }
         //saida.close();///deve-se fechar se não nao irá conseguir usar essa ponte de novo
+        ouvirServidor();
     }
 
     public static void definirTela(Jogar jogarr){

@@ -37,10 +37,12 @@ public class AleatorioTeste extends PreTeste {
         while (rodada <= numRodadas) {
             Ensaio ensaio = new Ensaio(); // Iniciando um ensaio
             ensaio.setId(rodada + "");
-            msg = (Mensagem) leitor.readObject();
+            msg = leitor.readLine().split("-");
             ensaio.setIdDesafio(Integer.toString(rodada));
 
-            if (msg.getComando() == desafioAtual.getImgCorreta()) {
+            int comando = Integer.parseInt(msg[1]);
+
+            if (comando == desafioAtual.getImgCorreta()) {
                 jogar.tocarAcerto();
                 rodada++;
                 esp32(ABRIR_MOTOR);
@@ -50,9 +52,9 @@ public class AleatorioTeste extends PreTeste {
                     dormir(TesteViewModel.teste.getValue().getIntervalo1()); // tempo de espera do mestre
                     novaInteracao(); //fazer nova interação de imagens entre os tablets
                 }
-            } else if (msg.getComando() == TROCAR_IMAGENS) {//trocar imagens;
+            } else if (comando == TROCAR_IMAGENS) {//trocar imagens;
                 novaInteracao();
-            } else if (msg.getComando() == FECHAR_SOCKET) {//fechar socket
+            } else if (comando == FECHAR_SOCKET) {//fechar socket
                 desconectarControle();
             } else { //O cavalo errou
                 jogar.tocarError();
@@ -72,7 +74,7 @@ public class AleatorioTeste extends PreTeste {
 
         for (int i = 0; i < clientes.size(); i++) {
             PreTeste destino = clientes.get(i);
-            destino.getEscritor().writeInt(999);
+            destino.getEscritor().write(999);
             destino.getEscritor().flush();
         }
     }
@@ -145,17 +147,13 @@ public class AleatorioTeste extends PreTeste {
 
     // Enviar comandos para enviar para escravos 1 e 2
     private static void enviarParaEscravos(int img1, int img2) {
-        try {
-            PreTeste destino = clientes.get(0); // primeiro cliente conectado
-            destino.getEscritor().writeInt(img1);
-            destino.getEscritor().flush();
+        PreTeste destino = clientes.get(0); // primeiro cliente conectado
+        destino.getEscritor().write(img1);
+        destino.getEscritor().flush();
 
-            destino = clientes.get(1); // segundo cliente conectado
-            destino.getEscritor().writeInt(img2);
-            destino.getEscritor().flush();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        destino = clientes.get(1); // segundo cliente conectado
+        destino.getEscritor().write(img2);
+        destino.getEscritor().flush();
     }
 
 }

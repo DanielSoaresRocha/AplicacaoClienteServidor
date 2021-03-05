@@ -112,9 +112,7 @@ public class ExperimentoExpecifico extends AppCompatActivity {
     }
 
     private void pegarPosicao() {
-        Intent it = getIntent();
-        POSITION_EXPERIMENTO = it.getIntExtra("positionExperimento", 0);
-        experimento = ExperimentoViewModel.experimentos.getValue().get(POSITION_EXPERIMENTO);
+        experimento = (Experimento) getIntent().getSerializableExtra("experimento");
         ExperimentoViewModel.experimento.setValue(experimento);
     }
 

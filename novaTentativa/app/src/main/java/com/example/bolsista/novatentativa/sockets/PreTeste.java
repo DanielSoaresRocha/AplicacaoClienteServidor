@@ -25,6 +25,7 @@ import java.io.InputStreamReader;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.PrintStream;
+import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,8 +39,8 @@ import java.util.Objects;
 * */
 
 public class PreTeste extends Thread {
-    public ObjectInputStream leitor; // ler dados
-    private ObjectOutputStream escritor;// enviar dados
+    public BufferedReader leitor; // ler dados
+    private PrintWriter escritor;// enviar dados
 
     //comandos para o exp32
     static PrintStream esp32; // enviar dados para o esp
@@ -57,7 +58,7 @@ public class PreTeste extends Thread {
     public static Map<Integer, Integer> numClicks = new HashMap<>();
 
     //interações
-    public Mensagem msg;
+    public String msg[];
     private Context context;
     static Jogar jogar;
     public static int rodada = 1;
@@ -73,9 +74,9 @@ public class PreTeste extends Thread {
     public void run() {
         if(!identificarCliente()) { //se o cliente não for o esp32
             try {
-                escritor = new ObjectOutputStream(cliente.getOutputStream());
+                escritor = new PrintWriter(cliente.getOutputStream(), true);
+                leitor = new BufferedReader(new InputStreamReader(cliente.getInputStream()));
                 Log.i("OBJETO", "Criou output do servidor");
-                leitor = new ObjectInputStream(cliente.getInputStream());
                 Log.i("OBJETO", "Criou input do servidor");
                 enviarObjeto();
                 incrementaEscravos();
@@ -96,19 +97,19 @@ public class PreTeste extends Thread {
             Ensaio ensaio = new Ensaio(); // Iniciando um ensaio
             ensaio.setId(rodada+"");
             Log.i("OBJETO", "Entrou no While - esperando mensagem do cliente...");
-            msg = (Mensagem) leitor.readObject();
-            Log.i("OBJETO", "leu mensagem "+ msg);
+            msg = leitor.readLine().split("-");
+            Log.i("OBJETO", "leu mensagem "+ msg[0]);
             ensaio.setIdDesafio(Integer.toString(rodada));
 
             if(clientes.size() >= 1){
-                int numClicksClient = numClicks.get(msg.getIdentificacao());
+                int numClicksClient = numClicks.get(Integer.parseInt(msg[0]));
                 //Se este cliente tiver clicado menos a quantidada max de vezes consecutivas
-                Log.i("Cliente "+ msg.getIdentificacao(), "clicks = "+ numClicksClient);
+                Log.i("Cliente "+ msg[0], "clicks = "+ numClicksClient);
                 if(numClicksClient < TesteViewModel.teste.getValue().getMaxVezesConsecutivas()){
                     jogar.tocarAcerto(); // cavalo acertou
                     esp32(ABRIR_MOTOR);
                     //esp32(FECHAR_MOTOR);//enviar comando para o servo fechar no esp32numClicks.put(msg.)
-                    numClicks.put(msg.getIdentificacao(), numClicksClient+1);
+                    numClicks.put(Integer.parseInt(msg[0]), numClicksClient+1);
                     rodada++;
                     //ensaio
                     ensaio.setAcerto(true);
@@ -141,7 +142,8 @@ public class PreTeste extends Thread {
 
     private void enviarObjeto() throws IOException{
         Mensagem mensagem = new Mensagem(numCliente, 0);
-        escritor.writeObject(mensagem);
+        //escritor.writeObject(mensagem);
+        escritor.println(numCliente+"-"+0);
         escritor.flush();
         Log.i("OBJETO","Enviou objeto" + mensagem.getIdentificacao());
     }
@@ -161,13 +163,14 @@ public class PreTeste extends Thread {
         Log.i("TERMINAR", "QTD DE CLIENTE CONECTADOS:" + clientes.size());
         for(int i = 0; i < clientes.size(); i++){
             PreTeste destino = clientes.get(i);
-            destino.getEscritor().writeInt(900);// comando para fechar socket no lado do cliente
+            destino.getEscritor().println("900");// comando para fechar socket no lado do cliente
             destino.getEscritor().flush();
 
             destino.getEscritor().close();
             destino.getLeitor().close();
             destino.getCliente().close();
         }
+
     }
 
     private void desconectarCliente(){
@@ -290,12 +293,20 @@ public class PreTeste extends Thread {
         jogar = jogarr;
     }
 
-    public ObjectOutputStream getEscritor() {
+    public BufferedReader getLeitor() {
+        return leitor;
+    }
+
+    public void setLeitor(BufferedReader leitor) {
+        this.leitor = leitor;
+    }
+
+    public PrintWriter getEscritor() {
         return escritor;
     }
 
-    public ObjectInputStream getLeitor() {
-        return leitor;
+    public void setEscritor(PrintWriter escritor) {
+        this.escritor = escritor;
     }
 
     public Socket getCliente() {

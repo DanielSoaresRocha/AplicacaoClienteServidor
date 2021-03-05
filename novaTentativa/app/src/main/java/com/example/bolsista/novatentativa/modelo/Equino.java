@@ -2,9 +2,10 @@ package com.example.bolsista.novatentativa.modelo;
 
 import com.google.firebase.firestore.DocumentReference;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Equino {
+public class Equino implements Serializable {
     private String id;
     private String nome;
     private String raca;
