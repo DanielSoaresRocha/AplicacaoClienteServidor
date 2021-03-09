@@ -12,7 +12,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Resultado"
+        android:text="Experimento finalizado"
         android:textColor="@color/black_de"
         android:textSize="30sp"
         android:gravity="center"
@@ -20,58 +20,15 @@
         >
     </TextView>
 
-    <LinearLayout
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/voltarButton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        >
-        <TextView
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Imagem\ncorreta"
-            android:gravity="center"
-            android:textColor="@color/black_de"
-            >
-        </TextView>
-
-        <TextView
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Imagem\nErrada"
-            android:gravity="center"
-            android:textColor="@color/black_de"
-            >
-        </TextView>
-
-        <TextView
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Quantidade de\nerros"
-            android:gravity="center"
-            android:textColor="@color/black_de"
-            >
-        </TextView>
-
-        <TextView
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:text="Tempo para\nacerto"
-            android:gravity="center"
-            android:textColor="@color/black_de"
-            >
-        </TextView>
-    </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/desafiosRecycle"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="Voltar"
         >
 
-    </androidx.recyclerview.widget.RecyclerView>
+
+    </Button>
 
 </LinearLayout>

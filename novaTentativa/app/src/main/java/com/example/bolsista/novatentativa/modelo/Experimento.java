@@ -28,6 +28,21 @@ public class Experimento implements Serializable {
         this.finalizado = finalizado;
     }
 
+    // Se todos os testes tiverem sido completados o Experimento é finalizado,
+    // se não, continua em andamento.
+    public void verificarCompleto() {
+        boolean finalizado = true;
+
+        for(Teste teste: testes){
+            if(!teste.isCompleto()){
+                finalizado = false;
+                break;
+            }
+        }
+
+        setFinalizado(finalizado);
+    }
+
     public Boolean getFinalizado() {
         return finalizado;
     }
@@ -83,4 +98,5 @@ public class Experimento implements Serializable {
     public void setTestes(ArrayList<Teste> testes) {
         this.testes = testes;
     }
+
 }

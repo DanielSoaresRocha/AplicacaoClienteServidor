@@ -17,6 +17,21 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/license.txt'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/notice.txt'
+        exclude 'META-INF/ASL2.0'
+        exclude("META-INF/*.kotlin_module")
+        exclude 'com/itextpdf/io/font/cmap_info.txt'
+        exclude 'com/itextpdf/io/font/cmap/*'
+    }
+
     buildToolsVersion '28.0.3'
     compileOptions {
         sourceCompatibility = 1.8
@@ -70,4 +85,6 @@ dependencies {
     implementation "android.arch.lifecycle:extensions:1.1.1"
     //Gráficos
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+    //Generate PDF with IText
+    implementation 'com.itextpdf:itext7-core:7.0.2'
 }

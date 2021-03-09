@@ -83,14 +83,18 @@ public class Cliente {
                     //Irá receber infinitamente mensagens do servidor
                     while (true){
                         //int mensagem = leitor.readInt(); // o loop fica pausado aqui até que receba algum comando do servidor
-                        int mensagem = Integer.parseInt(leitor.readLine());
-                        Log.i("COMUNICACAO","MENSAGEM RECEBIDA DO SERVER ="+ mensagem);
-
-                        mudarImagem(mensagem);
+                        String mensagem = leitor.readLine();
+                        Log.i("COMUNICACAO","MENSAGEM RECEBIDA DO SERVER = "+ mensagem);
+                        int comando = Integer.parseInt(mensagem);
+                        mudarImagem(comando);
                     }
 
                 }catch (IOException e){
                     Log.i("ERRO","IMPOSSÍVEL LER MENSAGEM "+ e.getMessage());
+                    closeSocket();
+                }catch (NumberFormatException e){
+                    Log.i("ERRO","IMPOSSÍVEL LER MENSAGEM "+ e.getMessage());
+                    closeSocket();
                 }
             }
         }).start();
@@ -154,19 +158,20 @@ public class Cliente {
     }
 
     public void desconect(){
+        escritor.println(indentificador+"-"+FECHAR_SOCKET);
+        escritor.flush();
 
-        try{
-            //escritor.writeObject(new Mensagem(indentificador, FECHAR_SOCKET));
-            escritor.println(indentificador+"-"+FECHAR_SOCKET);
-            escritor.flush();
+        closeSocket();
+    }
 
+    private void closeSocket(){
+
+        try {
             escritor.close();
             leitor.close();
             cliente.close();
-
-            Log.i("REMOTO","CONEXÃO COM SERVIDOR FECHADA");
-        }catch (IOException e){
-            Log.i("ERRO", "ERRO AO FECHAR CLIENTE = " + e.getMessage());
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
     }

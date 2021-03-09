@@ -83,6 +83,18 @@ public class PseudoTeste extends PreTeste {
         jogar.terminar();
     }
 
+    public static void clicouNoMestre(){
+        Ensaio ensaio = new Ensaio(); // Iniciando um ensaio
+        ensaio.setId(rodada + "");
+        ensaio.setIdDesafio(Integer.toString(rodada));
+        ensaio.setDesafio(desafioAtual);
+
+        ensaio.setAcerto(false);
+        jogar.tocarError();
+        TesteViewModel.sessao.getEnsaios().add(ensaio);
+
+    }
+
     private void novaInteracao() {
         esp32(FECHAR_MOTOR);//enviar comando para o servo fechar no esp32
 
@@ -100,7 +112,7 @@ public class PseudoTeste extends PreTeste {
 
         for (int i = 0; i < clientes.size(); i++) {
             PreTeste destino = clientes.get(i);
-            destino.getEscritor().write(999);
+            destino.getEscritor().println(999);
             destino.getEscritor().flush();
         }
     }
@@ -522,11 +534,11 @@ public class PseudoTeste extends PreTeste {
     // Enviar comandos para enviar para escravos 1 e 2
     private static void enviarParaEscravos(int img1, int img2) {
         PreTeste destino = clientes.get(0); // primeiro cliente conectado
-        destino.getEscritor().write(img1);
+        destino.getEscritor().println(img1);
         destino.getEscritor().flush();
 
         destino = clientes.get(1); // segundo cliente conectado
-        destino.getEscritor().write(img2);
+        destino.getEscritor().println(img2);
         destino.getEscritor().flush();
     }
 }

@@ -72,12 +72,7 @@ public class ExperimentoExpecifico extends AppCompatActivity {
                             @Override
                             public void onItemClick(View view, int position) {
                                 Intent it = new Intent(contextActivity, Sessoes.class);
-                                it.putExtra("positionExperimento", POSITION_EXPERIMENTO);
-                                it.putExtra("positionTeste", position);
-                                it.putExtra("nomeTeste", experimento.getTestes()
-                                        .get(position).getNome());
-                                it.putExtra("completo", experimento.getTestes()
-                                        .get(position).isCompleto());
+                                it.putExtra("teste", experimento.getTestes().get(position));
                                 startActivity(it);
                             }
 

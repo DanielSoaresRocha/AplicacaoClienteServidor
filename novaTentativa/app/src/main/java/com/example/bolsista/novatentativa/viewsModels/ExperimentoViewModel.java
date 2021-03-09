@@ -29,6 +29,7 @@ public class ExperimentoViewModel extends ViewModel {
 
     public static void updateTeste(int numTeste, Teste teste){
         Objects.requireNonNull(experimento.getValue()).getTestes().set(numTeste, teste);
+        experimento.getValue().verificarCompleto();
 
         /*
         -> Resolver problema encontrado quando se tem menos testes em um experimento.

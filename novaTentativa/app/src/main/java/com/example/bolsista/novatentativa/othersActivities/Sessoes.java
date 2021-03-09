@@ -24,6 +24,7 @@ import com.example.bolsista.novatentativa.adapters.SessaoAdapter;
 import com.example.bolsista.novatentativa.arquitetura.Servidor;
 import com.example.bolsista.novatentativa.graficos.Estatistica;
 import com.example.bolsista.novatentativa.graficos.GraficoLinha;
+import com.example.bolsista.novatentativa.modelo.Experimento;
 import com.example.bolsista.novatentativa.modelo.Sessao;
 import com.example.bolsista.novatentativa.modelo.Teste;
 import com.example.bolsista.novatentativa.modelo.Usuario;
@@ -48,13 +49,13 @@ public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSele
     LinearLayout nenhumeSessaoLayouth;
     LinearLayout verGraficos;
 
-    private int POSITION_EXPERIMENTO;
-    private int POSITION_TESTE;
     private ArrayList<Sessao> sessoes;
     ArrayList<Usuario> usuarios;
     private SessaoAdapter adapter;
     Context contextActivity;
     private Usuario usuarioSelecionado;
+
+    Teste teste;
 
     //FireBase
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -130,8 +131,6 @@ public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSele
         IniciarSessaoBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Teste teste = ExperimentoViewModel.experimentos.getValue().get(POSITION_EXPERIMENTO)
-                        .getTestes().get(POSITION_TESTE);
                 TesteViewModel.iniciarTeste(teste, sessoes.size(), usuarioSelecionado);
 
                 Intent telaServidor = new Intent(Sessoes.this, Servidor.class);
@@ -149,12 +148,9 @@ public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSele
     }
     @SuppressLint("SetTextI18n")
     private void preencher() {
-        Intent it = getIntent();
-        POSITION_EXPERIMENTO = it.getIntExtra("positionExperimento", 0);
-        POSITION_TESTE = it.getIntExtra("positionTeste", 0);
+        teste = (Teste) getIntent().getSerializableExtra("teste");
+        sessoes = teste.getSessoes();
 
-        sessoes = ExperimentoViewModel.experimentos.getValue().get(POSITION_EXPERIMENTO)
-                .getTestes().get(POSITION_TESTE).getSessoes();
         //Se não tiver nenhuma sessao
         if(sessoes.size() == 0){
             sessaoRecycleView.setVisibility(View.GONE);
@@ -168,7 +164,7 @@ public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSele
         }
 
         // se o teste já tiver sido completado remover estas Views
-        if(it.getBooleanExtra("completo",false)){
+        if(teste.isCompleto()){
             experimentadorTextView.setVisibility(View.GONE);
             experimentadorSpinner.setVisibility(View.GONE);
             IniciarSessaoBtn.setVisibility(View.GONE);
@@ -176,7 +172,7 @@ public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSele
         // mudar Titulo da barra
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
-        actionbar.setTitle(it.getStringExtra("nomeTeste"));
+        actionbar.setTitle(teste.getNome());
     }
 
     private void inicializar() {

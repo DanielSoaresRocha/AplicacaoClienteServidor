@@ -61,12 +61,13 @@ public class PreTeste extends Thread {
     public String msg[];
     private Context context;
     static Jogar jogar;
-    public static int rodada = 1;
+    public static int rodada;
 
     public PreTeste(Socket cliente, int numCliente, Context context){
         this.cliente = cliente;
         this.numCliente = numCliente;
         this.context = context;
+        rodada = 1;
         start();
     }
 
@@ -171,6 +172,7 @@ public class PreTeste extends Thread {
             destino.getCliente().close();
         }
 
+        Servidor.servidor.close();
     }
 
     private void desconectarCliente(){

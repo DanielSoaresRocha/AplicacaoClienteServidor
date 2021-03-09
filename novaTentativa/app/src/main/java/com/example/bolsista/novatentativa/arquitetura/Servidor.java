@@ -35,7 +35,7 @@ public class Servidor extends AppCompatActivity {
     public static LinearLayout numEscravos;
     Context contextActivity;
 
-    ServerSocket servidor;
+    public static ServerSocket servidor;
 
     public static int numCliente;
 
