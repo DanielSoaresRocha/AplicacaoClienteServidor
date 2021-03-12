@@ -87,4 +87,5 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     //Generate PDF with IText
     implementation 'com.itextpdf:itext7-core:7.0.2'
+    //implementation 'com.itextpdf:itextpdf:5.0.6'
 }
