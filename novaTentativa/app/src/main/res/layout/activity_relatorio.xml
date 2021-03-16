@@ -10,11 +10,13 @@
     >
 
     <Button
+        android:id="@+id/relatorio1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Gerar"
+        android:text="Gerar Relatório"
         android:background="@color/verde_claro"
         android:textColor="@color/preto"
+        android:padding="20sp"
         >
 
     </Button>
