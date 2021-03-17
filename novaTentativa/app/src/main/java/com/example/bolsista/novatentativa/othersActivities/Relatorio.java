@@ -2,27 +2,38 @@ package com.example.bolsista.novatentativa.othersActivities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 import com.example.bolsista.novatentativa.R;
+import com.example.bolsista.novatentativa.graficos.Estatistica;
+import com.example.bolsista.novatentativa.graficos.Graficos;
 import com.example.bolsista.novatentativa.modelo.Equino;
 import com.example.bolsista.novatentativa.modelo.Experimento;
 import com.example.bolsista.novatentativa.modelo.Sessao;
 import com.example.bolsista.novatentativa.modelo.Teste;
 import com.example.bolsista.novatentativa.viewsModels.ExperimentoViewModel;
+import com.github.mikephil.charting.charts.LineChart;
+import com.github.mikephil.charting.components.Legend;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.itextpdf.io.font.FontConstants;
+import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.io.source.ByteArrayOutputStream;
 import com.itextpdf.kernel.color.DeviceGray;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.geom.PageSize;
+import com.itextpdf.kernel.geom.Rectangle;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.kernel.pdf.canvas.parser.listener.LocationTextExtractionStrategy;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.AreaBreak;
 import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.Image;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.element.Text;
@@ -44,7 +55,9 @@ public class Relatorio extends AppCompatActivity {
     public static final String DEST = "/sdcard/teste.pdf";
 
     private PdfFont bold;
-    
+
+    LineChart graficoLinha;
+    Graficos g;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +66,7 @@ public class Relatorio extends AppCompatActivity {
         
         pegarExperimento();
         inicializar();
+        layoutGraficoLinha();
         listener();
     }
 
@@ -110,6 +124,7 @@ public class Relatorio extends AppCompatActivity {
             addTitleCenter(doc, teste.getNome());
             breakLine(doc);
 
+            // Tabela
             float[] columnWidths = {1, 3, 3, 3, 3, 3};
             Table table = new Table(UnitValue.createPercentArray(columnWidths));
 
@@ -166,15 +181,36 @@ public class Relatorio extends AppCompatActivity {
                         .add(new Paragraph(Integer.toString(sessao.getTaxaAcerto()) + "%")));
                 table.addCell(new Cell().setTextAlignment(TextAlignment.CENTER)
                         .add(new Paragraph(sessao.getExperimentador().getNome())));
-
                 caunter++;
             }
             caunter = 0;
 
             doc.add(table);
-            doc.add(new AreaBreak(AreaBreakType.NEXT_PAGE)); // Quebrar página
-        }
 
+            // Grafico
+            g.getGraficoLinha(graficoLinha, teste.getSessoes(), equino.getNome());
+
+            graficoLinha.buildDrawingCache();
+            Bitmap bm = graficoLinha.getDrawingCache();
+
+            ByteArrayOutputStream stream3 = new ByteArrayOutputStream();
+            bm.compress(Bitmap.CompressFormat.PNG, 100, stream3);
+            byte[] byteArray = stream3.toByteArray();
+
+            Image graphic = new Image(ImageDataFactory.create(byteArray));
+            graphic.scaleToFit(250, 500);
+
+            graphic.setMarginLeft(150);
+
+            doc.add(graphic);
+
+            // Media e Mediana
+            Estatistica estatistica = new Estatistica(teste.getSessoes());
+            addParagraphInfo(doc, "Média:", estatistica.getMedia());
+            addParagraphInfo(doc, "Mediana:", estatistica.getMediana());
+
+            //doc.add(new AreaBreak(AreaBreakType.NEXT_PAGE)); // Quebrar página
+        }
         doc.close();
     }
 
@@ -203,7 +239,7 @@ public class Relatorio extends AppCompatActivity {
         Text info = new Text(information + "  ").setFont(bold);
         Text txt = new Text(text);
 
-        Paragraph paragraph = new Paragraph().add(info).add(txt);
+        Paragraph paragraph = new Paragraph().add(info).add(txt).setTextAlignment(TextAlignment.LEFT);
 
         doc.add(paragraph);
     }
@@ -234,16 +270,43 @@ public class Relatorio extends AppCompatActivity {
 
     private void inicializar() {
         relatorio1 = findViewById(R.id.relatorio1);
-    }
-
-    private void pegarExperimento() {
-        experimento = (Experimento) getIntent().getSerializableExtra("experimento");
-        ExperimentoViewModel.experimento.setValue(experimento);
 
         try {
             bold = PdfFontFactory.createFont(FontConstants.HELVETICA_BOLD);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        g = new Graficos();
+        graficoLinha = (LineChart) findViewById(R.id.graficoLinha);
+    }
+
+    private void layoutGraficoLinha() {
+        Legend legend = graficoLinha.getLegend();
+        legend.setTextSize(15f);
+
+        XAxis xAxis = graficoLinha.getXAxis(); // retorna o eixo 'x' do grafico graficoLinha.get...
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);// BOTTOM -> eixo X na parte inferior do gráfico
+        xAxis.setAxisMinimum(1f);// valor inicial mínimo - eixo 'x'
+        //xAxis.setAxisMaximum(30f);// valor inicial máximo - eixo 'x'
+        xAxis.setGranularity(1f);// intervalo mínimo entre os valores - eixo 'x'
+
+        YAxis yAxis = graficoLinha.getAxisLeft();// retorna o eixo Esquerdo 'y' do grafico graficoLinha.get...
+        YAxis yAxis1 = graficoLinha.getAxisRight();
+        //yAxis.setGranularity(10f);
+        yAxis.setAxisMinimum(0);
+        yAxis.setAxisMaximum(100);
+        yAxis1.setEnabled(false);// Eixo da Direita não é exibido se 'false'
+
+        graficoLinha.setDragEnabled(true);
+        graficoLinha.setScaleEnabled(false);
+        graficoLinha.setPinchZoom(true);// Se 'false' -> ativa zoom para eixo 'x' e 'y' SEPARADAMENTE
+        graficoLinha.setScaleEnabled(true);// Se 'true' ativa as escalas dos eixos
+        //graficoLinha.setVisibleXRangeMaximum(10f);// valor inicial mínimo - eixo 'x' - Visível
+    }
+
+    private void pegarExperimento() {
+        experimento = (Experimento) getIntent().getSerializableExtra("experimento");
+        ExperimentoViewModel.experimento.setValue(experimento);
     }
 }
