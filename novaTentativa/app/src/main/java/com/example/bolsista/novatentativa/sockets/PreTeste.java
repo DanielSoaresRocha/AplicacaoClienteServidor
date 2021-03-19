@@ -93,8 +93,14 @@ public class PreTeste extends Thread {
     }
 
     public void tratarConexao() throws IOException, ClassNotFoundException {
+        long tempInicial = 0, tempFinal = 0;
+        boolean flagContaTempo = true;
         int numRodadas = Objects.requireNonNull(TesteViewModel.teste.getValue()).getQtdEnsaiosPorSessao();
+
         while (rodada <= numRodadas){
+            if(flagContaTempo)
+                tempInicial = System.currentTimeMillis(); //Tempo inicial
+
             Ensaio ensaio = new Ensaio(); // Iniciando um ensaio
             ensaio.setId(rodada+"");
             Log.i("OBJETO", "Entrou no While - esperando mensagem do cliente...");
@@ -114,10 +120,15 @@ public class PreTeste extends Thread {
                     rodada++;
                     //ensaio
                     ensaio.setAcerto(true);
+
+                    flagContaTempo = true;
+                    tempFinal = System.currentTimeMillis();
+                    ensaio.setTempoAcerto(tempFinal - tempInicial);
                 }else {
                     jogar.tocarError();
                     Log.i("TAXA_ACERTO", "CAVALO ERROU - ADICIONANDO ERRO");
                     ensaio.setAcerto(false);
+                    flagContaTempo = false;
                 }
                 TesteViewModel.sessao.getEnsaios().add(ensaio);
             }

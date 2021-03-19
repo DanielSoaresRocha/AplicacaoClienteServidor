@@ -6,9 +6,9 @@ public class Ensaio implements Serializable {
     private String id;
     private String idSessao;
     private String idDesafio;
-    private int tempoAcerto;
     private Boolean acerto;
     private Desafio desafio;
+    private long tempoAcerto;
 
     public Ensaio(String idSessao) {
         this.idSessao = idSessao;
@@ -41,14 +41,6 @@ public class Ensaio implements Serializable {
         this.idDesafio = idDesafio;
     }
 
-    public int getTempoAcerto() {
-        return tempoAcerto;
-    }
-
-    public void setTempoAcerto(int tempoAcerto) {
-        this.tempoAcerto = tempoAcerto;
-    }
-
     public Boolean getAcerto() {
         return acerto;
     }
@@ -63,5 +55,13 @@ public class Ensaio implements Serializable {
 
     public void setDesafio(Desafio desafio) {
         this.desafio = desafio;
+    }
+
+    public long getTempoAcerto() {
+        return tempoAcerto;
+    }
+
+    public void setTempoAcerto(long tempoAcerto) {
+        this.tempoAcerto = tempoAcerto;
     }
 }
