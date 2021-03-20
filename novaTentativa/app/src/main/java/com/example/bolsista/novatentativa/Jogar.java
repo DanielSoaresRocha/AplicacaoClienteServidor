@@ -47,9 +47,10 @@ public class Jogar extends AppCompatActivity {
         inicializar();
         listener();
 
-        if(Servidor.preTeste){
+        if(Servidor.serverAtivo){
             Toast.makeText(this, "definiu", Toast.LENGTH_SHORT).show();
             PreTeste.definirTela(this);
+            PreTeste.iniciarContagemTempo();
             int imagemAtual = Servidor.numberAleatorio; //pegar a imagem atual que está no servidor
             imagemButton.setBackgroundResource(imagemAtual);
 
@@ -69,7 +70,7 @@ public class Jogar extends AppCompatActivity {
             imagemButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if(!Servidor.preTeste) { //Se não for o servidor
+                    if(!Servidor.serverAtivo) { //Se não for o servidor
                         ClienteActivity.enviar();
                     }else {
                         PseudoTeste.clicouNoMestre();

@@ -57,10 +57,12 @@ public class PseudoTeste extends PreTeste {
             int comando = Integer.parseInt(msg[1]);
 
             if (comando == desafioAtual.getImgCorreta()) {
+                terminarContagemTempo();
                 jogar.tocarAcerto();
                 rodada++;
                 esp32(ABRIR_MOTOR);
                 ensaio.setAcerto(true);
+                ensaio.setTempoAcerto(calcularTempoQuePassou());
                 esperar();
                 if (!Servidor.controleRemoto && rodada <= numRodadas) {
                     dormir(TesteViewModel.teste.getValue().getIntervalo1()); // tempo de espera do mestre
@@ -540,5 +542,7 @@ public class PseudoTeste extends PreTeste {
         destino = clientes.get(1); // segundo cliente conectado
         destino.getEscritor().println(img2);
         destino.getEscritor().flush();
+
+        iniciarContagemTempo();
     }
 }

@@ -57,6 +57,10 @@ public class PreTeste extends Thread {
     public static Map<Integer,PreTeste> clientes = new HashMap<>();
     public static Map<Integer, Integer> numClicks = new HashMap<>();
 
+    //controle de tempo das interações
+    public static long tempInicial = 0, tempFinal = 0;
+    boolean flagContaTempo;
+
     //interações
     public String msg[];
     private Context context;
@@ -68,6 +72,7 @@ public class PreTeste extends Thread {
         this.numCliente = numCliente;
         this.context = context;
         rodada = 1;
+        flagContaTempo = false;
         start();
     }
 
@@ -93,13 +98,11 @@ public class PreTeste extends Thread {
     }
 
     public void tratarConexao() throws IOException, ClassNotFoundException {
-        long tempInicial = 0, tempFinal = 0;
-        boolean flagContaTempo = true;
         int numRodadas = Objects.requireNonNull(TesteViewModel.teste.getValue()).getQtdEnsaiosPorSessao();
 
         while (rodada <= numRodadas){
             if(flagContaTempo)
-                tempInicial = System.currentTimeMillis(); //Tempo inicial
+                iniciarContagemTempo();
 
             Ensaio ensaio = new Ensaio(); // Iniciando um ensaio
             ensaio.setId(rodada+"");
@@ -122,8 +125,8 @@ public class PreTeste extends Thread {
                     ensaio.setAcerto(true);
 
                     flagContaTempo = true;
-                    tempFinal = System.currentTimeMillis();
-                    ensaio.setTempoAcerto(tempFinal - tempInicial);
+                    terminarContagemTempo();
+                    ensaio.setTempoAcerto(calcularTempoQuePassou());
                 }else {
                     jogar.tocarError();
                     Log.i("TAXA_ACERTO", "CAVALO ERROU - ADICIONANDO ERRO");
@@ -184,6 +187,18 @@ public class PreTeste extends Thread {
         }
 
         Servidor.servidor.close();
+    }
+
+    public static void iniciarContagemTempo(){
+        tempInicial = System.currentTimeMillis(); //Tempo inicial
+    }
+
+    public void terminarContagemTempo(){
+        tempFinal = System.currentTimeMillis();
+    }
+
+    public long calcularTempoQuePassou(){
+        return tempFinal - tempInicial;
     }
 
     private void desconectarCliente(){

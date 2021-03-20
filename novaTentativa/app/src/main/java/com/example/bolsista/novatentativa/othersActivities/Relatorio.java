@@ -10,6 +10,7 @@ import android.widget.Button;
 import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.graficos.Estatistica;
 import com.example.bolsista.novatentativa.graficos.Graficos;
+import com.example.bolsista.novatentativa.modelo.Ensaio;
 import com.example.bolsista.novatentativa.modelo.Equino;
 import com.example.bolsista.novatentativa.modelo.Experimento;
 import com.example.bolsista.novatentativa.modelo.Sessao;
@@ -43,6 +44,7 @@ import com.itextpdf.layout.property.UnitValue;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -58,7 +60,8 @@ public class Relatorio extends AppCompatActivity {
 
     LineChart graficoLinha;
     Graficos g;
-    
+
+    DecimalFormat formato = new DecimalFormat("#.##");
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -97,7 +100,7 @@ public class Relatorio extends AppCompatActivity {
         breakLine(doc);
 
         Equino equino = experimento.getEquino();
-        addParagraphInfo(doc, "Nome:", equino.getNome());
+        addParagraphInfo(doc, "Nome do Equino:", equino.getNome());
         addParagraphInfo(doc, "Idade:", calculaIdade(equino.getDataNascimento()).toString());
         addParagraphInfo(doc, "Raça:", equino.getRaca());
         addParagraphInfo(doc, "Atividade do equino:", equino.getAtividade());
@@ -107,7 +110,6 @@ public class Relatorio extends AppCompatActivity {
         addParagraphInfo(doc, "Nível de atividade/trabalho semanal:", equino.getAtividadeSemanal());
         addParagraphInfo(doc, "Intensidade da atividade:", equino.getItensidadeAtividade());
         addParagraphInfo(doc, "Suplementação Mineral?", equino.isSuplementacaoMineral() ? "Sim" : " Não");
-        addParagraphInfo(doc, "Temperamento:", equino.getTemperamento());
         addParagraphInfo(doc, "Classificação do Temperamento:", equino.getTemperamento());
         addParagraphInfo(doc, "Alguma Exteriotipia/vício?", equino.isVicio() ? "Sim" : "Não");
         addParagraphInfo(doc, "Problema de saúde nos últimnos 60 dias?", equino.getIsProblemaSaude() ? "Sim" : "Não");
@@ -125,10 +127,10 @@ public class Relatorio extends AppCompatActivity {
             breakLine(doc);
 
             // Tabela
-            float[] columnWidths = {1, 3, 3, 3, 3, 3};
+            float[] columnWidths = {3, 3, 3, 3, 4};
             Table table = new Table(UnitValue.createPercentArray(columnWidths));
 
-            Cell cell = new Cell(1, 6)
+            Cell cell = new Cell(1, 5)
                     .add(new Paragraph("Sessões"))
                     .setFontSize(13)
                     .setFontColor(DeviceGray.WHITE)
@@ -149,11 +151,7 @@ public class Relatorio extends AppCompatActivity {
                     new Cell()
                             .setTextAlignment(TextAlignment.CENTER)
                             .setBackgroundColor(new DeviceGray(0.75f))
-                            .add(new Paragraph("Horário Inicial")),
-                    new Cell()
-                            .setTextAlignment(TextAlignment.CENTER)
-                            .setBackgroundColor(new DeviceGray(0.75f))
-                            .add(new Paragraph("Horário Final")),
+                            .add(new Paragraph("Tempo Gasto/Minutos")),
                     new Cell()
                             .setTextAlignment(TextAlignment.CENTER)
                             .setBackgroundColor(new DeviceGray(0.75f))
@@ -169,14 +167,17 @@ public class Relatorio extends AppCompatActivity {
             }
 
             for(Sessao sessao : teste.getSessoes()){
+                long tempoMillis = 0;
+                for(Ensaio ensaio : sessao.getEnsaios()){
+                    tempoMillis += ensaio.getTempoAcerto();
+                }
+
                 table.addCell(new Cell().setTextAlignment(TextAlignment.CENTER)
                         .add(new Paragraph(String.valueOf(caunter))));
                 table.addCell(new Cell().setTextAlignment(TextAlignment.CENTER)
                         .add(new Paragraph(formatarData(sessao.getData()))));
                 table.addCell(new Cell().setTextAlignment(TextAlignment.CENTER)
-                        .add(new Paragraph("6")));
-                table.addCell(new Cell().setTextAlignment(TextAlignment.CENTER)
-                        .add(new Paragraph("6")));
+                        .add(new Paragraph(millisParaMinutos(tempoMillis))));
                 table.addCell(new Cell().setTextAlignment(TextAlignment.CENTER)
                         .add(new Paragraph(Integer.toString(sessao.getTaxaAcerto()) + "%")));
                 table.addCell(new Cell().setTextAlignment(TextAlignment.CENTER)
@@ -212,6 +213,12 @@ public class Relatorio extends AppCompatActivity {
             //doc.add(new AreaBreak(AreaBreakType.NEXT_PAGE)); // Quebrar página
         }
         doc.close();
+    }
+
+    private String millisParaMinutos(long tempoMillis) {
+        double tempoEmMinutos = (double) (tempoMillis / 1000) / 60;
+
+        return formato.format(tempoEmMinutos);
     }
 
     // Quebrar uma linha no PDF

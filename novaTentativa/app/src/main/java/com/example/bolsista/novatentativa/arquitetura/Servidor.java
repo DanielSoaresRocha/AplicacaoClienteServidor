@@ -42,7 +42,7 @@ public class Servidor extends AppCompatActivity {
     //static Cliente cliente;
 
     public static int numberAleatorio;
-    public static boolean preTeste = false;
+    public static boolean serverAtivo = false;
     public static boolean controleRemoto = false;
 
     @Override
@@ -77,9 +77,9 @@ public class Servidor extends AppCompatActivity {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
 
-        numberAleatorio = R.drawable.tela_preta;
+        numberAleatorio = R.drawable.branco;
 
-        preTeste = true;
+        serverAtivo = true;
         new Thread(new Runnable() {
             @Override
             public void run() {

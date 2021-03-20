@@ -39,7 +39,7 @@ public class Resultado extends AppCompatActivity {
 
         inicializar();
         listener();
-        if(Servidor.preTeste)
+        if(Servidor.serverAtivo)
             updateExperimento();
     }
 
