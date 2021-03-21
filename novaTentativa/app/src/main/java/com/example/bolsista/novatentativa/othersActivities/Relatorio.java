@@ -209,6 +209,7 @@ public class Relatorio extends AppCompatActivity {
             Estatistica estatistica = new Estatistica(teste.getSessoes());
             addParagraphInfo(doc, "Média:", estatistica.getMedia());
             addParagraphInfo(doc, "Mediana:", estatistica.getMediana());
+            addParagraphInfo(doc, "Desvio Padrão:", estatistica.getDesvioPadrao());
 
             //doc.add(new AreaBreak(AreaBreakType.NEXT_PAGE)); // Quebrar página
         }

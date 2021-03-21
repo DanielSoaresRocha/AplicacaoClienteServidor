@@ -30,7 +30,6 @@ public class ExperimentoExpecifico extends AppCompatActivity {
 
     private Experimento experimento;
     private TesteAdapter adapter;
-    private int POSITION_EXPERIMENTO;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -73,6 +72,7 @@ public class ExperimentoExpecifico extends AppCompatActivity {
                             public void onItemClick(View view, int position) {
                                 Intent it = new Intent(contextActivity, Sessoes.class);
                                 it.putExtra("teste", experimento.getTestes().get(position));
+                                it.putExtra("aleatoriedade", experimento.getTestes().get(position).getAleatoriedade());
                                 startActivity(it);
                             }
 

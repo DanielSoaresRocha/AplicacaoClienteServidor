@@ -6,7 +6,6 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class Estatistica {
-    float media = 0, mediana = 0;
     float valY[] = new float[100];
     DecimalFormat f = new DecimalFormat("0.00");
     ArrayList<Sessao> sessoes;
@@ -16,25 +15,30 @@ public class Estatistica {
     }
 
     public String getMedia(){
-        calculaMedia(sessoes);
-        return f.format(media);
+        return f.format(calculaMedia(sessoes));
     }
 
     public String getMediana(){
-        calculaMediana(sessoes);
-        return f.format(mediana);
+        return f.format(calculaMediana(sessoes));
     }
 
-    private void calculaMedia(ArrayList<Sessao> sessoes){
+    public String getDesvioPadrao(){
+        return f.format(calculaDesvioPadrao(sessoes));
+    }
+
+    private float calculaMedia(ArrayList<Sessao> sessoes){
+        float media = 0;
         for(int i = 0; i < sessoes.size(); i++){
             media = media+sessoes.get(i).getTaxaAcerto();
         }
         media = media/sessoes.size();
 
-        System.out.println("PASSEI AQUI"+media);
+        return media;
     }
 
-    private void calculaMediana(ArrayList<Sessao> sessoes){
+    private float calculaMediana(ArrayList<Sessao> sessoes){
+        float mediana = 0;
+
         for (int i = 0; i < sessoes.size(); i++) {
             valY[i] = sessoes.get(i).getTaxaAcerto();
         }
@@ -52,6 +56,8 @@ public class Estatistica {
             System.out.println("Impar: ValY["+posicao+"] = "+valY[posicao]);
             mediana = valY[posicao];
         }
+
+        return mediana;
     }
 
     private void ordena(ArrayList<Sessao> sessoes){
@@ -71,4 +77,17 @@ public class Estatistica {
             }
         }
     }//Termina método
+
+    private double calculaDesvioPadrao(ArrayList<Sessao> sessoes){
+        double media = calculaMedia(sessoes);
+        double variancia = 0;
+
+        for(Sessao sessao : sessoes){
+            variancia += Math.pow(sessao.getTaxaAcerto() - media, 2);
+        }
+
+        variancia = variancia / sessoes.size();
+
+        return Math.sqrt(variancia); // Desvio padrão
+    }
 }

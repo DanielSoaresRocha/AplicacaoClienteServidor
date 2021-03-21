@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -18,6 +19,7 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.adapters.SessaoAdapter;
@@ -28,6 +30,7 @@ import com.example.bolsista.novatentativa.modelo.Experimento;
 import com.example.bolsista.novatentativa.modelo.Sessao;
 import com.example.bolsista.novatentativa.modelo.Teste;
 import com.example.bolsista.novatentativa.modelo.Usuario;
+import com.example.bolsista.novatentativa.recycleOnTouchLinesters.GenericOnItemTouch;
 import com.example.bolsista.novatentativa.viewsModels.ExperimentoViewModel;
 import com.example.bolsista.novatentativa.viewsModels.TesteViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -40,6 +43,8 @@ import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 import java.util.Collections;
+
+import me.drakeet.materialdialog.MaterialDialog;
 
 public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
     private Button IniciarSessaoBtn, graficoLinhaBtn;
@@ -62,6 +67,8 @@ public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSele
     DocumentReference usuarioRef;
     //Fire Base Auth
     FirebaseAuth usuario;
+
+    private int aleatoriedade;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,10 +152,36 @@ public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSele
 
         LinearLayoutManager layout = new LinearLayoutManager(contextActivity, LinearLayoutManager.VERTICAL, false);
         sessaoRecycleView.setLayoutManager(layout);
+
+        sessaoRecycleView.addOnItemTouchListener(
+                new GenericOnItemTouch(
+                        contextActivity,
+                        sessaoRecycleView,
+                        new GenericOnItemTouch.OnItemClickListener(){
+                            @Override
+                            public void onItemClick(View view, int position) {
+                                if(aleatoriedade == 0){
+                                    Toast.makeText(contextActivity, "Não é possível fazer isso com o Pré-teste",
+                                            Toast.LENGTH_LONG).show();
+                                }else {
+                                    Intent it = new Intent(contextActivity, SessaoExpecifica.class);
+                                    it.putExtra("sessao", sessoes.get(position));
+                                    startActivity(it);
+                                }
+                            }
+
+                            @SuppressLint("SetTextI18n")
+                            @Override
+                            public void onItemLongClick(View view, int position) {
+
+                            }
+                        })
+        );
     }
     @SuppressLint("SetTextI18n")
     private void preencher() {
         teste = (Teste) getIntent().getSerializableExtra("teste");
+        aleatoriedade = getIntent().getIntExtra("aleatoriedade", 0);
         sessoes = teste.getSessoes();
 
         //Se não tiver nenhuma sessao
