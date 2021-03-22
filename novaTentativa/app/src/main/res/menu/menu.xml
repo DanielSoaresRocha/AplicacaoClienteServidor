@@ -2,6 +2,12 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
+        android:id="@+id/gerenciar"
+        android:checked="true"
+        android:icon="@drawable/horse"
+        android:title="Gerenciar" />
+
+    <item
         android:id="@+id/cadastrarCavalo"
         android:checked="true"
         android:icon="@drawable/horse"

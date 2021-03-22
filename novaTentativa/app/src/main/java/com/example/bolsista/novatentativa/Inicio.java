@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import com.example.bolsista.novatentativa.arquitetura.Definir;
 import com.example.bolsista.novatentativa.cadastros.CadastrarEquino;
+import com.example.bolsista.novatentativa.cadastros.Gerenciar;
 import com.example.bolsista.novatentativa.modelo.Usuario;
 import com.example.bolsista.novatentativa.othersActivities.ExperimentosAndamento;
 import com.example.bolsista.novatentativa.othersActivities.ExperimentosFinalizados;
@@ -142,6 +143,10 @@ public class Inicio extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()){
+            case R.id.gerenciar:
+                Intent telaGerenciar = new Intent(Inicio.this, Gerenciar.class);
+                startActivity(telaGerenciar);
+                return true;
             case R.id.logoff:
                 AuthUI.getInstance().signOut(this);
                 telaLogin();

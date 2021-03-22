@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <LinearLayout
+                android:layout_width="100sp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Editar"
+                android:textColor="@color/preto"
+                android:textSize="25sp"
+                android:gravity="center">
+
+            </TextView>
+
+            <ImageView
+                android:id="@+id/editClick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/edit"
+                android:layout_gravity="center"
+                >
+
+            </ImageView>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="100sp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Excluir"
+                android:textColor="@color/preto"
+                android:textSize="25sp"
+                android:gravity="center">
+
+            </TextView>
+
+            <ImageView
+                android:id="@+id/deleteClick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/delete"
+                android:layout_gravity="center"
+                >
+
+            </ImageView>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/confirmDelete"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:layout_marginTop="20sp"
+        android:visibility="gone"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textColor="@color/preto"
+            android:text="Têm certeza que deseja excluir?"
+            >
+        </TextView>
+
+        <Button
+            android:id="@+id/deleteEquino"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Excluir"
+            android:textColor="@color/branco"
+            android:background="@color/vermelhoo"
+            android:layout_marginTop="10sp"
+            >
+
+        </Button>
+    </LinearLayout>
+</LinearLayout>

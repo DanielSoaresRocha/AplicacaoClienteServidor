@@ -162,8 +162,7 @@ public class ListarTestes extends Fragment {
                     desafiosT2, "Teste Gabor", 1, 2,
                     new ArrayList<Sessao>(), false, 20, 3,
                     85,false));
-            implementsRecycle();
-            observerList();
+            getConfiguracoesFireStore();
         }else{// se não
             implementsRecycle();// apenas implemente o recycle
         }
@@ -189,10 +188,10 @@ public class ListarTestes extends Fragment {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Teste teste = document.toObject(Teste.class);
-                                mViewModel.addConfiguracao(teste);
-                                Log.i("DataBase-FireStore-get", "referencia de => ." +
+                                ListarViewModel.addConfiguracao(teste);
+                                /*Log.i("DataBase-FireStore-get", "referencia de => ." +
                                         teste.getNome() + " = " +
-                                        document.getDocumentReference("usuario").getId());
+                                        document.getDocumentReference("usuario").getId());*/
                             }
                             implementsRecycle();
                             observerList();
