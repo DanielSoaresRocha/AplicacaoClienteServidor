@@ -1,5 +1,6 @@
 package com.example.bolsista.novatentativa.adapters;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -35,6 +36,7 @@ public class EnsaioAdapter extends RecyclerView.Adapter<EnsaioViewHolder> {
         return new EnsaioViewHolder(v);
     }
 
+    @SuppressLint("ResourceAsColor")
     @Override
     public void onBindViewHolder(@NonNull EnsaioViewHolder holder, int position) {
         Ensaio ensaioEscolhido = ensaios.get(position);
@@ -43,14 +45,19 @@ public class EnsaioAdapter extends RecyclerView.Adapter<EnsaioViewHolder> {
         holder.img1.setImageResource(ensaioEscolhido.getDesafio().getImg1());
         holder.imgCorreta.setImageResource(ensaioEscolhido.getDesafio().getImgCorreta());
         holder.img2.setImageResource(ensaioEscolhido.getDesafio().getImg2());
+        if (!ensaioEscolhido.getAcerto()) {
+            holder.corBordaEnsaio.setBackgroundResource(R.drawable.fundo_vermelho);
+        }else {
+            holder.corBordaEnsaio.setBackgroundResource(R.drawable.fundo_verde);
+        }
     }
     @Override
     public int getItemCount() {
         return ensaios.size();
     }
 
-    private String millisParaMinutos(long tempoMillis) {
-        double tempoEmMinutos = (double) (tempoMillis / 1000) / 60;
+    private String millisParaMinutos(double tempoMillis) {
+        double tempoEmMinutos = (tempoMillis / 1000) / 60;
 
         return formato.format(tempoEmMinutos);
     }

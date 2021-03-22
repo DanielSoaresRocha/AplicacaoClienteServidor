@@ -167,7 +167,7 @@ public class Relatorio extends AppCompatActivity {
             }
 
             for(Sessao sessao : teste.getSessoes()){
-                long tempoMillis = 0;
+                double tempoMillis = 0;
                 for(Ensaio ensaio : sessao.getEnsaios()){
                     tempoMillis += ensaio.getTempoAcerto();
                 }
@@ -216,8 +216,8 @@ public class Relatorio extends AppCompatActivity {
         doc.close();
     }
 
-    private String millisParaMinutos(long tempoMillis) {
-        double tempoEmMinutos = (double) (tempoMillis / 1000) / 60;
+    private String millisParaMinutos(double tempoMillis) {
+        double tempoEmMinutos = (tempoMillis / 1000) / 60;
 
         return formato.format(tempoEmMinutos);
     }
