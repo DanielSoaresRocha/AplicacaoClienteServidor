@@ -8,6 +8,7 @@ import android.os.Bundle;
 import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.adapters.FixedTabsPageAdapter;
 import com.example.bolsista.novatentativa.fragments.EquinosGerenciar;
+import com.example.bolsista.novatentativa.fragments.ExperimentosGerenciar;
 import com.example.bolsista.novatentativa.modelo.Equino;
 import com.example.bolsista.novatentativa.modelo.Experimento;
 import com.example.bolsista.novatentativa.modelo.Teste;
@@ -47,6 +48,7 @@ public class Gerenciar extends AppCompatActivity {
     private void pageAdapter(){
         pageAdapter = new FixedTabsPageAdapter(getSupportFragmentManager());
         pageAdapter.adicionar(new EquinosGerenciar(), "Equinos");
+        pageAdapter.adicionar(new ExperimentosGerenciar(), "Experimentos");
 
         viewPagerEdit.setAdapter(pageAdapter);
         tabLayoutEdit.setupWithViewPager(viewPagerEdit);

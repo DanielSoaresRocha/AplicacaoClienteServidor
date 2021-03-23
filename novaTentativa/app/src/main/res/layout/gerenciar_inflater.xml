@@ -13,6 +13,7 @@
         android:orientation="horizontal">
 
         <LinearLayout
+                android:id="@+id/linearEdit"
                 android:layout_width="100sp"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
@@ -76,10 +77,12 @@
         >
 
         <TextView
+            android:id="@+id/mensagemExcluir"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:textColor="@color/preto"
+            android:gravity="center"
             android:text="Têm certeza que deseja excluir?"
             >
         </TextView>
