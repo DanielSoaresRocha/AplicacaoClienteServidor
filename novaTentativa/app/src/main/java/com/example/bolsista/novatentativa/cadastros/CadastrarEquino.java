@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.modelo.Equino;
+import com.example.bolsista.novatentativa.modelo.Experimento;
 import com.example.bolsista.novatentativa.viewsModels.ListarViewModel;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -45,13 +46,17 @@ import java.util.Date;
 
 public class CadastrarEquino extends AppCompatActivity implements DatePickerDialog.OnDateSetListener, AdapterView.OnItemSelectedListener {
 
-    Button cadastrarCavaloBtn,cancelarBtn;
+    Button cadastrarCavaloBtn,cancelarBtn, salvarCavaloBtn;
     EditText nome, detalhes;
     Context contextActivity;
     ImageView dataNascimentoI;
     TextView dataNascimentoE;
     Spinner ativitiesSpinner, racasSpinner;
     LinearLayout problemaSaudeLinear;
+
+    RadioGroup sexoRadioGroup, sistemaCriacaoRadioGroup, atividadeSemRadioGroup, itensidadeAtvRadioGroup,
+            temperamentoRadioGroup, suplementacaoMinRadioButton, vicioRadioGroup, problemaSaudeRadioButton,
+            problemaSaudeTextRadioBtn;
 
     ArrayAdapter<CharSequence> ativitiesAdapter, racasAdapter;
 
@@ -73,6 +78,85 @@ public class CadastrarEquino extends AppCompatActivity implements DatePickerDial
         inicializar();
         spinners();
         listener();
+        receberEquino();
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void receberEquino() {
+        equino = (Equino) getIntent().getSerializableExtra("equino");
+
+        if(equino != null){
+            cadastrarCavaloBtn.setVisibility(View.GONE);
+            salvarCavaloBtn.setVisibility(View.VISIBLE);
+
+            nome.setText(equino.getNome());
+
+            racaText = changeTextSpinner(racasSpinner, equino.getRaca());
+            atividade = changeTextSpinner(ativitiesSpinner, equino.getAtividade());
+
+            dataNascimento = equino.getDataNascimento();
+
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(dataNascimento);
+            dataNascimentoE.setText(cal.get(Calendar.DAY_OF_MONTH)+"/"+(cal.get(Calendar.MONTH)+1)+"/"+
+                    cal.get(Calendar.YEAR));
+
+            detalhes.setText(equino.getObservacoes());
+
+            sexo = changeCheckBoxSelected(sexoRadioGroup, equino.getSexo());
+            sistemaCriacao = changeCheckBoxSelected(sistemaCriacaoRadioGroup, equino.getSistemaCriacao());
+            atividadeSemanal = changeCheckBoxSelected(atividadeSemRadioGroup, equino.getAtividadeSemanal());
+            temperamento = changeCheckBoxSelected(temperamentoRadioGroup, equino.getTemperamento());
+            itensidadeAtividade = changeCheckBoxSelected(itensidadeAtvRadioGroup, equino.getItensidadeAtividade());
+
+            suplementacaoMineral = changeCheckBoxBoolean(suplementacaoMinRadioButton, equino.isSuplementacaoMineral());
+            vicio = changeCheckBoxBoolean(vicioRadioGroup, equino.isVicio());
+            isProblemaSaude = changeCheckBoxBoolean(problemaSaudeRadioButton, equino.getIsProblemaSaude());
+
+            if(isProblemaSaude){
+                problemaSaudeLinear.setVisibility(View.VISIBLE);
+                problemaSaude = changeCheckBoxSelected(problemaSaudeTextRadioBtn, equino.getProblemaSaude());
+            }
+        }else{
+            equino = new Equino();
+        }
+    }
+
+    private String changeTextSpinner(Spinner spinner, String nome){
+        for(int i= 0; i < spinner.getAdapter().getCount(); i++)
+        {
+            if(spinner.getAdapter().getItem(i).toString().contains(nome))
+            {
+                spinner.setSelection(i);
+                return nome;
+            }
+        }
+
+        return "";
+    }
+
+    private String changeCheckBoxSelected(RadioGroup radioGroup, String text){
+        for(int i = 0; i < radioGroup.getChildCount(); i++){
+            RadioButton radioButton = (RadioButton) radioGroup.getChildAt(i);
+            if (radioButton.getText().toString().contains(text)){
+                radioButton.setChecked(true);
+                return text;
+            }
+        }
+        return "";
+    }
+
+    private boolean changeCheckBoxBoolean(RadioGroup radioGroup, boolean is){
+        if(is){
+            RadioButton radioButton = (RadioButton) radioGroup.getChildAt(0);
+            radioButton.setChecked(true);
+            return true;
+        }else {
+            RadioButton radioButton = (RadioButton) radioGroup.getChildAt(1);
+            radioButton.setChecked(true);
+            return false;
+        }
+
     }
 
     private void listener() {
@@ -85,22 +169,24 @@ public class CadastrarEquino extends AppCompatActivity implements DatePickerDial
                 if((dataNascimentoE.getText().toString().length() >= 8) && (nome.getText().toString()
                         .length() > 1)) {
 
-                    equino = new Equino(nome.getText().toString(), racaText,
-                            dataNascimento, detalhes.getText().toString(),sexo, atividade,
-                            sistemaCriacao, atividadeSemanal, itensidadeAtividade, suplementacaoMineral,
-                            temperamento, vicio, isProblemaSaude, problemaSaude);
+                    preencherEquino();
 
                     addFireStore();
 
-                    nome.setText("");
-                    dataNascimentoE.setText("");
-                    detalhes.setText("");
                     Toast.makeText(getApplicationContext(), "Cavalo cadastrado", Toast.LENGTH_SHORT).show();
                     finish();
                 }else {
                     Toast.makeText(getApplicationContext(), "Preencha os campos obrigatórios",
                             Toast.LENGTH_SHORT).show();
                 }
+            }
+        });
+
+        salvarCavaloBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                preencherEquino();
+                updateEquinoFireStore(equino);
             }
         });
 
@@ -118,6 +204,25 @@ public class CadastrarEquino extends AppCompatActivity implements DatePickerDial
             }
         });
     }
+
+    private void preencherEquino(){
+        equino.setNome(nome.getText().toString());
+        equino.setRaca(racaText);
+        equino.setDataNascimento(dataNascimento);
+        equino.setObservacoes(detalhes.getText().toString());
+        equino.setSexo(sexo);
+        equino.setAtividade(atividade);
+        equino.setSistemaCriacao(sistemaCriacao);
+        equino.setAtividadeSemanal(atividadeSemanal);
+        equino.setItensidadeAtividade(itensidadeAtividade);
+        equino.setSuplementacaoMineral(suplementacaoMineral);
+        equino.setTemperamento(temperamento);
+        equino.setVicio(vicio);
+        equino.setIsProblemaSaude(isProblemaSaude);
+        if (isProblemaSaude)
+            equino.setProblemaSaude(problemaSaude);
+    }
+
 
     public void spinners(){
         // atividades
@@ -138,16 +243,10 @@ public class CadastrarEquino extends AppCompatActivity implements DatePickerDial
         // Is the button now checked?
         boolean checked = ((RadioButton) view).isChecked();
 
-        // Check which radio button was clicked
-        switch(view.getId()) {
-            case R.id.macho:
-                if (checked)
-                    sexo = "Macho";
-                    break;
-            case R.id.femea:
-                if (checked)
-                    sexo = "Fêmea";
-                    break;
+        if(view.getId() == R.id.macho || view.getId() == R.id.femea ||
+                view.getId() == R.id.garanhao){
+            if (checked)
+                sexo = ((RadioButton) view).getText().toString();
         }
     }
 
@@ -282,6 +381,26 @@ public class CadastrarEquino extends AppCompatActivity implements DatePickerDial
                 });
     }
 
+    private void updateEquinoFireStore(Equino equino){
+        db.collection("equinos")
+                .document(equino.getId())
+                .set(equino)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("FireStore", "DocumentSnapshot successfully updated!");
+                        Toast.makeText(contextActivity, "Equino Atualizado", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("FireStore", "Erro ao atualizar", e);
+                    }
+                });
+    }
+
     private void showDatePickerDialog(){
         Calendar hoje = Calendar.getInstance();
         DatePickerDialog datePickerDialog = new DatePickerDialog(
@@ -326,6 +445,17 @@ public class CadastrarEquino extends AppCompatActivity implements DatePickerDial
         ativitiesSpinner = findViewById(R.id.ativitiesSpinner);
         racasSpinner = findViewById(R.id.racasSpinner);
         problemaSaudeLinear = findViewById(R.id.problemaSaudeLinear);
+        salvarCavaloBtn = findViewById(R.id.salvarCavaloBtn);
+
+        sexoRadioGroup = findViewById(R.id.sexoRadioGroup);
+        sistemaCriacaoRadioGroup = findViewById(R.id.sistemaCriacaoRadioGroup);
+        atividadeSemRadioGroup = findViewById(R.id.atividadeSemRadioGroup);
+        itensidadeAtvRadioGroup = findViewById(R.id.itensidadeAtvRadioGroup);
+        temperamentoRadioGroup = findViewById(R.id.temperamentoRadioGroup);
+        suplementacaoMinRadioButton = findViewById(R.id.suplementacaoMinRadioButton);
+        vicioRadioGroup = findViewById(R.id.vicioRadioGroup);
+        problemaSaudeRadioButton = findViewById(R.id.problemaSaudeRadioButton);
+        problemaSaudeTextRadioBtn = findViewById(R.id.problemaSaudeTextRadioBtn);
     }
 
     @Override

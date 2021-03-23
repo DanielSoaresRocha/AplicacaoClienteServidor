@@ -2,6 +2,7 @@ package com.example.bolsista.novatentativa.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -25,8 +26,10 @@ import android.widget.Toast;
 import com.example.bolsista.novatentativa.NovoExperimento;
 import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.adapters.EquinoAdapter;
+import com.example.bolsista.novatentativa.cadastros.CadastrarEquino;
 import com.example.bolsista.novatentativa.cadastros.Gerenciar;
 import com.example.bolsista.novatentativa.modelo.Equino;
+import com.example.bolsista.novatentativa.othersActivities.SessaoExpecifica;
 import com.example.bolsista.novatentativa.recycleOnTouchLinesters.GenericOnItemTouch;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -121,7 +124,10 @@ public class EquinosGerenciar extends Fragment {
                                 editar.setOnClickListener(new View.OnClickListener() {
                                     @Override
                                     public void onClick(View v) {
-                                        Toast.makeText(contextoAtivity, "Opa", Toast.LENGTH_SHORT).show();
+                                        Intent it = new Intent(contextoAtivity, CadastrarEquino.class);
+                                        it.putExtra("equino", gerenciar.getEquinos().get(position));
+                                        startActivity(it);
+                                        getActivity().finish();
                                     }
                                 });
 

@@ -112,6 +112,7 @@
 
         </TextView>
         <RadioGroup
+            android:id="@+id/sexoRadioGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -158,6 +159,7 @@
         </TextView>
 
         <RadioGroup
+            android:id="@+id/sistemaCriacaoRadioGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -197,6 +199,7 @@
         </TextView>
 
         <RadioGroup
+            android:id="@+id/atividadeSemRadioGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -263,6 +266,7 @@
 
         </TextView>
         <RadioGroup
+            android:id="@+id/itensidadeAtvRadioGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -301,6 +305,7 @@
 
         </TextView>
         <RadioGroup
+            android:id="@+id/suplementacaoMinRadioButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -332,6 +337,7 @@
 
         </TextView>
         <RadioGroup
+            android:id="@+id/temperamentoRadioGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -370,6 +376,7 @@
 
         </TextView>
         <RadioGroup
+            android:id="@+id/vicioRadioGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -401,6 +408,7 @@
 
         </TextView>
         <RadioGroup
+            android:id="@+id/problemaSaudeRadioButton"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -440,6 +448,7 @@
             </TextView>
 
             <RadioGroup
+                android:id="@+id/problemaSaudeTextRadioBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
@@ -493,8 +502,18 @@
             android:layout_height="wrap_content"
             android:text="@string/cadastrar"
             >
-
         </Button>
+
+        <Button
+            android:visibility="gone"
+            android:id="@+id/salvarCavaloBtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Salvar"
+            >
+        </Button>
+
+
     </LinearLayout>
 
     </LinearLayout>
