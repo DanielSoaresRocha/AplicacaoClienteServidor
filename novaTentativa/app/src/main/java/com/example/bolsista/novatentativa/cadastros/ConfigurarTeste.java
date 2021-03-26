@@ -291,7 +291,7 @@ public class ConfigurarTeste extends AppCompatActivity implements AdapterView.On
 
     private void fazerConfiguracao(){
         teste = new Teste("999", nomeConfigEdit.getText().toString(), Integer.parseInt(intervaloQuestoes.getText().toString()),
-                Integer.parseInt(intervalo2.getText().toString()), 0, erroEscolhido, acertoEscolhido,
+                Integer.parseInt(intervalo2.getText().toString()), 0, acertoEscolhido, erroEscolhido,
                 getDesafios(), detalhesConfigEdit.getText().toString(),2, 3,
                 new ArrayList<Sessao>(), false, Integer.parseInt(qtdQuestao.getText().toString()),
                 3, 85, false);

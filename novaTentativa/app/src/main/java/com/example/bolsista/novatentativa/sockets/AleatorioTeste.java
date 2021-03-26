@@ -43,10 +43,13 @@ public class AleatorioTeste extends PreTeste {
             int comando = Integer.parseInt(msg[1]);
 
             if (comando == desafioAtual.getImgCorreta()) {
+                terminarContagemTempo();
                 jogar.tocarAcerto();
                 rodada++;
                 esp32(ABRIR_MOTOR);
                 ensaio.setAcerto(true);
+                ensaio.setDesafio(desafioAtual);
+                ensaio.setTempoAcerto(calcularTempoQuePassou());
                 esperar();
                 if (!Servidor.controleRemoto && rodada <= numRodadas) {
                     dormir(TesteViewModel.teste.getValue().getIntervalo1()); // tempo de espera do mestre
@@ -59,6 +62,8 @@ public class AleatorioTeste extends PreTeste {
             } else { //O cavalo errou
                 jogar.tocarError();
                 ensaio.setAcerto(false);
+                Log.i("DESAFIOATUAL", " IMG1 = " + desafioAtual.getImg1() + " IMG2 = " +desafioAtual.getImg2());
+                ensaio.setDesafio(desafioAtual);
             }
             TesteViewModel.sessao.getEnsaios().add(ensaio);
 
@@ -74,7 +79,7 @@ public class AleatorioTeste extends PreTeste {
 
         for (int i = 0; i < clientes.size(); i++) {
             PreTeste destino = clientes.get(i);
-            destino.getEscritor().write(999);
+            destino.getEscritor().println(999);
             destino.getEscritor().flush();
         }
     }
@@ -107,13 +112,15 @@ public class AleatorioTeste extends PreTeste {
     private static void sortearDesafio(){
         desafioAtual = desafios.get(numeroAleatorio(0, desafios.size() - 1));
 
+        int imgAleatoria = desafios.get(numeroAleatorio(0, desafios.size() - 1)).getImgCorreta();
+
         Integer lado = numeroAleatorio(0,1);
 
         if(lado.equals(0)){
             desafioAtual.setImg1(desafioAtual.getImgCorreta());
-            desafioAtual.setImg2(numeroAleatorio(0, desafios.size() - 1));
+            desafioAtual.setImg2(imgAleatoria);
         }else {
-            desafioAtual.setImg2(numeroAleatorio(0, desafios.size() - 1));
+            desafioAtual.setImg1(imgAleatoria);
             desafioAtual.setImg2(desafioAtual.getImgCorreta());
         }
     }
@@ -148,12 +155,14 @@ public class AleatorioTeste extends PreTeste {
     // Enviar comandos para enviar para escravos 1 e 2
     private static void enviarParaEscravos(int img1, int img2) {
         PreTeste destino = clientes.get(0); // primeiro cliente conectado
-        destino.getEscritor().write(img1);
+        destino.getEscritor().println(img1);
         destino.getEscritor().flush();
 
         destino = clientes.get(1); // segundo cliente conectado
-        destino.getEscritor().write(img2);
+        destino.getEscritor().println(img2);
         destino.getEscritor().flush();
+
+        iniciarContagemTempo();
     }
 
 }

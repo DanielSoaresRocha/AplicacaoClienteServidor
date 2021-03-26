@@ -34,6 +34,6 @@ public class TesteViewModel {
         Objects.requireNonNull(teste.getValue()).getSessoes().add(sessao);
         teste.getValue().verificaAprendizagem();
 
-        ExperimentoViewModel.updateTeste(Integer.parseInt(teste.getValue().getId()), teste.getValue());
+        ExperimentoViewModel.updateTeste(teste.getValue());
     }
 }

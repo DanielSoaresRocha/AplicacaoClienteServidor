@@ -27,16 +27,16 @@ public class ExperimentoViewModel extends ViewModel {
         experimentos.setValue(exp);
     }
 
-    public static void updateTeste(int numTeste, Teste teste){
-        Objects.requireNonNull(experimento.getValue()).getTestes().set(numTeste, teste);
-        experimento.getValue().verificarCompleto();
-
-        /*
-        -> Resolver problema encontrado quando se tem menos testes em um experimento.
-        for(int i = 0; i < experimento.getValue().getTestes().size(); i++){
-            if(experimento.getValue().getTestes().get(i).getId().equals(teste.getId())){
-                experimento.getValue().getTestes().set(i, teste);
+    public static void updateTeste(Teste teste){
+        int positionTeste = 0;
+        for(Teste testeCont : experimento.getValue().getTestes()){
+            if (testeCont.getId().equals(teste.getId())){
+                break;
             }
-        }*/
+            positionTeste++;
+        }
+
+        Objects.requireNonNull(experimento.getValue()).getTestes().set(positionTeste, teste);
+        experimento.getValue().verificarCompleto();
     }
 }

@@ -103,7 +103,7 @@ public class PseudoTeste extends PreTeste {
         sortearDesafio();
 
         mudarImagem(desafioAtual.getImgCorreta());
-        //dormir(TesteViewModel.teste.getValue().getIntervalo2());
+        dormir(TesteViewModel.teste.getValue().getIntervalo2());
 
         enviarParaEscravos(desafioAtual.getImg1(), desafioAtual.getImg2());
     }

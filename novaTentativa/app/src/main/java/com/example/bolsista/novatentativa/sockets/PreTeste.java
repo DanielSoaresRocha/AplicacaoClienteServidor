@@ -166,7 +166,7 @@ public class PreTeste extends Thread {
     public static void dormir(int tempo){
         try {
             tempo *= 1000; //transforma segundos em millisegundos
-            sleep(tempo);
+            sleep(0);
 
         } catch (InterruptedException e) {
             Log.i("ERRO", "ERRO EM SLEEP = " + e.getMessage());
