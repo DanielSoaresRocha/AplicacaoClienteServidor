@@ -28,11 +28,16 @@ import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.modelo.Equino;
 import com.example.bolsista.novatentativa.modelo.Experimento;
 import com.example.bolsista.novatentativa.viewsModels.ListarViewModel;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -390,13 +395,47 @@ public class CadastrarEquino extends AppCompatActivity implements DatePickerDial
                     public void onSuccess(Void aVoid) {
                         Log.d("FireStore", "DocumentSnapshot successfully updated!");
                         Toast.makeText(contextActivity, "Equino Atualizado", Toast.LENGTH_SHORT).show();
-                        finish();
+                        updateExperimentosWithEquino(equino);
                     }
                 })
                 .addOnFailureListener(new OnFailureListener() {
                     @Override
                     public void onFailure(@NonNull Exception e) {
                         Log.w("FireStore", "Erro ao atualizar", e);
+                    }
+                });
+    }
+
+    private void updateExperimentosWithEquino(Equino equino){
+        db.collection("experimentos")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Experimento experimento = document.toObject(Experimento.class);
+                                if (experimento.getEquino().getId().equals(equino.getId())){
+                                    updateExperimento(experimento, equino);
+                                }
+                            }
+                            finish();
+                        }
+                    }
+                });
+    }
+
+    private void updateExperimento(Experimento experimento, Equino equino){
+        experimento.setEquino(equino);
+
+        db.collection("experimentos")
+                .document(experimento.getId())
+                .set(experimento)
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(contextActivity, "Ocorreu algum erro ao tentar atualizar experimento",
+                                Toast.LENGTH_SHORT).show();
                     }
                 });
     }
