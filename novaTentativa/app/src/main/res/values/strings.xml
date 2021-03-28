@@ -128,11 +128,11 @@
     </string-array>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="x1">x1</string>
-    <string name="x2">x2</string>
-    <string name="x3">x3</string>
-    <string name="x4">x4</string>
-    <string name="x5">x5</string>
-    <string name="x6">x6</string>
-    <string name="x7">x7</string>
+    <string name="x1">1x</string>
+    <string name="x2">2x</string>
+    <string name="x3">3x</string>
+    <string name="x4">4x</string>
+    <string name="x5">5x</string>
+    <string name="x6">6x</string>
+    <string name="x7">7x</string>
 </resources>

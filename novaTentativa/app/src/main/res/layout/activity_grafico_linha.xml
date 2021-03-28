@@ -1,10 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.bolsista.novatentativa.graficos.GraficoLinha">
+    tools:context="com.example.bolsista.novatentativa.graficos.GraficoLinha"
+    android:orientation="vertical"
+    android:gravity="center">
+
+    <Button
+        android:id="@+id/gerarGrafico"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Gerar Relatório"
+        android:background="@color/verde_claro"
+        android:paddingHorizontal="20sp"
+        >
+    </Button>
 
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/graficoLinha"
@@ -12,13 +24,4 @@
         android:layout_height="match_parent"
         />
 
-    <Button
-        android:id="@+id/gerarGrafico"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="GerarGrafico"
-        >
-
-    </Button>
-
-</RelativeLayout>
+</LinearLayout>

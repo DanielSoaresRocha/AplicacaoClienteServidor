@@ -269,25 +269,25 @@
             android:id="@+id/itensidadeAtvRadioGroup"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
+            android:orientation="vertical"
             >
             <RadioButton
                 android:id="@+id/pesada"
-                android:text="Pesada"
+                android:text="Pesada 5-6h/dia"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="onRadioButtonClickedItensidade"
                 />
             <RadioButton
                 android:id="@+id/moderada"
-                android:text="Moderada"
+                android:text="Moderada 3-4h/ dia"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="onRadioButtonClickedItensidade"
                 />
             <RadioButton
                 android:id="@+id/leve"
-                android:text="Leve"
+                android:text="Leve 1-2h/dia"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:onClick="onRadioButtonClickedItensidade"
@@ -451,7 +451,7 @@
                 android:id="@+id/problemaSaudeTextRadioBtn"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 >
                 <RadioButton
                     android:id="@+id/articular"

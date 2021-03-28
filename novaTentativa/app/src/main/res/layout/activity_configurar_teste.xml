@@ -253,7 +253,8 @@
                 android:id="@+id/tamanhoBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/tamanho" />
+                android:text="@string/tamanho"
+                />
 
 
         </LinearLayout>
@@ -287,7 +288,8 @@
                 android:layout_height="wrap_content"
                 android:buttonTint="@color/colorAccent"
                 android:color="@color/verde"
-                android:text="aleatório" />
+                android:text="aleatório"
+                />
 
             <RadioButton
                 android:id="@+id/pseudoAleatorio"
@@ -391,6 +393,7 @@
                 />
 
             <EditText
+                android:id="@+id/criterioAprendEdit"
                 android:layout_width="80sp"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -424,6 +427,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Cadastrar"
+                />
+            <Button
+                android:id="@+id/salvarTestBtn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Salvar"
+                android:visibility="gone"
                 />
 
         </LinearLayout>

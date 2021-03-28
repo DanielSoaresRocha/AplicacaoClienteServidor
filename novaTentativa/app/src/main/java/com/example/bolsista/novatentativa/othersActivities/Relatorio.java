@@ -96,7 +96,7 @@ public class Relatorio extends AppCompatActivity {
         PdfDocument pdfDoc = new PdfDocument(new PdfWriter(dest));
         Document doc = new Document(pdfDoc, PageSize.A4);
 
-        addTitleCenter(doc, "Relatório de um teste dentro de um experimento");
+        addTitleCenter(doc, "Relatório completo de um experimento");
         breakLine(doc);
 
         Equino equino = experimento.getEquino();

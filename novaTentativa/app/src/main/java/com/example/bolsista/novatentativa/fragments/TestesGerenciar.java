@@ -2,6 +2,7 @@ package com.example.bolsista.novatentativa.fragments;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -25,6 +26,8 @@ import com.example.bolsista.novatentativa.NovoExperimento;
 import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.adapters.ExperimentoAdapter;
 import com.example.bolsista.novatentativa.adapters.TesteAdapter;
+import com.example.bolsista.novatentativa.cadastros.CadastrarEquino;
+import com.example.bolsista.novatentativa.cadastros.ConfigurarTeste;
 import com.example.bolsista.novatentativa.cadastros.Gerenciar;
 import com.example.bolsista.novatentativa.modelo.Experimento;
 import com.example.bolsista.novatentativa.modelo.Teste;
@@ -109,13 +112,21 @@ public class TestesGerenciar extends Fragment {
 
                                 m.show();
 
+                                ImageView editar = layout.findViewById(R.id.editClick);
                                 ImageView excluir = layout.findViewById(R.id.deleteClick);
                                 LinearLayout confirmDelete = layout.findViewById(R.id.confirmDelete);
-                                LinearLayout linearEdit = layout.findViewById(R.id.linearEdit);
                                 Button deleteEquino = layout.findViewById(R.id.deleteEquino);
                                 TextView mensagemExcluir = layout.findViewById(R.id.mensagemExcluir);
 
-                                linearEdit.setVisibility(View.GONE);
+                                editar.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View v) {
+                                        Intent it = new Intent(contextoAtivity, ConfigurarTeste.class);
+                                        it.putExtra("teste", gerenciar.getTestes().get(position));
+                                        startActivity(it);
+                                        getActivity().finish();
+                                    }
+                                });
 
                                 excluir.setOnClickListener(new View.OnClickListener() {
                                     @SuppressLint("SetTextI18n")

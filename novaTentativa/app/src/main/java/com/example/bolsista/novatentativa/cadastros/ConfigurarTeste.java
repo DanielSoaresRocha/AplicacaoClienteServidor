@@ -1,5 +1,6 @@
 package com.example.bolsista.novatentativa.cadastros;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.media.MediaPlayer;
 
@@ -14,28 +15,36 @@ import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.modelo.Desafio;
+import com.example.bolsista.novatentativa.modelo.Equino;
+import com.example.bolsista.novatentativa.modelo.Experimento;
 import com.example.bolsista.novatentativa.modelo.Sessao;
 import com.example.bolsista.novatentativa.modelo.Teste;
 import com.example.bolsista.novatentativa.viewsModels.ListarViewModel;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.QueryDocumentSnapshot;
+import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
 
 public class ConfigurarTeste extends AppCompatActivity implements AdapterView.OnItemSelectedListener{
-    EditText qtdQuestao, intervaloQuestoes, intervalo2,nomeConfigEdit,detalhesConfigEdit;
+    EditText qtdQuestao, intervaloQuestoes, intervalo2,nomeConfigEdit,detalhesConfigEdit, criterioAprendEdit;
     ImageView info1, info2,info3;
     TextView info1TextView, info2TextView,info3TextView;
-    Button somErro1, somErro2, somErro3, somAcerto1, somAcerto2, somAcerto3;
+    Button salvarTestBtn;
+    RadioButton somErro1, somErro2, somErro3, somAcerto1, somAcerto2, somAcerto3;
     CheckBox formas, preenchimento, tamanho;
     Button irPara, cadastrarTestBtn;
     Spinner qtdDesafiosSessao, qtdEnsaiosSessao, qtdRepDesafiosSessao;
@@ -68,6 +77,67 @@ public class ConfigurarTeste extends AppCompatActivity implements AdapterView.On
         inicializar();
         spinners();
         listener();
+        receberTeste();
+    }
+
+    @SuppressLint("SetTextI18n")
+    private void receberTeste() {
+        teste = (Teste) getIntent().getSerializableExtra("teste");
+
+        if(teste != null){
+            salvarTestBtn.setVisibility(View.VISIBLE);
+            cadastrarTestBtn.setVisibility(View.GONE);
+
+            nomeConfigEdit.setText(teste.getNome());
+            intervaloQuestoes.setText(Integer.toString(teste.getIntervalo1()));
+            intervalo2.setText(Integer.toString(teste.getIntervalo2()));
+
+            acertoEscolhido = teste.getSomAcerto();
+            erroEscolhido = teste.getSomErro();
+            sonsButtons(acertoEscolhido, erroEscolhido);
+
+            for(Desafio desafio : teste.getDesafios()){
+                if(desafio.getId().equals("0"))
+                    formas.setChecked(true);
+                if(desafio.getId().equals("6"))
+                    preenchimento.setChecked(true);
+            }
+
+            detalhesConfigEdit.setText(teste.getObservacoes());
+            qtdQuestao.setText(Integer.toString(teste.getQtdEnsaiosPorSessao()));
+            criterioAprendEdit.setText(Integer.toString(teste.getCriterioAprendizagem()));
+
+        }else {
+            teste = new Teste();
+            teste.setDesafios(new ArrayList<>());
+            teste.setSessoes(new ArrayList<>());
+        }
+    }
+
+    private void sonsButtons(int acertoEscolhido, int erroEscolhido){
+        switch (acertoEscolhido){
+            case R.raw.sucess:
+                somAcerto1.setChecked(true);
+                break;
+            case R.raw.sucess2:
+                somAcerto2.setChecked(true);
+                break;
+            case R.raw.sucess3:
+                somAcerto2.setChecked(true);
+                break;
+        }
+
+        switch (erroEscolhido){
+            case R.raw.error:
+                somErro1.setChecked(true);
+                break;
+            case R.raw.error2:
+                somErro2.setChecked(true);
+                break;
+            case R.raw.error3:
+                somErro3.setChecked(true);
+                break;
+        }
 
     }
 
@@ -236,19 +306,6 @@ public class ConfigurarTeste extends AppCompatActivity implements AdapterView.On
         irPara.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                /*try {
-                    fazerConfiguracao();
-
-                    Intent returnIntent = new Intent();
-                    returnIntent.putExtra("result","OK");
-                    setResult(Activity.RESULT_OK,returnIntent);
-                    finish();
-
-                }catch(java.lang.NumberFormatException e){
-                    Intent returnIntent = new Intent();
-                    setResult(Activity.RESULT_CANCELED, returnIntent);
-                    finish();
-                }*/
                 finish();
             }
         });
@@ -263,6 +320,71 @@ public class ConfigurarTeste extends AppCompatActivity implements AdapterView.On
             }
         });
 
+        salvarTestBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                fazerConfiguracao();
+                updateTesteFireStore(teste);
+            }
+        });
+
+    }
+
+    private void updateTesteFireStore(Teste teste){
+        db.collection("configuracoes")
+                .document(teste.getId())
+                .set(teste)
+                .addOnSuccessListener(new OnSuccessListener<Void>() {
+                    @Override
+                    public void onSuccess(Void aVoid) {
+                        Log.d("FireStore", "DocumentSnapshot successfully updated!");
+                        Toast.makeText(contextActivity, "Teste Atualizado", Toast.LENGTH_SHORT).show();
+                        updateExperimentosWithTeste(teste);
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w("FireStore", "Erro ao atualizar", e);
+                    }
+                });
+    }
+
+    private void updateExperimentosWithTeste(Teste teste){
+        db.collection("experimentos")
+                .get()
+                .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
+                    @Override
+                    public void onComplete(@NonNull Task<QuerySnapshot> task) {
+                        if (task.isSuccessful()) {
+                            for (QueryDocumentSnapshot document : task.getResult()) {
+                                Experimento experimento = document.toObject(Experimento.class);
+
+                                for (int i = 0; i < experimento.getTestes().size(); i++){
+                                    if(experimento.getTestes().get(i).getId().equals(teste.getId())){
+                                        experimento.getTestes().set(i, teste);
+                                        updateExperimento(experimento);
+                                        break;
+                                    }
+                                }
+                            }
+                            finish();
+                        }
+                    }
+                });
+    }
+
+    private void updateExperimento(Experimento experimento){
+        db.collection("experimentos")
+                .document(experimento.getId())
+                .set(experimento)
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(contextActivity, "Ocorreu algum erro ao tentar atualizar experimento",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 
     private void addTestToFireBase(){
@@ -290,11 +412,23 @@ public class ConfigurarTeste extends AppCompatActivity implements AdapterView.On
     }
 
     private void fazerConfiguracao(){
-        teste = new Teste("999", nomeConfigEdit.getText().toString(), Integer.parseInt(intervaloQuestoes.getText().toString()),
-                Integer.parseInt(intervalo2.getText().toString()), 0, acertoEscolhido, erroEscolhido,
-                getDesafios(), detalhesConfigEdit.getText().toString(),2, 3,
-                new ArrayList<Sessao>(), false, Integer.parseInt(qtdQuestao.getText().toString()),
-                3, 85, false);
+        teste.setNome(nomeConfigEdit.getText().toString());
+        teste.setIntervalo1(Integer.parseInt(intervaloQuestoes.getText().toString()));
+        teste.setIntervalo2(Integer.parseInt(intervalo2.getText().toString()));
+        teste.setQtdDesafios(0);
+        teste.setSomAcerto(acertoEscolhido);
+        teste.setSomErro(erroEscolhido);
+        teste.setDesafios(getDesafios());
+        teste.setObservacoes(detalhesConfigEdit.getText().toString());
+        teste.setTipo(2);
+        teste.setAleatoriedade(3);
+        teste.setPreTeste(false);
+        teste.setQtdEnsaiosPorSessao(Integer.parseInt(qtdQuestao.getText().toString()));
+        teste.setMaxVezesConsecutivas(3);
+        teste.setCriterioAprendizagem(Integer.parseInt(criterioAprendEdit.getText().toString()));
+        teste.setCompleto(false);
+
+
     }
 
     private ArrayList<Desafio> getDesafios(){
@@ -308,12 +442,12 @@ public class ConfigurarTeste extends AppCompatActivity implements AdapterView.On
                 desafios.add(new Desafio("5", R.drawable.retanguloo));
             }
             if(preenchimento.isChecked()){
-                desafios.add(new Desafio("0", R.drawable.b_circuloo));
-                desafios.add(new Desafio("0", R.drawable.trianguloo));
-                desafios.add(new Desafio("0", R.drawable.b_coracaoo));
-                desafios.add(new Desafio("0", R.drawable.b_estrela22));
-                desafios.add(new Desafio("0", R.drawable.b_hexagonoo));
-                desafios.add(new Desafio("0", R.drawable.b_retanguloo));
+                desafios.add(new Desafio("6", R.drawable.b_circuloo));
+                desafios.add(new Desafio("7", R.drawable.trianguloo));
+                desafios.add(new Desafio("8", R.drawable.b_coracaoo));
+                desafios.add(new Desafio("9", R.drawable.b_estrela22));
+                desafios.add(new Desafio("10", R.drawable.b_hexagonoo));
+                desafios.add(new Desafio("11", R.drawable.b_retanguloo));
             }
             return desafios;
     }
@@ -372,7 +506,9 @@ public class ConfigurarTeste extends AppCompatActivity implements AdapterView.On
         contextActivity = this;
         irPara = findViewById(R.id.irPara);
         cadastrarTestBtn = findViewById(R.id.cadastrarTestBtn);
+        salvarTestBtn = findViewById(R.id.salvarTestBtn);
         nomeConfigEdit = findViewById(R.id.nomeConfigEdit);
         detalhesConfigEdit = findViewById(R.id.detalhesConfigEdit);
+        criterioAprendEdit = findViewById(R.id.criterioAprendEdit);
     }
 }

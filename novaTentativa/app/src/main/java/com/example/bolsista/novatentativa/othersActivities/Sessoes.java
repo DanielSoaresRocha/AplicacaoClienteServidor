@@ -126,12 +126,16 @@ public class Sessoes extends AppCompatActivity implements AdapterView.OnItemSele
         graficoLinhaBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent it = new Intent(Sessoes.this, GraficoLinha.class);
-                // passando uma lista
-                it.putExtra("sessoes", sessoes);
-                it.putExtra("nomeEquino", ExperimentoViewModel.experimento.getValue()
-                        .getEquino().getNome());
-                startActivity(it);
+                if(sessoes.size() > 1) {
+                    Intent it = new Intent(Sessoes.this, GraficoLinha.class);
+                    // passando uma lista
+                    it.putExtra("teste", teste);
+                    it.putExtra("experimento", ExperimentoViewModel.experimento.getValue());
+                    startActivity(it);
+                }else {
+                    Toast.makeText(contextActivity, "Precisa-se de no mínimo duas sessões",
+                            Toast.LENGTH_SHORT).show();
+                }
             }
         });
 
