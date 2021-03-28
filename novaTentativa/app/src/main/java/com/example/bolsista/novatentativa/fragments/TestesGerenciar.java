@@ -21,6 +21,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.bolsista.novatentativa.NovoExperimento;
 import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.adapters.ExperimentoAdapter;
 import com.example.bolsista.novatentativa.adapters.TesteAdapter;
@@ -85,7 +86,7 @@ public class TestesGerenciar extends Fragment {
     }
 
     private void implementsRecycle(){
-        adapter = new TesteAdapter(contextoAtivity, gerenciar.getTestes(), true);
+        adapter = new TesteAdapter(contextoAtivity, gerenciar.getTestes(), true, null);
         testesRecycleEdit.setAdapter(adapter);
 
         LinearLayoutManager layout = new LinearLayoutManager(contextoAtivity,LinearLayoutManager.VERTICAL,false);

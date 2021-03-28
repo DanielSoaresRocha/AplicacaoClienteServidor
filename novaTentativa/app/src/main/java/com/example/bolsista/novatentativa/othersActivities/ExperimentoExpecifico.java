@@ -56,7 +56,7 @@ public class ExperimentoExpecifico extends AppCompatActivity {
     }
 
     private void implementsRecycle() {
-        adapter = new TesteAdapter(contextActivity, experimento.getTestes(),true);
+        adapter = new TesteAdapter(contextActivity, experimento.getTestes(),true, null);
         testesRecycleView.setAdapter(adapter);
 
         LinearLayoutManager layout = new LinearLayoutManager(contextActivity, LinearLayoutManager.VERTICAL, false);

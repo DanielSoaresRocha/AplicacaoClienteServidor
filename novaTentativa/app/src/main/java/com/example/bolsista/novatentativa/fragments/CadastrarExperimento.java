@@ -52,6 +52,8 @@ public class CadastrarExperimento extends Fragment implements DatePickerDialog.O
     //FireBase FireStore
     private FirebaseFirestore db = FirebaseFirestore.getInstance();
 
+    NovoExperimento novoExperimento;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -85,11 +87,17 @@ public class CadastrarExperimento extends Fragment implements DatePickerDialog.O
     }
 
     private void instanciarExperimento(){
-        Experimento experimento = new Experimento("", NovoExperimento.equinoSelecionado,
+        Experimento experimento = new Experimento("", novoExperimento.getEquinoSelecionado(),
                 nomeExperimento.getText().toString(), dataExperimento, new Date(),
-                NovoExperimento.testes, false);
+                novoExperimento.getTestes(), false);
 
-        addExperimentoToFireBase(experimento);
+        novoExperimento.setExperimento(experimento);
+        String validacao = novoExperimento.validar();
+
+        if (validacao.equals("ok"))
+            addExperimentoToFireBase(experimento);
+        else
+            Toast.makeText(contextoAtivity, validacao, Toast.LENGTH_SHORT).show();
     }
 
     private void addExperimentoToFireBase(Experimento experimento){
@@ -99,8 +107,8 @@ public class CadastrarExperimento extends Fragment implements DatePickerDialog.O
                     @Override
                     public void onSuccess(DocumentReference documentReference) {
                         documentReference.update("id",documentReference.getId());//adiciona ao campo id o id gerado pelo firebase
-                        NovoExperimento.experimento = experimento;
-                        NovoExperimento.experimento.setId(documentReference.getId());
+                        novoExperimento.setExperimento(experimento);
+                        novoExperimento.getExperimento().setId(documentReference.getId());
                         Toast.makeText(contextoAtivity, "Experimento adicionado", Toast.LENGTH_SHORT).show();
                     }
                 })
@@ -152,5 +160,7 @@ public class CadastrarExperimento extends Fragment implements DatePickerDialog.O
         contextoAtivity = getActivity();
         dataExperimentoT = v.findViewById(R.id.dataExperimentoT);
         dataExperimentoI = v.findViewById(R.id.dataExperimentoI);
+
+        novoExperimento = (NovoExperimento) getActivity();
     }
 }

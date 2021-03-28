@@ -63,6 +63,8 @@ public class ListarTestes extends Fragment {
     //FireBase autenth
     FirebaseAuth usuario;
 
+    NovoExperimento novoExperimento;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -204,7 +206,7 @@ public class ListarTestes extends Fragment {
     }
 
     private void implementsRecycle(){
-        adapter = new TesteAdapter(contextoAtivity,mViewModel.configuracoes.getValue(),false);
+        adapter = new TesteAdapter(contextoAtivity,mViewModel.configuracoes.getValue(),false, novoExperimento);
         configuracaoRecycle.setAdapter(adapter);
 
         LinearLayoutManager layout = new LinearLayoutManager(contextoAtivity,LinearLayoutManager.VERTICAL,false);
@@ -265,6 +267,8 @@ public class ListarTestes extends Fragment {
         floatingActionButton = v.findViewById(R.id.floatingActionButton);
 
         contextoAtivity = getActivity();
+
+        novoExperimento = (NovoExperimento) getActivity();
 
         usuario = FirebaseAuth.getInstance();
         try {

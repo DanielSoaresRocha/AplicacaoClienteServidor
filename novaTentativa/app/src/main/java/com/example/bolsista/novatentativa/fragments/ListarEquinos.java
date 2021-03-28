@@ -23,6 +23,7 @@ import android.widget.Toast;
 import com.example.bolsista.novatentativa.NovoExperimento;
 import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.adapters.EquinoAdapter;
+import com.example.bolsista.novatentativa.cadastros.Gerenciar;
 import com.example.bolsista.novatentativa.modelo.Equino;
 import com.example.bolsista.novatentativa.recycleOnTouchLinesters.GenericOnItemTouch;
 import com.example.bolsista.novatentativa.viewsModels.ListarViewModel;
@@ -48,6 +49,8 @@ public class ListarEquinos extends Fragment {
 
     @SuppressLint("StaticFieldLeak")
     public static EquinoAdapter adapter;
+
+    private NovoExperimento novoExperimento;
 
     //FireBase FireStore
     FirebaseFirestore db = FirebaseFirestore.getInstance();
@@ -112,7 +115,7 @@ public class ListarEquinos extends Fragment {
 
                             @Override
                             public void onItemClick(View view, int position) {
-                                NovoExperimento.equinoSelecionado = mViewModel.cavalos.getValue().get(position);
+                                novoExperimento.setEquinoSelecionado(mViewModel.cavalos.getValue().get(position));
                                 Toast.makeText(contextoAtivity,"Cavalo selecionado",
                                         Toast.LENGTH_SHORT).show();
                                 Log.i("Teste", "onSingleTapUp2");
@@ -176,6 +179,7 @@ public class ListarEquinos extends Fragment {
         progressBarCavalos = v.findViewById(R.id.progressBarCavalos);
 
         contextoAtivity = getActivity();
+        novoExperimento = (NovoExperimento) getActivity();
 
         usuario = FirebaseAuth.getInstance();
         try {

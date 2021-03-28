@@ -1,5 +1,6 @@
 package com.example.bolsista.novatentativa.adapters;
 
+import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -23,11 +24,14 @@ public class TesteAdapter extends RecyclerView.Adapter<ConfiguracaoViewHolder> {
     private Context c;
     static List<Teste> configuracoes;
     private boolean changeColor;
+    NovoExperimento novoExperimento;
 
-    public TesteAdapter(Context c, List<Teste> configuracoes, Boolean changeColor) {
+    public TesteAdapter(Context c, List<Teste> configuracoes, Boolean changeColor, Activity novoExperimento) {
         this.c = c;
         this.configuracoes = configuracoes;
         this.changeColor = changeColor;
+        if(novoExperimento != null)
+            this.novoExperimento = (NovoExperimento) novoExperimento;
     }
 
     @NonNull
@@ -77,14 +81,14 @@ public class TesteAdapter extends RecyclerView.Adapter<ConfiguracaoViewHolder> {
     }
 
     private void adicionarTeste(Teste teste){
-        if(!NovoExperimento.testes.contains(teste)){
-            NovoExperimento.testes.add(teste);
+        if(!novoExperimento.getTestes().contains(teste)){
+            novoExperimento.getTestes().add(teste);
         }
     }
 
     private void removerTeste(Teste teste){
-        if(NovoExperimento.testes.contains(teste)){
-            NovoExperimento.testes.remove(teste);
+        if(novoExperimento.getTestes().contains(teste)){
+            novoExperimento.getTestes().remove(teste);
         }
     }
 

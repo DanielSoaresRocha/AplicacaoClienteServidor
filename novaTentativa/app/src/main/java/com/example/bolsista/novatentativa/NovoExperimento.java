@@ -26,9 +26,9 @@ public class NovoExperimento extends AppCompatActivity {
     FixedTabsPageAdapter pageAdapter;
     public static int identificaAba = 0; //Identifica aba em que está no momento
 
-    public static Equino equinoSelecionado;
-    public static ArrayList<Teste> testes;
-    public static Experimento experimento;
+    private Equino equinoSelecionado;
+    private ArrayList<Teste> testes;
+    private Experimento experimento;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,10 +80,47 @@ public class NovoExperimento extends AppCompatActivity {
 
     }
 
+    public String validar(){
+        if (equinoSelecionado == null)
+            return "Equino não foi selecionado";
+        if(testes.size() == 0)
+            return "Nenhum teste foi acrescentado ao experimento";
+        if(experimento.getDataInicio() == null)
+            return "Você precisa informar uma data de início";
+        if(experimento.getNome().isEmpty())
+            return "Experimento sem nome";
+
+        return "ok";
+    }
+
     private void inicializar() {
         viewPager = findViewById(R.id.viewPager);
         tabLayout = findViewById(R.id.tabLayout);
         mViewModel = ViewModelProviders.of(this).get(ListarViewModel.class);
         testes = new ArrayList<>();
+    }
+
+    public Equino getEquinoSelecionado() {
+        return equinoSelecionado;
+    }
+
+    public void setEquinoSelecionado(Equino equinoSelecionado) {
+        this.equinoSelecionado = equinoSelecionado;
+    }
+
+    public ArrayList<Teste> getTestes() {
+        return testes;
+    }
+
+    public void setTestes(ArrayList<Teste> testes) {
+        this.testes = testes;
+    }
+
+    public Experimento getExperimento() {
+        return experimento;
+    }
+
+    public void setExperimento(Experimento experimento) {
+        this.experimento = experimento;
     }
 }
