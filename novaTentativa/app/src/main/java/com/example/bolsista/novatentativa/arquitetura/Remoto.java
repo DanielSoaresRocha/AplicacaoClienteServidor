@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.bolsista.novatentativa.sockets.Cliente;
@@ -14,6 +15,7 @@ import com.example.bolsista.novatentativa.R;
 
 public class Remoto extends AppCompatActivity {
     public EditText remotoEditText;
+    public TextView infoIpTextRemoto;
     public Button criarRemotoBtn, comecarRemotoBtn;
 
     public static Cliente cliente;
@@ -64,5 +66,6 @@ public class Remoto extends AppCompatActivity {
         remotoEditText = findViewById(R.id.remotoEditText);
         criarRemotoBtn = findViewById(R.id.criarRemotoBtn);
         comecarRemotoBtn = findViewById(R.id.comecarRemotoBtn);
+        infoIpTextRemoto = findViewById(R.id.infoIpTextRemoto);
     }
 }

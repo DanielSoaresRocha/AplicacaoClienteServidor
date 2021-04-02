@@ -24,6 +24,7 @@
         >
 
         <TextView
+            android:id="@+id/experaConexoesTest"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="casual"
@@ -37,6 +38,8 @@
             android:id="@+id/criarServerBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@color/laranja"
+            android:padding="10sp"
 
             android:text="@string/servidor" />
 
@@ -69,6 +72,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/com_ecar"
+            android:background="@color/verde_claro"
 
             />
 
@@ -83,7 +87,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Número de escravos conectados:"
+                android:text="Número de secundários conectados:"
                 android:gravity="center"
                 android:textColor="@color/preto"
                 android:fontFamily="casual"

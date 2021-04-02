@@ -7,16 +7,16 @@
     >
 
     <!-- TODO: Update blank fragment layout -->
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Cadastrar Experimento"
+        android:textSize="36sp"
+        android:paddingVertical="30sp"
+        android:fontFamily="casual"
         android:gravity="center"
-        android:textSize="30sp"
-        android:textColor="@color/black_de"
-        >
-
-    </TextView>
+        />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -72,8 +72,9 @@
             <Button
                 android:id="@+id/finalizarExperimento"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Cadastrar novo experimento"
+                android:layout_height="40sp"
+                android:text="Cadastrar"
+                android:background="@drawable/fundo_verde"
                 >
 
             </Button>

@@ -78,6 +78,7 @@ public class Relatorio extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 try{
+                    graficoLinha.setVisibility(View.VISIBLE);
                     File file = new File(DEST);
                     if (!file.exists()) {
                         file.createNewFile();
@@ -101,7 +102,7 @@ public class Relatorio extends AppCompatActivity {
 
         Equino equino = experimento.getEquino();
         addParagraphInfo(doc, "Nome do Equino:", equino.getNome());
-        addParagraphInfo(doc, "Idade:", calculaIdade(equino.getDataNascimento()).toString());
+        addParagraphInfo(doc, "Idade:", calculaIdade(equino.getDataNascimento()).toString() + " anos");
         addParagraphInfo(doc, "Raça:", equino.getRaca());
         addParagraphInfo(doc, "Atividade do equino:", equino.getAtividade());
         addParagraphInfo(doc, "Sexo:", equino.getSexo());

@@ -77,6 +77,7 @@
             android:text="Raça do equino:"
             android:paddingVertical="10sp"
             android:textSize="20sp"
+            android:textColor="@color/black_de"
             >
         </TextView>
         <Spinner
@@ -92,6 +93,7 @@
             android:text="Atividade do equino:"
             android:paddingVertical="10sp"
             android:textSize="20sp"
+            android:textColor="@color/black_de"
             >
         </TextView>
 
@@ -108,6 +110,7 @@
             android:text="Sexo:"
             android:paddingVertical="5sp"
             android:textSize="20sp"
+            android:textColor="@color/black_de"
             >
 
         </TextView>
@@ -154,6 +157,7 @@
             android:text="Sistema de criação:"
             android:paddingVertical="5sp"
             android:textSize="20sp"
+            android:textColor="@color/black_de"
             >
 
         </TextView>
@@ -194,6 +198,7 @@
             android:text="Nível de atividade/trabalho semanal:"
             android:paddingVertical="5sp"
             android:textSize="20sp"
+            android:textColor="@color/black_de"
             >
 
         </TextView>
@@ -262,6 +267,7 @@
             android:text="Intensidade da atividade:"
             android:paddingVertical="5sp"
             android:textSize="20sp"
+            android:textColor="@color/black_de"
             >
 
         </TextView>
@@ -301,6 +307,7 @@
             android:text="Suplemento mineral:"
             android:paddingVertical="5sp"
             android:textSize="20sp"
+            android:textColor="@color/black_de"
             >
 
         </TextView>
@@ -333,6 +340,7 @@
             android:text="Classificação de temperamento:"
             android:paddingVertical="5sp"
             android:textSize="20sp"
+            android:textColor="@color/black_de"
             >
 
         </TextView>
@@ -372,6 +380,7 @@
             android:text="Alguma Exteriotipia/vício:"
             android:paddingVertical="5sp"
             android:textSize="20sp"
+            android:textColor="@color/black_de"
             >
 
         </TextView>
@@ -404,6 +413,7 @@
             android:text="Problema de saúde nos últimnos 60 dias:"
             android:paddingVertical="5sp"
             android:textSize="20sp"
+            android:textColor="@color/black_de"
             >
 
         </TextView>
@@ -443,6 +453,7 @@
                 android:text="Qual:"
                 android:paddingVertical="5sp"
                 android:textSize="20sp"
+                android:textColor="@color/black_de"
                 >
 
             </TextView>
@@ -492,6 +503,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/cancelar"
+            android:background="@color/vermelhoo"
+            android:textColor="@color/branco"
+            android:layout_marginRight="10sp"
             >
 
         </Button>
@@ -501,6 +515,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/cadastrar"
+            android:background="@color/verde_claro"
+            android:textColor="@color/branco"
             >
         </Button>
 
@@ -510,6 +526,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Salvar"
+            android:background="@color/verde_claro"
+            android:textColor="@color/branco"
             >
         </Button>
 

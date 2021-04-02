@@ -134,7 +134,7 @@ public class GraficoLinha extends AppCompatActivity {
 
         Equino equino = experimento.getEquino();
         addParagraphInfo(doc, "Nome do Equino:", equino.getNome());
-        addParagraphInfo(doc, "Idade:", calculaIdade(equino.getDataNascimento()).toString());
+        addParagraphInfo(doc, "Idade:", calculaIdade(equino.getDataNascimento()).toString() + " anos");
         addParagraphInfo(doc, "Raça:", equino.getRaca());
         addParagraphInfo(doc, "Atividade do equino:", equino.getAtividade());
         addParagraphInfo(doc, "Sexo:", equino.getSexo());

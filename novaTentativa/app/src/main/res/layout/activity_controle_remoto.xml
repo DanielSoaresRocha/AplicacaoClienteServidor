@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     tools:context="com.example.bolsista.novatentativa.ControleRemoto">
 
+    <!--
     <Button
         android:id="@+id/controleRemoto"
         android:layout_width="177dp"
@@ -23,7 +24,24 @@
         app:layout_constraintHorizontal_bias="0.49"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.13999999" />
+        app:layout_constraintVertical_bias="0.13999999"
+        android:visibility="gone"
+        />
+        -->
+
+    <ImageView
+        android:id="@+id/controleRemoto"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@drawable/button"
+        app:layout_constraintBottom_toTopOf="@+id/desconect"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.155">
+
+    </ImageView>
 
     <Button
         android:id="@+id/desconect"
@@ -37,6 +55,10 @@
         android:text="@string/desconectar"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        android:background="@color/vermelhoo"
+        android:padding="10sp"
+        android:textColor="@color/branco"
+        />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

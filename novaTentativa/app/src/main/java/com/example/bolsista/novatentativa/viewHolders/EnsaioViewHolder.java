@@ -13,7 +13,7 @@ public class EnsaioViewHolder extends RecyclerView.ViewHolder {
 
     public final TextView tempoAcertoText;
     public final ImageView img1, imgCorreta, img2;
-    public final LinearLayout corBordaEnsaio;
+    public final LinearLayout corBordaEnsaio, linearTempoAcerto;
 
     public EnsaioViewHolder(View v) {
         super(v);
@@ -22,5 +22,6 @@ public class EnsaioViewHolder extends RecyclerView.ViewHolder {
         this.imgCorreta = (ImageView) v.findViewById(R.id.imgCorreta);
         this.img2 = (ImageView) v.findViewById(R.id.img2);
         this.corBordaEnsaio = (LinearLayout) v.findViewById(R.id.corBordaEnsaio);
+        this.linearTempoAcerto = (LinearLayout) v.findViewById(R.id.linearTempoAcerto);
     }
 }

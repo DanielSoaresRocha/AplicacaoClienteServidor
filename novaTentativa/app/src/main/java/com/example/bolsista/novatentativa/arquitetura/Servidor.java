@@ -30,7 +30,7 @@ import java.net.Socket;
 public class Servidor extends AppCompatActivity {
     public static Button comecarServerBtn, criarServerBtn;
     LinearLayout serverDiv2;
-    TextView ipTextView;
+    TextView ipTextView, experaConexoesTest;
     public static TextView numEscravo;
     public static LinearLayout numEscravos;
     Context contextActivity;
@@ -162,7 +162,10 @@ public class Servidor extends AppCompatActivity {
             @Override
             public void run() {
                 ipTextView.setText(ip);
-                ipTextView.setTextColor(getResources().getColor(R.color.vermelhoo));
+                ipTextView.setTextColor(getResources().getColor(R.color.verde));
+                criarServerBtn.setVisibility(View.GONE);
+                experaConexoesTest.setTextColor(getResources().getColor(R.color.verde));
+                experaConexoesTest.setText("Aguardando conexões...");
 
                 Toast.makeText(getApplicationContext(), R.string.servidor_criado,Toast.LENGTH_LONG).show();
 
@@ -177,6 +180,7 @@ public class Servidor extends AppCompatActivity {
         comecarServerBtn = findViewById(R.id.comecarServerBtn);
         serverDiv2 = findViewById(R.id.serverDiv2);
         ipTextView = findViewById(R.id.ipTextView);
+        experaConexoesTest = findViewById(R.id.experaConexoesTest);
         numEscravo = findViewById(R.id.numEscravo);
 
         comecarServerBtn.setVisibility(View.GONE);

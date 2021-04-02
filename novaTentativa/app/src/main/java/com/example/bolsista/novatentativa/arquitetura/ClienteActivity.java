@@ -16,7 +16,7 @@ import com.example.bolsista.novatentativa.R;
 
 public class ClienteActivity extends AppCompatActivity {
     public LinearLayout identificacaoCliente;
-    public TextView numIdentificacao;
+    public TextView numIdentificacao, infoIpText;
     public EditText ipClientEdit;
     public Button criarClientBtn;
     public Button comecarClientBtn;
@@ -77,5 +77,6 @@ public class ClienteActivity extends AppCompatActivity {
         comecarClientBtn = findViewById(R.id.comecarClientBtn);
         identificacaoCliente = findViewById(R.id.identificacaoCliente);
         numIdentificacao = findViewById(R.id.numIdentificacao);
+        infoIpText = findViewById(R.id.infoIpText);
     }
 }

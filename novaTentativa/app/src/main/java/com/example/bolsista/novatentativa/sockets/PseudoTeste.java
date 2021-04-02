@@ -45,7 +45,7 @@ public class PseudoTeste extends PreTeste {
 
     @Override
     public void tratarConexao() throws IOException, ClassNotFoundException {
-        int numRodadas = Objects.requireNonNull(TesteViewModel.teste.getValue()).getQtdEnsaiosPorSessao();
+        int numRodadas = Objects.requireNonNull(TesteViewModel.teste.getValue()).getQtdEnsaiosPorSessao(); // Quantidade de questões
 
         while (rodada <= numRodadas) {
             Ensaio ensaio = new Ensaio(); // Iniciando um ensaio
@@ -68,8 +68,10 @@ public class PseudoTeste extends PreTeste {
                     dormir(TesteViewModel.teste.getValue().getIntervalo1()); // tempo de espera do mestre
                     novaInteracao(); //fazer nova interação de imagens entre os tablets
                 }
-            } else if (comando == TROCAR_IMAGENS) {//trocar imagens;
+            } else if (comando == TROCAR_IMAGENS) {//trocar imagens
+                ensaio.setAcerto(true);
                 novaInteracao();
+                continue;
             } else if (comando == FECHAR_SOCKET) {//fechar socket
                 desconectarControle();
             } else { //O cavalo errou
@@ -77,12 +79,11 @@ public class PseudoTeste extends PreTeste {
                 ensaio.setAcerto(false);
             }
             TesteViewModel.sessao.getEnsaios().add(ensaio);
-
             Log.i("TESTE_Simbolos", "Simbolo se repetiu "+ numRepeticoes+ " vezes");
         }
-        TesteViewModel.adicionarNovaSessao();
         terminar();
         jogar.terminar();
+        TesteViewModel.adicionarNovaSessao();
     }
 
     public static void clicouNoMestre(){

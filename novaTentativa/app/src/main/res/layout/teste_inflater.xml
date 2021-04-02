@@ -25,27 +25,55 @@
             android:orientation="vertical"
             >
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:id="@+id/nomeConfig"
-                android:drawableLeft="@drawable/settings"
-                android:gravity="center_vertical"
-                android:text="Nome da configuração"
-                android:textSize="30sp"
-                android:textColor="@color/black_de"
-                android:paddingVertical="10sp"
-                />
+                android:orientation="horizontal"
+                android:gravity="center"
+                >
+               <ImageView
+                   android:layout_width="wrap_content"
+                   android:layout_height="wrap_content"
+                   android:src="@drawable/settings"
+                   >
+               </ImageView>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/nomeConfig"
+                    android:gravity="center_vertical"
+                    android:text="Nome da configuração"
+                    android:textSize="30sp"
+                    android:textColor="@color/black_de"
+                    android:paddingVertical="10sp"
+                    android:layout_marginLeft="10sp"
+                    />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/search"
+                    >
+                </ImageView>
+
                 <TextView
                     android:layout_height="wrap_content"
                     android:layout_width="match_parent"
-                    android:drawableLeft="@drawable/info_detalhes"
                     android:id="@+id/detalhesConfig"
                     android:gravity="center_vertical"
                     android:text="detalhes"
                     android:textSize="20sp"
                     android:textColor="@color/black_de"
+                    android:layout_marginLeft="10sp"
                     />
+            </LinearLayout>
         </LinearLayout>
 
     <LinearLayout

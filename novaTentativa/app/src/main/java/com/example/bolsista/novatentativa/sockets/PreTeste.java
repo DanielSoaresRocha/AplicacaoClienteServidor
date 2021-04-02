@@ -65,13 +65,12 @@ public class PreTeste extends Thread {
     public String msg[];
     private Context context;
     static Jogar jogar;
-    public static int rodada;
+    public static int rodada = 1;
 
     public PreTeste(Socket cliente, int numCliente, Context context){
         this.cliente = cliente;
         this.numCliente = numCliente;
         this.context = context;
-        rodada = 1;
         flagContaTempo = false;
         start();
     }
@@ -166,7 +165,7 @@ public class PreTeste extends Thread {
     public static void dormir(int tempo){
         try {
             tempo *= 1000; //transforma segundos em millisegundos
-            sleep(tempo);
+            sleep(0);
 
         } catch (InterruptedException e) {
             Log.i("ERRO", "ERRO EM SLEEP = " + e.getMessage());
@@ -175,6 +174,7 @@ public class PreTeste extends Thread {
 
     // Informar e fechar todos os sockets (clientes)
     public void terminar() throws IOException {
+        rodada = 1;
         Log.i("TERMINAR", "QTD DE CLIENTE CONECTADOS:" + clientes.size());
         for(int i = 0; i < clientes.size(); i++){
             PreTeste destino = clientes.get(i);

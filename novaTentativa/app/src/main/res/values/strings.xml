@@ -11,13 +11,13 @@
     <string name="comecar">Pronto para começar</string>
     <string name="qtd_de_quest_es">Quantidade de questões</string>
     <string name="informacao1">
-        Este campo dirá quantas questões o equino irá responder até o terminar o teste
+        Este campo dirá quantas ensaios o equino deverá completar para terminar terminar o teste
     </string>
     <string name="informacao2">
-        Definir tempo de intervalo entre as questões em que o tablet mestre permanece branco
+        Definir tempo de intervalo entre os ensaios em que o tablet mestre permanece escuro
     </string>
     <string name="informacao3">
-        Este é o tempo de aparição das imagens nos escravos após a imagem do mestre ter aparecido
+        Este é o tempo de aparição das imagens nos secundários após a imagem do mestre ter aparecido
     </string>
     <string name="intervalo">Intervalo</string>
     <string name="intervalo2">Segundo intervalo</string>
@@ -35,7 +35,7 @@
     <string name="title_activity_definir">Definir</string>
     <string name="quem_eu_sou">Quem sou eu?</string>
     <string name="mestre">Mestre</string>
-    <string name="escravo">Escravo</string>
+    <string name="escravo">Secundário</string>
     <string name="remoto">Remoto</string>
     <string name="servidor">Criar Mestre</string>
     <string name="precisa_configurar">Voce precida configurar um teste</string>
@@ -43,7 +43,7 @@
     <string name="com_ecar">comecar</string>
     <string name="ip_para_conecao">Ip para conexão:</string>
     <string name="esperando">esperando...</string>
-    <string name="criar_cliente">Criar Escravo</string>
+    <string name="criar_cliente">Criar secundário</string>
     <string name="pronto_para_criar">Pronto para criar</string>
     <string name="controle_remoto">Controle Remoto</string>
     <string name="iniciar_controle_remoto">Iniciar controle remoto</string>
@@ -55,7 +55,7 @@
     <string name="cadastrar">cadastrar</string>
     <string name="cancelar">cancelar</string>
     <string name="logoff">logoff</string>
-    <string name="conectar">Apenas conectar</string>
+    <string name="conectar">Estabelecer conexão</string>
     <string name="escolha_uma_configura_o">Escolha uma configuração:</string>
     <string name="exp_andamento">Experimentos em andamento</string>
     <string name="exp_finalizado">Experimentos finalizados</string>

@@ -17,9 +17,13 @@ import android.widget.Toast;
 
 import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.adapters.ExperimentoAdapter;
+import com.example.bolsista.novatentativa.modelo.Desafio;
+import com.example.bolsista.novatentativa.modelo.Ensaio;
 import com.example.bolsista.novatentativa.modelo.Equino;
+import com.example.bolsista.novatentativa.modelo.Sessao;
 import com.example.bolsista.novatentativa.modelo.Teste;
 import com.example.bolsista.novatentativa.modelo.Experimento;
+import com.example.bolsista.novatentativa.modelo.Usuario;
 import com.example.bolsista.novatentativa.recycleOnTouchLinesters.GenericOnItemTouch;
 import com.example.bolsista.novatentativa.viewsModels.ExperimentoViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -31,6 +35,8 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Random;
 
 public class ExperimentosAndamento extends AppCompatActivity {
     private RecyclerView experimentosRecycle;
@@ -46,6 +52,7 @@ public class ExperimentosAndamento extends AppCompatActivity {
     DocumentReference usuarioRef;
     //Fire Base Auth
     FirebaseAuth usuario;
+    Random random = new Random(); // gerar número aleatório
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -78,6 +85,48 @@ public class ExperimentosAndamento extends AppCompatActivity {
                         }
                     }
                 });
+    }
+
+    private void alterarExpTest(Experimento experimento){
+        for(Teste teste : experimento.getTestes()){
+            if(teste.getId().equals("2")) {
+                teste.setSessoes(new ArrayList<>());
+
+                for(int j = 0; j < 40; j++) {
+                    Sessao sessao = new Sessao();
+                    teste.getSessoes().add(sessao);
+                    teste.getSessoes().get(j).setEnsaios(new ArrayList<>());
+                    for (int i = 0; i < 20; i++) {
+                        Ensaio ensaio = new Ensaio();
+                        ensaio.setId("kasda");
+                        boolean acerto = numeroAleatorio(0, 1) == 0;
+                        ensaio.setAcerto(acerto);
+                        ensaio.setIdDesafio("dfasdf");
+                        ensaio.setDesafio(new Desafio("adf", R.drawable.peace, R.drawable.peace, R.drawable.plane));
+                        ensaio.setTempoAcerto(numeroAleatorio(120000, 360000));
+
+                        teste.getSessoes().get(j).getEnsaios().add(ensaio);
+                    }
+                    teste.getSessoes().get(j).calculaPorcentagemAcerto();
+                    teste.getSessoes().get(j).setData(new Date());
+
+                    Usuario usuario = new Usuario();
+                    usuario.setUid("23423");
+                    usuario.setNome("Daniel Soares");
+                    teste.getSessoes().get(j).setExperimentador(usuario);
+                    teste.getSessoes().get(j).setNome("Sessão "+ (j+1));
+                    teste.getSessoes().get(j).setId(Integer.toString(j));
+                }
+            }
+        }
+
+        experimento.setFinalizado(true);
+    }
+
+    private int numeroAleatorio(int min, int max) {
+         // gerar número aleatório
+        int numeroTmp = random.nextInt(max - (min - 1)) + min;
+        return numeroTmp;
     }
 
     private void implementsRecycle(){

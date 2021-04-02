@@ -45,10 +45,10 @@
                 android:id="@+id/nomeEquino"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/preto"
                 android:textSize="25sp"
-                android:text="Cavalo 1"
+                android:textColor="@color/cinza"
                 android:paddingLeft="20sp"
+                android:text="Cavalo"
                 />
 
         </LinearLayout>
@@ -72,10 +72,10 @@
                 android:id="@+id/dataInicioE"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textColor="@color/preto"
                 android:textSize="25sp"
                 android:text="29/04/2000"
                 android:paddingLeft="20sp"
+                android:textColor="@color/cinza"
                 />
 
         </LinearLayout>

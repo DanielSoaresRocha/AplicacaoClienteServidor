@@ -47,8 +47,10 @@ public class EnsaioAdapter extends RecyclerView.Adapter<EnsaioViewHolder> {
         holder.img2.setImageResource(ensaioEscolhido.getDesafio().getImg2());
         if (!ensaioEscolhido.getAcerto()) {
             holder.corBordaEnsaio.setBackgroundResource(R.drawable.fundo_vermelho);
+            holder.linearTempoAcerto.setVisibility(View.INVISIBLE);
         }else {
             holder.corBordaEnsaio.setBackgroundResource(R.drawable.fundo_verde);
+            holder.linearTempoAcerto.setVisibility(View.VISIBLE);
         }
     }
     @Override

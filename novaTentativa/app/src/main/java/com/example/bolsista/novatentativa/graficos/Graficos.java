@@ -22,7 +22,9 @@ import com.google.firebase.firestore.QueryDocumentSnapshot;
 import com.google.firebase.firestore.QuerySnapshot;
 
 import java.util.ArrayList;
+import java.util.List;
 
+// https://weeklycoding.com/mpandroidchart-documentation/setting-data/ Grafico linha com mais parâmetros
 public class Graficos {
 
     ArrayList<BarEntry> entradas;

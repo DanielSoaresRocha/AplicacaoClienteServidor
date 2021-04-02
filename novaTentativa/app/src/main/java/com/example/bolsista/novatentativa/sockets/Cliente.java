@@ -120,6 +120,9 @@ public class Cliente {
                         Toast.makeText(client.getApplicationContext(), R.string.comecar, Toast.LENGTH_LONG).show();
                         cliente.comecarClientBtn.setVisibility(View.VISIBLE);
                         cliente.criarClientBtn.setVisibility(View.GONE);
+                        cliente.infoIpText.setTextColor(cliente.getResources().getColor(R.color.verde));
+                        cliente.infoIpText.setText("Conectado");
+                        cliente.ipClientEdit.setVisibility(View.GONE);
                     }
                 });
             }else{
@@ -131,6 +134,9 @@ public class Cliente {
                         Toast.makeText(client.getApplicationContext(), R.string.comecar, Toast.LENGTH_LONG).show();
                         remoto.comecarRemotoBtn.setVisibility(View.VISIBLE);
                         remoto.criarRemotoBtn.setVisibility(View.GONE);
+                        remoto.remotoEditText.setVisibility(View.GONE);
+                        remoto.infoIpTextRemoto.setText("Conectado");
+                        remoto.infoIpTextRemoto.setTextColor(remoto.getResources().getColor(R.color.verde));
                     }
                 });
             }

@@ -26,6 +26,7 @@
         >
 
         <TextView
+            android:id="@+id/infoIpTextRemoto"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:fontFamily="casual"
@@ -48,13 +49,18 @@
             android:id="@+id/criarRemotoBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/iniciar_controle_remoto" />
+            android:text="@string/iniciar_controle_remoto"
+            android:background="@color/laranja"
+            android:padding="10sp"
+            />
 
         <Button
             android:id="@+id/comecarRemotoBtn"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/com_ecar" />
+            android:text="@string/com_ecar"
+            android:background="@color/verde_claro"
+            />
 
     </LinearLayout>
 
