@@ -57,8 +57,10 @@ public class AleatorioTeste extends PreTeste {
                 }
             } else if (comando == TROCAR_IMAGENS) {//trocar imagens;
                 novaInteracao();
+                continue;
             } else if (comando == FECHAR_SOCKET) {//fechar socket
                 desconectarControle();
+                continue;
             } else { //O cavalo errou
                 jogar.tocarError();
                 ensaio.setAcerto(false);
@@ -68,9 +70,9 @@ public class AleatorioTeste extends PreTeste {
             TesteViewModel.sessao.getEnsaios().add(ensaio);
 
         }
-        TesteViewModel.adicionarNovaSessao();
         terminar();
         jogar.terminar();
+        TesteViewModel.adicionarNovaSessao();
     }
 
     //mudar imagens para preto, e espera um novo sorteio

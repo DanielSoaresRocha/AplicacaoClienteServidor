@@ -28,8 +28,10 @@ public class Sessao implements Serializable {
     // Percorre todos os ensaios desta sessão e calcula a porcentagem de acerto
     public void calculaPorcentagemAcerto(){
         int qtdEnsaios = ensaios.size();
+        Log.i("QTD_SESSAO", "QTD TOTAL = "+ qtdEnsaios);
         int qtdAcertos = 0;
         for (int i = 0; i < qtdEnsaios; i++){
+            Log.i("QTD_SESSAO", "ensaio = "+ ensaios.get(i).getId());
             if(ensaios.get(i).getAcerto())
                 qtdAcertos++;
         }

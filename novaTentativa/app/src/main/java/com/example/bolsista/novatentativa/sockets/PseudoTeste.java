@@ -69,11 +69,11 @@ public class PseudoTeste extends PreTeste {
                     novaInteracao(); //fazer nova interação de imagens entre os tablets
                 }
             } else if (comando == TROCAR_IMAGENS) {//trocar imagens
-                ensaio.setAcerto(true);
                 novaInteracao();
                 continue;
             } else if (comando == FECHAR_SOCKET) {//fechar socket
                 desconectarControle();
+                continue;
             } else { //O cavalo errou
                 jogar.tocarError();
                 ensaio.setAcerto(false);
