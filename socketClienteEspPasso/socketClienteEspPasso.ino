@@ -11,10 +11,10 @@ const int MOTOR_STEP_PIN = 33;
 const int MOTOR_DIRECTION_PIN = 25;
 
 // Speed settings
-const int DISTANCE_TO_TRAVEL_IN_STEPS = 2000;
-const int SPEED_IN_STEPS_PER_SECOND = 300; // 300Hz (300 pulsos por segundo)
-const int ACCELERATION_IN_STEPS_PER_SECOND = 800;
-const int DECELERATION_IN_STEPS_PER_SECOND = 800;
+const int DISTANCE_TO_TRAVEL_IN_STEPS = 2000; // DISTÂNCIA PARA VIAJAR EM PASSOS
+const int SPEED_IN_STEPS_PER_SECOND = 300; // 300Hz (300 pulsos/passos por segundo)
+const int ACCELERATION_IN_STEPS_PER_SECOND = 800; // ACELERAÇÃO EM PASSOS POR SEGUNDO
+const int DECELERATION_IN_STEPS_PER_SECOND = 800; // DESACELERAÇÃO EM PASSOS POR SEGUNDO
 
 // create the stepper motor object
 ESP_FlexyStepper stepper;
