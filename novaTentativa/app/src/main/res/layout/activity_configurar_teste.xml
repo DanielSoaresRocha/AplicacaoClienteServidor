@@ -421,12 +421,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Cancelar"
+                android:background="@color/vermelhoo"
+                android:textColor="@color/branco"
+                android:layout_marginRight="10sp"
                 />
             <Button
                 android:id="@+id/cadastrarTestBtn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Cadastrar"
+                android:background="@color/verde_claro"
                 />
             <Button
                 android:id="@+id/salvarTestBtn"
@@ -434,6 +438,7 @@
                 android:layout_height="wrap_content"
                 android:text="Salvar"
                 android:visibility="gone"
+                android:background="@color/verde_claro"
                 />
 
         </LinearLayout>

@@ -13,7 +13,7 @@ public class Sessao implements Serializable {
     private String nome;
     private ArrayList<Ensaio> ensaios;
     private Date data;
-    private int taxaAcerto;
+    private Double taxaAcerto;
 
     public Sessao() {
     }
@@ -36,9 +36,17 @@ public class Sessao implements Serializable {
                 qtdAcertos++;
         }
         double divisao = (double) qtdAcertos/qtdEnsaios;
-        int porcentagem = (int) (divisao*100);
+        double porcentagem = (divisao*100);
 
         setTaxaAcerto(porcentagem);
+    }
+
+    public Double getTaxaAcerto() {
+        return taxaAcerto;
+    }
+
+    public void setTaxaAcerto(Double taxaAcerto) {
+        this.taxaAcerto = taxaAcerto;
     }
 
     public String getId() {
@@ -65,13 +73,6 @@ public class Sessao implements Serializable {
         this.data = data;
     }
 
-    public int getTaxaAcerto() {
-        return taxaAcerto;
-    }
-
-    public void setTaxaAcerto(int taxaAcerto) {
-        this.taxaAcerto = taxaAcerto;
-    }
 
     public Usuario getExperimentador() {
         return experimentador;

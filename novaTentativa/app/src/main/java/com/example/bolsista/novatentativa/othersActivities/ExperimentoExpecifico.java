@@ -94,7 +94,7 @@ public class ExperimentoExpecifico extends AppCompatActivity {
                                 intervalo2.setText(experimento.getTestes().get(position)
                                         .getIntervalo2()+" segundos");
                                 qtdQuestoes.setText(experimento.getTestes().get(position)
-                                        .getQtdEnsaiosPorSessao()+" ensaios");
+                                        .getQtdQuestoesPorSessao()+" ensaios");
 
                                 MaterialDialog m = new MaterialDialog(contextActivity)
                                         .setContentView(layout)

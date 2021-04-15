@@ -77,6 +77,7 @@ public class ExperimentosAndamento extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             for (QueryDocumentSnapshot document : task.getResult()) {
                                 Experimento experimento = document.toObject(Experimento.class);
+                                //alterarExpTest(experimento);
                                 experimentos.add(experimento);
                             }
                             implementsRecycle();
@@ -88,36 +89,53 @@ public class ExperimentosAndamento extends AppCompatActivity {
     }
 
     private void alterarExpTest(Experimento experimento){
+        int qtdSessoes = 0;
+        experimento.setFinalizado(true);
         for(Teste teste : experimento.getTestes()){
-            if(teste.getId().equals("2")) {
-                teste.setSessoes(new ArrayList<>());
-
-                for(int j = 0; j < 40; j++) {
-                    Sessao sessao = new Sessao();
-                    teste.getSessoes().add(sessao);
-                    teste.getSessoes().get(j).setEnsaios(new ArrayList<>());
-                    for (int i = 0; i < 20; i++) {
-                        Ensaio ensaio = new Ensaio();
-                        ensaio.setId("kasda");
-                        boolean acerto = numeroAleatorio(0, 1) == 0;
-                        ensaio.setAcerto(acerto);
-                        ensaio.setIdDesafio("dfasdf");
-                        ensaio.setDesafio(new Desafio("adf", R.drawable.peace, R.drawable.peace, R.drawable.plane));
-                        ensaio.setTempoAcerto(numeroAleatorio(120000, 360000));
-
-                        teste.getSessoes().get(j).getEnsaios().add(ensaio);
-                    }
-                    teste.getSessoes().get(j).calculaPorcentagemAcerto();
-                    teste.getSessoes().get(j).setData(new Date());
-
-                    Usuario usuario = new Usuario();
-                    usuario.setUid("23423");
-                    usuario.setNome("Daniel Soares");
-                    teste.getSessoes().get(j).setExperimentador(usuario);
-                    teste.getSessoes().get(j).setNome("Sessão "+ (j+1));
-                    teste.getSessoes().get(j).setId(Integer.toString(j));
-                }
+            if(teste.getId().equals("0")) {
+                qtdSessoes = 10;
+            }else if(teste.getId().equals("1")) {
+                qtdSessoes = 20;
+            }else if(teste.getId().equals("2")) {
+                qtdSessoes = 24;
+            }else if(teste.getId().equals("3")) {
+                qtdSessoes = 22;
+            }else if(teste.getId().equals("4")){
+                qtdSessoes = 17;
+            }else{
+                qtdSessoes = 14;
             }
+
+            teste.setSessoes(new ArrayList<>());
+
+            for(int j = 0; j < qtdSessoes; j++) {
+                Sessao sessao = new Sessao();
+                teste.getSessoes().add(sessao);
+                teste.getSessoes().get(j).setEnsaios(new ArrayList<>());
+                for (int i = 0; i < 10; i++) {
+                    Ensaio ensaio = new Ensaio();
+                    ensaio.setId("kasda");
+                    boolean acerto = numeroAleatorio(0, 1) == 0;
+                    if(j > (qtdSessoes-3) && i > 1)
+                        acerto = true;
+                    ensaio.setAcerto(acerto);
+                    ensaio.setIdDesafio("dfasdf");
+                    ensaio.setDesafio(new Desafio("adf", R.drawable.peace, R.drawable.peace, R.drawable.plane));
+                    ensaio.setTempoAcerto(numeroAleatorio(120000, 360000));
+
+                    teste.getSessoes().get(j).getEnsaios().add(ensaio);
+                }
+                teste.getSessoes().get(j).calculaPorcentagemAcerto();
+                teste.getSessoes().get(j).setData(new Date());
+
+                Usuario usuario = new Usuario();
+                usuario.setUid("23423");
+                usuario.setNome("Daniel Soares");
+                teste.getSessoes().get(j).setExperimentador(usuario);
+                teste.getSessoes().get(j).setNome("Sessão "+ (j+1));
+                teste.getSessoes().get(j).setId(Integer.toString(j));
+            }
+
         }
 
         experimento.setFinalizado(true);

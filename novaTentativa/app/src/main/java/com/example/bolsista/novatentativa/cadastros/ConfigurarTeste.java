@@ -22,9 +22,7 @@ import android.widget.Toast;
 
 import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.modelo.Desafio;
-import com.example.bolsista.novatentativa.modelo.Equino;
 import com.example.bolsista.novatentativa.modelo.Experimento;
-import com.example.bolsista.novatentativa.modelo.Sessao;
 import com.example.bolsista.novatentativa.modelo.Teste;
 import com.example.bolsista.novatentativa.viewsModels.ListarViewModel;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -104,7 +102,7 @@ public class ConfigurarTeste extends AppCompatActivity implements AdapterView.On
             }
 
             detalhesConfigEdit.setText(teste.getObservacoes());
-            qtdQuestao.setText(Integer.toString(teste.getQtdEnsaiosPorSessao()));
+            qtdQuestao.setText(Integer.toString(teste.getQtdQuestoesPorSessao()));
             criterioAprendEdit.setText(Integer.toString(teste.getCriterioAprendizagem()));
 
         }else {
@@ -423,7 +421,7 @@ public class ConfigurarTeste extends AppCompatActivity implements AdapterView.On
         teste.setTipo(2);
         teste.setAleatoriedade(3);
         teste.setPreTeste(false);
-        teste.setQtdEnsaiosPorSessao(Integer.parseInt(qtdQuestao.getText().toString()));
+        teste.setQtdQuestoesPorSessao(Integer.parseInt(qtdQuestao.getText().toString()));
         teste.setMaxVezesConsecutivas(3);
         teste.setCriterioAprendizagem(Integer.parseInt(criterioAprendEdit.getText().toString()));
         teste.setCompleto(false);

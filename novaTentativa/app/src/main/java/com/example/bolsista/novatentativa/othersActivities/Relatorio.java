@@ -180,7 +180,7 @@ public class Relatorio extends AppCompatActivity {
                 table.addCell(new Cell().setTextAlignment(TextAlignment.CENTER)
                         .add(new Paragraph(millisParaMinutos(tempoMillis))));
                 table.addCell(new Cell().setTextAlignment(TextAlignment.CENTER)
-                        .add(new Paragraph(Integer.toString(sessao.getTaxaAcerto()) + "%")));
+                        .add(new Paragraph(formato.format(sessao.getTaxaAcerto()) + "%")));
                 table.addCell(new Cell().setTextAlignment(TextAlignment.CENTER)
                         .add(new Paragraph(sessao.getExperimentador().getNome())));
                 caunter++;

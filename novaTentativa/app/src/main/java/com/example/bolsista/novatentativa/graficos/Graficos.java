@@ -69,7 +69,7 @@ public class Graficos {
     private BarDataSet addEntradasBar(){
         for(int i = 0; i < sessoes.size(); i++) {
             valX[i] = Integer.parseInt(sessoes.get(i).getId())+1;
-            valY[i] = sessoes.get(i).getTaxaAcerto();
+            valY[i] = Float.parseFloat(sessoes.get(i).getTaxaAcerto().toString());
             //System.out.println(valX[i]+" "+valY[i]);
             entradas.add(new BarEntry(valX[i], valY[i]));
         }
@@ -85,7 +85,7 @@ public class Graficos {
     private LineDataSet addEntradasLin(){
         for (int i = 0; i < sessoes.size(); i++) {
             valX[i] = Integer.parseInt(sessoes.get(i).getId())+1;
-            valY[i] = sessoes.get(i).getTaxaAcerto();
+            valY[i] = Float.parseFloat(sessoes.get(i).getTaxaAcerto().toString());
         }
         ordena();
         for (int i = 0; i < sessoes.size(); i++) {

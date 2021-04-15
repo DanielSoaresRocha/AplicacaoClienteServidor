@@ -3,23 +3,15 @@ package com.example.bolsista.novatentativa.sockets;
 import android.content.Context;
 import android.util.Log;
 
-import com.example.bolsista.novatentativa.GerenciadorDeClientes;
 import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.arquitetura.Servidor;
 import com.example.bolsista.novatentativa.modelo.Desafio;
 import com.example.bolsista.novatentativa.modelo.Ensaio;
-import com.example.bolsista.novatentativa.modelo.Mensagem;
 import com.example.bolsista.novatentativa.viewsModels.TesteViewModel;
-import com.google.android.gms.common.util.JsonUtils;
-
-import org.w3c.dom.ls.LSOutput;
 
 import java.io.IOException;
 import java.net.Socket;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Objects;
 import java.util.Random;
 
@@ -45,7 +37,7 @@ public class PseudoTeste extends PreTeste {
 
     @Override
     public void tratarConexao() throws IOException, ClassNotFoundException {
-        int numRodadas = Objects.requireNonNull(TesteViewModel.teste.getValue()).getQtdEnsaiosPorSessao(); // Quantidade de questões
+        int numRodadas = Objects.requireNonNull(TesteViewModel.teste.getValue()).getQtdQuestoesPorSessao(); // Quantidade de questões
 
         while (rodada <= numRodadas) {
             Ensaio ensaio = new Ensaio(); // Iniciando um ensaio

@@ -1,7 +1,5 @@
 package com.example.bolsista.novatentativa.modelo;
 
-import android.util.Log;
-
 import java.io.Serializable;
 import java.util.ArrayList;
 
@@ -19,7 +17,7 @@ public class Teste implements Serializable{
     private int aleatoriedade;
     private ArrayList<Sessao> sessoes;
     private Boolean preTeste;
-    private int qtdEnsaiosPorSessao;
+    private int qtdQuestoesPorSessao;
     private int maxVezesConsecutivas;
     private int criterioAprendizagem;
     private boolean completo;
@@ -45,7 +43,7 @@ public class Teste implements Serializable{
         this.aleatoriedade = aleatoriedade;
         this.sessoes = sessoes;
         this.preTeste = preTeste;
-        this.qtdEnsaiosPorSessao = qtdEnsaiosPorSessao;
+        this.qtdQuestoesPorSessao = qtdEnsaiosPorSessao;
         this.maxVezesConsecutivas = maxVezesConsecutivas;
         this.criterioAprendizagem = criterioAprendizagem;
         this.completo = completo;
@@ -167,12 +165,12 @@ public class Teste implements Serializable{
         this.preTeste = preTeste;
     }
 
-    public int getQtdEnsaiosPorSessao() {
-        return qtdEnsaiosPorSessao;
+    public int getQtdQuestoesPorSessao() {
+        return qtdQuestoesPorSessao;
     }
 
-    public void setQtdEnsaiosPorSessao(int qtdEnsaiosPorSessao) {
-        this.qtdEnsaiosPorSessao = qtdEnsaiosPorSessao;
+    public void setQtdQuestoesPorSessao(int qtdQuestoesPorSessao) {
+        this.qtdQuestoesPorSessao = qtdQuestoesPorSessao;
     }
 
     public int getMaxVezesConsecutivas() {

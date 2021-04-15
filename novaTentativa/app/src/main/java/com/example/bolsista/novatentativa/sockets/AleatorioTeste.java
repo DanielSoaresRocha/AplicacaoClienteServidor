@@ -7,7 +7,6 @@ import com.example.bolsista.novatentativa.R;
 import com.example.bolsista.novatentativa.arquitetura.Servidor;
 import com.example.bolsista.novatentativa.modelo.Desafio;
 import com.example.bolsista.novatentativa.modelo.Ensaio;
-import com.example.bolsista.novatentativa.modelo.Mensagem;
 import com.example.bolsista.novatentativa.viewsModels.TesteViewModel;
 
 import java.io.IOException;
@@ -32,7 +31,7 @@ public class AleatorioTeste extends PreTeste {
 
     @Override
     public void tratarConexao() throws IOException, ClassNotFoundException {
-        int numRodadas = Objects.requireNonNull(TesteViewModel.teste.getValue()).getQtdEnsaiosPorSessao();
+        int numRodadas = Objects.requireNonNull(TesteViewModel.teste.getValue()).getQtdQuestoesPorSessao();
 
         while (rodada <= numRodadas) {
             Ensaio ensaio = new Ensaio(); // Iniciando um ensaio

@@ -6,7 +6,7 @@ import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class Estatistica {
-    float valY[] = new float[100];
+    Double valY[] = new Double[100];
     DecimalFormat f = new DecimalFormat("0.00");
     ArrayList<Sessao> sessoes;
 
@@ -26,8 +26,8 @@ public class Estatistica {
         return f.format(calculaDesvioPadrao(sessoes));
     }
 
-    private float calculaMedia(ArrayList<Sessao> sessoes){
-        float media = 0;
+    private double calculaMedia(ArrayList<Sessao> sessoes){
+        double media = 0;
         for(int i = 0; i < sessoes.size(); i++){
             media = media+sessoes.get(i).getTaxaAcerto();
         }
@@ -36,8 +36,8 @@ public class Estatistica {
         return media;
     }
 
-    private float calculaMediana(ArrayList<Sessao> sessoes){
-        float mediana = 0;
+    private double calculaMediana(ArrayList<Sessao> sessoes){
+        double mediana = 0;
 
         for (int i = 0; i < sessoes.size(); i++) {
             valY[i] = sessoes.get(i).getTaxaAcerto();
@@ -68,7 +68,7 @@ public class Estatistica {
                 if (valY[i] < valY[j])
                 {
                     //aqui acontece a troca. O maior vai para a direita e o menor para a esquerda
-                    float auxY = valY[i];
+                    double auxY = valY[i];
 
                     valY[i] = valY[j];
 

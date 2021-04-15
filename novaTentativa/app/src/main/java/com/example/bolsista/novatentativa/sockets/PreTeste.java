@@ -1,33 +1,23 @@
 package com.example.bolsista.novatentativa.sockets;
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.bolsista.novatentativa.GerenciadorDeClientes;
 import com.example.bolsista.novatentativa.Jogar;
-import com.example.bolsista.novatentativa.NovoExperimento;
-import com.example.bolsista.novatentativa.R;
-import com.example.bolsista.novatentativa.arquitetura.Definir;
 import com.example.bolsista.novatentativa.arquitetura.Servidor;
-import com.example.bolsista.novatentativa.modelo.Desafio;
 import com.example.bolsista.novatentativa.modelo.Ensaio;
 import com.example.bolsista.novatentativa.modelo.Mensagem;
-import com.example.bolsista.novatentativa.modelo.Sessao;
 import com.example.bolsista.novatentativa.viewsModels.TesteViewModel;
 
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -97,7 +87,7 @@ public class PreTeste extends Thread {
     }
 
     public void tratarConexao() throws IOException, ClassNotFoundException {
-        int numRodadas = Objects.requireNonNull(TesteViewModel.teste.getValue()).getQtdEnsaiosPorSessao();
+        int numRodadas = Objects.requireNonNull(TesteViewModel.teste.getValue()).getQtdQuestoesPorSessao();
 
         while (rodada <= numRodadas){
             if(flagContaTempo)
