@@ -110,35 +110,6 @@ public class Servidor extends AppCompatActivity {
         }).start();
     }
 
-    /*private void criarServidor() {
-        final Servidor server = this;
-        numberAleatorio = R.drawable.branco;
-
-        serverIdentificado = true;
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                try {
-                    Log.i("SERVIDOR", "STARTANDO SERVIDOR");
-                    servidor = new ServerSocket(9999);
-                    Log.i("SERVIDOR", "Esperando conexão...");
-                    pegarIp();
-
-                    numCliente = 0;
-                    while (true) {
-                        Socket cliente = servidor.accept();
-                        Log.i("SERVIDOR", "CLIENTE FOI CONECTADO = " + cliente.getInetAddress());
-                        new GerenciadorDeClientes(cliente, server,numCliente);
-
-                        numCliente++;
-                    }
-                } catch (IOException e) {
-                    Log.i("ERRO", "PORTA OCUPADA OU SERVER FOI FECHADO:" + e.getMessage());
-                }
-            }
-        }).start();
-    }*/
-
     //este método retorna o ip de conexão wifi no android
     private void pegarIp(){
         WifiManager wifiManager = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);

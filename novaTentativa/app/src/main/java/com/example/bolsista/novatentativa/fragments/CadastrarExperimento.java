@@ -87,9 +87,9 @@ public class CadastrarExperimento extends Fragment implements DatePickerDialog.O
     }
 
     private void instanciarExperimento(){
-        Experimento experimento = new Experimento("", novoExperimento.getEquinoSelecionado(),
-                nomeExperimento.getText().toString(), dataExperimento, new Date(),
-                novoExperimento.getTestes(), false);
+        Experimento experimento = new Experimento("",novoExperimento.getUsuarioRef().getId(),
+                novoExperimento.getEquinoSelecionado(), nomeExperimento.getText().toString(),
+                dataExperimento, new Date(), novoExperimento.getTestes(), false);
 
         novoExperimento.setExperimento(experimento);
         String validacao = novoExperimento.validar();
@@ -162,5 +162,7 @@ public class CadastrarExperimento extends Fragment implements DatePickerDialog.O
         dataExperimentoI = v.findViewById(R.id.dataExperimentoI);
 
         novoExperimento = (NovoExperimento) getActivity();
+
+
     }
 }

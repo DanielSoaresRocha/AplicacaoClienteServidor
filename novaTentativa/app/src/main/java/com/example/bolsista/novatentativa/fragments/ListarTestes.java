@@ -57,12 +57,6 @@ public class ListarTestes extends Fragment {
     @SuppressLint("StaticFieldLeak")
     public static TesteAdapter adapter;
 
-    //FireBase FireStore
-    FirebaseFirestore db = FirebaseFirestore.getInstance();
-    DocumentReference usuarioRef;
-    //FireBase autenth
-    FirebaseAuth usuario;
-
     NovoExperimento novoExperimento;
 
     @Override
@@ -181,7 +175,7 @@ public class ListarTestes extends Fragment {
     }
 
     private void getConfiguracoesFireStore() {
-        db.collection("configuracoes")
+        novoExperimento.getDb().collection("configuracoes")
                 //.whereEqualTo("users", usuarioRef)//referencia do usuario que adicionou o cavalo
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
@@ -269,12 +263,5 @@ public class ListarTestes extends Fragment {
         contextoAtivity = getActivity();
 
         novoExperimento = (NovoExperimento) getActivity();
-
-        usuario = FirebaseAuth.getInstance();
-        try {
-            usuarioRef = db.collection("users").document(usuario.getCurrentUser().getUid());
-        }catch (java.lang.NullPointerException e){
-            usuarioRef = db.collection("users").document("zl1hFltVOlJONAVUeIsY");
-        }
     }
 }

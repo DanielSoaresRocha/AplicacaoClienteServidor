@@ -54,7 +54,7 @@
     <string name="detalhes">Observações</string>
     <string name="cadastrar">cadastrar</string>
     <string name="cancelar">cancelar</string>
-    <string name="logoff">logoff</string>
+    <string name="logoff">Logoff</string>
     <string name="conectar">Estabelecer conexão</string>
     <string name="escolha_uma_configura_o">Escolha uma configuração:</string>
     <string name="exp_andamento">Experimentos em andamento</string>
