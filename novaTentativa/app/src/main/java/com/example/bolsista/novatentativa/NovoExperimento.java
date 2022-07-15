@@ -15,6 +15,9 @@ import com.example.bolsista.novatentativa.modelo.Experimento;
 import com.example.bolsista.novatentativa.modelo.Teste;
 import com.example.bolsista.novatentativa.viewsModels.ListarViewModel;
 import com.google.android.material.tabs.TabLayout;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 
@@ -29,6 +32,12 @@ public class NovoExperimento extends AppCompatActivity {
     private Equino equinoSelecionado;
     private ArrayList<Teste> testes;
     private Experimento experimento;
+
+    //FireBase FireStore
+    FirebaseFirestore db = FirebaseFirestore.getInstance();
+    DocumentReference usuarioRef;
+    //FireBase autenth
+    FirebaseAuth usuario;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -98,6 +107,13 @@ public class NovoExperimento extends AppCompatActivity {
         tabLayout = findViewById(R.id.tabLayout);
         mViewModel = ViewModelProviders.of(this).get(ListarViewModel.class);
         testes = new ArrayList<>();
+
+        usuario = FirebaseAuth.getInstance();
+        try {
+            usuarioRef = db.collection("users").document(usuario.getCurrentUser().getUid());
+        }catch (java.lang.NullPointerException e){
+            usuarioRef = db.collection("users").document("zl1hFltVOlJONAVUeIsY");
+        }
     }
 
     public Equino getEquinoSelecionado() {
@@ -122,5 +138,13 @@ public class NovoExperimento extends AppCompatActivity {
 
     public void setExperimento(Experimento experimento) {
         this.experimento = experimento;
+    }
+
+    public FirebaseFirestore getDb() {
+        return db;
+    }
+
+    public DocumentReference getUsuarioRef() {
+        return usuarioRef;
     }
 }

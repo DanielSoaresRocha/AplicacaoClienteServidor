@@ -68,7 +68,7 @@ public class ExperimentosAndamento extends AppCompatActivity {
 
     private void getExperimentosFireStore() {
         db.collection("experimentos")
-                //.whereEqualTo("users", usuarioRef)//referencia do usuario que adicionou o cavalo
+                .whereEqualTo("idExperimentador", usuarioRef.getId())//referencia do usuario que adicionou o cavalo
                 .whereEqualTo("finalizado", false)
                 .get()
                 .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {

@@ -7,6 +7,7 @@ import java.util.Date;
 
 public class Experimento implements Serializable {
     private String id;
+    private String idExperimentador;
     private Equino equino;
     private String nome;
     private Date dataInicio;
@@ -17,7 +18,7 @@ public class Experimento implements Serializable {
     public Experimento() {
     }
 
-    public Experimento(String id, Equino equino, String nome, Date dataInicio, Date dataFim,
+    public Experimento(String id, String idExperimentador, Equino equino, String nome, Date dataInicio, Date dataFim,
                        ArrayList<Teste> testes, Boolean finalizado) {
         this.id = id;
         this.equino = equino;
@@ -26,6 +27,7 @@ public class Experimento implements Serializable {
         this.dataFim = dataFim;
         this.testes = testes;
         this.finalizado = finalizado;
+        this.idExperimentador = idExperimentador;
     }
 
     // Se todos os testes tiverem sido completados o Experimento é finalizado,
@@ -99,4 +101,11 @@ public class Experimento implements Serializable {
         this.testes = testes;
     }
 
+    public String getIdExperimentador() {
+        return idExperimentador;
+    }
+
+    public void setIdExperimentador(String idExperimentador) {
+        this.idExperimentador = idExperimentador;
+    }
 }
